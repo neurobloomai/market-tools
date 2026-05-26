@@ -18,7 +18,7 @@ warnings.filterwarnings('ignore')
 UNIVERSE = [
     'AAPL','MSFT','GOOGL','META','NVDA','V','MA','UNH','LLY','JPM',
     'JNJ','PG','HD','COST','ABBV','MRK','TMO','ACN','AVGO','TXN',
-    'QCOM','NEE','DHR','AMAT','LRCX','KLAC','MCHP','ADI','SNPS','CDNS',
+    'QCOM','DHR','AMAT','LRCX','KLAC','MCHP','ADI','SNPS','CDNS',
     'ADBE','CRM','NOW','INTU','ORCL','FTNT','PANW','CRWD','ZS','DDOG',
     'VEEV','WDAY','TTD','PAYC',
     'BRK-B','CB','AFL','TRV','PGR','AJG','MMC','AON','WTW','CINF',
@@ -35,6 +35,7 @@ UNIVERSE = [
 WATCHLIST = [
     'PLTR','ALAB','CRWD','AXON','MELI','ARM','SNOW','BILL',
     'MDB','NET','HUBS','TEAM','MKC','DPZ','GEV','CEG',
+    'NEE',   # NextEra — utility debt heavy but clean energy moat; Dominion merger arb / long-term value creation
 ]
 
 def get_fundamentals(ticker):
