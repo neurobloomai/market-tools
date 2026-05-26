@@ -29,13 +29,19 @@ UNIVERSE = [
     'MU','MPWR','MRVL','ITW','ROP','SYK','BSX','AMZN','APP',
     'MTD','MANH','FAST','MNST','POOL','NVR','DOCS','MKTX','ACGL',
     'CHD','CL','HSY','TJX','GIS','NFLX','LULU','WSM','KMB','VRTX',
+    'HWM','FSLR','DUOL',   # promoted from watchlist — pass all quality filters
 ]
 
 # Future contenders — great businesses not yet qualifying, tracked separately
 WATCHLIST = [
-    'PLTR','ALAB','CRWD','AXON','MELI','ARM','SNOW','BILL',
+    'PLTR','ALAB','AXON','MELI','ARM','SNOW','BILL',   # CRWD removed — already in universe
     'MDB','NET','HUBS','TEAM','MKC','DPZ','GEV','CEG',
-    'NEE',   # NextEra — utility debt heavy but clean energy moat; Dominion merger arb / long-term value creation
+    'NEE',   # NextEra — utility debt heavy; clean energy moat, Dominion merger / long-term value
+    'VST',   # Vistra — nuclear+gas deregulated moat; D/EV 0.27, qualifies as debt pays down
+    'KTOS',  # Kratos — drone/defense tech; margins thin now, scaling with DoD contracts
+    'CELH',  # Celsius — ROE at 8.1%, one point under threshold; margin recovery play
+    'HOOD',  # Robinhood — profitability inflecting; D/EV 0.22 only blocker
+    'SOFI',  # SoFi — neobank scaling; ROE 6.6% and trending right
 ]
 
 def get_fundamentals(ticker):
