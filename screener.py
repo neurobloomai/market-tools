@@ -42,6 +42,7 @@ WATCHLIST = [
     'CELH',  # Celsius — ROE at 8.1%, one point under threshold; margin recovery play
     'HOOD',  # Robinhood — profitability inflecting; D/EV 0.22 only blocker
     'SOFI',  # SoFi — neobank scaling; ROE 6.6% and trending right
+    'CORZ',  # Core Scientific — leadership in high-density infrastructure; BTC miner label masks AI/HPC pivot
 ]
 
 def get_fundamentals(ticker):
