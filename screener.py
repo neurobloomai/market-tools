@@ -65,7 +65,8 @@ def get_fundamentals(ticker):
         roa               = info.get('returnOnAssets', None)
 
         # Valuation
-        pe                = info.get('trailingPE', None)
+        _pe_raw           = info.get('trailingPE', None)
+        pe                = None if not isinstance(_pe_raw, (int, float)) else _pe_raw
         pb                = info.get('priceToBook', None)
 
         # FCF
