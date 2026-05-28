@@ -57,33 +57,36 @@ CACHE_TTL  = 900
 
 # All index tickers — reliable MA data from yfinance (no volume for indices, shown as N/A)
 TICKERS = [
-    '^NSEI', '^NSMIDCP',
+    '^NSEI', '^NSMIDCP', '^INDIAVIX',
     '^CNXIT', '^NSEBANK', '^CNXPSUBANK',
-    '^CNXPSE',
+    '^CNXPSE', '^CNXINFRA',
     '^CNXPHARMA', '^CNXAUTO', '^CNXENERGY', '^CNXMETAL',
-    '^CNXFMCG',
+    '^CNXFMCG', '^CNXREALTY',
 ]
 
 THEMES = {
     '^NSEI':       'Nifty50',
     '^NSMIDCP':    'Midcap',
+    '^INDIAVIX':   'India VIX',
     '^CNXIT':      'IT',
     '^NSEBANK':    'Banks',
     '^CNXPSUBANK': 'PSUBanks',
     '^CNXPSE':     'PSU/Capex',
+    '^CNXINFRA':   'Infra',
     '^CNXPHARMA':  'Pharma',
     '^CNXAUTO':    'Auto',
     '^CNXENERGY':  'Energy',
     '^CNXMETAL':   'Metal',
     '^CNXFMCG':    'FMCG',
+    '^CNXREALTY':  'Realty',
 }
 
 GROUPS = [
-    ('BENCHMARK',   ['^NSEI', '^NSMIDCP']),
+    ('BENCHMARK',    ['^NSEI', '^NSMIDCP', '^INDIAVIX']),
     ('TECH & BANKS', ['^CNXIT', '^NSEBANK', '^CNXPSUBANK']),
-    ('PSU / CAPEX', ['^CNXPSE']),
-    ('SECTORS',     ['^CNXPHARMA', '^CNXAUTO', '^CNXENERGY', '^CNXMETAL']),
-    ('CONSUMER',    ['^CNXFMCG']),
+    ('PSU / CAPEX',  ['^CNXPSE', '^CNXINFRA']),
+    ('SECTORS',      ['^CNXPHARMA', '^CNXAUTO', '^CNXENERGY', '^CNXMETAL']),
+    ('CONSUMER',     ['^CNXFMCG', '^CNXREALTY']),
 ]
 
 G  = '\033[92m'

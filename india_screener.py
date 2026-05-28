@@ -64,6 +64,12 @@ UNIVERSE = [
 
     # Infrastructure & Logistics
     'ADANIPORTS.NS','CONCOR.NS',
+
+    # Capital Markets & Wealth — India's affluence theme
+    'CDSL.NS','BSE.NS','360ONE.NS',
+
+    # Retail — aspirational consumption
+    'TRENT.NS',
 ]
 
 # Watchlist — high quality but not yet qualifying
@@ -76,6 +82,8 @@ WATCHLIST = [
     'ADANIENT.NS',    # conglomerate, debt heavy
     'ARE&M.NS',       # Amara Raja Energy — Op margin just under threshold, clean balance sheet
     'ADANIGREEN.NS',  # Adani Green — heavy capex, debt, P/E stretched but 57% op margin
+    'SWIGGY.NS',      # Swiggy — food delivery, profitability inflecting, duopoly with Zomato
+    'IXIGO.NS',       # ixigo — travel-tech, recently listed, margins building
 ]
 
 def get_fundamentals(ticker):
@@ -95,7 +103,8 @@ def get_fundamentals(ticker):
         roe              = info.get('returnOnEquity', None)
         roa              = info.get('returnOnAssets', None)
 
-        pe               = info.get('trailingPE', None)
+        _pe_raw          = info.get('trailingPE', None)
+        pe               = None if not isinstance(_pe_raw, (int, float)) else _pe_raw
         pb               = info.get('priceToBook', None)
 
         fcf              = info.get('freeCashflow', None)
