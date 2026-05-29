@@ -56,21 +56,21 @@ CACHE_FILE = os.path.expanduser('~/.dashboard_cache.json')
 CACHE_TTL  = 900  # 15 minutes
 
 TICKERS = [
-    'NLR','SMR','GRID','COPX','CIBR',
+    'NLR','GRID','COPX','CIBR',
     'SMH','IGV','WCLD',
     'BOTZ','QTUM','ARKQ',
     'IWM','IWR','TOPT',
 ]
 
 THEMES = {
-    'NLR':'Nuclear ETF', 'SMR':'SMR',      'GRID':'Grid Infra', 'COPX':'Copper',  'CIBR':'Cyber',
-    'SMH':'Semis',       'IGV':'Software',  'WCLD':'Cloud',
-    'BOTZ':'Robotics',   'QTUM':'Quantum',  'ARKQ':'Autonomous',
-    'IWM':'SmallCap',    'IWR':'MidCap',    'TOPT':'Top20ETF',
+    'NLR':'Nuclear ETF', 'GRID':'Grid Infra', 'COPX':'Copper',  'CIBR':'Cyber',
+    'SMH':'Semis',       'IGV':'Software',     'WCLD':'Cloud',
+    'BOTZ':'Robotics',   'QTUM':'Quantum',     'ARKQ':'Autonomous',
+    'IWM':'SmallCap',    'IWR':'MidCap',       'TOPT':'Top20ETF',
 }
 
 GROUPS = [
-    ('STRUCTURAL — MACRO/INFRA', ['NLR','SMR','GRID','COPX','CIBR']),
+    ('STRUCTURAL — MACRO/INFRA', ['NLR','GRID','COPX','CIBR']),
     ('STRUCTURAL — TECH',        ['SMH','IGV','WCLD']),
     ('SPECULATIVE / THEMATIC',   ['BOTZ','QTUM','ARKQ']),
     ('MARKET',                   ['IWM','IWR','TOPT']),

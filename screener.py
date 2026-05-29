@@ -43,6 +43,8 @@ WATCHLIST = [
     'HOOD',  # Robinhood — profitability inflecting; D/EV 0.22 only blocker
     'SOFI',  # SoFi — neobank scaling; ROE 6.6% and trending right
     'CORZ',  # Core Scientific — leadership in high-density infrastructure; BTC miner label masks AI/HPC pivot
+    'SMR',   # NuScale Power — small modular reactors; pre-revenue but first-mover in licensed SMR tech
+    'OKLO',  # Oklo — micro-reactors, Sam Altman-backed; nuclear theme beneath NLR ETF
 ]
 
 def get_fundamentals(ticker):
