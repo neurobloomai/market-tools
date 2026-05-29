@@ -46,6 +46,9 @@ WATCHLIST = [
     'CORZ',  # Core Scientific — leadership in high-density infrastructure; BTC miner label masks AI/HPC pivot
     'SMR',   # NuScale Power — small modular reactors; pre-revenue but first-mover in licensed SMR tech
     'OKLO',  # Oklo — micro-reactors, Sam Altman-backed; nuclear theme beneath NLR ETF
+    'SYM',   # Symbotic — warehouse AI robotics, Walmart-backed; revenue scaling, margins early
+    'RKLB',  # Rocket Lab — only end-to-end small launch + space systems; revenue real, path to profit
+    'AMSC',  # American Superconductor — power electronics, grid/defense; OpM 5.1%, one filter away
 ]
 
 def get_fundamentals(ticker):
