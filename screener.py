@@ -29,7 +29,7 @@ UNIVERSE = [
     'MU','MPWR','MRVL','ITW','ROP','SYK','BSX','AMZN','APP',
     'MTD','MANH','FAST','MNST','POOL','NVR','DOCS','MKTX','ACGL',
     'CHD','CL','HSY','TJX','GIS','NFLX','LULU','WSM','KMB','VRTX',
-    'HWM','FSLR','DUOL',   # promoted from watchlist — pass all quality filters
+    'HWM','FSLR','DUOL','PLAB',   # promoted from watchlist — pass all quality filters
 ]
 
 # Future contenders — great businesses not yet qualifying, tracked separately
@@ -42,6 +42,7 @@ WATCHLIST = [
     'CELH',  # Celsius — ROE at 8.1%, one point under threshold; margin recovery play
     'HOOD',  # Robinhood — profitability inflecting; D/EV 0.22 only blocker
     'SOFI',  # SoFi — neobank scaling; ROE 6.6% and trending right
+    'UPWK',  # Upwork — freelance marketplace; D/EV 0.44 (converts) only blocker, margins/FCF solid
     'CORZ',  # Core Scientific — leadership in high-density infrastructure; BTC miner label masks AI/HPC pivot
     'SMR',   # NuScale Power — small modular reactors; pre-revenue but first-mover in licensed SMR tech
     'OKLO',  # Oklo — micro-reactors, Sam Altman-backed; nuclear theme beneath NLR ETF
