@@ -221,8 +221,10 @@ def passes_filter(d):
     # Must have revenue growth
     if d['rev_growth'] is None or d['rev_growth'] < 2.0:
         return False
-    # Net income must be growing
-    if d['ni_growth'] is None or d['ni_growth'] < 0:
+    # Net income must be broadly stable or growing
+    # -2% tolerance absorbs non-cash acquisition amortization (e.g. ABBV/Allergan)
+    # while still excluding companies with genuine profit deterioration
+    if d['ni_growth'] is None or d['ni_growth'] < -2.0:
         return False
     # Interest coverage must be comfortable
     if d['ic_curr'] is not None and d['ic_curr'] < 3.0:
