@@ -46,6 +46,7 @@ warnings.filterwarnings('ignore')
 UNIVERSE = [
     # Pharma post-acquisition (biggest de-lever stories)
     'ABBV', 'BMY', 'PFE', 'AMGN', 'MRK', 'GILD', 'BIIB', 'REGN',
+    'VTRS',  # Viatris — textbook debt paydown ($18B→$12B), FCF solid; GAAP losses are non-cash impairments
 
     # Industrials post-M&A
     'PH', 'HON', 'ETN', 'GE', 'ROK', 'FTV', 'CARR', 'OTIS', 'EMR',
