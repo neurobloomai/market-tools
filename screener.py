@@ -49,6 +49,8 @@ WATCHLIST = [
     'SYM',   # Symbotic — warehouse AI robotics, Walmart-backed; revenue scaling, margins early
     'RKLB',  # Rocket Lab — only end-to-end small launch + space systems; revenue real, path to profit
     'AMSC',  # American Superconductor — power electronics, grid/defense; OpM 5.1%, one filter away
+    'BMY',   # Bristol-Myers Squibb — de-lever + profit growth play; Celgene debt paydown near complete, Eliquis+Opdivo FCF, NI inflecting
+    'ABBV',  # AbbVie — Allergan amortization masking strong cash earnings; FCF/Debt 28.5%, IC improving 6.3→7.8×, Skyrizi/Rinvoq replacing Humira
 ]
 
 def get_fundamentals(ticker):
