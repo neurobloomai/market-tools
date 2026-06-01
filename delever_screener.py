@@ -288,6 +288,30 @@ def category(score):
     return 'Watch'
 
 
+def passes_monitor(d):
+    """Monitor Closely: FCF + debt paydown confirmed but GAAP NI distorted by non-cash items.
+    Fails the main NI filter but FCF/Debt ratio proves real cash generation.
+    Excludes commodity cycles (oil E&P) and genuine margin deterioration (managed care)."""
+    if d is None: return False
+    if passes_filter(d): return False                          # already in main list
+    if d.get('industry') in EXCLUDED_INDUSTRIES: return False
+    # Must have meaningful debt in range (slightly wider ceiling — 0.65)
+    if d['debt_to_ev'] is None or not (0.15 <= d['debt_to_ev'] <= 0.65): return False
+    # Real FCF generation — the whole point
+    if d['fcf_yield'] is None or d['fcf_yield'] < 5.0: return False
+    # FCF/Debt proves actual paydown capacity
+    if d['fcf_to_debt_pct'] is None or d['fcf_to_debt_pct'] < 10.0: return False
+    # Exclude commodity cycles — oil E&P FCF swings with crude, not business quality
+    if d.get('industry') in {'Oil & Gas E&P', 'Oil & Gas Midstream'}: return False
+    # Exclude managed care — NI decline here is real medical cost ratio deterioration
+    if d.get('industry') in {'Healthcare Plans'}: return False
+    # Exclude retail margin compression — structural, not non-cash
+    if d.get('industry') in {'Discount Stores', 'Department Stores'}: return False
+    # Must have some revenue — not a pure balance-sheet play
+    if d['rev_growth'] is None: return False
+    return True
+
+
 # ── HTML ──────────────────────────────────────────────────────────────────────
 
 def fmt(val, suffix='', prefix='', dash_color='#484f58'):
@@ -316,7 +340,7 @@ def ic_cell(curr, prev, improving):
     return f'<span style="color:{color}">{curr}×</span>{arrow}'
 
 
-def build_html(results):
+def build_html(results, monitor):
     now   = datetime.now().strftime('%B %d, %Y  %H:%M')
     rows  = ''
 
@@ -326,7 +350,7 @@ def build_html(results):
 
     def row_html(d):
         cat = d['category']
-        cat_cls = {'Strong': 'cat-strong', 'On Track': 'cat-ontrack', 'Watch': 'cat-watch'}[cat]
+        cat_cls = {'Strong': 'cat-strong', 'On Track': 'cat-ontrack', 'Watch': 'cat-watch', 'Monitor': 'cat-monitor'}[cat]
         ic_trend = ic_cell(d['ic_curr'], d['ic_prev'], d['ic_improving'])
         gm_arrow = (' <span style="color:#3fb950">↑</span>' if d['gm_improving'] is True
                     else (' <span style="color:#f85149">↓</span>' if d['gm_improving'] is False else ''))
@@ -365,6 +389,14 @@ def build_html(results):
             for d in section:
                 rows += row_html(d)
 
+    if monitor:
+        rows += '''<tr><td colspan="16" style="padding:28px 10px 6px;font-size:13px;font-weight:700;color:#bc8cff;border-bottom:2px solid #21262d">
+          🔬 Monitor Closely — FCF confirmed, GAAP NI distorted by non-cash items
+          <span style="color:#8b949e;font-size:10px;font-weight:400;margin-left:12px">Real debt paydown underway · NI drag from impairments / acquisition amortization · Watch for GAAP inflection</span>
+        </td></tr>'''
+        for d in monitor:
+            rows += row_html(d)
+
     return f"""<!DOCTYPE html>
 <html>
 <head>
@@ -387,6 +419,7 @@ def build_html(results):
   .cat-strong  {{ background: #1a4731; color: #3fb950; }}
   .cat-ontrack {{ background: #1c2e4a; color: #58a6ff; }}
   .cat-watch   {{ background: #2d2208; color: #ffa657; }}
+  .cat-monitor {{ background: #1e1b2e; color: #bc8cff; }}
   .thesis {{ background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 16px; margin-bottom: 20px; }}
   .thesis h2 {{ font-size: 11px; color: #8b949e; margin-bottom: 10px; text-transform: uppercase; letter-spacing: .08em; }}
   .thesis-grid {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }}
@@ -404,6 +437,7 @@ def build_html(results):
   <span>{len(strong)}</span> Strong &nbsp;·&nbsp;
   <span>{len(on_track)}</span> On Track &nbsp;·&nbsp;
   <span>{len(watch)}</span> Watch
+  &nbsp;·&nbsp; <span style="color:#bc8cff">{len(monitor)}</span> <span style="color:#bc8cff">Monitor Closely</span>
 </div>
 
 <div class="thesis">
@@ -471,14 +505,21 @@ if __name__ == '__main__':
         x['debt_to_ev'] or 1,
     ))
 
+    monitor = [d for d in raw if passes_monitor(d)]
+    for d in monitor:
+        d['score']    = momentum_score(d)
+        d['category'] = 'Monitor'
+    monitor.sort(key=lambda x: -(x['fcf_to_debt_pct'] or 0))
+
     strong   = sum(1 for d in passed if d['category'] == 'Strong')
     on_track = sum(1 for d in passed if d['category'] == 'On Track')
     watch    = sum(1 for d in passed if d['category'] == 'Watch')
 
     print(f"  ✅  {len(passed)} companies passed filters")
-    print(f"      {strong} Strong  ·  {on_track} On Track  ·  {watch} Watch\n")
+    print(f"      {strong} Strong  ·  {on_track} On Track  ·  {watch} Watch")
+    print(f"  🔬  {len(monitor)} Monitor Closely\n")
 
-    html = build_html(passed)
+    html = build_html(passed, monitor)
     path = os.path.expanduser('~/delever_screener.html')
     with open(path, 'w') as f:
         f.write(html)
