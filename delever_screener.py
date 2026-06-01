@@ -180,6 +180,7 @@ def get_fundamentals(ticker):
             ticker           = ticker,
             name             = info.get('shortName', ticker),
             sector           = info.get('sector', ''),
+            industry         = info.get('industry', ''),
             price            = info.get('currentPrice', None),
             market_cap_b     = round(market_cap / 1e9, 1),
             debt_to_ev       = round(debt_to_ev, 3) if debt_to_ev is not None else None,
@@ -202,10 +203,22 @@ def get_fundamentals(ticker):
         return None
 
 
+# ── Sector exclusions ─────────────────────────────────────────────────────────
+# Refiners and commodity processors: FCF driven by crack spreads / commodity cycles,
+# not structural debt paydown. Debt trends follow capex cycles, not business quality.
+EXCLUDED_INDUSTRIES = {
+    'Oil & Gas Refining & Marketing',
+    'Oil & Gas Integrated',
+}
+
+
 # ── Filters ───────────────────────────────────────────────────────────────────
 
 def passes_filter(d):
     if d is None:
+        return False
+    # Exclude pure refiners — crack-spread FCF ≠ structural de-lever
+    if d.get('industry') in EXCLUDED_INDUSTRIES:
         return False
     # Must have debt — this is a de-lever screener, not quality screener
     if d['debt_to_ev'] is None:
