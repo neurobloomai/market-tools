@@ -37,6 +37,8 @@ WATCHLIST = [
     'PLTR','ALAB','AXON','MELI','ARM','SNOW','BILL',   # CRWD removed — already in universe
     'MDB','NET','HUBS','TEAM','MKC','DPZ','GEV','CEG',
     'NEE',   # NextEra — utility debt heavy; clean energy moat, Dominion merger / long-term value
+    'NRG',   # NRG Energy — de-lever play; LS Power acq doubled fleet+debt, targeting 3x net leverage, Fwd P/E 11x, yield-sensitive re-rate when 10yr < 4.0%
+    'PCG',   # PG&E — regulated CA utility, NOT a datacenter play (unlike CEG/NEE/VST); wildfire liability + rate-case risk, de-lever story only
     'VST',   # Vistra — nuclear+gas deregulated moat; D/EV 0.27, qualifies as debt pays down
     'KTOS',  # Kratos — drone/defense tech; margins thin now, scaling with DoD contracts
     'CELH',  # Celsius — ROE at 8.1%, one point under threshold; margin recovery play
