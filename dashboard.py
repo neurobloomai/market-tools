@@ -224,7 +224,7 @@ def ma_html(v):
     c = '#3fb950' if v > 0 else '#f85149'
     return f'<span style="color:{c}">{v:+.1f}%</span>'
 
-def build_html(data, is_open=True, status_msg=''):
+def build_html(data, is_open=True, status_msg='', yld=None):
     now  = datetime.now().strftime('%B %d, %Y  %H:%M')
     rows = ''
     for group, tickers in GROUPS:
@@ -275,6 +275,7 @@ def build_html(data, is_open=True, status_msg=''):
 <h1>Market Selective Briefing</h1>
 <div class="subtitle">{now}</div>
 {'<div class="market-closed">⚠ ' + status_msg + ' — showing last available data</div>' if not is_open else ''}
+{yield_html(yld)}
 <table>
   <thead>
     <tr>
@@ -296,7 +297,60 @@ def build_html(data, is_open=True, status_msg=''):
 </body>
 </html>"""
 
-def print_dashboard(data, is_open, status_msg):
+def get_yield():
+    try:
+        df = yf.Ticker('^TNX').history(period='3mo', interval='1d', auto_adjust=True)
+        if len(df) < 6: return None
+        val     = float(df['Close'].iloc[-1])
+        prev    = float(df['Close'].iloc[-2])
+        chg_bps = (val - prev) * 100
+        w5      = float(df['Close'].iloc[-6])
+        chg5    = val - w5
+        ma20    = float(df['Close'].rolling(20).mean().iloc[-1])
+        ma50    = float(df['Close'].rolling(50).mean().iloc[-1])
+        return dict(val=val, chg_bps=chg_bps, chg5=chg5, ma20=ma20, ma50=ma50)
+    except Exception:
+        return None
+
+def print_yield(y):
+    if not y: return
+    bps_c  = R if y['chg_bps'] > 0 else G
+    chg5_c = R if y['chg5'] > 0 else G
+    trend  = f"{bps_c}{y['chg_bps']:+.1f}bps today{RS}  {chg5_c}{y['chg5']:+.2f}% 5D{RS}"
+    vs20   = y['val'] - y['ma20']
+    vs50   = y['val'] - y['ma50']
+    ma_str = f"vs MA20:{vs20:+.2f}  vs MA50:{vs50:+.2f}"
+    alert  = ''
+    if y['val'] >= 4.5:
+        alert = f"  {R}⚠ ABOVE 4.5% — macro headwind{RS}"
+    elif y['val'] <= 4.0:
+        alert = f"  {G}✓ BELOW 4.0% — equity tailwind{RS}"
+    print(f"  {B}US 10YR YIELD  {y['val']:.3f}%{RS}  │  {trend}  │  {ma_str}{alert}")
+
+def yield_html(y):
+    if not y: return ''
+    bps_c  = '#f85149' if y['chg_bps'] > 0 else '#3fb950'
+    chg5_c = '#f85149' if y['chg5'] > 0 else '#3fb950'
+    vs20   = y['val'] - y['ma20']
+    vs50   = y['val'] - y['ma50']
+    alert  = ''
+    if y['val'] >= 4.5:
+        alert = '<span style="color:#f85149;font-weight:700"> ⚠ ABOVE 4.5% — macro headwind</span>'
+    elif y['val'] <= 4.0:
+        alert = '<span style="color:#3fb950;font-weight:700"> ✓ BELOW 4.0% — equity tailwind</span>'
+    return f"""
+<div style="background:#161b22;border:1px solid #21262d;border-radius:6px;padding:12px 16px;margin-bottom:16px;font-family:'SF Mono','Fira Code',monospace;font-size:12px">
+  <span style="color:#58a6ff;font-weight:700;font-size:14px">US 10-Year Yield &nbsp; {y['val']:.3f}%</span>
+  &nbsp;&nbsp;│&nbsp;&nbsp;
+  <span style="color:{bps_c}">{y['chg_bps']:+.1f} bps today</span>
+  &nbsp;&nbsp;
+  <span style="color:{chg5_c}">{y['chg5']:+.2f}% 5D</span>
+  &nbsp;&nbsp;│&nbsp;&nbsp;
+  <span style="color:#8b949e">vs MA20: {vs20:+.2f} &nbsp; vs MA50: {vs50:+.2f}</span>
+  {alert}
+</div>"""
+
+def print_dashboard(data, is_open, status_msg, yld=None):
     now = datetime.now().strftime('%b %d %Y  %H:%M')
     w   = 95
     hdr = f"  {'TICKER':<6}  {'THEME':<10}  {'PRICE':>7}  {'DAY%':>8}  {'VOL/AVG':>10}  {'5D':>2}  {'vs20D':>6}   50D  20W  10M  20M   MOM   SIGNAL"
@@ -304,6 +358,8 @@ def print_dashboard(data, is_open, status_msg):
     print(f"  {B}MARKET SELECTIVE BRIEFING  —  {now}{RS}")
     if not is_open:
         print(f"  {Y}⚠  {status_msg} — showing last available data{RS}")
+    print('─' * w)
+    print_yield(yld)
     print('─' * w)
     print(hdr)
 
@@ -355,10 +411,11 @@ if __name__ == '__main__':
         print()
         save_cache({k: v for k, v in data.items() if v})
 
-    print_dashboard(data, is_open, status_msg)
+    yld = get_yield()
+    print_dashboard(data, is_open, status_msg, yld)
 
     path = os.path.expanduser('~/market_briefing.html')
     with open(path, 'w') as f:
-        f.write(build_html(data, is_open, status_msg))
+        f.write(build_html(data, is_open, status_msg, yld))
     print(f"  Saved → {path}")
     webbrowser.open(f'file://{path}')
