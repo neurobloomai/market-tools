@@ -48,6 +48,8 @@ WATCHLIST = [
     'SOFI',  # SoFi — neobank scaling; ROE 6.6% and trending right
     'UPWK',  # Upwork — freelance marketplace; D/EV 0.44 (converts) only blocker, margins/FCF solid
     'CORZ',  # Core Scientific — leadership in high-density infrastructure; BTC miner label masks AI/HPC pivot
+    'CLS',   # Celestica — AI infra contract manufacturer (servers, networking), ROE 52%, D/EV 0.02, gross margin 12% blocks universe
+    'SSNC',  # SS&C Technologies — fund admin infra, $1.28B FCF, extreme switching costs, debt 0.32 only blocker
     'SMR',   # NuScale Power — small modular reactors; pre-revenue but first-mover in licensed SMR tech
     'OKLO',  # Oklo — micro-reactors, Sam Altman-backed; nuclear theme beneath NLR ETF
     'SYM',   # Symbotic — warehouse AI robotics, Walmart-backed; revenue scaling, margins early
