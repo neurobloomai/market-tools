@@ -31,6 +31,7 @@ UNIVERSE = [
     'CHD','CL','HSY','TJX','GIS','NFLX','LULU','WSM','KMB','VRTX',
     'HWM','FSLR','DUOL','PLAB',   # promoted from watchlist — pass all quality filters
     'WPM',                        # Wheaton Precious Metals — streaming model, 85% gross/65% net margin, zero debt, A+
+    'VRSN',                       # VeriSign — .com/.net registry monopoly, 88% gross/68% op margin, ROE distorted by buybacks (ROA 52%), toll collector
 ]
 
 # Future contenders — great businesses not yet qualifying, tracked separately
