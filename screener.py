@@ -58,6 +58,7 @@ UNIVERSE = [
     'WPM',                        # Wheaton Precious Metals — streaming model, 85% gross/65% net margin, zero debt, A+
     'VRSN',                       # VeriSign — .com/.net registry monopoly, 88% gross/68% op margin, ROE distorted by buybacks (ROA 52%), toll collector
     'CRDO',                       # Credo Technology — AI datacenter interconnect silicon (SerDes/AEC), 68% gross/35% op margin, 157% rev growth, zero debt, A+
+    'MTSI',                       # MACOM Technology — analog/mixed-signal for 800G/1.6T optical datacenter interconnects; D/EV 0.02, NM 16%, ROE expanding, A
 ]
 
 # Future contenders — great businesses not yet qualifying, tracked separately
@@ -87,7 +88,7 @@ WATCHLIST = [
     'CIEN',  # Ciena — optical networking, AI datacenter interconnect tailwind; net margin 4.5% and ROE/P/E blocking, 33% rev growth
     'GFS',   # GlobalFoundries — specialty foundry (RF, automotive, IoT); 5/6 filters pass, ROE 6.8% only blocker (capital-heavy fab structure)
     'SITM',  # SiTime — MEMS precision timing chips; near-monopoly, 65% gross margin, AI datacenter + 5G tailwind; cyclical recovery in progress
-    'MTSI',  # MACOM Technology — analog/mixed-signal for 800G/1.6T optical datacenter interconnects; margins expanding, AI connectivity angle
+    'MTSI',  # MACOM Technology — promoted to universe; analog/mixed-signal optical, grades A, watch for A+ as op margin crosses 20%
     'LSCC',  # Lattice Semiconductor — low-power FPGAs, 60%+ gross margin, zero debt; AI edge + industrial; cyclical trough recovery
     'ONTO',  # Onto Innovation — advanced packaging inspection/metrology; HBM + chiplet complexity = more inspection; picks-and-shovels for AI silicon
     'AMKR',  # Amkor Technology — OSAT advanced packaging + test; HBM stacking, chiplet assembly; lower margins (services model) may block universe
