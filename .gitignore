@@ -6,3 +6,4 @@ __pycache__/
 dashboard-env/
 venv/
 .DS_Store
+internal_*.py
