@@ -116,15 +116,17 @@ def get_fundamentals(ticker):
         # Valuation — prefer trailing P/E; fall back to forward P/E for high-growth where trailing is distorted
         _pe_raw           = info.get('trailingPE', None)
         _fwd_pe           = info.get('forwardPE', None)
+        import math
+        _pe_raw           = None if isinstance(_pe_raw, float) and math.isinf(_pe_raw) else _pe_raw
         pe                = None if not isinstance(_pe_raw, (int, float)) else _pe_raw
         pe_is_forward     = False
         if pe is None or pe > 100:
-            # Trailing P/E missing (pre-profit) or stretched (high-growth) — try forward P/E
-            _fwd_valid = isinstance(_fwd_pe, (int, float)) and 15 < _fwd_pe <= 500
+            # Trailing P/E missing/infinite (pre-profit) or stretched (high-growth) — try forward P/E
+            _fwd_valid = isinstance(_fwd_pe, (int, float)) and 5 < _fwd_pe <= 500
             if not _fwd_valid:
                 _price = info.get('currentPrice') or info.get('regularMarketPrice')
                 _fmp   = get_fmp_forward_pe(ticker, _price)
-                if _fmp is not None and _fmp > 15:
+                if _fmp is not None and _fmp > 5:
                     _fwd_pe    = _fmp
                     _fwd_valid = True
             if _fwd_valid:
