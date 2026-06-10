@@ -65,6 +65,7 @@ UNIVERSE = [
     'EQT',                        # EQT — largest US nat gas producer, Appalachia low-cost, vertically integrated; 57% OM, 50% RevG, D/EV 0.14; powers the structures
     'RRC',                        # Range Resources — Appalachia nat gas, D/EV 0.10, 44% OM, ROE 21%; clean balance sheet, powers the structures
     'CTRA',                       # Coterra Energy — nat gas + oil, D/EV 0.13, 28% OM, 23% NM; diversified Appalachia/Permian, powers the structures
+    'CF',                         # CF Industries — largest N. American ammonia/nitrogen producer; green ammonia pivot, D/EV 0.17, 34% OM, ROE 27%; foundation for structures, grades A
 ]
 
 # Future contenders — great businesses not yet qualifying, tracked separately
@@ -176,7 +177,7 @@ def passes_quality_filter(d):
 
     # Debt filter — the primary ask
     if d['debt_to_ev'] is None: return False
-    if d['debt_to_ev'] > 0.15: return False
+    if d['debt_to_ev'] > 0.20: return False
 
     # Profitability must be real
     if d['operating_margin'] is None or d['operating_margin'] < 10: return False
@@ -207,9 +208,9 @@ def failing_filters(d):
     if d is None: return [('No data', '—', '—')]
     fails = []
     if d['debt_to_ev'] is None:
-        fails.append(('Debt/EV', 'missing', '≤ 0.15'))
-    elif d['debt_to_ev'] > 0.15:
-        fails.append(('Debt/EV', f"{d['debt_to_ev']}", '≤ 0.15'))
+        fails.append(('Debt/EV', 'missing', '≤ 0.20'))
+    elif d['debt_to_ev'] > 0.20:
+        fails.append(('Debt/EV', f"{d['debt_to_ev']}", '≤ 0.20'))
     if d['operating_margin'] is None or d['operating_margin'] < 10:
         fails.append(('Op Margin', f"{d['operating_margin']}%" if d['operating_margin'] is not None else 'missing', '≥ 10%'))
     if d['net_margin'] is None or d['net_margin'] < 5:
@@ -383,7 +384,7 @@ def build_html(results, watchlist=None):
 <div class="criteria">
   <h2>Filter Criteria</h2>
   <div class="criteria-grid">
-    <div class="criteria-item">Debt/EV <span>≤ 0.15</span></div>
+    <div class="criteria-item">Debt/EV <span>≤ 0.20</span></div>
     <div class="criteria-item">Operating Margin <span>≥ 10%</span></div>
     <div class="criteria-item">Net Margin <span>≥ 5%</span></div>
     <div class="criteria-item">ROE <span>≥ 10%</span></div>
