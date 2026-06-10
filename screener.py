@@ -92,7 +92,7 @@ def get_fundamentals(ticker):
         _fwd_pe           = info.get('forwardPE', None)
         pe                = None if not isinstance(_pe_raw, (int, float)) else _pe_raw
         pe_is_forward     = False
-        if pe is not None and pe > 100 and isinstance(_fwd_pe, (int, float)) and _fwd_pe <= 100:
+        if pe is not None and pe > 100 and isinstance(_fwd_pe, (int, float)) and 15 < _fwd_pe <= 100:
             pe            = _fwd_pe
             pe_is_forward = True
         pb                = info.get('priceToBook', None)
