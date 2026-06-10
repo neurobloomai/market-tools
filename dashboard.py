@@ -60,7 +60,7 @@ TICKERS = [
     'SMH','IGV','WCLD',
     'BOTZ','QTUM','ARKQ',
     'IWM','IWR','TOPT',
-    'FCX','B','WPM',
+    'FCX','HBM','B','WPM',
 ]
 
 THEMES = {
@@ -68,7 +68,7 @@ THEMES = {
     'SMH':'Semis',       'IGV':'Software',     'WCLD':'Cloud',
     'BOTZ':'Robotics',   'QTUM':'Quantum',     'ARKQ':'Autonomous',
     'IWM':'SmallCap',    'IWR':'MidCap',       'TOPT':'Top20ETF',
-    'FCX':'Freeport',    'B':'Barrick Mining',  'WPM':'Wheaton Metals',
+    'FCX':'Freeport',    'HBM':'Hudbay Minerals', 'B':'Barrick Mining',  'WPM':'Wheaton Metals',
 }
 
 GROUPS = [
@@ -76,7 +76,7 @@ GROUPS = [
     ('STRUCTURAL — TECH',        ['SMH','IGV','WCLD']),
     ('SPECULATIVE / THEMATIC',   ['BOTZ','QTUM','ARKQ']),
     ('MARKET',                   ['IWM','IWR','TOPT']),
-    ('WATCHLIST — METALS',       ['FCX','B','WPM']),
+    ('WATCHLIST — METALS',       ['FCX','HBM','B','WPM']),
 ]
 
 # ANSI colors
