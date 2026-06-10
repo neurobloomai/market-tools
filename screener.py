@@ -242,20 +242,22 @@ def quality_grade(d):
     if is_financial:
         # Gross margin is meaningless for insurers/financials — use FCF yield twice instead
         if d['fcf_yield'] and d['fcf_yield'] >= 5: score += 1
-        if d['operating_margin'] and d['operating_margin'] >= 12: score += 1
+        if d['operating_margin'] and d['operating_margin'] >= 12: score += 2   # OM weighted x2
     elif is_services:
         # Consulting/labour-heavy — gross margin threshold lowered
         if d['gross_margin'] and d['gross_margin'] >= 30: score += 1
-        if d['operating_margin'] and d['operating_margin'] >= 15: score += 1
+        if d['operating_margin'] and d['operating_margin'] >= 15: score += 2   # OM weighted x2
     else:
         if d['gross_margin'] and d['gross_margin'] >= 60: score += 1
-        if d['operating_margin'] and d['operating_margin'] >= 20: score += 1
+        if d['operating_margin'] and d['operating_margin'] >= 20: score += 2   # OM weighted x2
 
     if d['net_margin'] and d['net_margin'] >= 15: score += 1
     if d['roe'] and d['roe'] >= 20: score += 1
     if d['fcf_yield'] and d['fcf_yield'] >= 3: score += 1
     if d['rev_growth'] and d['rev_growth'] >= 10: score += 1
 
+    # Max score: 9 (D/EV 2 + GM 1 + OM 2 + NM 1 + ROE 1 + FCF 1 + RevG 1)
+    # Thresholds unchanged — OM reweighting rewards strong OM, doesn't penalize rest
     if score >= 6: return 'A+'
     if score >= 4: return 'A'
     return 'B'
