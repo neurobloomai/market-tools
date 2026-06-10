@@ -61,6 +61,11 @@ WATCHLIST = [
     'ABBV',  # AbbVie — Allergan amortization masking strong cash earnings; FCF/Debt 28.5%, IC improving 6.3→7.8×, Skyrizi/Rinvoq replacing Humira
     'CIEN',  # Ciena — optical networking, AI datacenter interconnect tailwind; net margin 4.5% and ROE/P/E blocking, 33% rev growth
     'GFS',   # GlobalFoundries — specialty foundry (RF, automotive, IoT); 5/6 filters pass, ROE 6.8% only blocker (capital-heavy fab structure)
+    'SITM',  # SiTime — MEMS precision timing chips; near-monopoly, 65% gross margin, AI datacenter + 5G tailwind; cyclical recovery in progress
+    'MTSI',  # MACOM Technology — analog/mixed-signal for 800G/1.6T optical datacenter interconnects; margins expanding, AI connectivity angle
+    'LSCC',  # Lattice Semiconductor — low-power FPGAs, 60%+ gross margin, zero debt; AI edge + industrial; cyclical trough recovery
+    'ONTO',  # Onto Innovation — advanced packaging inspection/metrology; HBM + chiplet complexity = more inspection; picks-and-shovels for AI silicon
+    'AMKR',  # Amkor Technology — OSAT advanced packaging + test; HBM stacking, chiplet assembly; lower margins (services model) may block universe
 ]
 
 def get_fundamentals(ticker):
@@ -82,15 +87,18 @@ def get_fundamentals(ticker):
         roe               = info.get('returnOnEquity', None)
         roa               = info.get('returnOnAssets', None)
 
-        # Valuation
+        # Valuation — prefer trailing P/E; fall back to forward P/E for high-growth where trailing is distorted
         _pe_raw           = info.get('trailingPE', None)
+        _fwd_pe           = info.get('forwardPE', None)
         pe                = None if not isinstance(_pe_raw, (int, float)) else _pe_raw
+        if pe is not None and pe > 100 and isinstance(_fwd_pe, (int, float)) and _fwd_pe <= 100:
+            pe = _fwd_pe  # trailing distorted by growth investment; use forward
         pb                = info.get('priceToBook', None)
 
         # FCF
         fcf               = info.get('freeCashflow', None)
         market_cap        = info.get('marketCap', 1) or 1
-        fcf_yield         = (fcf / market_cap * 100) if fcf and market_cap else None
+        fcf_yield         = (fcf / market_cap * 100) if fcf is not None and market_cap else None
 
         # Revenue growth
         rev_growth        = info.get('revenueGrowth', None)
@@ -133,8 +141,15 @@ def passes_quality_filter(d):
     roa_ok = d['roa'] is not None and d['roa'] >= 15
     if not roe_ok and not roa_ok: return False
 
-    # FCF positive
-    if d['fcf_yield'] is None or d['fcf_yield'] < 0: return False
+    # FCF positive — if yfinance has no FCF data but net margin is strong and growth is high,
+    # treat as pass (data gap, not negative FCF)
+    if d['fcf_yield'] is None:
+        high_growth = d['rev_growth'] is not None and d['rev_growth'] >= 50
+        strong_margin = d['net_margin'] is not None and d['net_margin'] >= 10
+        if not (high_growth and strong_margin):
+            return False
+    elif d['fcf_yield'] < 0:
+        return False
 
     # Valuation sanity check — stretched P/E rarely ends well
     if d['pe'] is not None and d['pe'] > 100: return False
@@ -157,8 +172,13 @@ def failing_filters(d):
     roa_ok = d['roa'] is not None and d['roa'] >= 15
     if not roe_ok and not roa_ok:
         fails.append(('ROE/ROA', f"ROE {d['roe']}% / ROA {d['roa']}%", '≥ 10% / ≥ 15%'))
-    if d['fcf_yield'] is None or d['fcf_yield'] < 0:
-        fails.append(('FCF Yield', f"{d['fcf_yield']}%" if d['fcf_yield'] is not None else 'missing', '> 0%'))
+    if d['fcf_yield'] is None:
+        high_growth = d['rev_growth'] is not None and d['rev_growth'] >= 50
+        strong_margin = d['net_margin'] is not None and d['net_margin'] >= 10
+        if not (high_growth and strong_margin):
+            fails.append(('FCF Yield', 'missing (no data relief)', '> 0% or rev>50%+margin>10%'))
+    elif d['fcf_yield'] < 0:
+        fails.append(('FCF Yield', f"{d['fcf_yield']}%", '> 0%'))
     if d['pe'] is not None and d['pe'] > 100:
         fails.append(('P/E', f"{d['pe']}x", '≤ 100x'))
     return fails if fails else [('Passes all filters', '—', '—')]
