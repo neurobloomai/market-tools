@@ -9,10 +9,35 @@ Disclaimer: For informational purposes only. Not financial advice.
 """
 
 import yfinance as yf
-import warnings, os, webbrowser
-from datetime import datetime
+import warnings, os, webbrowser, requests
+from datetime import datetime, date
 from concurrent.futures import ThreadPoolExecutor
 warnings.filterwarnings('ignore')
+
+FMP_API_KEY = os.environ.get('FMP_API_KEY', '')
+
+def get_fmp_forward_pe(ticker, price):
+    """FMP fallback for forward P/E — only called when yfinance returns implausible data."""
+    if not FMP_API_KEY or not price:
+        return None
+    try:
+        url = f"https://financialmodelingprep.com/api/v3/analyst-estimates/{ticker}?apikey={FMP_API_KEY}"
+        resp = requests.get(url, timeout=5)
+        if resp.status_code != 200:
+            return None
+        data = resp.json()
+        if not data or not isinstance(data, list):
+            return None
+        today = date.today().isoformat()
+        future = [e for e in data if e.get('date', '') > today]
+        if not future:
+            return None
+        eps = future[0].get('estimatedEpsAvg')
+        if not eps or eps <= 0:
+            return None
+        return round(price / eps, 1)
+    except Exception:
+        return None
 
 # Broad universe — S&P 500 quality names worth screening
 UNIVERSE = [
@@ -92,9 +117,18 @@ def get_fundamentals(ticker):
         _fwd_pe           = info.get('forwardPE', None)
         pe                = None if not isinstance(_pe_raw, (int, float)) else _pe_raw
         pe_is_forward     = False
-        if pe is not None and pe > 100 and isinstance(_fwd_pe, (int, float)) and 15 < _fwd_pe <= 100:
-            pe            = _fwd_pe
-            pe_is_forward = True
+        if pe is not None and pe > 100:
+            # Validate yfinance forward P/E; if implausible, try FMP
+            _fwd_valid = isinstance(_fwd_pe, (int, float)) and 15 < _fwd_pe <= 100
+            if not _fwd_valid:
+                _price = info.get('currentPrice') or info.get('regularMarketPrice')
+                _fmp   = get_fmp_forward_pe(ticker, _price)
+                if _fmp is not None and 15 < _fmp <= 100:
+                    _fwd_pe    = _fmp
+                    _fwd_valid = True
+            if _fwd_valid:
+                pe            = _fwd_pe
+                pe_is_forward = True
         pb                = info.get('priceToBook', None)
 
         # FCF
