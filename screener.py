@@ -118,13 +118,13 @@ def get_fundamentals(ticker):
         _fwd_pe           = info.get('forwardPE', None)
         pe                = None if not isinstance(_pe_raw, (int, float)) else _pe_raw
         pe_is_forward     = False
-        if pe is not None and pe > 100:
-            # Validate yfinance forward P/E; if implausible, try FMP
-            _fwd_valid = isinstance(_fwd_pe, (int, float)) and 15 < _fwd_pe <= 100
+        if pe is None or pe > 100:
+            # Trailing P/E missing (pre-profit) or stretched (high-growth) — try forward P/E
+            _fwd_valid = isinstance(_fwd_pe, (int, float)) and 15 < _fwd_pe <= 500
             if not _fwd_valid:
                 _price = info.get('currentPrice') or info.get('regularMarketPrice')
                 _fmp   = get_fmp_forward_pe(ticker, _price)
-                if _fmp is not None and 15 < _fmp <= 100:
+                if _fmp is not None and _fmp > 15:
                     _fwd_pe    = _fmp
                     _fwd_valid = True
             if _fwd_valid:
