@@ -91,8 +91,10 @@ def get_fundamentals(ticker):
         _pe_raw           = info.get('trailingPE', None)
         _fwd_pe           = info.get('forwardPE', None)
         pe                = None if not isinstance(_pe_raw, (int, float)) else _pe_raw
+        pe_is_forward     = False
         if pe is not None and pe > 100 and isinstance(_fwd_pe, (int, float)) and _fwd_pe <= 100:
-            pe = _fwd_pe  # trailing distorted by growth investment; use forward
+            pe            = _fwd_pe
+            pe_is_forward = True
         pb                = info.get('priceToBook', None)
 
         # FCF
@@ -116,6 +118,7 @@ def get_fundamentals(ticker):
             roe             = round(roe * 100, 1) if roe is not None else None,
             roa             = round(roa * 100, 1) if roa is not None else None,
             pe              = round(pe, 1) if pe is not None else None,
+            pe_is_forward   = pe_is_forward,
             pb              = round(pb, 1) if pb is not None else None,
             fcf_yield       = round(fcf_yield, 1) if fcf_yield is not None else None,
             rev_growth      = round(rev_growth * 100, 1) if rev_growth is not None else None,
@@ -258,7 +261,7 @@ def build_watchlist_rows(watchlist):
           <td>{pct_color(d['roe'], 10)}</td>
           <td>{pct_color(d['fcf_yield'], 0)}</td>
           <td>{pct_color(d['rev_growth'], 10)}</td>
-          <td style="color:#e6edf3">{fmt(d['pe'], 'x')}</td>
+          <td style="color:#e6edf3">{fmt(d['pe'], 'x')}{'<span style="font-size:9px;color:#8b949e">f</span>' if d.get('pe_is_forward') else ''}</td>
           <td style="font-size:11px">{blockers}</td>
         </tr>"""
     return rows
@@ -285,7 +288,7 @@ def build_html(results, watchlist=None):
           <td>{pct_color(d['roe'], 15)}</td>
           <td>{pct_color(d['fcf_yield'], 2)}</td>
           <td>{pct_color(d['rev_growth'], 5)}</td>
-          <td>{fmt(d['pe'], 'x')}</td>
+          <td>{fmt(d['pe'], 'x')}{'<span style="font-size:9px;color:#8b949e">f</span>' if d.get('pe_is_forward') else ''}</td>
         </tr>"""
 
     aplus = sum(1 for d in results if d['grade'] == 'A+')
