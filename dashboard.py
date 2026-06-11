@@ -392,7 +392,8 @@ def print_dashboard(data, is_open, status_msg, yld=None):
 if __name__ == '__main__':
     import sys
     is_open, status_msg = market_status()
-    force = '--refresh' in sys.argv
+    force   = '--refresh' in sys.argv
+    browser = '--browser' in sys.argv
     cache = {} if force else load_cache()
     if cache:
         age = int((time.time() - cache['_ts']) / 60)
@@ -418,4 +419,5 @@ if __name__ == '__main__':
     with open(path, 'w') as f:
         f.write(build_html(data, is_open, status_msg, yld))
     print(f"  Saved → {path}")
-    webbrowser.open(f'file://{path}')
+    if browser:
+        webbrowser.open(f'file://{path}')
