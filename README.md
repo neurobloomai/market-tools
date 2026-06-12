@@ -23,6 +23,7 @@ pip install yfinance
 # US dashboard
 python dashboard.py
 python dashboard.py --refresh   # force fresh data
+python dashboard.py --refresh --browser   # for browser rendering
 
 # India dashboard  
 python india_dashboard.py
