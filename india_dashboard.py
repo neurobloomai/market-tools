@@ -349,8 +349,9 @@ def print_dashboard(data, is_open, status_msg):
 if __name__ == '__main__':
     import sys
     is_open, status_msg = market_status()
-    force = '--refresh' in sys.argv
-    cache = {} if force else load_cache()
+    force   = '--refresh' in sys.argv
+    browser = '--browser' in sys.argv
+    cache   = {} if force else load_cache()
     if cache:
         age = int((time.time() - cache['_ts']) / 60)
         print(f"\n  Using cached data ({age}m old) — run with --refresh to force update")
@@ -374,4 +375,5 @@ if __name__ == '__main__':
     with open(path, 'w') as f:
         f.write(build_html(data, is_open, status_msg))
     print(f"  Saved → {path}")
-    webbrowser.open(f'file://{path}')
+    if browser:
+        webbrowser.open(f'file://{path}')

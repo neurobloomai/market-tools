@@ -10,7 +10,7 @@ Disclaimer: For informational purposes only. Not financial advice.
 """
 
 import yfinance as yf
-import warnings, os, webbrowser
+import warnings, os, webbrowser, math
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
 warnings.filterwarnings('ignore')
@@ -33,10 +33,10 @@ UNIVERSE = [
     'HAL.NS','BEL.NS','MTARTECH.NS','DATAPATTNS.NS','PARAS.NS',
 
     # Electronics Manufacturing — PLI beneficiaries
-    'DIXON.NS','KAYNES.NS',
+    # DIXON and KAYNES moved to watchlist — EMS margin model and capex phase respectively
 
     # Auto & Components
-    'BAJAJ-AUTO.NS','EICHERMOT.NS','BHARATFORG.NS','MOTHERSUMI.NS',
+    'BAJAJ-AUTO.NS','EICHERMOT.NS','FORCEMOT.NS','BHARATFORG.NS','MOTHERSUMI.NS',
     'BALKRISIND.NS','TIINDIA.NS',
 
     # Energy & Power Transition
@@ -44,32 +44,32 @@ UNIVERSE = [
     'WAAREEENER.NS',
 
     # Specialty Chemicals — China+1 beneficiary
-    'SRF.NS','NAVINFLUOR.NS','AARTIIND.NS','DEEPAKNTR.NS','PIIND.NS',
+    'SRF.NS','NAVINFLUOR.NS','VINATIORGA.NS','AARTIIND.NS','DEEPAKNTR.NS','PIIND.NS',
 
-    # Pharma & CDMO
+    # Pharma, CDMO & Diagnostics
     'SUNPHARMA.NS','DIVISLAB.NS','CIPLA.NS','DRREDDY.NS','LAURUSLABS.NS',
-    'AUROPHARMA.NS','MANKIND.NS',
+    'AUROPHARMA.NS','MANKIND.NS','LALPATHLAB.NS',
 
-    # IT Services
+    # IT Services & Engineering R&D
     'TCS.NS','INFY.NS','HCLTECH.NS','WIPRO.NS','PERSISTENT.NS',
-    'COFORGE.NS','MPHASIS.NS',
+    'COFORGE.NS','MPHASIS.NS','TATAELXSI.NS','LTTS.NS',
 
-    # Financials
+    # Financials & Asset Management
     'HDFCBANK.NS','ICICIBANK.NS','BAJFINANCE.NS','KOTAKBANK.NS',
-    'SBIN.NS','CHOLAFIN.NS','MUTHOOTFIN.NS',
+    'SBIN.NS','CHOLAFIN.NS','MUTHOOTFIN.NS','HDFCAMC.NS',
 
     # Consumer & FMCG
     'HINDUNILVR.NS','NESTLEIND.NS','BRITANNIA.NS','DABUR.NS','MARICO.NS',
     'TITAN.NS','PAGEIND.NS','TATACONSUM.NS',
 
     # Infrastructure & Logistics
-    'ADANIPORTS.NS','CONCOR.NS',
+    'ADANIPORTS.NS','CONCOR.NS','IRCTC.NS',
 
     # Capital Markets & Wealth — India's affluence theme
     'CDSL.NS','BSE.NS','360ONE.NS',
 
     # Retail — aspirational consumption
-    'TRENT.NS',
+    'TRENT.NS','DMART.NS',
 ]
 
 # Watchlist — high quality but not yet qualifying
@@ -78,12 +78,16 @@ WATCHLIST = [
     'NYKAA.NS',       # profitability still building
     'POLICYBZR.NS',   # high growth, early stage
     'DELHIVERY.NS',   # logistics, margins building
-    'IRCTC.NS',       # monopoly but valuation often stretched
+    # IRCTC.NS promoted to universe — OM 26%, NM 27%, ROE 35%, P/E 30x
     'ADANIENT.NS',    # conglomerate, debt heavy
     'ARE&M.NS',       # Amara Raja Energy — Op margin just under threshold, clean balance sheet
     'ADANIGREEN.NS',  # Adani Green — heavy capex, debt, P/E stretched but 57% op margin
     'SWIGGY.NS',      # Swiggy — food delivery, profitability inflecting, duopoly with Zomato
     'IXIGO.NS',       # ixigo — travel-tech, recently listed, margins building
+    'OLAELEC.NS',     # Ola Electric — EV two-wheeler, high growth, deeply loss-making, margins inflecting
+    'DIXON.NS',       # Dixon Technologies — EMS/contract manufacturing, ROE 37% but OM ~3% by design (assembler model)
+    'KAYNES.NS',      # Kaynes Technology — defense/semi electronics, OM 11% but FCF -10% (heavy capex ramp) + ROE just under threshold
+    'APOLLOHOSP.NS',  # Apollo Hospitals — healthcare brand growing well, FCF inconsistent due to hospital capex
 ]
 
 def get_fundamentals(ticker):
@@ -104,6 +108,7 @@ def get_fundamentals(ticker):
         roa              = info.get('returnOnAssets', None)
 
         _pe_raw          = info.get('trailingPE', None)
+        _pe_raw          = None if isinstance(_pe_raw, float) and math.isinf(_pe_raw) else _pe_raw
         pe               = None if not isinstance(_pe_raw, (int, float)) else _pe_raw
         pb               = info.get('priceToBook', None)
 
@@ -135,34 +140,65 @@ def get_fundamentals(ticker):
 
 def passes_quality_filter(d):
     if d is None: return False
-    if d['debt_to_ev'] is None: return False
-    if d['debt_to_ev'] > 0.20: return False          # slightly wider for India — capital-intensive sectors
-    if d['operating_margin'] is None or d['operating_margin'] < 8: return False   # 8% vs 10% for US
+    sector = d.get('sector', '')
+    is_financial = 'Financial' in sector
+
+    if not is_financial:
+        # D/EV not meaningful for banks/NBFCs — they borrow to lend by design
+        if d['debt_to_ev'] is None: return False
+        if d['debt_to_ev'] > 0.20: return False
+
+    if d['operating_margin'] is None or d['operating_margin'] < 8: return False
     if d['net_margin'] is None or d['net_margin'] < 5: return False
+
     roe_ok = d['roe'] is not None and d['roe'] >= 10
     roa_ok = d['roa'] is not None and d['roa'] >= 10
     if not roe_ok and not roa_ok: return False
-    if d['fcf_yield'] is None or d['fcf_yield'] < 0: return False
-    if d['pe'] is not None and d['pe'] > 80: return False   # Indian market P/E tends to be lower
+
+    if is_financial:
+        # ROE ≥ 15% replaces FCF as quality gate for banks/NBFCs
+        if d['roe'] is None or d['roe'] < 15: return False
+    else:
+        if d['fcf_yield'] is None:
+            high_growth   = d['rev_growth'] is not None and d['rev_growth'] >= 50
+            strong_margin = d['net_margin'] is not None and d['net_margin'] >= 10
+            if not (high_growth and strong_margin):
+                return False
+        elif d['fcf_yield'] < 0:
+            return False
+
+    if d['pe'] is not None and d['pe'] > 80: return False
     return True
 
 def failing_filters(d):
     if d is None: return [('No data', '—', '—')]
+    sector = d.get('sector', '')
+    is_financial = 'Financial' in sector
     fails = []
-    if d['debt_to_ev'] is None:
-        fails.append(('Debt/EV', 'missing', '≤ 0.20'))
-    elif d['debt_to_ev'] > 0.20:
-        fails.append(('Debt/EV', f"{d['debt_to_ev']}", '≤ 0.20'))
+
+    if not is_financial:
+        if d['debt_to_ev'] is None:
+            fails.append(('Debt/EV', 'missing', '≤ 0.20'))
+        elif d['debt_to_ev'] > 0.20:
+            fails.append(('Debt/EV', f"{d['debt_to_ev']}", '≤ 0.20'))
+
     if d['operating_margin'] is None or d['operating_margin'] < 8:
         fails.append(('Op Margin', f"{d['operating_margin']}%" if d['operating_margin'] is not None else 'missing', '≥ 8%'))
     if d['net_margin'] is None or d['net_margin'] < 5:
         fails.append(('Net Margin', f"{d['net_margin']}%" if d['net_margin'] is not None else 'missing', '≥ 5%'))
+
     roe_ok = d['roe'] is not None and d['roe'] >= 10
     roa_ok = d['roa'] is not None and d['roa'] >= 10
     if not roe_ok and not roa_ok:
         fails.append(('ROE/ROA', f"ROE {d['roe']}% / ROA {d['roa']}%", '≥ 10%'))
-    if d['fcf_yield'] is None or d['fcf_yield'] < 0:
-        fails.append(('FCF Yield', f"{d['fcf_yield']}%" if d['fcf_yield'] is not None else 'missing', '> 0%'))
+
+    if is_financial:
+        if d['roe'] is None or d['roe'] < 15:
+            fails.append(('ROE (financial)', f"{d['roe']}%" if d['roe'] is not None else 'missing', '≥ 15%'))
+    else:
+        if d['fcf_yield'] is None or d['fcf_yield'] < 0:
+            fails.append(('FCF Yield', f"{d['fcf_yield']}%" if d['fcf_yield'] is not None else 'missing', '> 0%'))
+
     if d['pe'] is not None and d['pe'] > 80:
         fails.append(('P/E', f"{d['pe']}x", '≤ 80x'))
     return fails if fails else [('Passes all filters', '—', '—')]
@@ -178,13 +214,13 @@ def quality_grade(d):
 
     if is_financial:
         if d['roe'] and d['roe'] >= 15: score += 2
-        if d['operating_margin'] and d['operating_margin'] >= 10: score += 1
+        if d['operating_margin'] and d['operating_margin'] >= 10: score += 2
     elif is_it:
         if d['gross_margin'] and d['gross_margin'] >= 30: score += 1
-        if d['operating_margin'] and d['operating_margin'] >= 20: score += 1
+        if d['operating_margin'] and d['operating_margin'] >= 20: score += 2
     else:
         if d['gross_margin'] and d['gross_margin'] >= 40: score += 1
-        if d['operating_margin'] and d['operating_margin'] >= 15: score += 1
+        if d['operating_margin'] and d['operating_margin'] >= 15: score += 2
 
     if d['net_margin'] and d['net_margin'] >= 12: score += 1
     if d['roe'] and d['roe'] >= 18: score += 1

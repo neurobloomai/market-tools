@@ -21,13 +21,14 @@ pip install yfinance
 
 ```bash
 # US dashboard
-python dashboard.py
-python dashboard.py --refresh   # force fresh data
-python dashboard.py --refresh --browser   # for browser rendering
+python dashboard.py                        # CLI only
+python dashboard.py --refresh              # force fresh data
+python dashboard.py --refresh --browser    # refresh + open in browser
 
-# India dashboard  
+# India dashboard
 python india_dashboard.py
 python india_dashboard.py --refresh
+python india_dashboard.py --refresh --browser
 
 # US screener
 python screener.py
@@ -36,9 +37,24 @@ python screener.py
 python india_screener.py
 ```
 
-Both dashboards output a CLI table and save an HTML file locally.
+Both dashboards output a CLI table and save an HTML file locally (`~/market_briefing.html` and `~/india_briefing.html`). Browser launch is opt-in via `--browser`.
 
-## Signals
+## Screener — Quality Filters
+
+### US (`screener.py`)
+- Debt/EV ≤ 0.20 · Operating margin ≥ 10% · Net margin ≥ 5%
+- ROE ≥ 10% · FCF yield ≥ 0% · P/E ≤ 100x (forward P/E used as fallback)
+- FCF gap relief: None allowed when rev growth ≥ 50% AND net margin ≥ 10%
+- Grading: A+ ≥ 6pts · A ≥ 4pts · OM weighted at 2pts (primary signal)
+
+### India (`india_screener.py`)
+- Debt/EV ≤ 0.20 · Operating margin ≥ 8% · Net margin ≥ 5%
+- ROE or ROA ≥ 10% · FCF yield ≥ 0% · P/E ≤ 80x
+- FCF gap relief: None allowed when rev growth ≥ 50% AND net margin ≥ 10%
+- Grading: A+ ≥ 6pts · A ≥ 4pts · OM weighted at 2pts (primary signal)
+- Sector-aware thresholds for Financials and IT
+
+## Dashboard Signals
 
 - **ALIGNED** — price above all 4 MAs (50D, 20W, 10M, 20M)
 - **PULLBACK** — above long-term MAs, below short-term (potential entry)

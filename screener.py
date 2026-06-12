@@ -67,11 +67,12 @@ UNIVERSE = [
     'CTRA',                       # Coterra Energy — nat gas + oil, D/EV 0.13, 28% OM, 23% NM; diversified Appalachia/Permian, powers the structures
     'CF',                         # CF Industries — largest N. American ammonia/nitrogen producer; green ammonia pivot, D/EV 0.17, 34% OM, ROE 27%; foundation for structures, grades A
     'ETN',                        # Eaton Corp — electrical switchgear, circuit breakers, power distribution; sits above PWR in grid value chain, 16% OM, 14% NM, ROE 21%, D/EV 0.12
+    'ALAB',                       # Astera Labs — AI datacenter connectivity (PCIe/CXL retimers), 68% gross/35% op margin, zero debt, 200%+ rev growth, A+; promoted from watchlist
 ]
 
 # Future contenders — great businesses not yet qualifying, tracked separately
 WATCHLIST = [
-    'PLTR','ALAB','AXON','MELI','ARM','SNOW','BILL',   # CRWD removed — already in universe
+    'PLTR','AXON','MELI','ARM','SNOW','BILL',   # ALAB promoted to universe; CRWD removed — already in universe
     'MDB','NET','HUBS','TEAM','MKC','DPZ','GEV','CEG',
     'NEE',   # NextEra — utility debt heavy; clean energy moat, Dominion merger / long-term value
     'NRG',   # NRG Energy — de-lever play; LS Power acq doubled fleet+debt, targeting 3x net leverage, Fwd P/E 11x, yield-sensitive re-rate when 10yr < 4.0%
@@ -97,7 +98,6 @@ WATCHLIST = [
     'GFS',   # GlobalFoundries — specialty foundry (RF, automotive, IoT); 5/6 filters pass, ROE 6.8% only blocker (capital-heavy fab structure)
     'PWR',   # Quanta Services — dominant grid/electrical infrastructure contractor; OM 4% blocks now, watch for 7-8% as AI datacenter + grid modernization drives project mix higher
     'SITM',  # SiTime — MEMS precision timing chips; near-monopoly, 65% gross margin, AI datacenter + 5G tailwind; cyclical recovery in progress
-    'MTSI',  # MACOM Technology — promoted to universe; analog/mixed-signal optical, grades A, watch for A+ as op margin crosses 20%
     'LSCC',  # Lattice Semiconductor — low-power FPGAs, 60%+ gross margin, zero debt; AI edge + industrial; cyclical trough recovery
     'ONTO',  # Onto Innovation — advanced packaging inspection/metrology; HBM + chiplet complexity = more inspection; picks-and-shovels for AI silicon
     'AMKR',  # Amkor Technology — OSAT advanced packaging + test; HBM stacking, chiplet assembly; lower margins (services model) may block universe
