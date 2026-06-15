@@ -8,4 +8,5 @@ venv/
 .DS_Store
 internal_*.py
 schwab_client.py
+schwab_auth.py
 .schwab_token.json
