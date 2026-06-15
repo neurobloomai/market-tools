@@ -53,7 +53,7 @@ UNIVERSE = [
     'ROL','CTAS','CPRT','ADP','PAYX','EFX','TRI','IHS','VRSK','IT',
     'MU','MPWR','MRVL','ITW','ROP','SYK','BSX','AMZN','APP',
     'MTD','MANH','FAST','MNST','POOL','NVR','DOCS','MKTX','ACGL',
-    'CHD','CL','HSY','TJX','GIS','NFLX','LULU','WSM','KMB','VRTX',
+    'CHD','CL','HSY','TJX','GIS','NFLX','LULU','WSM','KMB','VRTX','DECK',
     'HWM','FSLR','DUOL','PLAB',   # promoted from watchlist — pass all quality filters
     'WPM',                        # Wheaton Precious Metals — streaming model, 85% gross/65% net margin, zero debt, A+
     'VRSN',                       # VeriSign — .com/.net registry monopoly, 88% gross/68% op margin, ROE distorted by buybacks (ROA 52%), toll collector
