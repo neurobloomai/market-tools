@@ -7,3 +7,5 @@ dashboard-env/
 venv/
 .DS_Store
 internal_*.py
+schwab_client.py
+.schwab_token.json
