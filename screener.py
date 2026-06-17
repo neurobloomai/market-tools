@@ -120,6 +120,7 @@ WATCHLIST = [
     'TOST',  # Toast — restaurant POS/payments platform; ROE 22.5%, FCF 4%, rev growth 21.9%, near-zero debt; OM 6.7% + NM 6.4% blocking; grades A, 0/4 MA; strong switching costs, margins scaling
     'FIG',   # Figma — design collaboration SaaS; 79.8% gross margin, FCF 8.6%, 46.1% rev growth; OM -41.2% post-IPO investment spend blocking; grades A, 0/4 MA; Adobe tried $20B acquisition, IPO'd at $9.5B — quality business finding its level
     'KLAR',  # Klarna — BNPL/payments platform; 44.4% rev growth; OM 1.7%, FCF -23.8%, D/EV 0.391 blocking; grades B, 2/4 MA; credit cycle risk inherent to BNPL model, watch margin inflection
+    'UPST',  # Upstart — AI-powered lending platform; 82.7% gross margin, 44.6% rev growth, OM 0.9% (just turning); FCF -10.1% + D/EV 0.431 (converts) + ROA 1.8% blocking; grades B, 2/4 MA; platform gross margin story, watch FCF inflection
 ]
 
 def get_fundamentals(ticker):
