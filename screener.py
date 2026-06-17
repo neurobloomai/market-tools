@@ -75,7 +75,8 @@ UNIVERSE = [
     'UBER',                       # Uber — rideshare + delivery marketplace; 14.6% OM, 15.9% NM, ROE 35%, D/EV 0.08, FCF 4.4%; platform flywheel, grades A
     'ABNB',                       # Airbnb — asset-light home-sharing marketplace; NM 19.9%, ROE 32%, D/EV 0.037, FCF solid; yfinance OM distorted by SBC/charges (true OM ~12-13%), quality real
     'ANET',                       # Arista Networks — AI/cloud datacenter networking switches; 42.7% OM, 38.3% NM, ROE 31.5%, zero debt, 35% rev growth, A+; already 4/4 weekly MA aligned at add time
-    'SCHW',                       # Charles Schwab — brokerage/custody platform; 49.4% OM, 38% NM, ROE 19.1%, 15.8% rev growth; D/EV 0.465 + ROA 2% fail filter (structural brokerage model, not deterioration); grades A on true business quality
+    'SCHW',                       # Charles Schwab — brokerage/custody platform; 49.4% OM, 38% NM, ROE 19.1%, 15.8% rev growth; D/EV 0.465 + FCF None fail filter (structural brokerage model, not deterioration); grades A on true business quality
+    'IBKR',                       # Interactive Brokers — electronic brokerage; 76.8% OM, 93% gross, ROE 23.6%, 16.8% rev growth, net cash position (D/EV -0.922); FCF None only blocker (yfinance doesn't report for brokerages); grades A+, 4/4 MA aligned at add time
     'KRYS',                       # Krystal Biotech — gene therapy dermatology (B-VEC for RDEB); 94.2% gross/46.1% OM/53.9% NM, near-zero debt, 31.9% rev growth, A+; 4/4 MA aligned at add time
     'NBIX',                       # Neurocrine Biosciences — CNS/endocrine specialist (Ingrezza); 22.8% OM, 21.6% NM, ROE 22.5%, FCF 3.8%, 42.2% rev growth, A+; 4/4 MA aligned at add time
 ]
@@ -210,12 +211,15 @@ def passes_quality_filter(d):
     roa_ok = d['roa'] is not None and d['roa'] >= 15
     if not roe_ok and not roa_ok: return False
 
-    # FCF positive — if yfinance has no FCF data but net margin is strong and growth is high,
-    # treat as pass (data gap, not negative FCF)
+    # FCF positive — if yfinance has no FCF data, allow pass if:
+    # (a) high-growth SaaS: rev_growth ≥ 50% + NM ≥ 10%, or
+    # (b) strong-margin business (financial services, etc.): NM ≥ 15%
+    #     yfinance doesn't report FCF for brokerages/banks — data gap, not negative FCF
     if d['fcf_yield'] is None:
-        high_growth = d['rev_growth'] is not None and d['rev_growth'] >= 50
-        strong_margin = d['net_margin'] is not None and d['net_margin'] >= 10
-        if not (high_growth and strong_margin):
+        high_growth_saas = (d['rev_growth'] is not None and d['rev_growth'] >= 50
+                            and d['net_margin'] is not None and d['net_margin'] >= 10)
+        strong_margin    = d['net_margin'] is not None and d['net_margin'] >= 15
+        if not (high_growth_saas or strong_margin):
             return False
     elif d['fcf_yield'] < 0:
         return False
