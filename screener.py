@@ -116,6 +116,7 @@ WATCHLIST = [
     'LSCC',  # Lattice Semiconductor — low-power FPGAs, 60%+ gross margin, zero debt; AI edge + industrial; cyclical trough recovery
     'ONTO',  # Onto Innovation — advanced packaging inspection/metrology; HBM + chiplet complexity = more inspection; picks-and-shovels for AI silicon
     'AMKR',  # Amkor Technology — OSAT advanced packaging + test; HBM stacking, chiplet assembly; lower margins (services model) may block universe
+    'MOD',   # Modine Manufacturing — AI datacenter thermal/cooling (heat exchangers); 47.5% rev growth, D/EV 0.037; NM 3.8% + FCF -0.7% + ROE/ROA below threshold blocking; grades B, 4/4 MA aligned at add time
 ]
 
 def get_fundamentals(ticker):
