@@ -451,7 +451,7 @@ if __name__ == '__main__':
     passed = [d for d in raw if passes_quality_filter(d)]
     for d in passed:
         d['grade'] = quality_grade(d)
-    passed.sort(key=lambda x: (0 if x['grade']=='A+' else 1 if x['grade']=='A' else 2, x['debt_to_ev'] or 1))
+    passed.sort(key=lambda x: (0 if x['grade']=='A+' else 1 if x['grade']=='A' else 2, -(x['market_cap_b'] or 0)))
 
     print(f"  ✅  {len(passed)} companies passed filters")
     print(f"\n  Fetching {len(WATCHLIST)} watchlist contenders ...", flush=True)
@@ -459,6 +459,7 @@ if __name__ == '__main__':
     with ThreadPoolExecutor(max_workers=10) as ex:
         watch_raw = list(ex.map(get_fundamentals, WATCHLIST))
     watch_raw = [d for d in watch_raw if d is not None]
+    watch_raw.sort(key=lambda x: -(x['market_cap_b'] or 0))
 
     print(f"  👀  {len(watch_raw)} watchlist entries fetched\n")
 
