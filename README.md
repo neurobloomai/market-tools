@@ -64,7 +64,7 @@ Volume shown as `x(C)` = closed-day vs 20-day avg · `x(P)` = partial intraday
 
 ## A Personal Note
 
-I never had success with markets or a successful track record. I never made $100k or a million from trading. These frameworks were built through failures and learnings — not victories.
+I never had success with markets or a successful track record. I never made $100k or a million from trading so far in my life. These frameworks were built through failures and learnings — not victories.
 
 They might provide insights, or they might not. They are not tailored advice or suggestions for anyone. They are simply one person's attempt to build a framework for understanding a few themes in the market — quality, structure, momentum, and discipline.
 
