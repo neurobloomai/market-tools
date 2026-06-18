@@ -164,6 +164,14 @@ def get_fundamentals(ticker):
             if _fwd_valid:
                 pe            = _fwd_pe
                 pe_is_forward = True
+        # For display: if trailing PE is 50-100 and yfinance has no forwardPE, try FMP as fallback
+        if pe is not None and pe > 50 and not pe_is_forward:
+            _fwd_valid2 = isinstance(_fwd_pe, (int, float)) and 5 < _fwd_pe <= 500
+            if not _fwd_valid2:
+                _price = info.get('currentPrice') or info.get('regularMarketPrice')
+                _fmp2  = get_fmp_forward_pe(ticker, _price)
+                if _fmp2 is not None and _fmp2 > 5:
+                    _fwd_pe = _fmp2
         pb                = info.get('priceToBook', None)
 
         # FCF
