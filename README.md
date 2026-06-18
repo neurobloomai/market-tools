@@ -62,6 +62,14 @@ Both dashboards output a CLI table and save an HTML file locally (`~/market_brie
 
 Volume shown as `x(C)` = closed-day vs 20-day avg · `x(P)` = partial intraday
 
+## A Personal Note
+
+I never had success with markets or a successful track record. I never made $100k or a million from trading. These frameworks were built through failures and learnings — not victories.
+
+They might provide insights, or they might not. They are not tailored advice or suggestions for anyone. They are simply one person's attempt to build a framework for understanding a few themes in the market — quality, structure, momentum, and discipline.
+
+I never found the holy grail. I could never fully resolve the puzzles of the market. I had only learnings. That is what this repository is: a record of those learnings, shared openly in case they are useful to someone else on the same journey.
+
 ## Disclaimer
 
 For informational purposes only. Not financial advice.
