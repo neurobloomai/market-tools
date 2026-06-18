@@ -188,6 +188,7 @@ def get_fundamentals(ticker):
             roa             = round(roa * 100, 1) if roa is not None else None,
             pe              = round(pe, 1) if pe is not None else None,
             pe_is_forward   = pe_is_forward,
+            fwd_pe          = round(_fwd_pe, 1) if isinstance(_fwd_pe, (int, float)) and not math.isinf(_fwd_pe) and 5 < _fwd_pe <= 500 else None,
             pb              = round(pb, 1) if pb is not None else None,
             fcf_yield       = round(fcf_yield, 1) if fcf_yield is not None else None,
             rev_growth      = round(rev_growth * 100, 1) if rev_growth is not None else None,
@@ -294,6 +295,16 @@ def fmt(val, suffix='', prefix=''):
     if val is None: return '<span style="color:#484f58">—</span>'
     return f"{prefix}{val}{suffix}"
 
+def pe_html(d):
+    pe  = d.get('pe')
+    fwd = d.get('fwd_pe')
+    if pe is None:
+        return '<span style="color:#484f58">—</span>'
+    if d.get('pe_is_forward') or (pe > 50 and fwd is not None):
+        show = fwd if (not d.get('pe_is_forward') and fwd is not None) else pe
+        return f'{show:.0f}x<span style="font-size:9px;color:#8b949e">f</span>'
+    return f'{pe:.1f}x'
+
 def pct_color(val, good_above=0):
     if val is None: return '<span style="color:#484f58">—</span>'
     c = '#3fb950' if val >= good_above else '#f85149'
@@ -362,7 +373,7 @@ def build_html(results, watchlist=None):
           <td>{pct_color(d['roe'], 15)}</td>
           <td>{pct_color(d['fcf_yield'], 2)}</td>
           <td>{pct_color(d['rev_growth'], 5)}</td>
-          <td>{fmt(d['pe'], 'x')}{'<span style="font-size:9px;color:#8b949e">f</span>' if d.get('pe_is_forward') else ''}</td>
+          <td>{pe_html(d)}</td>
         </tr>"""
 
     aplus = sum(1 for d in results if d['grade'] == 'A+')
