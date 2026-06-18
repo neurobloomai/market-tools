@@ -354,7 +354,7 @@ def build_watchlist_rows(watchlist):
           <td>{pct_color(d['roe'], 10)}</td>
           <td>{pct_color(d['fcf_yield'], 0)}</td>
           <td>{pct_color(d['rev_growth'], 10)}</td>
-          <td style="color:#e6edf3">{fmt(d['pe'], 'x')}{'<span style="font-size:9px;color:#8b949e">f</span>' if d.get('pe_is_forward') else ''}</td>
+          <td style="color:#e6edf3">{pe_html(d)}</td>
           <td style="font-size:11px">{blockers}</td>
         </tr>"""
     return rows
