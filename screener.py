@@ -52,7 +52,7 @@ UNIVERSE = [
     'ODFL','EXPD','CHRW','XPO','JBHT','SAIA','KNSL','RLI','CASH','FICO',
     'ROL','CTAS','CPRT','ADP','PAYX','EFX','TRI','IHS','VRSK','IT',
     'MU','MPWR','MRVL','ITW','ROP','SYK','BSX','AMZN','APP',
-    'MTD','MANH','FAST','MNST','POOL','NVR','DOCS','MKTX','ACGL',
+    'MTD','MANH','FAST','MNST','POOL','NVR','DHI','LEN','TOL','DOCS','MKTX','ACGL',
     'CHD','CL','HSY','TJX','GIS','NFLX','LULU','WSM','KMB','VRTX','DECK',
     'HWM','FSLR','DUOL','PLAB',   # promoted from watchlist — pass all quality filters
     'WPM',                        # Wheaton Precious Metals — streaming model, 85% gross/65% net margin, zero debt, A+
@@ -361,7 +361,24 @@ def build_watchlist_rows(watchlist):
         </tr>"""
     return rows
 
-def build_html(results, watchlist=None):
+def build_universe_failing_section(failing):
+    if not failing: return ''
+    rows = build_watchlist_rows(sorted(failing, key=lambda x: x['ticker']))
+    return f"""
+<div class="section-header">🔍 Universe — Not Yet Qualifying</div>
+<div class="section-sub">In the universe but blocked by one or more filters — good businesses to watch for improvement.</div>
+<table>
+  <thead>
+    <tr>
+      <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th>
+      <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th>
+      <th>Blocking Filters</th>
+    </tr>
+  </thead>
+  <tbody>{rows}</tbody>
+</table>"""
+
+def build_html(results, watchlist=None, universe_failing=None):
     now  = datetime.now().strftime('%B %d, %Y  %H:%M')
     rows = ''
 
@@ -457,6 +474,7 @@ def build_html(results, watchlist=None):
   </thead>
   <tbody>{rows}</tbody>
 </table>
+{build_universe_failing_section(universe_failing)}
 {build_watchlist_section(watchlist)}
 <div class="disclaimer">
   Data sourced from Yahoo Finance via yfinance. Prices and fundamentals may be delayed or incomplete.<br>
@@ -471,12 +489,13 @@ if __name__ == '__main__':
     with ThreadPoolExecutor(max_workers=10) as ex:
         raw = list(ex.map(get_fundamentals, UNIVERSE))
 
-    passed = [d for d in raw if passes_quality_filter(d)]
+    passed  = [d for d in raw if d is not None and passes_quality_filter(d)]
+    failing = [d for d in raw if d is not None and not passes_quality_filter(d)]
     for d in passed:
         d['grade'] = quality_grade(d)
     passed.sort(key=lambda x: (0 if x['grade']=='A+' else 1 if x['grade']=='A' else 2, -(x['market_cap_b'] or 0)))
 
-    print(f"  ✅  {len(passed)} companies passed filters")
+    print(f"  ✅  {len(passed)} companies passed filters  ({len(failing)} in universe not yet qualifying)")
     print(f"\n  Fetching {len(WATCHLIST)} watchlist contenders ...", flush=True)
 
     with ThreadPoolExecutor(max_workers=10) as ex:
@@ -486,7 +505,7 @@ if __name__ == '__main__':
 
     print(f"  👀  {len(watch_raw)} watchlist entries fetched\n")
 
-    html = build_html(passed, watch_raw)
+    html = build_html(passed, watch_raw, universe_failing=failing)
     path = os.path.expanduser('~/quality_screener.html')
     with open(path, 'w') as f:
         f.write(html)

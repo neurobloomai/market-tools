@@ -27,7 +27,7 @@ except ImportError:
 UNIVERSE = [
     # Capital Goods & Industrials — the backbone of India's buildout
     'LT.NS','SIEMENS.NS','ABB.NS','HAVELLS.NS','THERMAX.NS','CUMMINSIND.NS',
-    'KEC.NS','KALPATPOWR.NS','GRINDWELL.NS',
+    'KEC.NS','KALPATPOWR.NS','GRINDWELL.NS','POLYCAB.NS',
 
     # Defense — Make in India moment
     'HAL.NS','BEL.NS','MTARTECH.NS','DATAPATTNS.NS','PARAS.NS',
@@ -52,7 +52,7 @@ UNIVERSE = [
 
     # IT Services & Engineering R&D
     'TCS.NS','INFY.NS','HCLTECH.NS','WIPRO.NS','PERSISTENT.NS',
-    'COFORGE.NS','MPHASIS.NS','TATAELXSI.NS','LTTS.NS',
+    'COFORGE.NS','MPHASIS.NS','TATAELXSI.NS','LTTS.NS','KPITTECH.NS',
 
     # Financials & Asset Management
     'HDFCBANK.NS','ICICIBANK.NS','BAJFINANCE.NS','KOTAKBANK.NS',
@@ -66,7 +66,7 @@ UNIVERSE = [
     'ADANIPORTS.NS','CONCOR.NS','IRCTC.NS',
 
     # Capital Markets & Wealth — India's affluence theme
-    'CDSL.NS','BSE.NS','360ONE.NS',
+    'CDSL.NS','BSE.NS','CAMS.NS','ANGELONE.NS',
 
     # Retail — aspirational consumption
     'TRENT.NS','DMART.NS',
@@ -88,6 +88,10 @@ WATCHLIST = [
     'DIXON.NS',       # Dixon Technologies — EMS/contract manufacturing, ROE 37% but OM ~3% by design (assembler model)
     'KAYNES.NS',      # Kaynes Technology — defense/semi electronics, OM 11% but FCF -10% (heavy capex ramp) + ROE just under threshold
     'APOLLOHOSP.NS',  # Apollo Hospitals — healthcare brand growing well, FCF inconsistent due to hospital capex
+    # ANGELONE.NS promoted to universe — A+, OM 32%, ROE 15.5%, D/EV 0.200, passes financial sector gate
+    '360ONE.NS',      # 360 ONE WAM (formerly IIFL Wealth) — HNI/ultra-HNI wealth + asset mgmt; OM 57.7%, NM 27.2%; ROE 14.4% just below 15% financial threshold; D/EV 0.262; near-miss, watch for ROE crossing 15%
+    'BAJAJHFL.NS',    # Bajaj Housing Finance — fast-growing NBFC, recently listed; ROE building, financial sector rules apply; 2-3yr story
+    'ASTRAL.NS',      # Astral Ltd — pipes/adhesives/bathing compounder; OM ~13%, ROE ~18%, low debt; consistent but may grade B by filter thresholds
 ]
 
 def get_fundamentals(ticker):
@@ -107,10 +111,17 @@ def get_fundamentals(ticker):
         roe              = info.get('returnOnEquity', None)
         roa              = info.get('returnOnAssets', None)
 
-        _pe_raw          = info.get('trailingPE', None)
-        _pe_raw          = None if isinstance(_pe_raw, float) and math.isinf(_pe_raw) else _pe_raw
-        pe               = None if not isinstance(_pe_raw, (int, float)) else _pe_raw
-        pb               = info.get('priceToBook', None)
+        _pe_raw       = info.get('trailingPE', None)
+        _fwd_pe       = info.get('forwardPE', None)
+        _pe_raw       = None if isinstance(_pe_raw, float) and math.isinf(_pe_raw) else _pe_raw
+        pe            = None if not isinstance(_pe_raw, (int, float)) else _pe_raw
+        pe_is_forward = False
+        if pe is None or pe > 100:
+            _fwd_valid = isinstance(_fwd_pe, (int, float)) and not math.isinf(_fwd_pe) and 5 < _fwd_pe <= 500
+            if _fwd_valid:
+                pe            = _fwd_pe
+                pe_is_forward = True
+        pb            = info.get('priceToBook', None)
 
         fcf              = info.get('freeCashflow', None)
         market_cap       = info.get('marketCap', 1) or 1
@@ -130,6 +141,8 @@ def get_fundamentals(ticker):
             roe             = round(roe * 100, 1) if roe is not None else None,
             roa             = round(roa * 100, 1) if roa is not None else None,
             pe              = round(pe, 1) if pe is not None else None,
+            pe_is_forward   = pe_is_forward,
+            fwd_pe          = round(_fwd_pe, 1) if isinstance(_fwd_pe, (int, float)) and not math.isinf(_fwd_pe) and 5 < _fwd_pe <= 500 else None,
             pb              = round(pb, 1) if pb is not None else None,
             fcf_yield       = round(fcf_yield, 1) if fcf_yield is not None else None,
             rev_growth      = round(rev_growth * 100, 1) if rev_growth is not None else None,
@@ -235,6 +248,16 @@ def fmt(val, suffix='', prefix=''):
     if val is None: return '<span style="color:#484f58">—</span>'
     return f'{prefix}{val}{suffix}'
 
+def pe_html(d):
+    pe  = d.get('pe')
+    fwd = d.get('fwd_pe')
+    if pe is None:
+        return '<span style="color:#484f58">—</span>'
+    if d.get('pe_is_forward') or (pe > 50 and fwd is not None):
+        show = fwd if (not d.get('pe_is_forward') and fwd is not None) else pe
+        return f'{show:.0f}x<span style="font-size:9px;color:#8b949e">f</span>'
+    return f'{pe:.1f}x'
+
 def pct_color(val, good_above=0):
     if val is None: return '<span style="color:#484f58">—</span>'
     c = '#3fb950' if val >= good_above else '#f85149'
@@ -260,7 +283,7 @@ def build_watchlist_section(watchlist):
           <td>{pct_color(d['roe'], 10)}</td>
           <td>{pct_color(d['fcf_yield'], 0)}</td>
           <td>{pct_color(d['rev_growth'], 12)}</td>
-          <td style="color:#e6edf3">{fmt(d['pe'], 'x')}</td>
+          <td style="color:#e6edf3">{pe_html(d)}</td>
           <td style="font-size:11px">{blockers}</td>
         </tr>"""
     return f"""
@@ -277,7 +300,43 @@ def build_watchlist_section(watchlist):
   <tbody>{rows}</tbody>
 </table>"""
 
-def build_html(results, watchlist=None):
+def build_universe_failing_section(failing):
+    if not failing: return ''
+    rows = ''
+    for d in sorted(failing, key=lambda x: x['ticker']):
+        fails = failing_filters(d)
+        blockers = ' &nbsp;·&nbsp; '.join(
+            f'<span class="blocker">{f[0]}</span> <span class="blocker-val">{f[1]}</span> <span class="blocker-threshold">→ {f[2]}</span>'
+            for f in fails
+        )
+        rows += f"""<tr>
+          <td class="ticker">{d['ticker'].replace('.NS','')}</td>
+          <td style="color:#8b949e;font-size:11px">{d['name'][:22]}</td>
+          <td style="color:#8b949e;font-size:11px">{d['sector'][:15]}</td>
+          <td>₹{fmt(d['price'])}</td>
+          <td>{pct_color(d['operating_margin'], 8)}</td>
+          <td>{pct_color(d['net_margin'], 5)}</td>
+          <td>{pct_color(d['roe'], 10)}</td>
+          <td>{pct_color(d['fcf_yield'], 0)}</td>
+          <td>{pct_color(d['rev_growth'], 12)}</td>
+          <td style="color:#e6edf3">{pe_html(d)}</td>
+          <td style="font-size:11px">{blockers}</td>
+        </tr>"""
+    return f"""
+<div class="section-header">🔍 Universe — Not Yet Qualifying</div>
+<div class="section-sub">In the universe but blocked by one or more filters — good businesses to watch for improvement.</div>
+<table>
+  <thead>
+    <tr>
+      <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th>
+      <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th>
+      <th>Blocking Filters</th>
+    </tr>
+  </thead>
+  <tbody>{rows}</tbody>
+</table>"""
+
+def build_html(results, watchlist=None, universe_failing=None):
     now   = _ist_now().strftime('%B %d, %Y  %H:%M IST')
     rows  = ''
     for d in results:
@@ -297,7 +356,7 @@ def build_html(results, watchlist=None):
           <td>{pct_color(d['roe'], 15)}</td>
           <td>{pct_color(d['fcf_yield'], 2)}</td>
           <td>{pct_color(d['rev_growth'], 12)}</td>
-          <td>{fmt(d['pe'], 'x')}</td>
+          <td>{pe_html(d)}</td>
         </tr>"""
 
     aplus = sum(1 for d in results if d['grade'] == 'A+')
@@ -370,6 +429,7 @@ def build_html(results, watchlist=None):
   </thead>
   <tbody>{rows}</tbody>
 </table>
+{build_universe_failing_section(universe_failing)}
 {build_watchlist_section(watchlist)}
 <div class="disclaimer">
   Data sourced from NSE via Yahoo Finance / yfinance. Prices and fundamentals may be delayed or incomplete.<br>
@@ -384,12 +444,13 @@ if __name__ == '__main__':
     with ThreadPoolExecutor(max_workers=10) as ex:
         raw = list(ex.map(get_fundamentals, UNIVERSE))
 
-    passed = [d for d in raw if passes_quality_filter(d)]
+    passed  = [d for d in raw if d is not None and passes_quality_filter(d)]
+    failing = [d for d in raw if d is not None and not passes_quality_filter(d)]
     for d in passed:
         d['grade'] = quality_grade(d)
     passed.sort(key=lambda x: (0 if x['grade']=='A+' else 1 if x['grade']=='A' else 2, x['debt_to_ev'] or 1))
 
-    print(f'  ✅  {len(passed)} companies passed filters')
+    print(f'  ✅  {len(passed)} companies passed filters  ({len(failing)} in universe not yet qualifying)')
     print(f'\n  Fetching {len(WATCHLIST)} watchlist contenders ...', flush=True)
 
     with ThreadPoolExecutor(max_workers=10) as ex:
@@ -398,7 +459,7 @@ if __name__ == '__main__':
 
     print(f'  👀  {len(watch_raw)} watchlist entries fetched\n')
 
-    html = build_html(passed, watch_raw)
+    html = build_html(passed, watch_raw, universe_failing=failing)
     path = os.path.expanduser('~/india_screener.html')
     with open(path, 'w') as f:
         f.write(html)
