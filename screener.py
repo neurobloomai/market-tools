@@ -101,6 +101,7 @@ WATCHLIST = [
     'SSNC',  # SS&C Technologies — fund admin infra, $1.28B FCF, extreme switching costs, debt 0.32 only blocker
     'SMR',   # NuScale Power — small modular reactors; pre-revenue but first-mover in licensed SMR tech
     'OKLO',  # Oklo — micro-reactors, Sam Altman-backed; nuclear theme beneath NLR ETF
+    'XE',    # X-energy — Gen IV HTGR (Xe-100, 80 MWe pebble bed); Amazon/AWS committed offtake for datacenter power + DOE ARDP $1.2B+ funding; pre-revenue, structural nuclear/AI power theme
     'SYM',   # Symbotic — warehouse AI robotics, Walmart-backed; revenue scaling, margins early
     'RKLB',  # Rocket Lab — only end-to-end small launch + space systems; revenue real, path to profit
     'AMSC',  # American Superconductor — power electronics, grid/defense; OpM 5.1%, one filter away
