@@ -13,7 +13,13 @@ Free, open-source market dashboards and quality stock screeners powered by Yahoo
 
 ## Setup
 
+Requires **Python 3.9+**. If you don't have Python installed, download it from [python.org](https://www.python.org/downloads/) or use your system package manager (`brew install python` on macOS, `apt install python3` on Linux).
+
 ```bash
+# Verify your Python version first
+python3 --version
+
+# Install the only dependency
 pip install yfinance
 ```
 
