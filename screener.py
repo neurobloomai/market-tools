@@ -42,7 +42,7 @@ def get_fmp_forward_pe(ticker, price):
 # Broad universe — S&P 500 quality names worth screening
 UNIVERSE = [
     'AAPL','MSFT','GOOGL','META','NVDA','V','MA','UNH','LLY','JPM',
-    'JNJ','PG','HD','COST','ABBV','MRK','TMO','ACN','AVGO','TXN',
+    'JNJ','PG','HD','ABBV','MRK','TMO','ACN','AVGO','TXN',
     'QCOM','DHR','AMAT','LRCX','KLAC','MCHP','ADI','SNPS','CDNS',
     'ADBE','CRM','NOW','INTU','ORCL','FTNT','PANW','CRWD','ZS','DDOG',
     'VEEV','WDAY','TTD','PAYC',
@@ -116,6 +116,7 @@ WATCHLIST = [
 
     'RXRX',  # Recursion Pharmaceuticals — AI drug discovery (phenomics at scale); NVIDIA-backed (Jensen Huang), Roche/Genentech $150M partnership, Bayer neuro deal; merging with Exscientia; AI + biology intersection, pre-profit, D/EV 0.064 clean
     'RARE',  # Ultragenyx — rare/orphan genetic disease; Crysvita (XLH bone disorder), Dojolvi, gene therapy pipeline (GTX-102 for Angelman syndrome); founder Emil Kakkis (rare disease pioneer); D/EV 0.344 + pre-profit blocking; established rare disease franchise with gene therapy optionality
+    'COST',  # Costco — membership moat, not a margin story; OM ~3% by design (merchandise passes savings to members, fee stream runs at ~95% margin); screen blocks on OM/NM — low margins are the product, not a flaw; measure by membership fee growth + renewal rate (~93%) + ROIC, not OM or NM
     'ORLY',  # O'Reilly Auto Parts — Akre compounder; 18% OM, 14% NM, ROA 13.8% (ROE negative from 20yrs buybacks); ROA just below 15% threshold; D/EV 0.10, P/E 29x, exceptional execution
     'TDG',   # TransDigm — aerospace parts monopolist, 47% OM, 22% NM; D/EV 0.325 structural debt (leveraged rollup model, won't change); watch if debt pays down or FCF re-rates
     'FISV',  # Fiserv — payment processing + Clover POS + banking tech, extreme switching costs; ~33% OM, 15% NM; D/EV ~0.26 from First Data acquisition; ~$3-4B FCF/yr paydown, 1-2yr to threshold
