@@ -113,7 +113,7 @@ WATCHLIST = [
     'CRSP',  # CRISPR Therapeutics — Swiss-HQ, NASDAQ-listed; co-founded by Nobel laureate Emmanuelle Charpentier; Casgevy (w/ Vertex) = first-ever FDA-approved CRISPR therapy (sickle cell + beta-thal, Dec 2023); pre-profit, all filters blocking; most commercially advanced gene editor
     'NTLA',  # Intellia Therapeutics — in vivo CRISPR (edits genes inside body, no cell removal); Regeneron partnership; NTLA-2001 for transthyretin amyloidosis late-stage; pre-profit, all filters blocking
     'BEAM',  # Beam Therapeutics — base editing (David Liu/Harvard); single base changes without DNA double-strand cuts, fewer off-target effects than classical CRISPR; sickle cell + AML programs; pre-profit, all filters blocking
-    'VERV',  # Verve Therapeutics — base editing for cardiovascular; one-time PCSK9 gene edit to permanently lower LDL (replacing lifelong statins); pre-profit, data limited on yfinance; structural cardiovascular + gene editing theme
+
     'RXRX',  # Recursion Pharmaceuticals — AI drug discovery (phenomics at scale); NVIDIA-backed (Jensen Huang), Roche/Genentech $150M partnership, Bayer neuro deal; merging with Exscientia; AI + biology intersection, pre-profit, D/EV 0.064 clean
     'RARE',  # Ultragenyx — rare/orphan genetic disease; Crysvita (XLH bone disorder), Dojolvi, gene therapy pipeline (GTX-102 for Angelman syndrome); founder Emil Kakkis (rare disease pioneer); D/EV 0.344 + pre-profit blocking; established rare disease franchise with gene therapy optionality
     'ORLY',  # O'Reilly Auto Parts — Akre compounder; 18% OM, 14% NM, ROA 13.8% (ROE negative from 20yrs buybacks); ROA just below 15% threshold; D/EV 0.10, P/E 29x, exceptional execution
