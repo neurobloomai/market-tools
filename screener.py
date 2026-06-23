@@ -84,11 +84,12 @@ UNIVERSE = [
     'KRYS',                       # Krystal Biotech — gene therapy dermatology (B-VEC for RDEB); 94.2% gross/46.1% OM/53.9% NM, near-zero debt, 31.9% rev growth, A+; 4/4 MA aligned at add time
     'NBIX',                       # Neurocrine Biosciences — CNS/endocrine specialist (Ingrezza); 22.8% OM, 21.6% NM, ROE 22.5%, FCF 3.8%, 42.2% rev growth, A+; 4/4 MA aligned at add time
     'HOOD',                       # Robinhood Markets — fintech brokerage/crypto; 92.2% gross, 38.5% OM, 41.1% NM, ROE 21.5%, 15.1% rev growth; D/EV improved to 0.166 (was 0.22 blocker); FCF None (brokerage model); grades A, 3/4 MA at promotion
+    'PLTR',                       # Palantir — AI/data analytics platform (AIP + Foundry + Gotham); government + commercial flywheel; A+ quality; promoted from watchlist
 ]
 
 # Future contenders — great businesses not yet qualifying, tracked separately
 WATCHLIST = [
-    'PLTR','AXON','MELI','ARM','SNOW','BILL',   # ALAB promoted to universe; CRWD removed — already in universe
+    'AXON','MELI','ARM','SNOW','BILL',   # ALAB promoted to universe; CRWD removed — already in universe; PLTR promoted to universe
     'MDB','NET','HUBS','TEAM','MKC','DPZ','GEV','CEG',
     'NEE',   # NextEra — utility debt heavy; clean energy moat, Dominion merger / long-term value
     'NRG',   # NRG Energy — de-lever play; LS Power acq doubled fleet+debt, targeting 3x net leverage, Fwd P/E 11x, yield-sensitive re-rate when 10yr < 4.0%
