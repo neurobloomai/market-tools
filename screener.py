@@ -498,7 +498,9 @@ def build_html(results, watchlist=None, universe_failing=None):
 </html>"""
 
 if __name__ == '__main__':
-    print(f"\n  Screening {len(UNIVERSE)} companies ...", flush=True)
+    now = datetime.now().strftime('%Y-%m-%d %H:%M')
+    print(f"\n  Quality Screener — {now}", flush=True)
+    print(f"  Screening {len(UNIVERSE)} companies ...", flush=True)
 
     with ThreadPoolExecutor(max_workers=10) as ex:
         raw = list(ex.map(get_fundamentals, UNIVERSE))
