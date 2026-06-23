@@ -1,4 +1,5 @@
 *.html
+!aligned_screener.html
 *.json
 __pycache__/
 *.pyc
