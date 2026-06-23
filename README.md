@@ -10,6 +10,50 @@ Free, open-source market dashboards and quality stock screeners powered by Yahoo
 | `india_dashboard.py` | 🇮🇳 India | NSE sector index briefing — same MA framework for Indian markets |
 | `screener.py` | 🇺🇸 US | Quality growth screener — low debt, high ROIC, strong margins, FCF |
 | `india_screener.py` | 🇮🇳 India | India quality growth screener — NSE universe across key themes |
+| `aligned_screener.py` | 🇺🇸 US | Weekly MA alignment scanner — 4/4 aligned names, squeeze setups, CMF, RS vs SPY |
+| `weekly_snapshot.py` | 🇺🇸 US | Appends weekly alignment snapshot to `weekly_notes.md` |
+| `dividend_plays_for_longterm.py` | 🇺🇸 US | Curated long-term dividend universe — quality-filtered, thesis-annotated |
+| `run_aligned.sh` | — | Cron entry point — runs weekly snapshot + aligned screener, auto-pushes both to GitHub |
+
+## Live Outputs
+
+Updated automatically every Monday at 8am by cron:
+
+- **[`aligned_screener.html`](aligned_screener.html)** — visual snapshot of 4/4 MA aligned names, squeeze setups, RS vs SPY, CMF, Special Mention base-building names
+- **[`weekly_notes.md`](weekly_notes.md)** — rolling markdown log of weekly alignment + coil data with hand-written observations
+
+## Weekly Alignment Framework
+
+`aligned_screener.py` scans the quality universe every week across four signals:
+
+| Signal | What it means |
+|---|---|
+| **4/4 MA aligned** | Price above 10w, 20w, 10m (43w), 20m (87w) SMAs — full structure intact |
+| **FullCoil squeeze** | 10w/20w/35w/50w spread compressed — energy building, potential move ahead |
+| **CMF (Chaikin Money Flow)** | Volume weighted to close position in range — accumulation vs distribution |
+| **RS vs SPY** | 13-week price ratio vs SPY — outperforming or lagging the market |
+
+**Special Mention** — names where price has dislocated far from MAs but structure is quietly rebuilding. Not actionable yet. Monthly CMF trend tracked separately for base-building thesis.
+
+**Philosophy:** medium and long-term orientation. The framework is not built for scalping or short-term noise. Quality names in full MA alignment with tight coils and accumulation signals — hold the structure, wait for the move.
+
+## Dividend Universe
+
+`dividend_plays_for_longterm.py` is a curated list of 57 dividend-paying names filtered for quality: payout ratio, FCF yield, net margin, ROE, debt/EV. Each entry is annotated with the thesis — why it belongs, what the moat is, what to watch. Sectors: financials, energy, industrials, consumer, healthcare, precious metals.
+
+## Automation
+
+`run_aligned.sh` is designed to run via cron on Monday mornings:
+
+```bash
+# Add to crontab (runs every Monday at 8am)
+0 8 * * 1 /path/to/market-tools/run_aligned.sh
+
+# Or run manually any time
+bash run_aligned.sh
+```
+
+Log output goes to `/tmp/aligned_cron.log`.
 
 ## Setup
 

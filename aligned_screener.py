@@ -1,27 +1,15 @@
 """
-Internal — 4/4 MA Aligned Names + Weekly Squeeze Scanner
+aligned_screener.py — 4/4 MA Aligned Names + Weekly Squeeze Scanner
 Cross-references screener universe + watchlist against full MA structure.
 Fetches quality grades for aligned names — shows [U/W] TICKER GRADE $PRICE.
 Weekly squeeze: monitors 10w/20w/35w/50w MA compression across all names.
-Not pushed to GitHub — for internal use only.
-Run: python internal_aligned.py
+Run: python aligned_screener.py
 """
 
-import yfinance as yf, warnings, csv, os, functools
+import yfinance as yf, warnings, os, functools
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 warnings.filterwarnings('ignore')
-
-HISTORY_FILE = 'internal_aligned_history.csv'
-
-def log_run(valid, timestamp):
-    is_new = not os.path.exists(HISTORY_FILE)
-    with open(HISTORY_FILE, 'a', newline='') as f:
-        w = csv.writer(f)
-        if is_new:
-            w.writerow(['timestamp', 'ticker', 'price', 'score', 'w_spread', 'st_spread'])
-        for r in valid:
-            w.writerow([timestamp, r['t'], r['p'], r['s'], r['w_spread'], r['st_spread']])
 
 from screener import UNIVERSE, WATCHLIST, get_fundamentals, passes_quality_filter, quality_grade
 
@@ -417,8 +405,6 @@ if __name__ == '__main__':
         results = list(ex.map(ma_score_fn, TICKERS))
 
     valid = [r for r in results if r]
-
-    log_run(valid, datetime.now().strftime('%Y-%m-%d %H:%M'))
 
     aligned = sorted([r for r in valid if r['s'] == 4], key=lambda r: r['t'])
     partial = sorted([r for r in valid if r['s'] == 3], key=lambda r: r['t'])
