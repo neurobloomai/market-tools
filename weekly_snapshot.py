@@ -118,3 +118,14 @@ if __name__ == '__main__':
 
     print(f'  Appended → weekly_notes.md')
     print(f'  4/4: {len(aligned_4)}   3/4: {len(aligned_3)}   Coils ≤5%: {len([d for d in data if d["spread"] <= 5.0])}')
+
+    import subprocess
+    try:
+        commit_msg = f'weekly_notes: {label}'
+        subprocess.run(['git', 'add', 'weekly_notes.md'], check=True, capture_output=True)
+        subprocess.run(['git', 'commit', '-m', commit_msg], check=True, capture_output=True)
+        subprocess.run(['git', 'push'], check=True, capture_output=True)
+        print(f'  Pushed → GitHub  ({commit_msg})')
+    except subprocess.CalledProcessError as e:
+        msg = e.stderr.decode().strip() if e.stderr else str(e)
+        print(f'  Git push skipped: {msg or "nothing new to commit"}')
