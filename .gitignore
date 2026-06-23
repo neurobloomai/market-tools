@@ -1,5 +1,6 @@
 *.html
 !aligned_screener.html
+!india_aligned_screener.html
 *.json
 __pycache__/
 *.pyc

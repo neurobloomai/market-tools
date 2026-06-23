@@ -12,15 +12,19 @@ Free, open-source market dashboards and quality stock screeners powered by Yahoo
 | `india_screener.py` | 🇮🇳 India | India quality growth screener — NSE universe across key themes |
 | `aligned_screener.py` | 🇺🇸 US | Weekly MA alignment scanner — 4/4 aligned names, squeeze setups, CMF, RS vs SPY |
 | `weekly_snapshot.py` | 🇺🇸 US | Appends weekly alignment snapshot to `weekly_notes.md` |
+| `india_aligned_screener.py` | 🇮🇳 India | Weekly MA alignment scanner for India — same framework, RS vs NIFTY 50 |
+| `india_weekly_snapshot.py` | 🇮🇳 India | Appends weekly India alignment snapshot to `india_weekly_notes.md` |
 | `dividend_plays_for_longterm.py` | 🇺🇸 US | Curated long-term dividend universe — quality-filtered, thesis-annotated |
-| `run_aligned.sh` | — | Cron entry point — runs weekly snapshot + aligned screener, auto-pushes both to GitHub |
+| `run_aligned.sh` | — | Cron entry point — runs all four scripts (US + India), auto-pushes to GitHub |
 
 ## Live Outputs
 
 Updated automatically every Monday at 8am by cron:
 
-- **[`aligned_screener.html`](aligned_screener.html)** — visual snapshot of 4/4 MA aligned names, squeeze setups, RS vs SPY, CMF, Special Mention base-building names
-- **[`weekly_notes.md`](weekly_notes.md)** — rolling markdown log of weekly alignment + coil data with hand-written observations
+- **[`aligned_screener.html`](aligned_screener.html)** — US: 4/4 MA aligned names, squeeze setups, RS vs SPY, CMF, Special Mention base-building names
+- **[`weekly_notes.md`](weekly_notes.md)** — US: rolling markdown log of weekly alignment + coil data with hand-written observations
+- **[`india_aligned_screener.html`](india_aligned_screener.html)** — India: same framework, RS vs NIFTY 50, ₹ prices
+- **[`india_weekly_notes.md`](india_weekly_notes.md)** — India: rolling markdown log of weekly alignment snapshots
 
 ## Weekly Alignment Framework
 
