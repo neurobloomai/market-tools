@@ -19,12 +19,34 @@ Free, open-source market dashboards and quality stock screeners powered by Yahoo
 
 ## Live Outputs
 
-Updated automatically every Monday at 8am by cron:
+Updated automatically every Monday via GitHub Actions — no server, no local machine needed:
 
-- **[`aligned_screener.html`](aligned_screener.html)** — US: 4/4 MA aligned names, squeeze setups, RS vs SPY, CMF, Special Mention base-building names
-- **[`weekly_notes.md`](weekly_notes.md)** — US: rolling markdown log of weekly alignment + coil data with hand-written observations
-- **[`india_aligned_screener.html`](india_aligned_screener.html)** — India: same framework, RS vs NIFTY 50, ₹ prices
-- **[`india_weekly_notes.md`](india_weekly_notes.md)** — India: rolling markdown log of weekly alignment snapshots
+| File | Market | Schedule |
+|---|---|---|
+| [`aligned_screener.html`](aligned_screener.html) | 🇺🇸 US | Monday 8am EST |
+| [`weekly_notes.md`](weekly_notes.md) | 🇺🇸 US | Monday 8am EST |
+| [`india_aligned_screener.html`](india_aligned_screener.html) | 🇮🇳 India | Monday 8am IST |
+| [`india_weekly_notes.md`](india_weekly_notes.md) | 🇮🇳 India | Monday 8am IST |
+
+## Automation
+
+Runs entirely on GitHub's infrastructure via two scheduled workflows:
+
+| Workflow | Schedule | What runs |
+|---|---|---|
+| [Weekly Screener — US](.github/workflows/weekly_us.yml) | Monday 8am EST | `weekly_snapshot.py` + `aligned_screener.py` |
+| [Weekly Screener — India](.github/workflows/weekly_india.yml) | Monday 8am IST | `india_weekly_snapshot.py` + `india_aligned_screener.py` |
+
+Each workflow checks out the repo, installs `yfinance`, runs the scripts, and commits the updated HTML and markdown files back — fully automated, zero manual steps.
+
+You can also trigger either workflow manually anytime from the **Actions** tab on GitHub.
+
+`run_aligned.sh` is available as a local fallback if you want to run everything on your own machine:
+
+```bash
+bash run_aligned.sh
+# log output → /tmp/aligned_cron.log
+```
 
 ## Weekly Alignment Framework
 
