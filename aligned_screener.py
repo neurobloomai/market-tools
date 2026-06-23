@@ -256,6 +256,8 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                              f'<span style="color:{_c_trend(mc[2])};font-weight:600"> {mc[2]}</span>')
             else:
                 mcmf_cell = '<span style="color:#484f58">—</span>'
+            auto_badge = '<span style="color:#484f58;font-size:10px">[auto] </span>' if note.startswith('[auto]') else ''
+            note_text  = note[7:] if note.startswith('[auto]') else note
             sm_rows += (f'<tr>'
                         f'<td class="ticker">{t}</td>'
                         f'<td style="color:{_c_ma(r["s"])}">{r["s"]}/4</td>'
@@ -264,7 +266,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                         f'<td style="color:{_c_hi(hi)}">{hi:+.1f}%</td>'
                         f'<td style="color:{_c_cmf(cmf)}">{cmf:+.2f}</td>'
                         f'<td>{mcmf_cell}</td>'
-                        f'<td style="color:#8b949e;font-size:11px">{note}</td>'
+                        f'<td style="color:#8b949e;font-size:11px">{auto_badge}{note_text}</td>'
                         f'</tr>')
 
     promo_rows = ''.join(
@@ -426,13 +428,6 @@ if __name__ == '__main__':
 
     cmf_map = {r['t']: r.get('cmf', 0.0) for r in valid}
 
-    # Monthly CMF trend — only for Special Mention names (base-building timeframe)
-    print(f"  Fetching monthly CMF trend for Special Mention names ...", flush=True)
-    m_cmf_map = {}
-    for t in SPECIAL_MENTION:
-        cur, prior, trend = monthly_cmf_trend(t)
-        m_cmf_map[t] = (cur, prior, trend)
-
     def fmt_rs_hi(t):
         rs_val  = rs_map.get(t)
         hi_val  = hi_map.get(t)
@@ -492,8 +487,37 @@ if __name__ == '__main__':
     else:
         print(f"  none — all watchlist names below quality threshold")
 
+    # ── Auto-detect Special Mention ──────────────────────────────────────────
+    # Quality name (A+/A) + structure broken (≤1/4) + far from highs (<-30%)
+    # Manual SPECIAL_MENTION entries take precedence — richer notes, curated thesis
+    auto_candidates = [r for r in valid
+                       if r['s'] <= 1
+                       and (r.get('pct_from_high') or 0) < -45
+                       and r['t'] not in SPECIAL_MENTION
+                       and (r['t'] in UNIVERSE or r['t'] in WATCHLIST)]
+    auto_sm = {}
+    if auto_candidates:
+        print(f"  Auto-detecting Special Mention: {len(auto_candidates)} candidates ...", flush=True)
+        with ThreadPoolExecutor(max_workers=10) as ex:
+            auto_grades = list(ex.map(grade_ticker, [r['t'] for r in auto_candidates]))
+        for r, g in zip(auto_candidates, auto_grades):
+            if g == 'A+':
+                hi = r.get('pct_from_high', 0)
+                auto_sm[r['t']] = (f'[auto] A+ quality — {r["s"]}/4 MA, {hi:+.1f}% from highs; '
+                                   f'structure dislocated, fundamentals intact; watch for MA recovery')
+
+    # Manual entries override auto — merge with manual taking precedence
+    combined_sm = {**auto_sm, **SPECIAL_MENTION}
+
+    # Monthly CMF trend for all Special Mention names (auto + manual)
+    print(f"  Fetching monthly CMF trend for {len(combined_sm)} Special Mention names ...", flush=True)
+    m_cmf_map = {}
+    for t in combined_sm:
+        cur, prior, trend = monthly_cmf_trend(t)
+        m_cmf_map[t] = (cur, prior, trend)
+
     # ── Special Mention ──────────────────────────────────────────────────────
-    sm_data = [(t, note) for t, note in SPECIAL_MENTION.items()]
+    sm_data = [(t, note) for t, note in combined_sm.items()]
     print(f"\n  SPECIAL MENTION — Teasing / Puzzling Setups")
     print(f"  {'─'*60}")
     print(f"  Structure building or price dislocated — not yet actionable, worth watching closely.\n")
@@ -565,7 +589,7 @@ if __name__ == '__main__':
     import subprocess
     html     = build_aligned_html(valid, aligned, grades, partial, promos,
                                   squeezed, st_squeezed, rs_map, hi_map, cmf_map,
-                                  SPECIAL_MENTION, now, UNIVERSE, WATCHLIST, m_cmf_map)
+                                  combined_sm, now, UNIVERSE, WATCHLIST, m_cmf_map)
     out_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'aligned_screener.html')
     with open(out_path, 'w') as f:
         f.write(html)
