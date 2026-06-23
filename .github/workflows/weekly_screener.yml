@@ -1,0 +1,39 @@
+name: Weekly Screener
+
+on:
+  schedule:
+    - cron: '30 2 * * 1'  # Monday 2:30am UTC = 8am IST
+  workflow_dispatch:       # allow manual trigger from GitHub UI
+
+jobs:
+  run-screeners:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install yfinance
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: US — weekly snapshot
+        run: python weekly_snapshot.py
+
+      - name: US — aligned screener
+        run: python aligned_screener.py
+
+      - name: India — weekly snapshot
+        run: python india_weekly_snapshot.py
+
+      - name: India — aligned screener
+        run: python india_aligned_screener.py

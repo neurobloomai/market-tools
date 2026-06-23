@@ -569,7 +569,9 @@ if __name__ == '__main__':
     with open(out_path, 'w') as f:
         f.write(html)
     print(f"  Saved → {out_path}")
-    subprocess.Popen(['open', out_path])
+    import platform
+    if platform.system() == 'Darwin':
+        subprocess.Popen(['open', out_path])
 
     # Auto-push aligned_screener.html to GitHub after every run
     try:
