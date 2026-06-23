@@ -26,6 +26,7 @@ SPECIAL_MENTION = {
     'PLAB': 'Photomask specialist (semiconductor enabler); quality passed filters but cyclical collapse from highs; above 20m MA only — structure rebuilding, patience required',
     'UPWK': 'Freelance marketplace; price ~$8 far below monthly MAs (~$13-14) but monthly 10m/20m compressing (+/-2%) — MA squeeze forming on monthly chart while price bases; downtrend in averages flattening; D/EV 0.44 (converts) only fundamental blocker; watch for monthly structure recovery',
     'MRAM': 'Magnetoresistive RAM (Everspin) — niche non-volatile memory; fundamentals actively strengthening but 6-9 month thesis; RS 2.26x outperforming SPY despite -38% offHi = recovery not leadership yet; CMF distribution into the bounce; 3/4 MA — wait for 20m confirmation + CMF flip before treating as actionable',
+    'PLTR': 'Palantir — AI/data analytics platform (AIP + Foundry + Gotham); A+ quality, government + commercial flywheel; 0/4 MA — price pulled back below all MAs, structure rebuilding; valuation stretched (high P/E growth premium); wait for MA reclaim before treating as actionable entry',
 }
 
 TICKERS = list(dict.fromkeys(UNIVERSE + WATCHLIST + EXTRA + list(SPECIAL_MENTION.keys())))
