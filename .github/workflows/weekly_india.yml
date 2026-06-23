@@ -1,12 +1,12 @@
-name: Weekly Screener
+name: Weekly Screener — India
 
 on:
   schedule:
     - cron: '30 2 * * 1'  # Monday 2:30am UTC = 8am IST
-  workflow_dispatch:       # allow manual trigger from GitHub UI
+  workflow_dispatch:
 
 jobs:
-  run-screeners:
+  run-india-screeners:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -26,14 +26,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: US — weekly snapshot
-        run: python weekly_snapshot.py
-
-      - name: US — aligned screener
-        run: python aligned_screener.py
-
-      - name: India — weekly snapshot
+      - name: Weekly snapshot
         run: python india_weekly_snapshot.py
 
-      - name: India — aligned screener
+      - name: Aligned screener
         run: python india_aligned_screener.py
