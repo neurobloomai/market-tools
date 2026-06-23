@@ -89,6 +89,7 @@ UNIVERSE = [
 
 # Future contenders — great businesses not yet qualifying, tracked separately
 WATCHLIST = [
+    'SPCX',  # SpaceX — first ~$2T IPO; Starlink satellite internet (recurring revenue moat) + Starship (future infrastructure) + AI/autonomy intersection with Tesla ecosystem; too new for MA framework (3 weeks of data); quality filters TBD as financials mature; generational infrastructure play
     'AXON','MELI','ARM','SNOW','BILL',   # ALAB promoted to universe; CRWD removed — already in universe; PLTR promoted to universe
     'MDB','NET','HUBS','TEAM','MKC','DPZ','GEV','CEG',
     'NEE',   # NextEra — utility debt heavy; clean energy moat, Dominion merger / long-term value
