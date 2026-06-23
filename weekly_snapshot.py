@@ -99,6 +99,7 @@ if __name__ == '__main__':
 
     lines.append('\n### Notes\n')
     lines.append('_Weekly observations — what to watch, what is coiling, what to avoid._\n')
+    lines.append('\n> **Disclaimer:** For informational purposes only. Not financial advice.\n')
     lines.append('\n---\n')
 
     md = '\n'.join(lines)

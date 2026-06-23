@@ -58,5 +58,7 @@ AMSC, AVGO, BRK-B, CIEN, CL, CLS, CRSP, CTRA, GOOGL, JNJ, MDB, MPWR, MRAM, MRK, 
 
 **VRTX** — 4/4 A+, FullCoil 2.7%, vol 1.2x. Quality biotech coiling. Franchise strength (CF/pain pipeline) backing the structure.
 
+> **Disclaimer:** For informational purposes only. Not financial advice.
+
 
 ---
