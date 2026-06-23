@@ -16,7 +16,7 @@ EXTRA = []
 
 # Special mention — teasing/puzzling setups not yet in alignment
 SPECIAL_MENTION = {
-    'ZOMATO.NS': 'Food delivery duopoly; profitability inflecting — FCF turning positive, quick commerce thesis building; MA structure not yet complete; wait for full 4/4 alignment and quality filter pass',
+    'ETERNAL.NS': 'Eternal (formerly Zomato) — food delivery + quick commerce duopoly; profitability inflecting, FCF turning positive; MA structure not yet complete; wait for full 4/4 alignment and quality filter pass',
     'SWIGGY.NS': 'Food delivery + quick commerce; loss-making but narrowing fast; similar inflection thesis to Zomato; monthly structure building — 12-18 month patience play',
 }
 

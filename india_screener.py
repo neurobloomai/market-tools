@@ -27,7 +27,7 @@ except ImportError:
 UNIVERSE = [
     # Capital Goods & Industrials — the backbone of India's buildout
     'LT.NS','SIEMENS.NS','ABB.NS','HAVELLS.NS','THERMAX.NS','CUMMINSIND.NS',
-    'KEC.NS','KALPATPOWR.NS','GRINDWELL.NS','POLYCAB.NS',
+    'KEC.NS','KPIL.NS','GRINDWELL.NS','POLYCAB.NS',
 
     # Defense — Make in India moment
     'HAL.NS','BEL.NS','MTARTECH.NS','DATAPATTNS.NS','PARAS.NS',
@@ -36,7 +36,7 @@ UNIVERSE = [
     # DIXON and KAYNES moved to watchlist — EMS margin model and capex phase respectively
 
     # Auto & Components
-    'BAJAJ-AUTO.NS','EICHERMOT.NS','FORCEMOT.NS','BHARATFORG.NS','MOTHERSUMI.NS',
+    'BAJAJ-AUTO.NS','EICHERMOT.NS','FORCEMOT.NS','BHARATFORG.NS','MOTHERSON.NS',
     'BALKRISIND.NS','TIINDIA.NS',
 
     # Energy & Power Transition
@@ -74,7 +74,7 @@ UNIVERSE = [
 
 # Watchlist — high quality but not yet qualifying
 WATCHLIST = [
-    'ZOMATO.NS',      # not yet profitable on all metrics
+    'ETERNAL.NS',     # Eternal (formerly Zomato) — food delivery + quick commerce; profitability inflecting
     'NYKAA.NS',       # profitability still building
     'POLICYBZR.NS',   # high growth, early stage
     'DELHIVERY.NS',   # logistics, margins building
