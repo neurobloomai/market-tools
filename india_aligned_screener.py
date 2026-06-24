@@ -121,6 +121,13 @@ def grade_ticker(ticker):
         return '—'
     return quality_grade(d)
 
+def sm_signal(rs, mcmf_trend):
+    if mcmf_trend == '↑':
+        return '◎'
+    if mcmf_trend == '↓' and (rs is None or rs < 1.0):
+        return '⚠'
+    return '→'
+
 
 # ── HTML helpers ──────────────────────────────────────────────────────────────
 
@@ -204,7 +211,6 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
         cmf   = r.get('cmf', 0.0)
         rs    = r.get('rs')
         hi    = r.get('pct_from_high', 0.0)
-        vol_s = f'{r["vol_ratio"]:.1f}x' if r.get('vol_ratio') is not None else '—'
         slp   = '↑' if r.get('slope_up') else '↓'
         flag  = '●' if r['w_spread'] < 3.0 else ('○' if r['w_spread'] < 5.0 else '')
         rs_s  = f'{rs:.2f}x' if rs is not None else '—'
@@ -215,7 +221,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                 f'<td style="color:{_c_ma(r["s"])}">{r["s"]}/4</td>'
                 f'<td>₹{r["p"]:,.2f}</td>'
                 f'<td>{flag} {r["w_spread"]:.1f}%</td>'
-                f'<td>{vol_s}</td><td>{slp}</td>'
+                f'<td>{slp}</td>'
                 f'<td style="color:{_c_cmf(cmf)}">{cmf:+.2f}</td>'
                 f'<td style="color:{_c_rs(rs)}">{rs_s}{lag}</td>'
                 f'<td style="color:{_c_hi(hi)}">{hi:+.1f}%</td>'
@@ -230,7 +236,6 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
         cmf   = r.get('cmf', 0.0)
         rs    = r.get('rs')
         hi    = r.get('pct_from_high', 0.0)
-        vol_s = f'{r["vol_ratio"]:.1f}x' if r.get('vol_ratio') is not None else '—'
         slp   = '↑' if r.get('slope_up') else '↓'
         flag  = '●' if r['st_spread'] < 2.0 else ('○' if r['st_spread'] < 4.0 else '')
         rs_s  = f'{rs:.2f}x' if rs is not None else '—'
@@ -241,7 +246,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                 f'<td style="color:{_c_ma(r["s"])}">{r["s"]}/4</td>'
                 f'<td>₹{r["p"]:,.2f}</td>'
                 f'<td>{flag} {r["st_spread"]:.1f}%</td>'
-                f'<td>{vol_s}</td><td>{slp}</td>'
+                f'<td>{slp}</td>'
                 f'<td style="color:{_c_cmf(cmf)}">{cmf:+.2f}</td>'
                 f'<td style="color:{_c_rs(rs)}">{rs_s}{lag}</td>'
                 f'<td style="color:{_c_hi(hi)}">{hi:+.1f}%</td>'
@@ -278,6 +283,10 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                              f'<span style="color:{_c_trend(mc[2])};font-weight:600"> {mc[2]}</span>')
             else:
                 mcmf_cell = '<span style="color:#484f58">—</span>'
+            sig = sm_signal(rs, mc[2])
+            sig_color = '#3fb950' if sig == '◎' else ('#f85149' if sig == '⚠' else '#8b949e')
+            sig_label = 'base building' if sig == '◎' else ('distributing' if sig == '⚠' else 'mixed')
+            sig_cell  = f'<span style="color:{sig_color};font-weight:600">{sig}</span><span style="color:{sig_color};font-size:10px"> {sig_label}</span>'
             sm_rows += (f'<tr>'
                         f'<td class="ticker">{disp(t)}</td>'
                         f'<td style="color:{_c_ma(r["s"])}">{r["s"]}/4</td>'
@@ -286,6 +295,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                         f'<td style="color:{_c_hi(hi)}">{hi:+.1f}%</td>'
                         f'<td style="color:{_c_cmf(cmf)}">{cmf:+.2f}</td>'
                         f'<td>{mcmf_cell}</td>'
+                        f'<td>{sig_cell}</td>'
                         f'<td style="color:#8b949e;font-size:11px">{note}</td>'
                         f'</tr>')
 
@@ -348,24 +358,24 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
 {'<div class="sh">Promotion Candidates</div><table><thead><tr><th></th><th>Ticker</th><th>Grade</th><th>Price</th><th>MA</th></tr></thead><tbody>' + promo_rows + '</tbody></table>' if promos else ''}
 
 <div class="sh">Special Mention — Teasing / Puzzling Setups</div>
-<div class="sub">Structure building or price dislocated — not yet actionable but worth watching closely. &nbsp;Mth CMF = 6-month monthly CMF + trend vs prior 6 months (↑ rising / ↓ falling / → flat).</div>
+<div class="sub">Structure building or price dislocated — not yet actionable but worth watching closely. &nbsp;Mth CMF = 6-month monthly CMF + trend vs prior 6 months (↑ rising / ↓ falling / → flat). &nbsp;<span style="color:#3fb950">◎ base building</span> = MthCMF ↑ &nbsp;·&nbsp; <span style="color:#f85149">⚠ distributing</span> = MthCMF ↓ + RS &lt; 1.0 &nbsp;·&nbsp; <span style="color:#8b949e">→ mixed</span> = conflicting signals.</div>
 <table><thead><tr>
-  <th>Ticker</th><th>MA</th><th>Price</th><th>RS vs NIFTY</th><th>offHi</th><th>CMF (wkly)</th><th>Mth CMF</th><th>Note</th>
+  <th>Ticker</th><th>MA</th><th>Price</th><th>RS vs NIFTY</th><th>offHi</th><th>CMF (wkly)</th><th>Mth CMF</th><th>Signal</th><th>Note</th>
 </tr></thead><tbody>{sm_rows}</tbody></table>
 
 <div class="sh">Weekly Squeeze — FullCoil (top 25)</div>
-<div class="sub">● &lt;3% very tight &nbsp; ○ 3–5% building &nbsp; CMF &gt;+0.10 accumulation / &lt;–0.10 distribution &nbsp; RS vs NIFTY 13w &nbsp; offHi = % from 52w high</div>
+<div class="sub">● &lt;3% very tight &nbsp; ○ 3–5% building &nbsp; Slp = 10w MA slope &nbsp; CMF &gt;+0.10 accumulation / &lt;–0.10 distribution &nbsp; RS vs NIFTY 13w &nbsp; offHi = % from 52w high</div>
 <table><thead><tr>
   <th>Ticker</th><th></th><th>MA</th><th>Price</th><th>Spread</th>
-  <th>Vol</th><th>Slp</th><th>CMF</th><th>RS</th><th>offHi</th>
+  <th>Slp</th><th>CMF</th><th>RS</th><th>offHi</th>
   <th>10w MA</th><th>20w MA</th><th>35w MA</th><th>50w MA</th>
 </tr></thead><tbody>{squeeze_rows}</tbody></table>
 
 <div class="sh">ST Squeeze — 10w/20w Convergence (top 20)</div>
-<div class="sub">● &lt;2% very tight &nbsp; ○ 2–4% building &nbsp; FullCoil = 10w–50w spread for context</div>
+<div class="sub">● &lt;2% very tight &nbsp; ○ 2–4% building &nbsp; Slp = 10w MA slope &nbsp; FullCoil = 10w–50w spread for context</div>
 <table><thead><tr>
   <th>Ticker</th><th></th><th>MA</th><th>Price</th><th>Gap</th>
-  <th>Vol</th><th>Slp</th><th>CMF</th><th>RS</th><th>offHi</th>
+  <th>Slp</th><th>CMF</th><th>RS</th><th>offHi</th>
   <th>10w MA</th><th>20w MA</th><th>FullCoil</th>
 </tr></thead><tbody>{st_rows}</tbody></table>
 
@@ -375,6 +385,11 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
   <span style="color:#3fb950">■</span> CMF &gt;+0.10 accumulation &nbsp;
   <span style="color:#d29922">■</span> CMF &lt;–0.10 distribution &nbsp;
   <span style="color:#3fb950">■</span> offHi ≥ –3% near 52w high
+</div>
+<div class="legend" style="margin-top:6px">
+  ● filled = very tight squeeze (FullCoil &lt;3%, ST Gap &lt;2%) — coil compressed, energy highest &nbsp;·&nbsp;
+  ○ unfilled = building squeeze (FullCoil 3–5%, ST Gap 2–4%) — compressing but not fully wound &nbsp;·&nbsp;
+  blank = spread still wide, no squeeze
 </div>
 <div class="legend" style="margin-top:6px">For informational purposes only. Not financial advice.</div>
 </body></html>"""
@@ -387,7 +402,9 @@ if __name__ == '__main__':
     nifty_13w_ratio = float(nifty_close.iloc[-1]) / float(nifty_close.iloc[-14]) if len(nifty_close) >= 14 else 1.0
     ma_score_fn     = functools.partial(ma_score, nifty_13w_ratio=nifty_13w_ratio)
 
-    print(f"\n  Fetching MA alignment for {len(TICKERS)} India tickers ...", flush=True)
+    now_ts = datetime.now().strftime('%Y-%m-%d %H:%M')
+    print(f"\n  India Aligned Screener — {now_ts}", flush=True)
+    print(f"  Fetching MA alignment for {len(TICKERS)} India tickers ...", flush=True)
     with ThreadPoolExecutor(max_workers=20) as ex:
         results = list(ex.map(ma_score_fn, TICKERS))
 
@@ -482,47 +499,48 @@ if __name__ == '__main__':
             rs_s    = f'RS {rs_val:.2f}x' if rs_val is not None else 'RS  —  '
             hi_s    = f'{hi_val:+.1f}% hi' if hi_val is not None else '—'
             mcmf_s  = f'MthCMF {mcmf[0]:+.2f}{mcmf[2]}' if mcmf[0] is not None else 'MthCMF —'
-            print(f"  {disp(t):12}  {r['s']}/4  ₹{r['p']:>10.2f}   {rs_s}   {hi_s}   CMF {cmf_val:+.2f}   {mcmf_s}")
+            sig     = sm_signal(rs_val, mcmf[2])
+            print(f"  {sig}  {disp(t):12}  {r['s']}/4  ₹{r['p']:>10.2f}   {rs_s}   {hi_s}   CMF {cmf_val:+.2f}   {mcmf_s}")
             print(f"               → {note}\n")
+    print(f"  ◎ base building (MthCMF ↑)   ⚠ distributing (MthCMF ↓ + RS < 1.0)   → mixed signals")
 
     # Weekly Squeeze
     squeezed = sorted(valid, key=lambda r: r['w_spread'])
     print(f"\n  WEEKLY SQUEEZE — 10w/20w/35w/50w MA compression  ({now})")
     print(f"  {'─'*84}")
-    print(f"  {'Ticker':<12} {'MA':<4} {'Price':>10}  {'Spread':>7}  {'Vol':>4}  {'Slp'}  {'CMF':>6}  {'RS':>6}  {'offHi':>6}")
-    print(f"  {'─'*12} {'─'*4} {'─'*10}  {'─'*7}  {'─'*4}  {'─'*3}  {'─'*6}  {'─'*6}  {'─'*6}")
+    print(f"  {'Ticker':<12} {'MA':<4} {'Price':>10}  {'Spread':>7}  {'Slp'}  {'CMF':>6}  {'RS':>6}  {'offHi':>6}")
+    print(f"  {'─'*12} {'─'*4} {'─'*10}  {'─'*7}  {'─'*3}  {'─'*6}  {'─'*6}  {'─'*6}")
     for r in squeezed[:25]:
         t     = r['t']
         src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
         flag  = '●' if r['w_spread'] < 3.0 else ('○' if r['w_spread'] < 5.0 else ' ')
-        vol_s = f'{r["vol_ratio"]:.1f}x' if r.get('vol_ratio') is not None else ' —  '
         slp_s = '↑' if r.get('slope_up') else '↓'
         cmf_s = f'{r.get("cmf", 0.0):+.2f}'
         rs_v  = r.get('rs')
         rs_s  = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
         hi_s  = f'{r.get("pct_from_high", 0.0):+.1f}%'
-        print(f"  {disp(t):<12} {r['s']}/4  ₹{r['p']:>9.2f}  {flag}{r['w_spread']:>5.1f}%  {vol_s:>4}  {slp_s}  {cmf_s:>6}  {rs_s:>6}  {hi_s:>6}  [{src}]")
+        print(f"  {disp(t):<12} {r['s']}/4  ₹{r['p']:>9.2f}  {flag}{r['w_spread']:>5.1f}%  {slp_s}  {cmf_s:>6}  {rs_s:>6}  {hi_s:>6}  [{src}]")
 
     # ST Squeeze
     st_squeezed = sorted(valid, key=lambda r: r['st_spread'])
     print(f"\n  ST SQUEEZE — 10w/20w SMA convergence  ({now})")
     print(f"  {'─'*72}")
-    print(f"  {'Ticker':<12} {'MA':<4} {'Price':>10}  {'Gap':>6}  {'Vol':>4}  {'Slp'}  {'CMF':>6}  {'RS':>6}  {'offHi':>6}  {'FullCoil':>8}")
-    print(f"  {'─'*12} {'─'*4} {'─'*10}  {'─'*6}  {'─'*4}  {'─'*3}  {'─'*6}  {'─'*6}  {'─'*6}  {'─'*8}")
+    print(f"  {'Ticker':<12} {'MA':<4} {'Price':>10}  {'Gap':>6}  {'Slp'}  {'CMF':>6}  {'RS':>6}  {'offHi':>6}  {'FullCoil':>8}")
+    print(f"  {'─'*12} {'─'*4} {'─'*10}  {'─'*6}  {'─'*3}  {'─'*6}  {'─'*6}  {'─'*6}  {'─'*8}")
     for r in st_squeezed[:20]:
         t     = r['t']
         src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
         flag  = '●' if r['st_spread'] < 2.0 else ('○' if r['st_spread'] < 4.0 else ' ')
-        vol_s = f'{r["vol_ratio"]:.1f}x' if r.get('vol_ratio') is not None else ' —  '
         slp_s = '↑' if r.get('slope_up') else '↓'
         cmf_s = f'{r.get("cmf", 0.0):+.2f}'
         rs_v  = r.get('rs')
         rs_s  = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
         hi_s  = f'{r.get("pct_from_high", 0.0):+.1f}%'
         print(f"  {disp(t):<12} {r['s']}/4  ₹{r['p']:>9.2f}  {flag}{r['st_spread']:>4.1f}%"
-              f"  {vol_s:>4}  {slp_s}  {cmf_s:>6}  {rs_s:>6}  {hi_s:>6}  {r['w_spread']:>7.1f}%  [{src}]")
+              f"  {slp_s}  {cmf_s:>6}  {rs_s:>6}  {hi_s:>6}  {r['w_spread']:>7.1f}%  [{src}]")
 
-    print(f"\n  ● <2% very tight   ○ 2-4% building   FullCoil = 10w-50w spread   CMF >+0.10 accum  <-0.10 distrib   RS vs NIFTY 13w")
+    print(f"\n  ● <3% very tight   ○ 3-5% building   Slp = 10w MA slope   CMF >+0.10 accum  <-0.10 distrib   RS vs NIFTY 13w")
+    print(f"  ● filled (FullCoil <3%, ST Gap <2%) — coil compressed   ○ unfilled (3-5% / 2-4%) — building   blank = wide, no squeeze")
     print(f"\n  [U] = Universe   [W] = Watchlist   [X] = Extra\n")
 
     # HTML output + auto-push
