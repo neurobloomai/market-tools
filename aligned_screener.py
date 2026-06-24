@@ -103,6 +103,55 @@ def ma_score(ticker, spy_13w_ratio=1.0):
     except:
         return None
 
+
+def daily_squeeze_data(ticker):
+    try:
+        hist  = yf.Ticker(ticker).history(period='6mo', interval='1d')
+        close = hist['Close'].dropna()
+        if len(close) < 50:
+            return None
+        price = float(close.iloc[-1])
+        ma10d = float(close.tail(10).mean())
+        ma20d = float(close.tail(20).mean())
+        ma35d = float(close.tail(35).mean()) if len(close) >= 35 else ma20d
+        ma50d = float(close.tail(50).mean())
+        dmas      = [ma10d, ma20d, ma35d, ma50d]
+        d_spread  = round((max(dmas) - min(dmas)) / price * 100, 2)
+        slope_up  = ma10d > float(close.iloc[-11:-1].mean()) if len(close) >= 11 else True
+        return {
+            't': ticker, 'p': round(price, 2),
+            'd_spread': d_spread, 'slope_up': slope_up,
+            'ma10d': round(ma10d, 2), 'ma20d': round(ma20d, 2),
+            'ma35d': round(ma35d, 2), 'ma50d': round(ma50d, 2),
+        }
+    except:
+        return None
+
+
+def monthly_squeeze_data(ticker):
+    try:
+        hist  = yf.Ticker(ticker).history(period='5y', interval='1mo')
+        close = hist['Close'].dropna()
+        if len(close) < 20:
+            return None
+        price = float(close.iloc[-1])
+        ma3m  = float(close.tail(3).mean())
+        ma6m  = float(close.tail(6).mean())
+        ma10m = float(close.tail(10).mean())
+        ma20m = float(close.tail(20).mean())
+        mmas      = [ma3m, ma6m, ma10m, ma20m]
+        m_spread  = round((max(mmas) - min(mmas)) / price * 100, 2)
+        slope_up  = ma3m > float(close.iloc[-4:-1].mean()) if len(close) >= 4 else True
+        return {
+            't': ticker, 'p': round(price, 2),
+            'm_spread': m_spread, 'slope_up': slope_up,
+            'ma3m': round(ma3m, 2), 'ma6m': round(ma6m, 2),
+            'ma10m': round(ma10m, 2), 'ma20m': round(ma20m, 2),
+        }
+    except:
+        return None
+
+
 # ── HTML helpers ─────────────────────────────────────────────────────────────
 
 def _c_rs(v):
@@ -140,10 +189,14 @@ def _c_trend(arrow):
 
 def build_aligned_html(valid, aligned, grades, partial, promos,
                        squeezed, st_squeezed, rs_map, hi_map, cmf_map,
-                       special_mention, now, UNIVERSE, WATCHLIST, m_cmf_map=None):
+                       special_mention, now, UNIVERSE, WATCHLIST, m_cmf_map=None,
+                       daily_squeezed=None, monthly_squeezed=None, mtf_set=None):
 
     def src_tag(t):
         return 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+
+    score_map = {r['t']: r['s'] for r in valid}
+    _mtf = mtf_set or set()
 
     def aligned_row(r, g):
         t    = r['t']
@@ -230,6 +283,50 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                 f'<td style="color:{_c_ma(r["s"])}">{r["w_spread"]:.1f}%</td>'
                 f'</tr>')
 
+    def daily_row(r):
+        t    = r['t']
+        ws   = score_map.get(t)
+        hi   = hi_map.get(t, 0.0)
+        slp  = '<span style="color:#3fb950">▲</span>' if r.get('slope_up') else '<span style="color:#f85149">▼</span>'
+        flag = '●' if r['d_spread'] < 3.0 else ('○' if r['d_spread'] < 5.0 else '')
+        star = '<span style="color:#d29922" title="MTF">★</span> ' if t in _mtf else ''
+        ws_s = f'{ws}/4' if ws is not None else '—'
+        return (f'<tr>'
+                f'<td class="ticker">{star}{t}</td>'
+                f'<td style="color:#8b949e;font-size:11px">[{src_tag(t)}]</td>'
+                f'<td style="color:{_c_ma(ws or 0)}">{ws_s}</td>'
+                f'<td>${r["p"]:,.2f}</td>'
+                f'<td>{flag} {r["d_spread"]:.1f}%</td>'
+                f'<td>{slp}</td>'
+                f'<td style="color:{_c_hi(hi)}">{hi:+.1f}%</td>'
+                f'<td style="color:#484f58;font-size:11px">${r["ma10d"]:,.2f}</td>'
+                f'<td style="color:#484f58;font-size:11px">${r["ma20d"]:,.2f}</td>'
+                f'<td style="color:#484f58;font-size:11px">${r["ma35d"]:,.2f}</td>'
+                f'<td style="color:#484f58;font-size:11px">${r["ma50d"]:,.2f}</td>'
+                f'</tr>')
+
+    def monthly_row(r):
+        t    = r['t']
+        ws   = score_map.get(t)
+        hi   = hi_map.get(t, 0.0)
+        slp  = '<span style="color:#3fb950">▲</span>' if r.get('slope_up') else '<span style="color:#f85149">▼</span>'
+        flag = '●' if r['m_spread'] < 3.0 else ('○' if r['m_spread'] < 5.0 else '')
+        star = '<span style="color:#d29922" title="MTF">★</span> ' if t in _mtf else ''
+        ws_s = f'{ws}/4' if ws is not None else '—'
+        return (f'<tr>'
+                f'<td class="ticker">{star}{t}</td>'
+                f'<td style="color:#8b949e;font-size:11px">[{src_tag(t)}]</td>'
+                f'<td style="color:{_c_ma(ws or 0)}">{ws_s}</td>'
+                f'<td>${r["p"]:,.2f}</td>'
+                f'<td>{flag} {r["m_spread"]:.1f}%</td>'
+                f'<td>{slp}</td>'
+                f'<td style="color:{_c_hi(hi)}">{hi:+.1f}%</td>'
+                f'<td style="color:#484f58;font-size:11px">${r["ma3m"]:,.2f}</td>'
+                f'<td style="color:#484f58;font-size:11px">${r["ma6m"]:,.2f}</td>'
+                f'<td style="color:#484f58;font-size:11px">${r["ma10m"]:,.2f}</td>'
+                f'<td style="color:#484f58;font-size:11px">${r["ma20m"]:,.2f}</td>'
+                f'</tr>')
+
     # Assemble section rows
     aligned_rows = ''
     for label, subset in [('A+ — structure + quality', [(r,g) for r,g in zip(aligned,grades) if g=='A+']),
@@ -243,6 +340,23 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
     partial_rows = ''.join(partial_row(r) for r in partial)
     squeeze_rows = ''.join(squeeze_row(r) for r in squeezed[:25])
     st_rows      = ''.join(st_row(r) for r in st_squeezed[:20])
+
+    _ds = sorted([r for r in (daily_squeezed or []) if r],   key=lambda r: r['d_spread'])
+    _ms = sorted([r for r in (monthly_squeezed or []) if r], key=lambda r: r['m_spread'])
+    daily_rows   = ''.join(daily_row(r) for r in _ds[:20])
+    monthly_rows = ''.join(monthly_row(r) for r in _ms[:20])
+
+    mtf_color = '#d29922' if _mtf else '#484f58'
+    mtf_section = ''
+    if _mtf:
+        mtf_names = ' &nbsp;·&nbsp; '.join(
+            f'<span style="font-weight:600;color:#d29922">{t}</span>' for t in sorted(_mtf))
+        mtf_section = (
+            f'<div class="sh" style="color:#d29922">★ Multi-Timeframe Squeeze — {len(_mtf)} names</div>'
+            f'<div class="sub">Daily + Weekly + Monthly all compressed simultaneously — rarest structural setup.</div>'
+            f'<div style="background:#161b22;border:1px solid #d29922;border-radius:6px;'
+            f'padding:12px 16px;margin-bottom:20px;font-size:13px">{mtf_names}</div>'
+        )
 
     sm_rows = ''
     for t, note in special_mention.items():
@@ -319,8 +433,10 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
   <div class="stat"><div class="stat-val" style="color:#58a6ff">{n_a}</div><div class="stat-lbl">A Grade</div></div>
   <div class="stat"><div class="stat-val" style="color:#d29922">{len(partial)}</div><div class="stat-lbl">3/4 Near-Aligned</div></div>
   <div class="stat"><div class="stat-val">{len(promos)}</div><div class="stat-lbl">Promo Candidates</div></div>
+  <div class="stat"><div class="stat-val" style="color:{mtf_color}">{"★ " if _mtf else ""}{len(_mtf)}</div><div class="stat-lbl">MTF Squeeze</div></div>
 </div>
 
+{mtf_section}
 <div class="sh">4/4 Aligned — {len(aligned)} names</div>
 <table><thead><tr>
   <th></th><th>Ticker</th><th>Grade</th><th>Price</th><th>RS vs SPY</th><th>% from 52wH</th><th>CMF</th>
@@ -356,6 +472,20 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
   <th>Slp</th><th>CMF</th><th>RS</th><th>offHi</th>
   <th>10w MA</th><th>20w MA</th><th>FullCoil</th>
 </tr></thead><tbody>{st_rows}</tbody></table>
+
+<div class="sh">Daily Squeeze — FullCoil 10d/20d/35d/50d (top 20)</div>
+<div class="sub">● &lt;3% very tight &nbsp; ○ 3–5% building &nbsp; Slp = 10d MA slope &nbsp; Wkly MA = weekly 4/4 score &nbsp; ★ = also MTF (all 3 TFs tight)</div>
+<table><thead><tr>
+  <th>Ticker</th><th></th><th>Wkly MA</th><th>Price</th><th>Daily Spread</th>
+  <th>Slp</th><th>offHi</th><th>10d MA</th><th>20d MA</th><th>35d MA</th><th>50d MA</th>
+</tr></thead><tbody>{daily_rows}</tbody></table>
+
+<div class="sh">Monthly Squeeze — FullCoil 3m/6m/10m/20m (top 20)</div>
+<div class="sub">● &lt;3% very tight &nbsp; ○ 3–5% building &nbsp; Slp = 3m MA slope &nbsp; Wkly MA = weekly 4/4 score &nbsp; ★ = also MTF (all 3 TFs tight)</div>
+<table><thead><tr>
+  <th>Ticker</th><th></th><th>Wkly MA</th><th>Price</th><th>Mthly Spread</th>
+  <th>Slp</th><th>offHi</th><th>3m MA</th><th>6m MA</th><th>10m MA</th><th>20m MA</th>
+</tr></thead><tbody>{monthly_rows}</tbody></table>
 
 <div class="legend" style="margin-top:28px">
   <span style="color:#3fb950">■</span> RS ≥ 1.20 outperforming &nbsp;
@@ -434,6 +564,17 @@ if __name__ == '__main__':
         results = list(ex.map(ma_score_fn, TICKERS))
 
     valid = [r for r in results if r]
+
+    print(f"  Fetching daily squeeze for {len(TICKERS)} tickers ...", flush=True)
+    with ThreadPoolExecutor(max_workers=20) as ex:
+        daily_results = list(ex.map(daily_squeeze_data, TICKERS))
+
+    print(f"  Fetching monthly squeeze for {len(TICKERS)} tickers ...", flush=True)
+    with ThreadPoolExecutor(max_workers=20) as ex:
+        monthly_results = list(ex.map(monthly_squeeze_data, TICKERS))
+
+    daily_valid   = [r for r in daily_results   if r]
+    monthly_valid = [r for r in monthly_results if r]
 
     aligned = sorted([r for r in valid if r['s'] == 4], key=lambda r: r['t'])
     partial = sorted([r for r in valid if r['s'] == 3], key=lambda r: r['t'])
@@ -561,9 +702,17 @@ if __name__ == '__main__':
             print(f"           → {note}\n")
     print(f"  ◎ base building (MthCMF ↑)   ⚠ distributing (MthCMF ↓ + RS < 1.0)   → mixed signals")
 
-    # ── Weekly Squeeze Scanner ────────────────────────────────────────────────
-    # Low w_spread = 10w/20w/35w/50w MAs bunching tight = coiled spring
-    squeezed = sorted(valid, key=lambda r: r['w_spread'])
+    # ── Squeeze Scanners ─────────────────────────────────────────────────────
+    squeezed         = sorted(valid,         key=lambda r: r['w_spread'])
+    daily_squeezed   = sorted(daily_valid,   key=lambda r: r['d_spread'])
+    monthly_squeezed = sorted(monthly_valid, key=lambda r: r['m_spread'])
+
+    weekly_tight  = {r['t'] for r in squeezed         if r['w_spread'] < 5.0}
+    daily_tight   = {r['t'] for r in daily_squeezed   if r['d_spread'] < 5.0}
+    monthly_tight = {r['t'] for r in monthly_squeezed if r['m_spread'] < 5.0}
+    mtf_set = weekly_tight & daily_tight & monthly_tight
+
+    ws_map = {r['t']: r['s'] for r in valid}
 
     print(f"\n  WEEKLY SQUEEZE — 10w/20w/35w/50w MA compression  ({now})")
     print(f"  {'─'*84}")
@@ -608,13 +757,60 @@ if __name__ == '__main__':
               f"  {slp_s}  {cmf_s:>6}  {rs_s:>6}  {hi_s:>6}  ${r['ma10w']:>7.2f} ${r['ma20w']:>7.2f}  {r['w_spread']:>7.1f}%  [{src}]")
 
     print(f"\n  ● <2% very tight   ○ 2-4% building   FullCoil = 10w-50w spread   CMF >+0.10 accum  <-0.10 distrib   RS vs SPY 13w   offHi = % from 52w high")
+
+    # ── Daily Squeeze CLI ────────────────────────────────────────────────────
+    print(f"\n  DAILY SQUEEZE — 10d/20d/35d/50d MA compression  ({now})")
+    print(f"  {'─'*78}")
+    print(f"  {'Ticker':<9} {'WkMA':<5} {'Price':>8}  {'Spread':>7}  {'Slp'}  {'offHi':>6}  {'10d':>8} {'20d':>8} {'35d':>8} {'50d':>8}")
+    print(f"  {'─'*9} {'─'*5} {'─'*8}  {'─'*7}  {'─'*3}  {'─'*6}  {'─'*8} {'─'*8} {'─'*8} {'─'*8}")
+    for r in daily_squeezed[:20]:
+        t     = r['t']
+        src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+        flag  = '●' if r['d_spread'] < 3.0 else ('○' if r['d_spread'] < 5.0 else ' ')
+        slp_s = '▲' if r.get('slope_up') else '▼'
+        ws    = ws_map.get(t, 0)
+        star  = '★' if t in mtf_set else ' '
+        hi    = hi_map.get(t, 0.0)
+        print(f"  {star}{t:<8} {ws}/4  ${r['p']:>8.2f}  {flag}{r['d_spread']:>5.1f}%  {slp_s}"
+              f"  {hi:>+5.1f}%  ${r['ma10d']:>7.2f} ${r['ma20d']:>7.2f} ${r['ma35d']:>7.2f} ${r['ma50d']:>7.2f}  [{src}]")
+    print(f"\n  ● <3% very tight   ○ 3-5% building   ★ = MTF (all 3 TFs tight)   (top 20 shown)")
+
+    # ── Monthly Squeeze CLI ──────────────────────────────────────────────────
+    print(f"\n  MONTHLY SQUEEZE — 3m/6m/10m/20m MA compression  ({now})")
+    print(f"  {'─'*78}")
+    print(f"  {'Ticker':<9} {'WkMA':<5} {'Price':>8}  {'Spread':>7}  {'Slp'}  {'offHi':>6}  {'3m':>8} {'6m':>8} {'10m':>8} {'20m':>8}")
+    print(f"  {'─'*9} {'─'*5} {'─'*8}  {'─'*7}  {'─'*3}  {'─'*6}  {'─'*8} {'─'*8} {'─'*8} {'─'*8}")
+    for r in monthly_squeezed[:20]:
+        t     = r['t']
+        src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+        flag  = '●' if r['m_spread'] < 3.0 else ('○' if r['m_spread'] < 5.0 else ' ')
+        slp_s = '▲' if r.get('slope_up') else '▼'
+        ws    = ws_map.get(t, 0)
+        star  = '★' if t in mtf_set else ' '
+        hi    = hi_map.get(t, 0.0)
+        print(f"  {star}{t:<8} {ws}/4  ${r['p']:>8.2f}  {flag}{r['m_spread']:>5.1f}%  {slp_s}"
+              f"  {hi:>+5.1f}%  ${r['ma3m']:>7.2f} ${r['ma6m']:>7.2f} ${r['ma10m']:>7.2f} ${r['ma20m']:>7.2f}  [{src}]")
+    print(f"\n  ● <3% very tight   ○ 3-5% building   ★ = MTF (all 3 TFs tight)   (top 20 shown)")
+
+    # ── MTF Summary CLI ──────────────────────────────────────────────────────
+    if mtf_set:
+        print(f"\n  ★ MULTI-TIMEFRAME SQUEEZE — {len(mtf_set)} names (Daily + Weekly + Monthly all tight)")
+        print(f"  {'─'*60}")
+        for t in sorted(mtf_set):
+            ws  = ws_map.get(t, 0)
+            src = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+            print(f"  ★  [{src}]  {t:8}  {ws}/4 weekly MA")
+    else:
+        print(f"\n  ★ MULTI-TIMEFRAME SQUEEZE — 0 names  (rarest signal — none this week)")
+
     print(f"\n  [U] = Universe   [W] = Watchlist   [X] = Extra\n")
 
     # ── HTML output ──────────────────────────────────────────────────────────
     import subprocess
     html     = build_aligned_html(valid, aligned, grades, partial, promos,
                                   squeezed, st_squeezed, rs_map, hi_map, cmf_map,
-                                  combined_sm, now, UNIVERSE, WATCHLIST, m_cmf_map)
+                                  combined_sm, now, UNIVERSE, WATCHLIST, m_cmf_map,
+                                  daily_squeezed, monthly_squeezed, mtf_set)
     out_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'aligned_screener.html')
     with open(out_path, 'w') as f:
         f.write(html)
