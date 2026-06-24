@@ -162,6 +162,9 @@ WATCHLIST = [
     'MP',    # MP Materials — only US rare earth miner + processor (Mountain Pass CA); DoD contract + Tesla partnership; RevG 118.6%, D/EV 0.103; OM -7.9% (processing build-out phase); national security + EV magnet supply chain
     'FCX',   # Freeport-McMoRan — world's largest publicly traded copper producer (US-based, AZ HQ); copper cycle proxy; margins swing with copper price (not a compounder); copper demand structural via grid + EVs + AI datacenters; ETN/LIN/GEV are the cleaner expression inside the universe
     'INOD',  # Innodata — AI data annotation + services (training data for LLMs); D/EV 0.002, OM 18.8%, NM 13.9%, ROE 38.6%, RevG 54.4%; passes all quality filters but services business (not SaaS) — moat thinner, customer concentration risk (few large AI labs); watch for durability as model efficiency reduces annotation demand
+    # --- Solar ---
+    'ENPH',  # Enphase Energy — microinverter monopoly + battery storage (IQ8/Encharge); cycle trough from high-rate residential solar slowdown, not structural; gross margins ~45%+ holding even in trough; OM -9.1% + RevG -20.6% blocking now; 3/4 MA recovering, -61.6% from highs; when rates normalize + installs recover = A+ candidate; engine intact
+    'RUN',   # Sunrun — residential solar installer + lease/PPA financer; solar deployment theme proxy; D/EV 0.789 (structural project finance debt), ROE -22.7%, FCF -73.4%; NM 17.9% distorted by tax credit pass-throughs; RevG 43.2%; 0/4 MA; not a quality compounder — tracks residential solar deployment rate
 ]
 
 def get_fundamentals(ticker):
