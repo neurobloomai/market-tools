@@ -626,6 +626,7 @@ if __name__ == '__main__':
         commit_msg = f"aligned_screener: {now}"
         subprocess.run(['git', 'add', 'aligned_screener.html'], cwd=repo, check=True, capture_output=True)
         subprocess.run(['git', 'commit', '-m', commit_msg],     cwd=repo, check=True, capture_output=True)
+        subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'], cwd=repo, check=True, capture_output=True)
         subprocess.run(['git', 'push'],                          cwd=repo, check=True, capture_output=True)
         print(f"  Pushed → GitHub  ({commit_msg})")
     except subprocess.CalledProcessError as e:
