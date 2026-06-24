@@ -259,6 +259,10 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                 mcmf_cell = '<span style="color:#484f58">—</span>'
             auto_badge = '<span style="color:#484f58;font-size:10px">[auto] </span>' if note.startswith('[auto]') else ''
             note_text  = note[7:] if note.startswith('[auto]') else note
+            sig = sm_signal(rs, mc[2])
+            sig_color = '#3fb950' if sig == '◎' else ('#f85149' if sig == '⚠' else '#8b949e')
+            sig_label = 'base building' if sig == '◎' else ('distributing' if sig == '⚠' else 'mixed')
+            sig_cell  = f'<span style="color:{sig_color};font-weight:600">{sig}</span><span style="color:{sig_color};font-size:10px"> {sig_label}</span>'
             sm_rows += (f'<tr>'
                         f'<td class="ticker">{t}</td>'
                         f'<td style="color:{_c_ma(r["s"])}">{r["s"]}/4</td>'
@@ -267,6 +271,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                         f'<td style="color:{_c_hi(hi)}">{hi:+.1f}%</td>'
                         f'<td style="color:{_c_cmf(cmf)}">{cmf:+.2f}</td>'
                         f'<td>{mcmf_cell}</td>'
+                        f'<td>{sig_cell}</td>'
                         f'<td style="color:#8b949e;font-size:11px">{auto_badge}{note_text}</td>'
                         f'</tr>')
 
@@ -329,9 +334,9 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
 {'<div class="sh">Promotion Candidates</div><table><thead><tr><th></th><th>Ticker</th><th>Grade</th><th>Price</th><th>MA</th></tr></thead><tbody>' + promo_rows + '</tbody></table>' if promos else ''}
 
 <div class="sh">Special Mention — Teasing / Puzzling Setups</div>
-<div class="sub">Structure building or price dislocated — not yet actionable but worth watching closely. &nbsp;Mth CMF = 6-month monthly CMF + trend vs prior 6 months (↑ rising / ↓ falling / → flat).</div>
+<div class="sub">Structure building or price dislocated — not yet actionable but worth watching closely. &nbsp;Mth CMF = 6-month monthly CMF + trend vs prior 6 months (↑ rising / ↓ falling / → flat). &nbsp;<span style="color:#3fb950">◎ base building</span> = MthCMF ↑ &nbsp;·&nbsp; <span style="color:#f85149">⚠ distributing</span> = MthCMF ↓ + RS &lt; 1.0 &nbsp;·&nbsp; <span style="color:#8b949e">→ mixed</span> = conflicting signals.</div>
 <table><thead><tr>
-  <th>Ticker</th><th>MA</th><th>Price</th><th>RS vs SPY</th><th>offHi</th><th>CMF (wkly)</th><th>Mth CMF</th><th>Note</th>
+  <th>Ticker</th><th>MA</th><th>Price</th><th>RS vs SPY</th><th>offHi</th><th>CMF (wkly)</th><th>Mth CMF</th><th>Signal</th><th>Note</th>
 </tr></thead><tbody>{sm_rows}</tbody></table>
 
 <div class="sh">Weekly Squeeze — FullCoil (top 25)</div>
@@ -396,6 +401,18 @@ def grade_ticker(ticker):
     if not passes_quality_filter(d):
         return '—'
     return quality_grade(d)
+
+def sm_signal(rs, mcmf_trend):
+    """Signal tag for Special Mention names.
+    ◎ base building = MthCMF turning up
+    ⚠ distributing  = MthCMF falling + RS lagging
+    → mixed          = conflicting signals
+    """
+    if mcmf_trend == '↑':
+        return '◎'
+    if mcmf_trend == '↓' and (rs is None or rs < 1.0):
+        return '⚠'
+    return '→'
 
 if __name__ == '__main__':
     # Fetch SPY reference once for RS calculation
@@ -532,8 +549,10 @@ if __name__ == '__main__':
             rs_s    = f'RS {rs_val:.2f}x' if rs_val is not None else 'RS  —  '
             hi_s    = f'{hi_val:+.1f}% hi' if hi_val is not None else '—'
             mcmf_s  = f'MthCMF {mcmf[0]:+.2f}{mcmf[2]}' if mcmf[0] is not None else 'MthCMF —'
-            print(f"  {t:8}  {r['s']}/4  ${r['p']:>8.2f}   {rs_s}   {hi_s}   CMF {cmf_val:+.2f}   {mcmf_s}")
+            sig     = sm_signal(rs_val, mcmf[2])
+            print(f"  {sig}  {t:8}  {r['s']}/4  ${r['p']:>8.2f}   {rs_s}   {hi_s}   CMF {cmf_val:+.2f}   {mcmf_s}")
             print(f"           → {note}\n")
+    print(f"  ◎ base building (MthCMF ↑)   ⚠ distributing (MthCMF ↓ + RS < 1.0)   → mixed signals")
 
     # ── Weekly Squeeze Scanner ────────────────────────────────────────────────
     # Low w_spread = 10w/20w/35w/50w MAs bunching tight = coiled spring
