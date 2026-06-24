@@ -165,7 +165,7 @@ WATCHLIST = [
     # --- Solar ---
     'ENPH',  # Enphase Energy — microinverter monopoly + battery storage (IQ8/Encharge); cycle trough from high-rate residential solar slowdown, not structural; gross margins ~45%+ holding even in trough; OM -9.1% + RevG -20.6% blocking now; 3/4 MA recovering, -61.6% from highs; when rates normalize + installs recover = A+ candidate; engine intact
     'SEDG',  # SolarEdge Technologies — power optimizer + string inverter (Israel HQ, NASDAQ); solar theme proxy alongside ENPH; OM -15.3%, NM -28.6%, ROE -72.5% — deeper hole than ENPH and not purely cyclical; Chinese inverters (Huawei/Sungrow) took European market share (competitive pressure, not just demand slowdown); FCF 8.7% positive (likely inventory liquidation); RevG 41.5%, 3/4 MA; watch gap vs ENPH to close before treating as equivalent recovery
-    'RUN',   # Sunrun — residential solar installer + lease/PPA financer; solar deployment theme proxy; D/EV 0.789 (structural project finance debt), ROE -22.7%, FCF -73.4%; NM 17.9% distorted by tax credit pass-throughs; RevG 43.2%; 0/4 MA; not a quality compounder — tracks residential solar deployment rate
+
 ]
 
 def get_fundamentals(ticker):
