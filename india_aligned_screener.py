@@ -483,16 +483,35 @@ if __name__ == '__main__':
     else:
         print(f"  none — all watchlist names below quality threshold")
 
+    # ── Auto-detect Special Mention ──────────────────────────────────────────
+    auto_candidates = [r for r in valid
+                       if ((r['s'] <= 1 and (r.get('pct_from_high') or 0) < -25)
+                           or (r['s'] == 2 and (r.get('pct_from_high') or 0) < -45))
+                       and r['t'] not in SPECIAL_MENTION
+                       and (r['t'] in UNIVERSE or r['t'] in WATCHLIST)]
+    auto_sm = {}
+    if auto_candidates:
+        print(f"  Auto-detecting Special Mention: {len(auto_candidates)} candidates ...", flush=True)
+        with ThreadPoolExecutor(max_workers=10) as ex:
+            auto_grades = list(ex.map(grade_ticker, [r['t'] for r in auto_candidates]))
+        for r, g in zip(auto_candidates, auto_grades):
+            if g == 'A+':
+                hi = r.get('pct_from_high', 0)
+                auto_sm[r['t']] = (f'[auto] A+ quality — {r["s"]}/4 MA, {hi:+.1f}% from highs; '
+                                   f'structure dislocated, fundamentals intact; watch for MA recovery')
+
+    combined_sm = {**auto_sm, **SPECIAL_MENTION}
+
     # Monthly CMF trend for Special Mention
-    print(f"  Fetching monthly CMF trend for Special Mention names ...", flush=True)
+    print(f"  Fetching monthly CMF trend for {len(combined_sm)} Special Mention names ...", flush=True)
     m_cmf_map = {}
-    for t in SPECIAL_MENTION:
+    for t in combined_sm:
         cur, prior, trend = monthly_cmf_trend(t)
         m_cmf_map[t] = (cur, prior, trend)
 
     print(f"\n  SPECIAL MENTION — Teasing / Puzzling Setups")
     print(f"  {'─'*60}")
-    for t, note in SPECIAL_MENTION.items():
+    for t, note in combined_sm.items():
         r = next((x for x in valid if x['t'] == t), None)
         if r:
             rs_val  = rs_map.get(t)
@@ -550,7 +569,7 @@ if __name__ == '__main__':
     import subprocess
     html     = build_aligned_html(valid, aligned, grades, partial, promos,
                                   squeezed, st_squeezed, rs_map, hi_map, cmf_map,
-                                  SPECIAL_MENTION, now, UNIVERSE, WATCHLIST, m_cmf_map)
+                                  combined_sm, now, UNIVERSE, WATCHLIST, m_cmf_map)
     out_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'india_aligned_screener.html')
     with open(out_path, 'w') as f:
         f.write(html)
