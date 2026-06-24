@@ -28,6 +28,7 @@ SPECIAL_MENTION = {
     'MRAM': 'Magnetoresistive RAM (Everspin) — niche non-volatile memory; fundamentals actively strengthening but 6-9 month thesis; RS 2.26x outperforming SPY despite -38% offHi = recovery not leadership yet; CMF distribution into the bounce; 3/4 MA — wait for 20m confirmation + CMF flip before treating as actionable',
     'PLTR': 'Palantir — AI/data analytics platform (AIP + Foundry + Gotham); A+ quality, government + commercial flywheel; 0/4 MA — price pulled back below all MAs, structure rebuilding; valuation stretched (high P/E growth premium); wait for MA reclaim before treating as actionable entry',
     'HUBS': 'HubSpot — CRM/marketing platform; grade A not A+ yet (OM 3.3%, NM 3.0%, ROE 5.0% below threshold); 0/4 MA, -69% from highs; engine intact — RevG 23.4%, FCF 7.4%, D/EV 0.033 (clean debt); margin thesis is the watch item — OM crossing 10% + NM crossing 5% = auto-qualifies A+; not actionable until margin data confirms the inflection',
+    'NEM': 'Newmont — world\'s largest gold miner (A+); 1/4 MA after gold cycle pullback — price below 10w/20w/10m but 20m support holding; FullCoil 14.6% still wide; OM 61.4%, NM 33.9%, FCF 8.7%, D/EV 0.049; Newcrest acquisition added copper assets (dual GLD + partial COPX theme); gold structural bid intact (central bank buying, de-dollarization); not actionable until MAs reclaim — watch 10m ($101) as first line to cross',
 }
 
 TICKERS = list(dict.fromkeys(UNIVERSE + WATCHLIST + EXTRA + list(SPECIAL_MENTION.keys())))
