@@ -48,7 +48,7 @@ UNIVERSE = [
     'VEEV','WDAY','TTD','PAYC',
     'BRK-B','CB','AFL','TRV','PGR','AJG','AON','WTW','CINF',
     'NVO','ISRG','EW','ALGN','IDXX','MASI','PODD','WST',
-    'MCO','SPGI','MSCI','ICE','CME','CBOE','FDS','BR','NDAQ','COIN',
+    'MCO','SPGI','MSCI','ICE','CME','CBOE','FDS','BR','NDAQ',
     'ODFL','EXPD','CHRW','XPO','JBHT','SAIA','KNSL','RLI','CASH','FICO',
     'ROL','CTAS','CPRT','ADP','PAYX','EFX','TRI','IHS','VRSK','IT',
     'MU','MPWR','MRVL','ITW','ROP','SYK','BSX','AMZN','APP',
@@ -73,7 +73,6 @@ UNIVERSE = [
     'ETN',                        # Eaton Corp — electrical switchgear, circuit breakers, power distribution; sits above PWR in grid value chain, 16% OM, 14% NM, ROE 21%, D/EV 0.12
     'HEI',                        # HEICO — aviation aftermarket parts monopolies, 30yr compounder; 25% OM, 16% NM, ROE 17%, D/EV 0.052, pricing power on FAA-approved parts, A+
     'CW',                         # Curtiss-Wright — defense electronics (nuclear instrumentation, aerospace actuation); 18% OM, 14% NM, ROE 20%, D/EV 0.04, defense cycle tailwind, A
-    'BWXT',                       # BWX Technologies — sole-source Navy nuclear propulsion (submarines/carriers) + nuclear components + medical isotopes; ROE 29%, OM 10%, D/EV 0.099, government contract moat, B
     'TW',                         # Tradeweb — electronic bond/derivatives trading platform; 46% OM, 40% NM, ROE 14%, D/EV 0.007, structural shift from voice to electronic fixed income, A+
     'ALAB',                       # Astera Labs — AI datacenter connectivity (PCIe/CXL retimers), 68% gross/35% op margin, zero debt, 200%+ rev growth, A+; promoted from watchlist
     'UBER',                       # Uber — rideshare + delivery marketplace; 14.6% OM, 15.9% NM, ROE 35%, D/EV 0.08, FCF 4.4%; platform flywheel, grades A
@@ -100,6 +99,7 @@ WATCHLIST = [
     'PCG',   # PG&E — regulated CA utility, NOT a datacenter play (unlike CEG/NEE/VST); wildfire liability + rate-case risk, de-lever story only
     'VST',   # Vistra — nuclear+gas deregulated moat; D/EV 0.27, qualifies as debt pays down
     'KTOS',  # Kratos — drone/defense tech; margins thin now, scaling with DoD contracts
+    'BWXT',  # BWX Technologies — sole-source Navy nuclear propulsion (submarines/carriers) + nuclear components + medical isotopes; ROE 29%, OM 10%, D/EV 0.099, government contract moat; grade B, watch for OM expanding above 15%
     'CELH',  # Celsius — ROE at 8.1%, one point under threshold; margin recovery play
     'SOFI',  # SoFi — neobank scaling; ROE 6.6% and trending right
     'UPWK',  # Upwork — freelance marketplace; D/EV 0.44 (converts) only blocker, margins/FCF solid
