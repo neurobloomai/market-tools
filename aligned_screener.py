@@ -735,9 +735,9 @@ if __name__ == '__main__':
     daily_squeezed   = sorted(daily_valid,   key=lambda r: r['d_spread'])
     monthly_squeezed = sorted(monthly_valid, key=lambda r: r['m_spread'])
 
-    weekly_tight  = {r['t'] for r in squeezed         if r['w_spread'] < 5.0}
-    daily_tight   = {r['t'] for r in daily_squeezed   if r['d_spread'] < 5.0}
-    monthly_tight = {r['t'] for r in monthly_squeezed if r['m_spread'] < 5.0}
+    weekly_tight  = {r['t'] for r in squeezed         if r['w_spread'] < 3.0}
+    daily_tight   = {r['t'] for r in daily_squeezed   if r['d_spread'] < 2.0}
+    monthly_tight = {r['t'] for r in monthly_squeezed if r['m_spread'] < 3.0}
     mtf_set = weekly_tight & daily_tight & monthly_tight
 
     ws_map = {r['t']: r['s'] for r in valid}
