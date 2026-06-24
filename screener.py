@@ -161,6 +161,7 @@ WATCHLIST = [
     'ALB',   # Albemarle — largest lithium producer (Chile/Australia mines); OM 24.8%, FCF 4.1%, D/EV 0.095; NM -4.2% from lithium price cycle (not structural); long-term EV battery supply chain position
     'MP',    # MP Materials — only US rare earth miner + processor (Mountain Pass CA); DoD contract + Tesla partnership; RevG 118.6%, D/EV 0.103; OM -7.9% (processing build-out phase); national security + EV magnet supply chain
     'FCX',   # Freeport-McMoRan — world's largest publicly traded copper producer (US-based, AZ HQ); copper cycle proxy; margins swing with copper price (not a compounder); copper demand structural via grid + EVs + AI datacenters; ETN/LIN/GEV are the cleaner expression inside the universe
+    'INOD',  # Innodata — AI data annotation + services (training data for LLMs); D/EV 0.002, OM 18.8%, NM 13.9%, ROE 38.6%, RevG 54.4%; passes all quality filters but services business (not SaaS) — moat thinner, customer concentration risk (few large AI labs); watch for durability as model efficiency reduces annotation demand
 ]
 
 def get_fundamentals(ticker):
