@@ -160,6 +160,7 @@ WATCHLIST = [
     # --- Critical Materials ---
     'ALB',   # Albemarle — largest lithium producer (Chile/Australia mines); OM 24.8%, FCF 4.1%, D/EV 0.095; NM -4.2% from lithium price cycle (not structural); long-term EV battery supply chain position
     'MP',    # MP Materials — only US rare earth miner + processor (Mountain Pass CA); DoD contract + Tesla partnership; RevG 118.6%, D/EV 0.103; OM -7.9% (processing build-out phase); national security + EV magnet supply chain
+    'FCX',   # Freeport-McMoRan — world's largest publicly traded copper producer (US-based, AZ HQ); copper cycle proxy; margins swing with copper price (not a compounder); copper demand structural via grid + EVs + AI datacenters; ETN/LIN/GEV are the cleaner expression inside the universe
 ]
 
 def get_fundamentals(ticker):
