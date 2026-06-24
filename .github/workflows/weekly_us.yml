@@ -29,5 +29,8 @@ jobs:
       - name: Weekly snapshot
         run: python weekly_snapshot.py
 
+      - name: Quality screener
+        run: python screener.py
+
       - name: Aligned screener
         run: python aligned_screener.py

@@ -459,10 +459,30 @@ if __name__ == '__main__':
 
     print(f'  👀  {len(watch_raw)} watchlist entries fetched\n')
 
+    now  = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
     html = build_html(passed, watch_raw, universe_failing=failing)
-    path = os.path.expanduser('~/india_screener.html')
-    with open(path, 'w') as f:
-        f.write(html)
 
-    print(f'  Saved → {path}')
-    webbrowser.open(f'file://{path}')
+    import subprocess, os as _os
+    out_path   = _os.path.join(_os.path.dirname(_os.path.abspath(__file__)), 'india_screener.html')
+    commit_msg = f'india_screener: {now}'
+    is_ci      = _os.environ.get('CI') == 'true'
+
+    with open(out_path, 'w') as f:
+        f.write(html)
+    print(f'  Saved → {out_path}')
+
+    if not is_ci:
+        webbrowser.open(f'file://{out_path}')
+
+    try:
+        repo = _os.path.dirname(out_path)
+        subprocess.run(['git', 'checkout', '--', 'india_screener.html'], cwd=repo, capture_output=True)
+        subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'],    cwd=repo, check=True, capture_output=True)
+        with open(out_path, 'w') as f:
+            f.write(html)
+        subprocess.run(['git', 'add',    'india_screener.html'], cwd=repo, check=True, capture_output=True)
+        subprocess.run(['git', 'commit', '-m', commit_msg],      cwd=repo, check=True, capture_output=True)
+        subprocess.run(['git', 'push'],                           cwd=repo, check=True, capture_output=True)
+        print(f'  Pushed → GitHub  ({commit_msg})')
+    except subprocess.CalledProcessError as e:
+        print(f'  Git push skipped: {e.stderr.decode() if e.stderr else e}')
