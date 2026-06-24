@@ -30,6 +30,7 @@ SPECIAL_MENTION = {
     'HUBS': 'HubSpot — CRM/marketing platform; grade A not A+ yet (OM 3.3%, NM 3.0%, ROE 5.0% below threshold); 0/4 MA, -69% from highs; engine intact — RevG 23.4%, FCF 7.4%, D/EV 0.033 (clean debt); margin thesis is the watch item — OM crossing 10% + NM crossing 5% = auto-qualifies A+; not actionable until margin data confirms the inflection',
     'NEM': 'Newmont — world\'s largest gold miner (A+); 1/4 MA after gold cycle pullback — price below 10w/20w/10m but 20m support holding; FullCoil 14.6% still wide; OM 61.4%, NM 33.9%, FCF 8.7%, D/EV 0.049; Newcrest acquisition added copper assets (dual GLD + partial COPX theme); gold structural bid intact (central bank buying, de-dollarization); not actionable until MAs reclaim — watch 10m ($101) as first line to cross',
     'MCO': 'Moody\'s — credit rating duopoly (with SPGI); every debt issuance globally needs a Moody\'s or S&P rating — structural toll collector on global capital markets; OM 45.7%, NM 31.7%, ROE 71.4%, D/EV 0.089, FCF 2.9%, RevG 8.1%; 2/4 MA, price below 10m ($470) and 20m ($473) — both monthly MAs clustered tight; watch $470 as the line to reclaim; great businesses deserve tracking even before alignment',
+    'SPGI': 'S&P Global — credit rating + financial data duopoly (with MCO); S&P 500 index licensing, Platts commodity data, Market Intelligence platform; pricing power permanent, toll collector on every index fund globally; 0/4 MA — watch for structure recovery alongside MCO',
     'NOW': 'ServiceNow — enterprise workflow automation platform; grade A (OM borderline); but world-class business moat — deep IT workflow integration means switching cost is near-permanent; 0/4 MA, -58% from highs; every large enterprise runs on ServiceNow; watch for margin inflection to A+ and MA structure recovery',
 }
 
@@ -515,7 +516,7 @@ if __name__ == '__main__':
     # Quality name (A+/A) + structure broken (≤1/4) + far from highs (<-30%)
     # Manual SPECIAL_MENTION entries take precedence — richer notes, curated thesis
     auto_candidates = [r for r in valid
-                       if ((r['s'] <= 1 and (r.get('pct_from_high') or 0) < -30)
+                       if ((r['s'] <= 1 and (r.get('pct_from_high') or 0) < -25)
                            or (r['s'] == 2 and (r.get('pct_from_high') or 0) < -45))
                        and r['t'] not in SPECIAL_MENTION
                        and (r['t'] in UNIVERSE or r['t'] in WATCHLIST)]
