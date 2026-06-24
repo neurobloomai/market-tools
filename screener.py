@@ -85,6 +85,10 @@ UNIVERSE = [
     'NBIX',                       # Neurocrine Biosciences — CNS/endocrine specialist (Ingrezza); 22.8% OM, 21.6% NM, ROE 22.5%, FCF 3.8%, 42.2% rev growth, A+; 4/4 MA aligned at add time
     'HOOD',                       # Robinhood Markets — fintech brokerage/crypto; 92.2% gross, 38.5% OM, 41.1% NM, ROE 21.5%, 15.1% rev growth; D/EV improved to 0.166 (was 0.22 blocker); FCF None (brokerage model); grades A, 3/4 MA at promotion
     'PLTR',                       # Palantir — AI/data analytics platform (AIP + Foundry + Gotham); government + commercial flywheel; A+ quality; promoted from watchlist
+    'TSM',                        # Taiwan Semiconductor — world's most advanced foundry (TSMC); 3nm/2nm leader; OM 58.1%, NM 46.5%, D/EV 0.069, FCF 31.8%, RevG 35.1%; Apple/NVIDIA/AMD customer lock-in; A+
+    'ASML',                       # ASML — EUV lithography monopoly; only company that makes EUV machines (every advanced chip fab needs them); zero debt, OM 36%, NM 29.7%, D/EV 0.0; A+
+    'TER',                        # Teradyne — semiconductor test + collaborative robotics (Universal Robots); OM 37.6%, NM 22.6%, D/EV 0.001, RevG 87%, FCF 0.5%; picks-and-shovels for AI silicon + factory automation; A+
+    'LITE',                       # Lumentum — photonics/optical components (datacenter transceivers + 3D sensing + telecom); OM 21.8%, NM 17.7%, D/EV 0.056, RevG 90.1%; AI datacenter interconnect tailwind; A+
 ]
 
 # Future contenders — great businesses not yet qualifying, tracked separately
@@ -140,6 +144,22 @@ WATCHLIST = [
     'KLAR',  # Klarna — BNPL/payments platform; 44.4% rev growth; OM 1.7%, FCF -23.8%, D/EV 0.391 blocking; grades B, 2/4 MA; credit cycle risk inherent to BNPL model, watch margin inflection
     'UPST',  # Upstart — AI-powered lending platform; 82.7% gross margin, 44.6% rev growth, OM 0.9% (just turning); FCF -10.1% + D/EV 0.431 (converts) + ROA 1.8% blocking; grades B, 2/4 MA; platform gross margin story, watch FCF inflection
     'COIN',  # Coinbase — digital asset exchange, crypto theme proxy; 85.5% gross margin, FCF 5.4%; OM -7.1% + rev growth -30.8% (crypto volume cycle) blocking; grades B, 0/4 MA; cyclical — watch for volume recovery + OM turning positive
+    # --- Photonics / Optical Interconnect ---
+    'COHR',  # Coherent Corp — optical components (800G/1.6T datacenter interconnect + telecom); OM 13.6%, NM 7.1%, D/EV 0.045; ROE 4.7% + FCF -0.3% blocking; post II-VI merger integration phase; watch FCF inflection
+    'AAOI',  # Applied Optoelectronics — datacenter optical transceivers (800G/1.6T AI fabric); RevG 51.4%, D/EV 0.024; OM -8.6% scaling toward profitability; AI datacenter interconnect demand driver
+    # --- Defense / Drones ---
+    'AVAV',  # AeroVironment — defense drones (Switchblade loitering munition, Puma ISR); RevG 143.4%, D/EV 0.108; OM -5.1% scaling with DoD contracts; proven battlefield platform
+    # --- Space ---
+    'ASTS',  # AST SpaceMobile — satellite broadband direct-to-device (no special handset needed); AT&T/Verizon partnerships, BlueWalker satellites deployed; pre-revenue, D/EV 0.134; RevG 1952% from tiny base; space connectivity infrastructure
+    'LUNR',  # Intuitive Machines — only commercial lunar lander to successfully land (IM-1 2024); NASA NSNS + payload contracts; RevG 198.7%, pre-profit; lunar economy infrastructure theme
+    # --- Quantum Computing ---
+    'IONQ',  # IonQ — trapped ion quantum computing (most commercially advanced); D/EV 0.002 (near-zero debt), RevG 754.7%; OM deeply negative (pre-scale); Microsoft/AWS marketplace partnerships; quantum leader
+    # --- Healthcare / mRNA ---
+    'MRNA',  # Moderna — mRNA platform pioneer post-COVID restructuring; personalized cancer vaccines (mRNA-4157 w/ Merck) + flu + RSV pipeline; D/EV 0.064, net cash; OM -131.1% in rebuild phase; watch revenue base rebuild
+    'BNTX',  # BioNTech — mRNA pioneer (Pfizer COVID partner); cancer + infectious disease pipeline; D/EV 0.032; OM -576.6% post-COVID revenue collapse; rebuilding commercial revenue base; mRNA platform value intact
+    # --- Critical Materials ---
+    'ALB',   # Albemarle — largest lithium producer (Chile/Australia mines); OM 24.8%, FCF 4.1%, D/EV 0.095; NM -4.2% from lithium price cycle (not structural); long-term EV battery supply chain position
+    'MP',    # MP Materials — only US rare earth miner + processor (Mountain Pass CA); DoD contract + Tesla partnership; RevG 118.6%, D/EV 0.103; OM -7.9% (processing build-out phase); national security + EV magnet supply chain
 ]
 
 def get_fundamentals(ticker):
