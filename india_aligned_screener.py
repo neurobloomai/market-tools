@@ -18,6 +18,7 @@ EXTRA = []
 SPECIAL_MENTION = {
     'ETERNAL.NS': 'Eternal (formerly Zomato) — food delivery + quick commerce duopoly; profitability inflecting, FCF turning positive; MA structure not yet complete; wait for full 4/4 alignment and quality filter pass',
     'SWIGGY.NS': 'Food delivery + quick commerce; loss-making but narrowing fast; similar inflection thesis to Zomato; monthly structure building — 12-18 month patience play',
+    'POLICYBZR.NS': 'PB Fintech (Policybazaar) — India\'s leading insurance + lending aggregator; one filter from qualifying (ROE 9.7% vs 10% threshold); RevG 36.7%, OM 8.9%, NM 9.9%, D/EV 0.005 (near-zero debt); insurance penetration in India ~4% of GDP vs 7% global avg — structural runway; 1/4 MA, watch for ROE crossing 10% as scale drives return on equity; when it qualifies it will surface in the right place',
 }
 
 TICKERS = list(dict.fromkeys(UNIVERSE + WATCHLIST + EXTRA + list(SPECIAL_MENTION.keys())))
