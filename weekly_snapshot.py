@@ -104,7 +104,6 @@ if __name__ == '__main__':
 
     md = '\n'.join(lines)
 
-    # Create file with header if it doesn't exist yet
     import os
     if not os.path.exists('weekly_notes.md'):
         with open('weekly_notes.md', 'w') as f:
@@ -113,10 +112,13 @@ if __name__ == '__main__':
             f.write('Run `python weekly_snapshot.py` each week to append the latest entry.\n\n')
             f.write('---\n\n')
 
-    with open('weekly_notes.md', 'a') as f:
-        f.write(md)
-
-    print(f'  Appended → weekly_notes.md')
+    existing = open('weekly_notes.md').read()
+    if f'## {label}' in existing:
+        print(f'  Already logged for {label} — skipping append')
+    else:
+        with open('weekly_notes.md', 'a') as f:
+            f.write(md)
+        print(f'  Appended → weekly_notes.md')
     print(f'  4/4: {len(aligned_4)}   3/4: {len(aligned_3)}   Coils ≤5%: {len([d for d in data if d["spread"] <= 5.0])}')
 
     import subprocess

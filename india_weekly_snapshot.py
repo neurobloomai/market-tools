@@ -114,10 +114,13 @@ if __name__ == '__main__':
             f.write('Run `python india_weekly_snapshot.py` each week to append the latest entry.\n\n')
             f.write('---\n\n')
 
-    with open(notes_file, 'a') as f:
-        f.write(md)
-
-    print(f'  Appended → india_weekly_notes.md')
+    existing = open(notes_file).read()
+    if f'## {label}' in existing:
+        print(f'  Already logged for {label} — skipping append')
+    else:
+        with open(notes_file, 'a') as f:
+            f.write(md)
+        print(f'  Appended → india_weekly_notes.md')
     print(f'  4/4: {len(aligned_4)}   3/4: {len(aligned_3)}   Coils ≤5%: {len([d for d in data if d["spread"] <= 5.0])}')
 
     try:
