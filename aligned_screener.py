@@ -360,6 +360,11 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
   <span style="color:#d29922">■</span> CMF &lt;–0.10 distribution &nbsp;
   <span style="color:#3fb950">■</span> offHi ≥ –3% near 52w high
 </div>
+<div class="legend" style="margin-top:6px">
+  ● filled = very tight squeeze (FullCoil &lt;3%, ST Gap &lt;2%) — coil compressed, energy highest &nbsp;·&nbsp;
+  ○ unfilled = building squeeze (FullCoil 3–5%, ST Gap 2–4%) — compressing but not fully wound &nbsp;·&nbsp;
+  blank = spread still wide, no squeeze
+</div>
 <div class="legend" style="margin-top:6px">For informational purposes only. Not financial advice.</div>
 </body></html>"""
 
