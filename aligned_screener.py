@@ -627,7 +627,10 @@ if __name__ == '__main__':
     try:
         repo = os.path.dirname(out_path)
         commit_msg = f"aligned_screener: {now}"
+        subprocess.run(['git', 'checkout', '--', 'aligned_screener.html'], cwd=repo, capture_output=True)
         subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'], cwd=repo, check=True, capture_output=True)
+        with open(out_path, 'w') as f:
+            f.write(html)  # re-write after pull overwrites the file
         subprocess.run(['git', 'add', 'aligned_screener.html'], cwd=repo, check=True, capture_output=True)
         subprocess.run(['git', 'commit', '-m', commit_msg],     cwd=repo, check=True, capture_output=True)
         subprocess.run(['git', 'push'],                          cwd=repo, check=True, capture_output=True)
