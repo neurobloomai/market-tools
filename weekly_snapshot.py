@@ -59,7 +59,7 @@ def ma_data(ticker):
 
 
 if __name__ == '__main__':
-    now   = datetime.now()
+    now   = datetime.utcnow()
     label = now.strftime('Week of %b %d %Y')
 
     print(f'  Fetching {len(ALL)} tickers ...', flush=True)

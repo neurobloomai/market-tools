@@ -403,7 +403,7 @@ if __name__ == '__main__':
     nifty_13w_ratio = float(nifty_close.iloc[-1]) / float(nifty_close.iloc[-14]) if len(nifty_close) >= 14 else 1.0
     ma_score_fn     = functools.partial(ma_score, nifty_13w_ratio=nifty_13w_ratio)
 
-    now_ts = datetime.now().strftime('%Y-%m-%d %H:%M')
+    now_ts = datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')
     print(f"\n  India Aligned Screener — {now_ts}", flush=True)
     print(f"  Fetching MA alignment for {len(TICKERS)} India tickers ...", flush=True)
     with ThreadPoolExecutor(max_workers=20) as ex:
