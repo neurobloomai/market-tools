@@ -19,13 +19,17 @@ Free, open-source market dashboards and quality stock screeners powered by Yahoo
 
 ## Live Outputs
 
+**GitHub Pages → https://neurobloomai.github.io/market-tools/**
+
 Updated automatically every Monday via GitHub Actions — no server, no local machine needed:
 
 | File | Market | Schedule |
 |---|---|---|
-| [`aligned_screener.html`](aligned_screener.html) | 🇺🇸 US | Monday 8am EST |
+| [`quality_screener.html`](https://neurobloomai.github.io/market-tools/quality_screener.html) | 🇺🇸 US | Monday 8am EST |
+| [`aligned_screener.html`](https://neurobloomai.github.io/market-tools/aligned_screener.html) | 🇺🇸 US | Monday 8am EST |
 | [`weekly_notes.md`](weekly_notes.md) | 🇺🇸 US | Monday 8am EST |
-| [`india_aligned_screener.html`](india_aligned_screener.html) | 🇮🇳 India | Monday 8am IST |
+| [`india_screener.html`](https://neurobloomai.github.io/market-tools/india_screener.html) | 🇮🇳 India | Monday 8am IST |
+| [`india_aligned_screener.html`](https://neurobloomai.github.io/market-tools/india_aligned_screener.html) | 🇮🇳 India | Monday 8am IST |
 | [`india_weekly_notes.md`](india_weekly_notes.md) | 🇮🇳 India | Monday 8am IST |
 
 ## Automation
@@ -34,8 +38,8 @@ Runs entirely on GitHub's infrastructure via two scheduled workflows:
 
 | Workflow | Schedule | What runs |
 |---|---|---|
-| [Weekly Screener — US](.github/workflows/weekly_us.yml) | Monday 8am EST | `weekly_snapshot.py` + `aligned_screener.py` |
-| [Weekly Screener — India](.github/workflows/weekly_india.yml) | Monday 8am IST | `india_weekly_snapshot.py` + `india_aligned_screener.py` |
+| [Weekly Screener — US](.github/workflows/weekly_us.yml) | Monday 8am EST | `weekly_snapshot.py` → `screener.py` → `aligned_screener.py` |
+| [Weekly Screener — India](.github/workflows/weekly_india.yml) | Monday 8am IST | `india_weekly_snapshot.py` → `india_screener.py` → `india_aligned_screener.py` |
 
 Each workflow checks out the repo, installs `yfinance`, runs the scripts, and commits the updated HTML and markdown files back — fully automated, zero manual steps.
 
