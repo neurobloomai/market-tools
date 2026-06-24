@@ -182,7 +182,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
         cmf   = r.get('cmf', 0.0)
         rs    = r.get('rs')
         hi    = r.get('pct_from_high', 0.0)
-        slp   = '↑' if r.get('slope_up') else '↓'
+        slp   = '<span style="color:#3fb950">▲</span>' if r.get('slope_up') else '<span style="color:#f85149">▼</span>'
         flag  = '●' if r['w_spread'] < 3.0 else ('○' if r['w_spread'] < 5.0 else '')
         rs_s  = f'{rs:.2f}x' if rs is not None else '—'
         lag   = ' ↓' if (rs is not None and rs < 0.80) else ''
@@ -207,7 +207,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
         cmf   = r.get('cmf', 0.0)
         rs    = r.get('rs')
         hi    = r.get('pct_from_high', 0.0)
-        slp   = '↑' if r.get('slope_up') else '↓'
+        slp   = '<span style="color:#3fb950">▲</span>' if r.get('slope_up') else '<span style="color:#f85149">▼</span>'
         flag  = '●' if r['st_spread'] < 2.0 else ('○' if r['st_spread'] < 4.0 else '')
         rs_s  = f'{rs:.2f}x' if rs is not None else '—'
         lag   = ' ↓' if (rs is not None and rs < 0.80) else ''
@@ -570,7 +570,7 @@ if __name__ == '__main__':
         t     = r['t']
         src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
         flag  = '●' if r['w_spread'] < 3.0 else ('○' if r['w_spread'] < 5.0 else ' ')
-        slp_s = '↑' if r.get('slope_up') else '↓'
+        slp_s = '▲' if r.get('slope_up') else '▼'
         cmf_s = f'{r.get("cmf", 0.0):+.2f}'
         rs_v  = r.get('rs')
         rs_s  = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
@@ -595,7 +595,7 @@ if __name__ == '__main__':
         t     = r['t']
         src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
         flag  = '●' if r['st_spread'] < 2.0 else ('○' if r['st_spread'] < 4.0 else ' ')
-        slp_s = '↑' if r.get('slope_up') else '↓'
+        slp_s = '▲' if r.get('slope_up') else '▼'
         cmf_s = f'{r.get("cmf", 0.0):+.2f}'
         rs_v  = r.get('rs')
         rs_s  = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
