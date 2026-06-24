@@ -19,6 +19,8 @@ SPECIAL_MENTION = {
     'ETERNAL.NS': 'Eternal (formerly Zomato) — food delivery + quick commerce duopoly; profitability inflecting, FCF turning positive; MA structure not yet complete; wait for full 4/4 alignment and quality filter pass',
     'SWIGGY.NS': 'Food delivery + quick commerce; loss-making but narrowing fast; similar inflection thesis to Zomato; monthly structure building — 12-18 month patience play',
     'POLICYBZR.NS': 'PB Fintech (Policybazaar) — India\'s leading insurance + lending aggregator; one filter from qualifying (ROE 9.7% vs 10% threshold); RevG 36.7%, OM 8.9%, NM 9.9%, D/EV 0.005 (near-zero debt); insurance penetration in India ~4% of GDP vs 7% global avg — structural runway; 1/4 MA, watch for ROE crossing 10% as scale drives return on equity; when it qualifies it will surface in the right place',
+    'IRCTC.NS': 'IRCTC — government monopoly on Indian railway ticketing (1B+ passengers annually, zero competition legally possible); A+ quality: OM 26.4%, NM 26.7%, ROE 35%, D/EV 0.002, FCF 2.4%; 0/4 MA, -49% from highs; moat is permanent by structure — no private player can enter; dislocation is price and sentiment, not business; watch for MA recovery as the only trigger',
+    'TRENT.NS': 'Trent (Tata group) — India\'s fastest-growing fast fashion retailer; Zudio brand (India\'s H&M equivalent) compounding store count and revenue; ROE 27.1%, OM 11.1%, D/EV 0.015, RevG 19.2%; Tata group backing = balance sheet safety net; 2/4 MA rebuilding, -60.5% from highs — massive dislocation from peak enthusiasm; watch 10m MA reclaim as structure recovers',
 }
 
 TICKERS = list(dict.fromkeys(UNIVERSE + WATCHLIST + EXTRA + list(SPECIAL_MENTION.keys())))
