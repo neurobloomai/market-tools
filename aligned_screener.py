@@ -441,7 +441,7 @@ if __name__ == '__main__':
         grades = list(ex.map(grade_ticker, aligned_tickers))
     grade_map = dict(zip(aligned_tickers, grades))
 
-    now     = datetime.now().strftime('%b %d %Y  %H:%M')
+    now     = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
     aplus   = [(r['t'], r['p'], g) for r, g in zip(aligned, grades) if g == 'A+']
     a       = [(r['t'], r['p'], g) for r, g in zip(aligned, grades) if g == 'A']
     watch   = [(r['t'], r['p'], g) for r, g in zip(aligned, grades) if g == '—']
