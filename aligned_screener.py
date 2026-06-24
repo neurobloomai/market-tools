@@ -182,7 +182,6 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
         cmf   = r.get('cmf', 0.0)
         rs    = r.get('rs')
         hi    = r.get('pct_from_high', 0.0)
-        vol_s = f'{r["vol_ratio"]:.1f}x' if r.get('vol_ratio') is not None else '—'
         slp   = '↑' if r.get('slope_up') else '↓'
         flag  = '●' if r['w_spread'] < 3.0 else ('○' if r['w_spread'] < 5.0 else '')
         rs_s  = f'{rs:.2f}x' if rs is not None else '—'
@@ -193,7 +192,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                 f'<td style="color:{_c_ma(r["s"])}">{r["s"]}/4</td>'
                 f'<td>${r["p"]:,.2f}</td>'
                 f'<td>{flag} {r["w_spread"]:.1f}%</td>'
-                f'<td>{vol_s}</td><td>{slp}</td>'
+                f'<td>{slp}</td>'
                 f'<td style="color:{_c_cmf(cmf)}">{cmf:+.2f}</td>'
                 f'<td style="color:{_c_rs(rs)}">{rs_s}{lag}</td>'
                 f'<td style="color:{_c_hi(hi)}">{hi:+.1f}%</td>'
@@ -208,7 +207,6 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
         cmf   = r.get('cmf', 0.0)
         rs    = r.get('rs')
         hi    = r.get('pct_from_high', 0.0)
-        vol_s = f'{r["vol_ratio"]:.1f}x' if r.get('vol_ratio') is not None else '—'
         slp   = '↑' if r.get('slope_up') else '↓'
         flag  = '●' if r['st_spread'] < 2.0 else ('○' if r['st_spread'] < 4.0 else '')
         rs_s  = f'{rs:.2f}x' if rs is not None else '—'
@@ -219,7 +217,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                 f'<td style="color:{_c_ma(r["s"])}">{r["s"]}/4</td>'
                 f'<td>${r["p"]:,.2f}</td>'
                 f'<td>{flag} {r["st_spread"]:.1f}%</td>'
-                f'<td>{vol_s}</td><td>{slp}</td>'
+                f'<td>{slp}</td>'
                 f'<td style="color:{_c_cmf(cmf)}">{cmf:+.2f}</td>'
                 f'<td style="color:{_c_rs(rs)}">{rs_s}{lag}</td>'
                 f'<td style="color:{_c_hi(hi)}">{hi:+.1f}%</td>'
@@ -340,18 +338,18 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
 </tr></thead><tbody>{sm_rows}</tbody></table>
 
 <div class="sh">Weekly Squeeze — FullCoil (top 25)</div>
-<div class="sub">● &lt;3% very tight &nbsp; ○ 3–5% building &nbsp; CMF &gt;+0.10 accumulation / &lt;–0.10 distribution &nbsp; RS vs SPY 13w &nbsp; offHi = % from 52w high</div>
+<div class="sub">● &lt;3% very tight &nbsp; ○ 3–5% building &nbsp; Slp = 10w MA slope &nbsp; CMF &gt;+0.10 accumulation / &lt;–0.10 distribution &nbsp; RS vs SPY 13w &nbsp; offHi = % from 52w high</div>
 <table><thead><tr>
   <th>Ticker</th><th></th><th>MA</th><th>Price</th><th>Spread</th>
-  <th>Vol</th><th>Slp</th><th>CMF</th><th>RS</th><th>offHi</th>
+  <th>Slp</th><th>CMF</th><th>RS</th><th>offHi</th>
   <th>10w MA</th><th>20w MA</th><th>35w MA</th><th>50w MA</th>
 </tr></thead><tbody>{squeeze_rows}</tbody></table>
 
 <div class="sh">ST Squeeze — 10w/20w Convergence (top 20)</div>
-<div class="sub">● &lt;2% very tight &nbsp; ○ 2–4% building &nbsp; FullCoil = 10w–50w spread for context</div>
+<div class="sub">● &lt;2% very tight &nbsp; ○ 2–4% building &nbsp; Slp = 10w MA slope &nbsp; FullCoil = 10w–50w spread for context</div>
 <table><thead><tr>
   <th>Ticker</th><th></th><th>MA</th><th>Price</th><th>Gap</th>
-  <th>Vol</th><th>Slp</th><th>CMF</th><th>RS</th><th>offHi</th>
+  <th>Slp</th><th>CMF</th><th>RS</th><th>offHi</th>
   <th>10w MA</th><th>20w MA</th><th>FullCoil</th>
 </tr></thead><tbody>{st_rows}</tbody></table>
 
@@ -560,23 +558,22 @@ if __name__ == '__main__':
 
     print(f"\n  WEEKLY SQUEEZE — 10w/20w/35w/50w MA compression  ({now})")
     print(f"  {'─'*84}")
-    print(f"  {'Ticker':<8} {'MA':<4} {'Price':>8}  {'Spread':>7}  {'Vol':>4}  {'Slp'}  {'CMF':>6}  {'RS':>6}  {'offHi':>6}  {'10w':>8} {'20w':>8} {'35w':>8} {'50w':>8}")
-    print(f"  {'─'*8} {'─'*4} {'─'*8}  {'─'*7}  {'─'*4}  {'─'*3}  {'─'*6}  {'─'*6}  {'─'*6}  {'─'*8} {'─'*8} {'─'*8} {'─'*8}")
+    print(f"  {'Ticker':<8} {'MA':<4} {'Price':>8}  {'Spread':>7}  {'Slp'}  {'CMF':>6}  {'RS':>6}  {'offHi':>6}  {'10w':>8} {'20w':>8} {'35w':>8} {'50w':>8}")
+    print(f"  {'─'*8} {'─'*4} {'─'*8}  {'─'*7}  {'─'*3}  {'─'*6}  {'─'*6}  {'─'*6}  {'─'*8} {'─'*8} {'─'*8} {'─'*8}")
 
     for r in squeezed[:25]:
         t     = r['t']
         src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
         flag  = '●' if r['w_spread'] < 3.0 else ('○' if r['w_spread'] < 5.0 else ' ')
-        vol_s = f'{r["vol_ratio"]:.1f}x' if r.get('vol_ratio') is not None else ' —  '
         slp_s = '↑' if r.get('slope_up') else '↓'
         cmf_s = f'{r.get("cmf", 0.0):+.2f}'
         rs_v  = r.get('rs')
         rs_s  = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
         hi_s  = f'{r.get("pct_from_high", 0.0):+.1f}%'
-        print(f"  {t:<8} {r['s']}/4  ${r['p']:>7.2f}  {flag}{r['w_spread']:>5.1f}%  {vol_s:>4}  {slp_s}  {cmf_s:>6}  {rs_s:>6}  {hi_s:>6}"
+        print(f"  {t:<8} {r['s']}/4  ${r['p']:>7.2f}  {flag}{r['w_spread']:>5.1f}%  {slp_s}  {cmf_s:>6}  {rs_s:>6}  {hi_s:>6}"
               f"  ${r['ma10w']:>7.2f} ${r['ma20w']:>7.2f} ${r['ma35w']:>7.2f} ${r['ma50w']:>7.2f}  [{src}]")
 
-    print(f"\n  ● <3% very tight   ○ 3-5% building   Vol = last wk / 10wk avg   CMF >+0.10 accum  <-0.10 distrib   RS vs SPY 13w  offHi = % from 52w high   (top 25 shown)")
+    print(f"\n  ● <3% very tight   ○ 3-5% building   Slp = 10w MA slope   CMF >+0.10 accum  <-0.10 distrib   RS vs SPY 13w  offHi = % from 52w high   (top 25 shown)")
 
     # ── ST Squeeze Scanner ───────────────────────────────────────────────────
     # 10w/20w convergence only — faster, short-term momentum signal.
@@ -586,21 +583,20 @@ if __name__ == '__main__':
 
     print(f"\n  ST SQUEEZE — 10w/20w SMA convergence  ({now})")
     print(f"  {'─'*72}")
-    print(f"  {'Ticker':<8} {'MA':<4} {'Price':>8}  {'Gap':>6}  {'Vol':>4}  {'Slp'}  {'CMF':>6}  {'RS':>6}  {'offHi':>6}  {'10w':>8} {'20w':>8}  {'FullCoil':>8}")
-    print(f"  {'─'*8} {'─'*4} {'─'*8}  {'─'*6}  {'─'*4}  {'─'*3}  {'─'*6}  {'─'*6}  {'─'*6}  {'─'*8} {'─'*8}  {'─'*8}")
+    print(f"  {'Ticker':<8} {'MA':<4} {'Price':>8}  {'Gap':>6}  {'Slp'}  {'CMF':>6}  {'RS':>6}  {'offHi':>6}  {'10w':>8} {'20w':>8}  {'FullCoil':>8}")
+    print(f"  {'─'*8} {'─'*4} {'─'*8}  {'─'*6}  {'─'*3}  {'─'*6}  {'─'*6}  {'─'*6}  {'─'*8} {'─'*8}  {'─'*8}")
 
     for r in st_squeezed[:20]:
         t     = r['t']
         src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
         flag  = '●' if r['st_spread'] < 2.0 else ('○' if r['st_spread'] < 4.0 else ' ')
-        vol_s = f'{r["vol_ratio"]:.1f}x' if r.get('vol_ratio') is not None else ' —  '
         slp_s = '↑' if r.get('slope_up') else '↓'
         cmf_s = f'{r.get("cmf", 0.0):+.2f}'
         rs_v  = r.get('rs')
         rs_s  = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
         hi_s  = f'{r.get("pct_from_high", 0.0):+.1f}%'
         print(f"  {t:<8} {r['s']}/4  ${r['p']:>7.2f}  {flag}{r['st_spread']:>4.1f}%"
-              f"  {vol_s:>4}  {slp_s}  {cmf_s:>6}  {rs_s:>6}  {hi_s:>6}  ${r['ma10w']:>7.2f} ${r['ma20w']:>7.2f}  {r['w_spread']:>7.1f}%  [{src}]")
+              f"  {slp_s}  {cmf_s:>6}  {rs_s:>6}  {hi_s:>6}  ${r['ma10w']:>7.2f} ${r['ma20w']:>7.2f}  {r['w_spread']:>7.1f}%  [{src}]")
 
     print(f"\n  ● <2% very tight   ○ 2-4% building   FullCoil = 10w-50w spread   CMF >+0.10 accum  <-0.10 distrib   RS vs SPY 13w   offHi = % from 52w high")
     print(f"\n  [U] = Universe   [W] = Watchlist   [X] = Extra\n")
