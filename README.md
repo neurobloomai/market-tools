@@ -23,14 +23,16 @@ Free, open-source market dashboards and quality stock screeners powered by Yahoo
 
 Updated automatically every Monday via GitHub Actions — no server, no local machine needed:
 
-| File | Market | Schedule |
-|---|---|---|
-| [`quality_screener.html`](https://neurobloomai.github.io/market-tools/quality_screener.html) | 🇺🇸 US | Monday 8am EST |
-| [`aligned_screener.html`](https://neurobloomai.github.io/market-tools/aligned_screener.html) | 🇺🇸 US | Monday 8am EST |
-| [`weekly_notes.md`](weekly_notes.md) | 🇺🇸 US | Monday 8am EST |
-| [`india_screener.html`](https://neurobloomai.github.io/market-tools/india_screener.html) | 🇮🇳 India | Monday 8am IST |
-| [`india_aligned_screener.html`](https://neurobloomai.github.io/market-tools/india_aligned_screener.html) | 🇮🇳 India | Monday 8am IST |
-| [`india_weekly_notes.md`](india_weekly_notes.md) | 🇮🇳 India | Monday 8am IST |
+| Page | Market | What it shows | Schedule |
+|---|---|---|---|
+| [market_briefing.html](https://neurobloomai.github.io/market-tools/market_briefing.html) | 🇺🇸 US | Sector ETF momentum dashboard — MA signals, day change, volume, yield | Monday 8am EST |
+| [quality_screener.html](https://neurobloomai.github.io/market-tools/quality_screener.html) | 🇺🇸 US | Quality growth screener — margins, ROE, FCF, debt filter | Monday 8am EST |
+| [aligned_screener.html](https://neurobloomai.github.io/market-tools/aligned_screener.html) | 🇺🇸 US | 4/4 MA alignment · FullCoil squeeze · MTF · CMF · RS vs SPY | Monday 8am EST |
+| [india_briefing.html](https://neurobloomai.github.io/market-tools/india_briefing.html) | 🇮🇳 India | NSE sector index dashboard — same MA framework, RS vs NIFTY | Monday 8am IST |
+| [india_screener.html](https://neurobloomai.github.io/market-tools/india_screener.html) | 🇮🇳 India | India quality screener — same filters, NSE universe | Monday 8am IST |
+| [india_aligned_screener.html](https://neurobloomai.github.io/market-tools/india_aligned_screener.html) | 🇮🇳 India | 4/4 MA alignment · FullCoil squeeze · MTF · CMF · RS vs NIFTY 50 | Monday 8am IST |
+
+Weekly snapshots: [`weekly_notes.md`](weekly_notes.md) · [`india_weekly_notes.md`](india_weekly_notes.md)
 
 ## Automation
 
@@ -38,8 +40,8 @@ Runs entirely on GitHub's infrastructure via two scheduled workflows:
 
 | Workflow | Schedule | What runs |
 |---|---|---|
-| [Weekly Screener — US](.github/workflows/weekly_us.yml) | Monday 8am EST | `weekly_snapshot.py` → `screener.py` → `aligned_screener.py` |
-| [Weekly Screener — India](.github/workflows/weekly_india.yml) | Monday 8am IST | `india_weekly_snapshot.py` → `india_screener.py` → `india_aligned_screener.py` |
+| [Weekly Screener — US](.github/workflows/weekly_us.yml) | Monday 8am EST | `dashboard.py` → `weekly_snapshot.py` → `screener.py` → `aligned_screener.py` |
+| [Weekly Screener — India](.github/workflows/weekly_india.yml) | Monday 8am IST | `india_dashboard.py` → `india_weekly_snapshot.py` → `india_screener.py` → `india_aligned_screener.py` |
 
 Each workflow checks out the repo, installs `yfinance`, runs the scripts, and commits the updated HTML and markdown files back — fully automated, zero manual steps.
 
