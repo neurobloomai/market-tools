@@ -1,5 +1,7 @@
 *.html
 !index.html
+!market_briefing.html
+!india_briefing.html
 !aligned_screener.html
 !india_aligned_screener.html
 !quality_screener.html
