@@ -51,8 +51,8 @@ def ma_score(ticker, spy_13w_ratio=1.0):
         ma20m = float(close.tail(87).mean()) if len(close) >= 87 else float(close.mean())
         score = sum([price > ma10w, price > ma20w, price > ma10m, price > ma20m])
         wmas  = [ma10w, ma20w, ma35w, ma50w]
-        w_spread  = round((max(wmas) - min(wmas)) / price * 100, 2)
-        st_spread = round(abs(ma10w - ma20w) / price * 100, 2)
+        w_spread  = round((1 if ma10w >= ma50w else -1) * (max(wmas) - min(wmas)) / price * 100, 2)
+        st_spread = round((1 if ma10w >= ma20w else -1) * abs(ma10w - ma20w) / price * 100, 2)
         vol = hist['Volume'].dropna()
         if len(vol) >= 11:
             vol_ratio = round(float(vol.iloc[-2]) / float(vol.iloc[-11:-1].mean()), 2)
@@ -116,7 +116,7 @@ def daily_squeeze_data(ticker):
         ma35d = float(close.tail(35).mean()) if len(close) >= 35 else ma20d
         ma50d = float(close.tail(50).mean())
         dmas      = [ma10d, ma20d, ma35d, ma50d]
-        d_spread  = round((max(dmas) - min(dmas)) / price * 100, 2)
+        d_spread  = round((1 if ma10d >= ma50d else -1) * (max(dmas) - min(dmas)) / price * 100, 2)
         slope_up  = ma10d > float(close.iloc[-11:-1].mean()) if len(close) >= 11 else True
         cmf = 0.0
         try:
@@ -152,7 +152,7 @@ def monthly_squeeze_data(ticker):
         ma10m = float(close.tail(10).mean())
         ma20m = float(close.tail(20).mean())
         mmas      = [ma3m, ma6m, ma10m, ma20m]
-        m_spread  = round((max(mmas) - min(mmas)) / price * 100, 2)
+        m_spread  = round((1 if ma3m >= ma20m else -1) * (max(mmas) - min(mmas)) / price * 100, 2)
         slope_up  = ma3m > float(close.iloc[-4:-1].mean()) if len(close) >= 4 else True
         cmf = 0.0
         try:
@@ -264,7 +264,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
         rs    = r.get('rs')
         hi    = r.get('pct_from_high', 0.0)
         slp   = '<span style="color:#3fb950">▲</span>' if r.get('slope_up') else '<span style="color:#f85149">▼</span>'
-        flag  = '●' if r['w_spread'] < 3.0 else ('○' if r['w_spread'] < 5.0 else '')
+        flag  = '●' if abs(r['w_spread']) < 3.0 else ('○' if abs(r['w_spread']) < 5.0 else '')
         rs_s  = f'{rs:.2f}x' if rs is not None else '—'
         lag   = ' ↓' if (rs is not None and rs < 0.80) else ''
         return (f'<tr>'
@@ -289,7 +289,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
         rs    = r.get('rs')
         hi    = r.get('pct_from_high', 0.0)
         slp   = '<span style="color:#3fb950">▲</span>' if r.get('slope_up') else '<span style="color:#f85149">▼</span>'
-        flag  = '●' if r['st_spread'] < 2.0 else ('○' if r['st_spread'] < 4.0 else '')
+        flag  = '●' if abs(r['st_spread']) < 2.0 else ('○' if abs(r['st_spread']) < 4.0 else '')
         rs_s  = f'{rs:.2f}x' if rs is not None else '—'
         lag   = ' ↓' if (rs is not None and rs < 0.80) else ''
         return (f'<tr>'
@@ -313,7 +313,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
         hi   = hi_map.get(t, 0.0)
         cmf  = r.get('cmf', 0.0)
         slp  = '<span style="color:#3fb950">▲</span>' if r.get('slope_up') else '<span style="color:#f85149">▼</span>'
-        flag = '●' if r['d_spread'] < 3.0 else ('○' if r['d_spread'] < 5.0 else '')
+        flag = '●' if abs(r['d_spread']) < 3.0 else ('○' if abs(r['d_spread']) < 5.0 else '')
         star = '<span style="color:#d29922" title="MTF">★</span> ' if t in _mtf else ''
         ws_s = f'{ws}/4' if ws is not None else '—'
         return (f'<tr>'
@@ -337,7 +337,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
         hi   = hi_map.get(t, 0.0)
         cmf  = r.get('cmf', 0.0)
         slp  = '<span style="color:#3fb950">▲</span>' if r.get('slope_up') else '<span style="color:#f85149">▼</span>'
-        flag = '●' if r['m_spread'] < 3.0 else ('○' if r['m_spread'] < 5.0 else '')
+        flag = '●' if abs(r['m_spread']) < 3.0 else ('○' if abs(r['m_spread']) < 5.0 else '')
         star = '<span style="color:#d29922" title="MTF">★</span> ' if t in _mtf else ''
         ws_s = f'{ws}/4' if ws is not None else '—'
         return (f'<tr>'
@@ -369,8 +369,8 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
     squeeze_rows = ''.join(squeeze_row(r) for r in squeezed[:25])
     st_rows      = ''.join(st_row(r) for r in st_squeezed[:20])
 
-    _ds = sorted([r for r in (daily_squeezed or []) if r],   key=lambda r: r['d_spread'])
-    _ms = sorted([r for r in (monthly_squeezed or []) if r], key=lambda r: r['m_spread'])
+    _ds = sorted([r for r in (daily_squeezed or []) if r],   key=lambda r: abs(r['d_spread']))
+    _ms = sorted([r for r in (monthly_squeezed or []) if r], key=lambda r: abs(r['m_spread']))
     daily_rows   = ''.join(daily_row(r) for r in _ds[:20])
     monthly_rows = ''.join(monthly_row(r) for r in _ms[:20])
 
@@ -731,13 +731,13 @@ if __name__ == '__main__':
     print(f"  ◎ base building (MthCMF ↑)   ⚠ distributing (MthCMF ↓ + RS < 1.0)   → mixed signals")
 
     # ── Squeeze Scanners ─────────────────────────────────────────────────────
-    squeezed         = sorted(valid,         key=lambda r: r['w_spread'])
-    daily_squeezed   = sorted(daily_valid,   key=lambda r: r['d_spread'])
-    monthly_squeezed = sorted(monthly_valid, key=lambda r: r['m_spread'])
+    squeezed         = sorted(valid,         key=lambda r: abs(r['w_spread']))
+    daily_squeezed   = sorted(daily_valid,   key=lambda r: abs(r['d_spread']))
+    monthly_squeezed = sorted(monthly_valid, key=lambda r: abs(r['m_spread']))
 
-    weekly_tight  = {r['t'] for r in squeezed         if r['w_spread'] < 3.0}
-    daily_tight   = {r['t'] for r in daily_squeezed   if r['d_spread'] < 2.0}
-    monthly_tight = {r['t'] for r in monthly_squeezed if r['m_spread'] < 3.0}
+    weekly_tight  = {r['t'] for r in squeezed         if abs(r['w_spread']) < 3.0}
+    daily_tight   = {r['t'] for r in daily_squeezed   if abs(r['d_spread']) < 2.0}
+    monthly_tight = {r['t'] for r in monthly_squeezed if abs(r['m_spread']) < 3.0}
     mtf_set = weekly_tight & daily_tight & monthly_tight
 
     ws_map = {r['t']: r['s'] for r in valid}
@@ -750,22 +750,22 @@ if __name__ == '__main__':
     for r in squeezed[:25]:
         t     = r['t']
         src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
-        flag  = '●' if r['w_spread'] < 3.0 else ('○' if r['w_spread'] < 5.0 else ' ')
+        flag  = '●' if abs(r['w_spread']) < 3.0 else ('○' if abs(r['w_spread']) < 5.0 else ' ')
         slp_s = '▲' if r.get('slope_up') else '▼'
         cmf_s = f'{r.get("cmf", 0.0):+.2f}'
         rs_v  = r.get('rs')
         rs_s  = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
         hi_s  = f'{r.get("pct_from_high", 0.0):+.1f}%'
-        print(f"  {t:<8} {r['s']}/4  ${r['p']:>7.2f}  {flag}{r['w_spread']:>5.1f}%  {slp_s}  {cmf_s:>6}  {rs_s:>6}  {hi_s:>6}"
+        print(f"  {t:<8} {r['s']}/4  ${r['p']:>7.2f}  {flag}{r['w_spread']:>+6.1f}%  {slp_s}  {cmf_s:>6}  {rs_s:>6}  {hi_s:>6}"
               f"  ${r['ma10w']:>7.2f} ${r['ma20w']:>7.2f} ${r['ma35w']:>7.2f} ${r['ma50w']:>7.2f}  [{src}]")
 
-    print(f"\n  ● <3% very tight   ○ 3-5% building   Slp = 10w MA slope   CMF >+0.10 accum  <-0.10 distrib   RS vs SPY 13w  offHi = % from 52w high   (top 25 shown)")
+    print(f"\n  ● |<3%| very tight   ○ |3-5%| building   + = bullish MA order (10w>50w)   - = bearish order   Slp = 10w slope   CMF >+0.10 accum  <-0.10 distrib   RS vs SPY 13w   (top 25 shown)")
 
     # ── ST Squeeze Scanner ───────────────────────────────────────────────────
     # 10w/20w convergence only — faster, short-term momentum signal.
     # Can fire even inside a longer downtrend (35w/50w still wide) — confirm
     # against w_spread/score before treating it as a structural turn.
-    st_squeezed = sorted(valid, key=lambda r: r['st_spread'])
+    st_squeezed = sorted(valid, key=lambda r: abs(r['st_spread']))
 
     print(f"\n  ST SQUEEZE — 10w/20w SMA convergence  ({now})")
     print(f"  {'─'*72}")
@@ -775,16 +775,16 @@ if __name__ == '__main__':
     for r in st_squeezed[:20]:
         t     = r['t']
         src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
-        flag  = '●' if r['st_spread'] < 2.0 else ('○' if r['st_spread'] < 4.0 else ' ')
+        flag  = '●' if abs(r['st_spread']) < 2.0 else ('○' if abs(r['st_spread']) < 4.0 else ' ')
         slp_s = '▲' if r.get('slope_up') else '▼'
         cmf_s = f'{r.get("cmf", 0.0):+.2f}'
         rs_v  = r.get('rs')
         rs_s  = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
         hi_s  = f'{r.get("pct_from_high", 0.0):+.1f}%'
-        print(f"  {t:<8} {r['s']}/4  ${r['p']:>7.2f}  {flag}{r['st_spread']:>4.1f}%"
-              f"  {slp_s}  {cmf_s:>6}  {rs_s:>6}  {hi_s:>6}  ${r['ma10w']:>7.2f} ${r['ma20w']:>7.2f}  {r['w_spread']:>7.1f}%  [{src}]")
+        print(f"  {t:<8} {r['s']}/4  ${r['p']:>7.2f}  {flag}{r['st_spread']:>+5.1f}%"
+              f"  {slp_s}  {cmf_s:>6}  {rs_s:>6}  {hi_s:>6}  ${r['ma10w']:>7.2f} ${r['ma20w']:>7.2f}  {r['w_spread']:>+7.1f}%  [{src}]")
 
-    print(f"\n  ● <2% very tight   ○ 2-4% building   FullCoil = 10w-50w spread   CMF >+0.10 accum  <-0.10 distrib   RS vs SPY 13w   offHi = % from 52w high")
+    print(f"\n  ● |<2%| very tight   ○ |2-4%| building   + = bullish MA order   - = bearish   FullCoil = signed 10w-50w spread   CMF >+0.10 accum  <-0.10 distrib   RS vs SPY 13w")
 
     # ── Daily Squeeze CLI ────────────────────────────────────────────────────
     print(f"\n  DAILY SQUEEZE — 10d/20d/35d/50d MA compression  ({now})")
@@ -800,9 +800,9 @@ if __name__ == '__main__':
         star  = '★' if t in mtf_set else ' '
         hi    = hi_map.get(t, 0.0)
         cmf   = r.get('cmf', 0.0)
-        print(f"  {star}{t:<8} {ws}/4  ${r['p']:>8.2f}  {flag}{r['d_spread']:>5.1f}%  {slp_s}  {cmf:>+6.2f}  {hi:>+5.1f}%"
+        print(f"  {star}{t:<8} {ws}/4  ${r['p']:>8.2f}  {flag}{r['d_spread']:>+6.1f}%  {slp_s}  {cmf:>+6.2f}  {hi:>+5.1f}%"
               f"  ${r['ma10d']:>7.2f} ${r['ma20d']:>7.2f} ${r['ma35d']:>7.2f} ${r['ma50d']:>7.2f}  [{src}]")
-    print(f"\n  ● <3% very tight   ○ 3-5% building   CMF 20-day   ★ = MTF (all 3 TFs tight)   (top 20 shown)")
+    print(f"\n  ● |<3%| very tight   ○ |3-5%| building   + bullish MA order   - bearish   CMF 20-day   ★ = MTF (all 3 TFs tight)   (top 20 shown)")
 
     # ── Monthly Squeeze CLI ──────────────────────────────────────────────────
     print(f"\n  MONTHLY SQUEEZE — 3m/6m/10m/20m MA compression  ({now})")
@@ -818,9 +818,9 @@ if __name__ == '__main__':
         star  = '★' if t in mtf_set else ' '
         hi    = hi_map.get(t, 0.0)
         cmf   = r.get('cmf', 0.0)
-        print(f"  {star}{t:<8} {ws}/4  ${r['p']:>8.2f}  {flag}{r['m_spread']:>5.1f}%  {slp_s}  {cmf:>+6.2f}  {hi:>+5.1f}%"
+        print(f"  {star}{t:<8} {ws}/4  ${r['p']:>8.2f}  {flag}{r['m_spread']:>+6.1f}%  {slp_s}  {cmf:>+6.2f}  {hi:>+5.1f}%"
               f"  ${r['ma3m']:>7.2f} ${r['ma6m']:>7.2f} ${r['ma10m']:>7.2f} ${r['ma20m']:>7.2f}  [{src}]")
-    print(f"\n  ● <3% very tight   ○ 3-5% building   CMF 6-month   ★ = MTF (all 3 TFs tight)   (top 20 shown)")
+    print(f"\n  ● |<3%| very tight   ○ |3-5%| building   + bullish MA order   - bearish   CMF 6-month   ★ = MTF (all 3 TFs tight)   (top 20 shown)")
 
     # ── MTF Summary CLI ──────────────────────────────────────────────────────
     if mtf_set:
