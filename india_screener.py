@@ -93,6 +93,7 @@ WATCHLIST = [
     'BAJAJHFL.NS',    # Bajaj Housing Finance — fast-growing NBFC, recently listed; ROE building, financial sector rules apply; 2-3yr story
     'ASTRAL.NS',      # Astral Ltd — pipes/adhesives/bathing compounder; OM ~13%, ROE ~18%, low debt; consistent but may grade B by filter thresholds
     'ANANDRATHI.NS',  # Anand Rathi Wealth — wealth management, asset-light; OM 40%, NM 32%, ROE 47%, RevG 48%; PE ~82x (just above 80x threshold); watch for earnings growth to bring PE sub-80
+    'HSCL.NS',        # Himadri Speciality Chemical — pivoting to battery anode materials + LFP cathodes for EV supply chain; OM 20%, NM 16%, ROE 18%; D/E 16 + FCF -0.4% blocking (heavy capex ramp); watch for FCF turning positive + debt reduction as capacity ramps
 ]
 
 def get_fundamentals(ticker):
