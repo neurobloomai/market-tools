@@ -16,11 +16,18 @@
   .flag{font-size:10px;padding:2px 7px;border-radius:4px;margin-left:8px;vertical-align:middle;font-weight:600}
   .us{background:#1f3a5c;color:#58a6ff}
   .in{background:#2d3b1f;color:#3fb950}
+  .refresh{display:inline-flex;align-items:center;gap:6px;margin-top:2px;font-size:11px;color:#8b949e;text-decoration:none;border:1px solid #21262d;border-radius:6px;padding:5px 12px;transition:border-color .15s;transition:color .15s}
+  .refresh:hover{border-color:#58a6ff;color:#58a6ff}
 </style>
 </head>
 <body>
   <h1>Market Tools</h1>
-  <div class="meta">neurobloom.ai — updated weekly via GitHub Actions</div>
+  <div class="meta" style="display:flex;align-items:center;gap:16px">
+    <span>neurobloom.ai — updated weekly via GitHub Actions</span>
+    <a class="refresh" href="https://github.com/neurobloomai/market-tools/actions" target="_blank">
+      ↻ Trigger refresh
+    </a>
+  </div>
 
   <div class="section">
     <div class="section-title">Dashboards — sector ETF momentum</div>
