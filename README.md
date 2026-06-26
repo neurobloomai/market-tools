@@ -80,7 +80,22 @@ bash run_aligned.sh
 
 **Special Mention** — names where price has dislocated far from MAs but structure is quietly rebuilding. Not actionable yet. Monthly CMF trend + A/D Line + OBV tracked together for base-building thesis.
 
+**Pullback Watch** — A+/A quality names at exactly 2/4 MA, -10% to -28% from highs. Long-term structure (10m/20m) intact, short-term MAs broken. Different from Special Mention: weeks away from reclaiming, not months. Watch 20w MA as the first gate back to 3/4.
+
 **Philosophy:** medium and long-term orientation. The framework is not built for scalping or short-term noise. Quality names in full MA alignment with tight coils and accumulation signals — hold the structure, wait for the move.
+
+## Options Spread Universe
+
+`SPREAD_UNIVERSE` in `screener.py` defines which names are liquid enough for vertical spreads. The rule: only spread where bid-ask is tight enough that slippage doesn't eat the edge. Tier 3 is the outer boundary — beyond it, friction works against you before the trade starts.
+
+| Tier | Names | Bid-ask | Notes |
+|---|---|---|---|
+| **1 — Indices** | SPY, QQQ | $0.01 | Tightest on the planet. No binary risk, no earnings gaps. Cleanest spread vehicles. |
+| **2 — Mega-cap tech** | NVDA, AAPL, MSFT, META, AMZN, GOOGL, TSLA | $0.01–0.05 | Massive options volume, clean execution. Tier 1 and 2 are where spreads actually work. |
+| **3 — Large cap tradeable** | MU, AMD, JPM, GS, NFLX | $0.05–0.15 | Usable outside earnings windows. Needs care on entry/exit. Outer boundary. |
+| **Below the line** | Everything else | Wide | Pharma binary risk (NEM), thin enterprise SaaS (NOW, ADBE, FTNT), mid-caps — slippage consistently eats the edge. |
+
+Names that look like good chart setups but fall below the line (VRTX, NEM, FTNT, ADBE): **good stock, not a spread vehicle.**
 
 ## Why This Framework Holds Up
 
