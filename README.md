@@ -10,9 +10,9 @@ Free, open-source market dashboards and quality stock screeners powered by Yahoo
 | `india_dashboard.py` | 🇮🇳 India | NSE sector index briefing — same MA framework for Indian markets |
 | `screener.py` | 🇺🇸 US | Quality growth screener — low debt, high ROIC, strong margins, FCF |
 | `india_screener.py` | 🇮🇳 India | India quality growth screener — NSE universe across key themes |
-| `aligned_screener.py` | 🇺🇸 US | Weekly MA alignment scanner — 4/4 aligned names, squeeze setups, CMF, RS vs SPY |
+| `aligned_screener.py` | 🇺🇸 US | Weekly MA alignment scanner — 4/4 aligned names, squeeze setups, CMF, RS vs SPY, A/D Line + OBV divergence |
 | `weekly_snapshot.py` | 🇺🇸 US | Appends weekly alignment snapshot to `weekly_notes.md` |
-| `india_aligned_screener.py` | 🇮🇳 India | Weekly MA alignment scanner for India — same framework, RS vs NIFTY 50 |
+| `india_aligned_screener.py` | 🇮🇳 India | Weekly MA alignment scanner for India — same framework, RS vs NIFTY 50, A/D Line + OBV divergence |
 | `india_weekly_snapshot.py` | 🇮🇳 India | Appends weekly India alignment snapshot to `india_weekly_notes.md` |
 | `dividend_plays_for_longterm.py` | 🇺🇸 US | Curated long-term dividend universe — quality-filtered, thesis-annotated |
 | `run_aligned.sh` | — | Cron entry point — runs all four scripts (US + India), auto-pushes to GitHub |
@@ -27,10 +27,10 @@ Updated automatically every Monday via GitHub Actions — no server, no local ma
 |---|---|---|---|
 | [market_briefing.html](https://neurobloomai.github.io/market-tools/market_briefing.html) | 🇺🇸 US | Sector ETF momentum dashboard — MA signals, day change, volume, yield | Monday 8am EST |
 | [quality_screener.html](https://neurobloomai.github.io/market-tools/quality_screener.html) | 🇺🇸 US | Quality growth screener — margins, ROE, FCF, debt filter | Monday 8am EST |
-| [aligned_screener.html](https://neurobloomai.github.io/market-tools/aligned_screener.html) | 🇺🇸 US | 4/4 MA alignment · FullCoil squeeze · MTF · CMF · RS vs SPY | Monday 8am EST |
+| [aligned_screener.html](https://neurobloomai.github.io/market-tools/aligned_screener.html) | 🇺🇸 US | 4/4 MA alignment · FullCoil squeeze · MTF · CMF · RS vs SPY · A/D Line · OBV | Monday 8am EST |
 | [india_briefing.html](https://neurobloomai.github.io/market-tools/india_briefing.html) | 🇮🇳 India | NSE sector index dashboard — same MA framework, RS vs NIFTY | Monday 8am IST |
 | [india_screener.html](https://neurobloomai.github.io/market-tools/india_screener.html) | 🇮🇳 India | India quality screener — same filters, NSE universe | Monday 8am IST |
-| [india_aligned_screener.html](https://neurobloomai.github.io/market-tools/india_aligned_screener.html) | 🇮🇳 India | 4/4 MA alignment · FullCoil squeeze · MTF · CMF · RS vs NIFTY 50 | Monday 8am IST |
+| [india_aligned_screener.html](https://neurobloomai.github.io/market-tools/india_aligned_screener.html) | 🇮🇳 India | 4/4 MA alignment · FullCoil squeeze · MTF · CMF · RS vs NIFTY 50 · A/D Line · OBV | Monday 8am IST |
 
 Weekly snapshots: [`weekly_notes.md`](weekly_notes.md) · [`india_weekly_notes.md`](india_weekly_notes.md)
 
@@ -56,16 +56,29 @@ bash run_aligned.sh
 
 ## Weekly Alignment Framework
 
-`aligned_screener.py` scans the quality universe every week across four signals:
+`aligned_screener.py` scans the quality universe every week across six signals:
 
 | Signal | What it means |
 |---|---|
 | **4/4 MA aligned** | Price above 10w, 20w, 10m (43w), 20m (87w) SMAs — full structure intact |
 | **FullCoil squeeze** | 10w/20w/35w/50w spread compressed — energy building, potential move ahead |
-| **CMF (Chaikin Money Flow)** | Volume weighted to close position in range — accumulation vs distribution |
-| **RS vs SPY** | 13-week price ratio vs SPY — outperforming or lagging the market |
+| **CMF (Chaikin Money Flow)** | Volume weighted to close position in range — accumulation vs distribution (20-week) |
+| **RS vs SPY / NIFTY** | 13-week price ratio vs benchmark — outperforming or lagging the market |
+| **A/D Line** | Cumulative money flow — 13-week slope rising = institutions accumulating regardless of price action |
+| **OBV (On Balance Volume)** | Volume conviction — more volume on up days vs down days over 13 weeks |
 
-**Special Mention** — names where price has dislocated far from MAs but structure is quietly rebuilding. Not actionable yet. Monthly CMF trend tracked separately for base-building thesis.
+**Divergence signals** — `◆bull` = A/D Line rising while price is weak (smart money accumulating before price confirms). `◇bear` = A/D falling while price rises (distribution into strength).
+
+**Confluence progression:**
+
+| Pattern | Reading |
+|---|---|
+| `⚠ + AD:↓ OBV:↓` | Pure distribution — avoid |
+| `⚠ + AD:↑ OBV:↑ ◆` | Early accumulation inside distribution — watch closely |
+| `◎ + AD:↓ OBV:↑` | Monthly regime turned, weekly volume confirming |
+| `◎ + AD:↑ OBV:↑` | Full confluence — strongest setup |
+
+**Special Mention** — names where price has dislocated far from MAs but structure is quietly rebuilding. Not actionable yet. Monthly CMF trend + A/D Line + OBV tracked together for base-building thesis.
 
 **Philosophy:** medium and long-term orientation. The framework is not built for scalping or short-term noise. Quality names in full MA alignment with tight coils and accumulation signals — hold the structure, wait for the move.
 
@@ -75,7 +88,7 @@ bash run_aligned.sh
 
 **Structure confirmation** — 4/4 MA alignment means the market agrees with the fundamentals. Price, momentum, and quality all pointing the same direction before anything is acted on. No thesis without structure. No structure without thesis.
 
-**Early warning system** — Special Mention catches names before they qualify. You're not chasing; you're watching the base build. When a name finally surfaces in the aligned list, it's not a surprise — it was already on the radar.
+**Early warning system** — Special Mention catches names before they qualify. You're not chasing; you're watching the base build. A/D Line and OBV divergence add an extra layer — when smart money starts accumulating before the monthly regime flips, the volume picture changes before the price structure does. When a name finally surfaces in the aligned list, it's not a surprise — it was already on the radar with the volume story already forming.
 
 **Honest watchlist** — every entry has a thesis and a blocker noted. Not just a ticker dump. You know exactly why something isn't in the universe yet and what has to change for it to qualify.
 
