@@ -643,8 +643,19 @@ AD/OBV = A/D Line + On Balance Volume 13w slope &nbsp;·&nbsp; <span style="colo
 
 
 if __name__ == '__main__':
-    # Fetch NIFTY 50 reference once for RS calculation
-    nifty_hist      = yf.Ticker('^NSEI').history(period='1y', interval='1wk')
+    import time as _time
+    # Fetch NIFTY 50 reference once for RS calculation — retry on rate limit
+    nifty_hist = None
+    for _att in range(5):
+        try:
+            nifty_hist = yf.Ticker('^NSEI').history(period='1y', interval='1wk')
+            break
+        except Exception:
+            wait = 10 + _att * 10
+            print(f"  NIFTY fetch rate-limited, retrying in {wait}s ...", flush=True)
+            _time.sleep(wait)
+    if nifty_hist is None or nifty_hist.empty:
+        print("  ERROR: could not fetch NIFTY after retries — exiting"); exit(1)
     nifty_close     = nifty_hist['Close'].dropna()
     nifty_13w_ratio = float(nifty_close.iloc[-1]) / float(nifty_close.iloc[-14]) if len(nifty_close) >= 14 else 1.0
     ma_score_fn     = functools.partial(ma_score, nifty_13w_ratio=nifty_13w_ratio)

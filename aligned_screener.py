@@ -666,8 +666,19 @@ def sm_signal(rs, mcmf_trend):
     return '→'
 
 if __name__ == '__main__':
-    # Fetch SPY reference once for RS calculation
-    spy_hist      = yf.Ticker('SPY').history(period='1y', interval='1wk')
+    import time as _time
+    # Fetch SPY reference once for RS calculation — retry on rate limit
+    spy_hist = None
+    for _att in range(5):
+        try:
+            spy_hist = yf.Ticker('SPY').history(period='1y', interval='1wk')
+            break
+        except Exception:
+            wait = 10 + _att * 10
+            print(f"  SPY fetch rate-limited, retrying in {wait}s ...", flush=True)
+            _time.sleep(wait)
+    if spy_hist is None or spy_hist.empty:
+        print("  ERROR: could not fetch SPY after retries — exiting"); exit(1)
     spy_close     = spy_hist['Close'].dropna()
     spy_13w_ratio = float(spy_close.iloc[-1]) / float(spy_close.iloc[-14]) if len(spy_close) >= 14 else 1.0
     ma_score_fn   = functools.partial(ma_score, spy_13w_ratio=spy_13w_ratio)
