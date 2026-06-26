@@ -69,6 +69,7 @@ UNIVERSE = [
     'CVX',   # Chevron — 37yr aristocrat, integrated oil
     'XOM',   # ExxonMobil — 42yr consecutive increases, massive scale
     'CNQ',   # Canadian Natural Resources — largest Canadian oil producer; oil sands (40-50yr reserve life, near-zero decline post-construction) = cash machine; Berkshire Hathaway holds it; OM 21.8%, NM 25.1%, ROE 22.8%, D/EV 0.191, FCF 6.2%, yield 4.5%, PE 11.8x, payout 46%; A+
+    'DVN',   # Devon Energy — pure Permian (Delaware Basin) E&P; fixed + variable dividend model = honest payout design (fixed base covered at ~$40/bbl, variable paid from excess FCF above that); lowest cost structure in US onshore E&P; clean balance sheet, active debt reduction; oil price dependency is real — variable portion evaporates below ~$50/bbl but that's the design not a failure; watch payout ratio and FCF coverage each quarter; size accordingly vs integrated names like CVX/XOM which carry less cycle risk
 
     # Telecom — high yield, FCF-covered, structural debt
     'VZ',    # Verizon — 6.1% yield, FCF 10.3% (1.7x dividend coverage), 25% OM, ROE 17%; D/EV 0.517 from 5G spectrum (structural, not deteriorating); income play not a compounder, no rev growth
