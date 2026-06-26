@@ -176,6 +176,31 @@ FUTURE_RADAR = {
     'ENVX': 'Enovix — silicon-dominant batteries (100% silicon anode); Fab2 Malaysia in ramp; consumer electronics + defense; most commercially advanced silicon anode play (vs AMPX/EOSE); all quality filters blocking now — gate to watchlist: Fab2 ramp execution + gross margin turning consistently positive + OM inflecting toward 0%; revisit Q3/Q4 2026',
 }
 
+# Spread universe — tiered by options liquidity
+# Rule: only spread where bid-ask is tight enough that slippage doesn't eat the edge
+# Tier 1 — indices: tightest spreads, no binary risk, no earnings gaps
+# Tier 2 — mega-cap tech: $0.01-0.05 wide near-the-money, massive volume, clean execution
+# Tier 3 — large cap tradeable: $0.05-0.15 wide, usable but needs care on entry/exit; avoid earnings windows
+# Below the line: everything else (pharma binary risk, thin mid-caps, sector ETFs with wide spreads)
+SPREAD_UNIVERSE = {
+    # Tier 1 — indices
+    'SPY':  1,
+    'QQQ':  1,
+    # Tier 2 — mega-cap tech
+    'NVDA': 2,
+    'AAPL': 2,
+    'MSFT': 2,
+    'META': 2,
+    'AMZN': 2,
+    'GOOGL':2,
+    'TSLA': 2,
+    # Tier 3 — large cap, tradeable outside earnings
+    'MU':   3,  # semi, $0.05-0.15 wide, avoid earnings window
+    'AMD':  3,  # AI accelerator challenger, similar liquidity profile to MU
+    'JPM':  3,  # financials, decent volume, macro-driven not binary
+    'GS':   3,  # same tier as JPM
+}
+
 def get_fundamentals(ticker):
     try:
         t    = yf.Ticker(ticker)
