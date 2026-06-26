@@ -29,8 +29,17 @@ def disp(t):
     return t.replace('.NS', '').replace('.BO', '')
 
 def ma_score(ticker, nifty_13w_ratio=1.0):
+    import time
+    for _attempt in range(3):
+        try:
+            hist  = yf.Ticker(ticker).history(period='2y', interval='1wk')
+            break
+        except Exception:
+            if _attempt < 2:
+                time.sleep(2 + _attempt * 2)
+            else:
+                return None
     try:
-        hist  = yf.Ticker(ticker).history(period='2y', interval='1wk')
         close = hist['Close'].dropna()
         if len(close) < 40:
             return None

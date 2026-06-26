@@ -37,8 +37,17 @@ SPECIAL_MENTION = {
 TICKERS = list(dict.fromkeys(UNIVERSE + WATCHLIST + EXTRA + list(SPECIAL_MENTION.keys())))
 
 def ma_score(ticker, spy_13w_ratio=1.0):
+    import time
+    for _attempt in range(3):
+        try:
+            hist  = yf.Ticker(ticker).history(period='2y', interval='1wk')
+            break
+        except Exception:
+            if _attempt < 2:
+                time.sleep(2 + _attempt * 2)
+            else:
+                return None
     try:
-        hist  = yf.Ticker(ticker).history(period='2y', interval='1wk')
         close = hist['Close'].dropna()
         if len(close) < 40:
             return None
