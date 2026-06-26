@@ -54,19 +54,33 @@ def ma_score(ticker, nifty_13w_ratio=1.0):
 
         # CMF (Chaikin Money Flow) — 20-week
         cmf = 0.0
+        ad_arrow, obv_arrow, ad_div = '→', '→', None
         try:
             high = hist['High'].dropna()
             low  = hist['Low'].dropna()
             idx  = close.index.intersection(vol.index).intersection(high.index).intersection(low.index)
-            c20  = close.loc[idx].tail(20)
-            h20  = high.loc[idx].tail(20)
-            l20  = low.loc[idx].tail(20)
-            v20  = vol.loc[idx].tail(20)
-            hl   = (h20 - l20).replace(0, float('nan'))
-            mfm  = ((c20 - l20) - (h20 - c20)) / hl
-            mfv  = mfm.fillna(0) * v20
+            ca = close.loc[idx]; ha = high.loc[idx]; la = low.loc[idx]; va = vol.loc[idx]
+            c20 = ca.tail(20); h20 = ha.tail(20); l20 = la.tail(20); v20 = va.tail(20)
+            hl      = (h20 - l20).replace(0, float('nan'))
+            mfm     = ((c20 - l20) - (h20 - c20)) / hl
+            mfv     = mfm.fillna(0) * v20
             vol_sum = float(v20.sum())
-            cmf  = round(float(mfv.sum()) / vol_sum, 3) if vol_sum > 0 else 0.0
+            cmf     = round(float(mfv.sum()) / vol_sum, 3) if vol_sum > 0 else 0.0
+            # A/D Line + OBV — 13-week slope for divergence detection
+            if len(ca) >= 14:
+                hl_a     = (ha - la).replace(0, float('nan'))
+                ad_line  = ((((ca - la) - (ha - ca)) / hl_a).fillna(0) * va).cumsum()
+                ad_up    = float(ad_line.iloc[-1]) > float(ad_line.iloc[-14])
+                obv_dir  = ca.diff().apply(lambda x: 1.0 if x > 0 else (-1.0 if x < 0 else 0.0))
+                obv_line = (va * obv_dir).cumsum()
+                obv_up   = float(obv_line.iloc[-1]) > float(obv_line.iloc[-14])
+                ad_arrow  = '↑' if ad_up  else '↓'
+                obv_arrow = '↑' if obv_up else '↓'
+                price_up  = price > float(ca.iloc[-14])
+                if ad_up and not price_up:
+                    ad_div = 'bull'
+                elif not ad_up and price_up:
+                    ad_div = 'bear'
         except:
             cmf = 0.0
 
@@ -85,6 +99,7 @@ def ma_score(ticker, nifty_13w_ratio=1.0):
             'cmf': cmf, 'rs': rs, 'pct_from_high': pct_from_high,
             'ma10w': round(ma10w, 2), 'ma20w': round(ma20w, 2),
             'ma35w': round(ma35w, 2), 'ma50w': round(ma50w, 2),
+            'ad_arrow': ad_arrow, 'obv_arrow': obv_arrow, 'ad_div': ad_div,
         }
     except:
         return None
@@ -237,6 +252,11 @@ def _c_trend(arrow):
     if arrow == '↓': return '#f85149'
     return '#8b949e'
 
+def _c_ad(arrow):
+    if arrow == '↑': return '#3fb950'
+    if arrow == '↓': return '#f85149'
+    return '#8b949e'
+
 
 def build_aligned_html(valid, aligned, grades, partial, promos,
                        squeezed, st_squeezed, rs_map, hi_map, cmf_map,
@@ -254,9 +274,14 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
         rs   = rs_map.get(t)
         hi   = hi_map.get(t)
         cmf  = cmf_map.get(t, 0.0)
+        ad   = r.get('ad_arrow', '→')
+        obv  = r.get('obv_arrow', '→')
+        div  = r.get('ad_div')
         rs_s = f'{rs:.2f}x' if rs is not None else '—'
         hi_s = f'{hi:+.1f}%' if hi is not None else '—'
         lag  = ' ↓' if (rs is not None and rs < 0.80) else ''
+        div_s = (' <span style="color:#d29922;font-size:10px" title="A/D bullish divergence">◆</span>' if div == 'bull'
+                 else (' <span style="color:#8b949e;font-size:10px" title="A/D bearish divergence">◇</span>' if div == 'bear' else ''))
         return (f'<tr>'
                 f'<td style="color:#8b949e;font-size:11px">[{src_tag(t)}]</td>'
                 f'<td class="ticker">{disp(t)}</td>'
@@ -265,6 +290,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                 f'<td style="color:{_c_rs(rs)}">{rs_s}{lag}</td>'
                 f'<td style="color:{_c_hi(hi or 0)}">{hi_s}</td>'
                 f'<td style="color:{_c_cmf(cmf)}">{cmf:+.2f}</td>'
+                f'<td><span style="color:{_c_ad(ad)}">{ad}</span> <span style="color:{_c_ad(obv)}">{obv}</span>{div_s}</td>'
                 f'</tr>')
 
     def partial_row(r):
@@ -272,15 +298,21 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
         rs   = rs_map.get(t)
         hi   = hi_map.get(t)
         cmf  = cmf_map.get(t, 0.0)
+        ad   = r.get('ad_arrow', '→')
+        obv  = r.get('obv_arrow', '→')
+        div  = r.get('ad_div')
         rs_s = f'{rs:.2f}x' if rs is not None else '—'
         hi_s = f'{hi:+.1f}%' if hi is not None else '—'
         lag  = ' ↓' if (rs is not None and rs < 0.80) else ''
+        div_s = (' <span style="color:#d29922;font-size:10px" title="A/D bullish divergence">◆</span>' if div == 'bull'
+                 else (' <span style="color:#8b949e;font-size:10px" title="A/D bearish divergence">◇</span>' if div == 'bear' else ''))
         return (f'<tr>'
                 f'<td style="color:#8b949e;font-size:11px">[{src_tag(t)}]</td>'
                 f'<td class="ticker">{disp(t)}</td>'
                 f'<td style="color:{_c_rs(rs)}">{rs_s}{lag}</td>'
                 f'<td style="color:{_c_hi(hi or 0)}">{hi_s}</td>'
                 f'<td style="color:{_c_cmf(cmf)}">{cmf:+.2f}</td>'
+                f'<td><span style="color:{_c_ad(ad)}">{ad}</span> <span style="color:{_c_ad(obv)}">{obv}</span>{div_s}</td>'
                 f'<td style="color:{_c_ma(r["s"])}">{r["s"]}/4</td>'
                 f'<td>₹{r["p"]:,.2f}</td>'
                 f'</tr>')
@@ -387,7 +419,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                            ('A — structure + quality',  [(r,g) for r,g in zip(aligned,grades) if g=='A']),
                            ('Watchlist / not yet qualifying', [(r,g) for r,g in zip(aligned,grades) if g=='—'])]:
         if subset:
-            aligned_rows += f'<tr class="grp"><td colspan="7">{label}</td></tr>'
+            aligned_rows += f'<tr class="grp"><td colspan="8">{label}</td></tr>'
             for r, g in sorted(subset, key=lambda x: disp(x[0]['t'])):
                 aligned_rows += aligned_row(r, g)
 
@@ -431,6 +463,17 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
             sig_color = '#3fb950' if sig == '◎' else ('#f85149' if sig == '⚠' else '#8b949e')
             sig_label = 'base building' if sig == '◎' else ('distributing' if sig == '⚠' else 'mixed')
             sig_cell  = f'<span style="color:{sig_color};font-weight:600">{sig}</span><span style="color:{sig_color};font-size:10px"> {sig_label}</span>'
+            ad  = r.get('ad_arrow', '→')
+            obv = r.get('obv_arrow', '→')
+            div = r.get('ad_div')
+            if div == 'bull':
+                div_badge = f' <span style="color:#d29922;font-size:10px" title="A/D rising while price weak — smart money accumulating">◆bull</span>'
+            elif div == 'bear':
+                div_badge = f' <span style="color:#8b949e;font-size:10px" title="A/D falling while price rises — distribution">◇bear</span>'
+            else:
+                div_badge = ''
+            flow_cell = (f'<span style="color:{_c_ad(ad)}">AD:{ad}</span>'
+                         f' <span style="color:{_c_ad(obv)}">OBV:{obv}</span>{div_badge}')
             sm_rows += (f'<tr>'
                         f'<td class="ticker">{disp(t)}</td>'
                         f'<td style="color:{_c_ma(r["s"])}">{r["s"]}/4</td>'
@@ -439,6 +482,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                         f'<td style="color:{_c_hi(hi)}">{hi:+.1f}%</td>'
                         f'<td style="color:{_c_cmf(cmf)}">{cmf:+.2f}</td>'
                         f'<td>{mcmf_cell}</td>'
+                        f'<td>{flow_cell}</td>'
                         f'<td>{sig_cell}</td>'
                         f'<td style="color:#8b949e;font-size:11px">{note}</td>'
                         f'</tr>')
@@ -491,22 +535,23 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
 {mtf_section}
 <div class="sh">4/4 Aligned — {len(aligned)} names</div>
 <table><thead><tr>
-  <th></th><th>Ticker</th><th>Grade</th><th>Price</th><th>RS vs NIFTY</th><th>% from 52wH</th><th>CMF</th>
+  <th></th><th>Ticker</th><th>Grade</th><th>Price</th><th>RS vs NIFTY</th><th>% from 52wH</th><th>CMF</th><th>AD OBV</th>
 </tr></thead><tbody>{aligned_rows}</tbody></table>
 <div class="legend">RS = 13w price vs NIFTY 50 &nbsp;·&nbsp; offHi = % below 52w high &nbsp;·&nbsp; CMF &gt;+0.10 accumulation / &lt;–0.10 distribution &nbsp;·&nbsp;
+AD/OBV = A/D Line + On Balance Volume 13w slope &nbsp;·&nbsp; <span style="color:#d29922">◆</span> bullish divergence (A/D↑ price↓) &nbsp;·&nbsp;
 <span style="color:#f85149">↓ = RS &lt; 0.80 lagging</span></div>
 
 <div class="sh">3/4 Near-Aligned — {len(partial)} names</div>
 <table><thead><tr>
-  <th></th><th>Ticker</th><th>RS vs NIFTY</th><th>% from 52wH</th><th>CMF</th><th>MA</th><th>Price</th>
+  <th></th><th>Ticker</th><th>RS vs NIFTY</th><th>% from 52wH</th><th>CMF</th><th>AD OBV</th><th>MA</th><th>Price</th>
 </tr></thead><tbody>{partial_rows}</tbody></table>
 
 {'<div class="sh">Promotion Candidates</div><table><thead><tr><th></th><th>Ticker</th><th>Grade</th><th>Price</th><th>MA</th></tr></thead><tbody>' + promo_rows + '</tbody></table>' if promos else ''}
 
 <div class="sh">Special Mention — Teasing / Puzzling Setups</div>
-<div class="sub">Structure building or price dislocated — not yet actionable but worth watching closely. &nbsp;Mth CMF = 6-month monthly CMF + trend vs prior 6 months (↑ rising / ↓ falling / → flat). &nbsp;<span style="color:#3fb950">◎ base building</span> = MthCMF ↑ &nbsp;·&nbsp; <span style="color:#f85149">⚠ distributing</span> = MthCMF ↓ + RS &lt; 1.0 &nbsp;·&nbsp; <span style="color:#8b949e">→ mixed</span> = conflicting signals.</div>
+<div class="sub">Structure building or price dislocated — not yet actionable but worth watching closely. &nbsp;Mth CMF = 6-month monthly CMF + trend vs prior 6 months (↑ rising / ↓ falling / → flat). &nbsp;Vol Flow = A/D Line + OBV 13w slope — <span style="color:#d29922">◆bull</span> = A/D rising while price weak (smart money accumulating). &nbsp;<span style="color:#3fb950">◎ base building</span> = MthCMF ↑ &nbsp;·&nbsp; <span style="color:#f85149">⚠ distributing</span> = MthCMF ↓ + RS &lt; 1.0 &nbsp;·&nbsp; <span style="color:#8b949e">→ mixed</span> = conflicting signals.</div>
 <table><thead><tr>
-  <th>Ticker</th><th>MA</th><th>Price</th><th>RS vs NIFTY</th><th>offHi</th><th>CMF (wkly)</th><th>Mth CMF</th><th>Signal</th><th>Note</th>
+  <th>Ticker</th><th>MA</th><th>Price</th><th>RS vs NIFTY</th><th>offHi</th><th>CMF (wkly)</th><th>Mth CMF</th><th>Vol Flow</th><th>Signal</th><th>Note</th>
 </tr></thead><tbody>{sm_rows}</tbody></table>
 
 <div class="sh">Weekly Squeeze — FullCoil (top 25)</div>
@@ -691,7 +736,10 @@ if __name__ == '__main__':
             hi_s    = f'{hi_val:+.1f}% hi' if hi_val is not None else '—'
             mcmf_s  = f'MthCMF {mcmf[0]:+.2f}{mcmf[2]}' if mcmf[0] is not None else 'MthCMF —'
             sig     = sm_signal(rs_val, mcmf[2])
-            print(f"  {sig}  {disp(t):12}  {r['s']}/4  ₹{r['p']:>10.2f}   {rs_s}   {hi_s}   CMF {cmf_val:+.2f}   {mcmf_s}")
+            ad_s    = r.get('ad_arrow', '→')
+            obv_s   = r.get('obv_arrow', '→')
+            div_s   = ' ◆bull' if r.get('ad_div') == 'bull' else (' ◇bear' if r.get('ad_div') == 'bear' else '')
+            print(f"  {sig}  {disp(t):12}  {r['s']}/4  ₹{r['p']:>10.2f}   {rs_s}   {hi_s}   CMF {cmf_val:+.2f}   {mcmf_s}   AD:{ad_s} OBV:{obv_s}{div_s}")
             print(f"               → {note}\n")
     print(f"  ◎ base building (MthCMF ↑)   ⚠ distributing (MthCMF ↓ + RS < 1.0)   → mixed signals")
 
