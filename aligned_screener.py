@@ -236,7 +236,8 @@ def _c_ad(arrow):
 def build_aligned_html(valid, aligned, grades, partial, promos,
                        squeezed, st_squeezed, rs_map, hi_map, cmf_map,
                        special_mention, now, UNIVERSE, WATCHLIST, m_cmf_map=None,
-                       daily_squeezed=None, monthly_squeezed=None, mtf_set=None):
+                       daily_squeezed=None, monthly_squeezed=None, mtf_set=None,
+                       pullback_watch=None):
 
     def src_tag(t):
         return 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
@@ -473,6 +474,32 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
         for t, p, g, ma in promos
     )
 
+    _pw = pullback_watch or []
+    def pw_row(r, g):
+        t    = r['t']
+        rs   = rs_map.get(t)
+        hi   = hi_map.get(t, 0.0)
+        cmf  = cmf_map.get(t, 0.0)
+        ad   = r.get('ad_arrow', '→')
+        obv  = r.get('obv_arrow', '→')
+        div  = r.get('ad_div')
+        rs_s = f'{rs:.2f}x' if rs is not None else '—'
+        lag  = ' ↓' if (rs is not None and rs < 0.80) else ''
+        div_s = (' <span style="color:#d29922;font-size:10px" title="A/D bullish divergence">◆</span>' if div == 'bull'
+                 else (' <span style="color:#8b949e;font-size:10px" title="A/D bearish divergence">◇</span>' if div == 'bear' else ''))
+        return (f'<tr>'
+                f'<td style="color:#8b949e;font-size:11px">[{src_tag(t)}]</td>'
+                f'<td class="ticker">{t}</td>'
+                f'<td style="color:{_c_grade(g)};font-weight:600">{g}</td>'
+                f'<td>${r["p"]:,.2f}</td>'
+                f'<td style="color:{_c_rs(rs)}">{rs_s}{lag}</td>'
+                f'<td style="color:{_c_hi(hi)}">{hi:+.1f}%</td>'
+                f'<td style="color:{_c_cmf(cmf)}">{cmf:+.2f}</td>'
+                f'<td><span style="color:{_c_ad(ad)}">{ad}</span> <span style="color:{_c_ad(obv)}">{obv}</span>{div_s}</td>'
+                f'<td style="color:#484f58;font-size:11px">20w ${r["ma20w"]:,.2f}</td>'
+                f'</tr>')
+    pw_rows = ''.join(pw_row(r, g) for r, g in _pw)
+
     n_aplus = sum(1 for _, g in zip(aligned, grades) if g == 'A+')
     n_a     = sum(1 for _, g in zip(aligned, grades) if g == 'A')
 
@@ -507,6 +534,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
   <div class="stat"><div class="stat-val" style="color:#58a6ff">{n_a}</div><div class="stat-lbl">A Grade</div></div>
   <div class="stat"><div class="stat-val" style="color:#d29922">{len(partial)}</div><div class="stat-lbl">3/4 Near-Aligned</div></div>
   <div class="stat"><div class="stat-val">{len(promos)}</div><div class="stat-lbl">Promo Candidates</div></div>
+  <div class="stat"><div class="stat-val" style="color:{'#d29922' if _pw else '#484f58'}">{len(_pw)}</div><div class="stat-lbl">Pullback Watch</div></div>
   <div class="stat"><div class="stat-val" style="color:{mtf_color}">{"★ " if _mtf else ""}{len(_mtf)}</div><div class="stat-lbl">MTF Squeeze</div></div>
 </div>
 
@@ -531,6 +559,8 @@ AD/OBV = A/D Line + On Balance Volume 13w slope &nbsp;·&nbsp; <span style="colo
 <table><thead><tr>
   <th>Ticker</th><th>MA</th><th>Price</th><th>RS vs SPY</th><th>offHi</th><th>CMF (wkly)</th><th>Mth CMF</th><th>Vol Flow</th><th>Signal</th><th>Note</th>
 </tr></thead><tbody>{sm_rows}</tbody></table>
+
+{'<div class="sh" style="color:#d29922">↘ Pullback Watch — ' + str(len(_pw)) + ' names</div><div class="sub">A+/A quality at 2/4 MA — long-term structure intact (10m/20m holding), short-term MAs broken. Different from Special Mention: weeks away from reclaiming, not months. Watch 20w MA as first gate back to 3/4.</div><table><thead><tr><th></th><th>Ticker</th><th>Grade</th><th>Price</th><th>RS vs SPY</th><th>offHi</th><th>CMF</th><th>AD OBV</th><th>Reclaim</th></tr></thead><tbody>' + pw_rows + '</tbody></table>' if _pw else ''}
 
 <div class="sh">Weekly Squeeze — FullCoil (top 25)</div>
 <div class="sub">● &lt;3% very tight &nbsp; ○ 3–5% building &nbsp; Slp = 10w MA slope &nbsp; CMF &gt;+0.10 accumulation / &lt;–0.10 distribution &nbsp; RS vs SPY 13w &nbsp; offHi = % from 52w high</div>
@@ -750,6 +780,25 @@ if __name__ == '__main__':
     # Manual entries override auto — merge with manual taking precedence
     combined_sm = {**auto_sm, **SPECIAL_MENTION}
 
+    # ── Pullback Watch — A+/A quality at exactly 2/4, moderate pullback ──────
+    # Long-term structure (10m/20m) intact — short-term (10w/20w) broken
+    # -10% to -28% from highs: not a trivial dip, not a deep dislocation
+    # Explicitly separate from Special Mention — weeks away, not months
+    pw_candidates = [r for r in valid
+                     if r['s'] == 2
+                     and -28 <= (r.get('pct_from_high') or 0) <= -10
+                     and r['t'] not in combined_sm
+                     and (r['t'] in UNIVERSE or r['t'] in WATCHLIST)]
+    pullback_watch = []
+    if pw_candidates:
+        print(f"  Auto-detecting Pullback Watch: {len(pw_candidates)} candidates ...", flush=True)
+        with ThreadPoolExecutor(max_workers=10) as ex:
+            pw_grades = list(ex.map(grade_ticker, [r['t'] for r in pw_candidates]))
+        for r, g in zip(pw_candidates, pw_grades):
+            if g in ('A+', 'A'):
+                pullback_watch.append((r, g))
+    pullback_watch.sort(key=lambda x: (0 if x[1] == 'A+' else 1, x[0]['t']))
+
     # Monthly CMF trend for all Special Mention names (auto + manual)
     print(f"  Fetching monthly CMF trend for {len(combined_sm)} Special Mention names ...", flush=True)
     m_cmf_map = {}
@@ -779,6 +828,25 @@ if __name__ == '__main__':
             print(f"  {sig}  {t:8}  {r['s']}/4  ${r['p']:>8.2f}   {rs_s}   {hi_s}   CMF {cmf_val:+.2f}   {mcmf_s}   AD:{ad_s} OBV:{obv_s}{div_s}")
             print(f"           → {note}\n")
     print(f"  ◎ base building (MthCMF ↑)   ⚠ distributing (MthCMF ↓ + RS < 1.0)   → mixed signals")
+
+    # ── Pullback Watch CLI ───────────────────────────────────────────────────
+    print(f"\n  PULLBACK WATCH — {len(pullback_watch)} A+/A names at 2/4")
+    print(f"  {'─'*60}")
+    print(f"  Long-term structure intact (10m/20m holding) · short-term broken · watch 20w reclaim → 3/4\n")
+    for r, g in pullback_watch:
+        t       = r['t']
+        src     = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+        rs_val  = rs_map.get(t)
+        hi_val  = hi_map.get(t, 0.0)
+        cmf_val = cmf_map.get(t, 0.0)
+        ad_s    = r.get('ad_arrow', '→')
+        obv_s   = r.get('obv_arrow', '→')
+        div_s   = ' ◆bull' if r.get('ad_div') == 'bull' else (' ◇bear' if r.get('ad_div') == 'bear' else '')
+        rs_s    = f'RS {rs_val:.2f}x' if rs_val is not None else 'RS  —  '
+        hi_s    = f'{hi_val:+.1f}% hi' if hi_val is not None else '—'
+        print(f"  [{src}]  {t:8}  {g:<3}  ${r['p']:>8.2f}   {rs_s}   {hi_s}   CMF {cmf_val:+.2f}   AD:{ad_s} OBV:{obv_s}{div_s}   → 20w ${r['ma20w']:,.2f}")
+    if not pullback_watch:
+        print(f"  none — no A+/A names at 2/4 within pullback range (-10% to -28%)")
 
     # ── Squeeze Scanners ─────────────────────────────────────────────────────
     squeezed         = sorted(valid,         key=lambda r: abs(r['w_spread']))
@@ -890,7 +958,8 @@ if __name__ == '__main__':
     html     = build_aligned_html(valid, aligned, grades, partial, promos,
                                   squeezed, st_squeezed, rs_map, hi_map, cmf_map,
                                   combined_sm, now, UNIVERSE, WATCHLIST, m_cmf_map,
-                                  daily_squeezed, monthly_squeezed, mtf_set)
+                                  daily_squeezed, monthly_squeezed, mtf_set,
+                                  pullback_watch=pullback_watch)
     out_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'aligned_screener.html')
     with open(out_path, 'w') as f:
         f.write(html)
