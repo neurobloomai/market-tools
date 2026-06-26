@@ -28,6 +28,7 @@ UNIVERSE = [
     'CB',    # Chubb — global P&C leader, 20% OM, fortress balance sheet
     'AJG',   # Arthur J. Gallagher — insurance broker, fee model, 30yr growth
     'AON',   # Aon — insurance/reinsurance broker, pricing power
+    'PRU',   # Prudential Financial — US life insurance + retirement solutions + PGIM asset management ($1.3T+ AUM); PGIM fee income is the floor — stable capital-light earnings regardless of insurance cycle volatility; 4-5% yield, consistent multi-year dividend growth; D/EV reads elevated due to insurance policyholder liabilities (structural, not deteriorating debt — same sector-aware read as VZ on telecom spectrum); moat = scale in group insurance + PGIM distribution; watch payout ratio and FCF coverage each quarter as the qualifying gate
 
     # Healthcare / pharma
     'JNJ',   # J&J — 62yr dividend king, MedTech + pharma
