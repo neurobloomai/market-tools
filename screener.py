@@ -157,8 +157,6 @@ WATCHLIST = [
     # --- Healthcare / mRNA ---
     'MRNA',  # Moderna — mRNA platform pioneer post-COVID restructuring; personalized cancer vaccines (mRNA-4157 w/ Merck) + flu + RSV pipeline; D/EV 0.064, net cash; OM -131.1% in rebuild phase; watch revenue base rebuild
     'BNTX',  # BioNTech — mRNA pioneer (Pfizer COVID partner); cancer + infectious disease pipeline; D/EV 0.032; OM -576.6% post-COVID revenue collapse; rebuilding commercial revenue base; mRNA platform value intact
-    # --- Battery Technology ---
-    'ENVX',  # Enovix — silicon-dominant lithium-ion batteries (100% silicon anode vs graphite); Fab2 Malaysia manufacturing; consumer electronics + defense markets; most commercially advanced of the silicon anode cohort (vs AMPX/EOSE); blockers: pre-profitability, gross margin not yet consistently positive, all quality filters failing; watch for Fab2 ramp execution + gross margin turning positive + OM inflecting toward 0% — that's the gate to WATCHLIST action; thesis: silicon anode = structural step-change in energy density, first mover with real production
     # --- Critical Materials ---
     'ALB',   # Albemarle — largest lithium producer (Chile/Australia mines); OM 24.8%, FCF 4.1%, D/EV 0.095; NM -4.2% from lithium price cycle (not structural); long-term EV battery supply chain position
     'MP',    # MP Materials — only US rare earth miner + processor (Mountain Pass CA); DoD contract + Tesla partnership; RevG 118.6%, D/EV 0.103; OM -7.9% (processing build-out phase); national security + EV magnet supply chain
@@ -170,6 +168,13 @@ WATCHLIST = [
     'S',     # SentinelOne — AI-native cybersecurity platform, direct CrowdStrike competitor; GrossM 73.2%, RevG 20.8%, FCF 5.0% (positive, unusual for loss-making SaaS); OM -28.8% + NM -30.4% hard blockers; ROE -21.4%; watch OM crossing 0% and trending toward 10%+ over 2-3 quarters as scale drives margin inflection
 
 ]
+
+# Future radar — too early for weekly scanning, revisit after 2-3 quarters
+# Not fetched, not graded. Documented here so the thesis isn't lost.
+# Gate to promote: gross margin consistently positive + OM inflecting toward 0%
+FUTURE_RADAR = {
+    'ENVX': 'Enovix — silicon-dominant batteries (100% silicon anode); Fab2 Malaysia in ramp; consumer electronics + defense; most commercially advanced silicon anode play (vs AMPX/EOSE); all quality filters blocking now — gate to watchlist: Fab2 ramp execution + gross margin turning consistently positive + OM inflecting toward 0%; revisit Q3/Q4 2026',
+}
 
 def get_fundamentals(ticker):
     try:
@@ -564,6 +569,12 @@ if __name__ == '__main__':
 
     if not is_ci:
         webbrowser.open(f'file://{out_path}')
+
+    if FUTURE_RADAR:
+        print(f"\n  FUTURE RADAR — revisit in 2-3 quarters (not scanned)")
+        print(f"  {'─'*60}")
+        for t, note in FUTURE_RADAR.items():
+            print(f"  {t:8}  {note}")
 
     try:
         repo = _os.path.dirname(out_path)
