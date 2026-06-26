@@ -181,7 +181,8 @@ FUTURE_RADAR = {
 # Tier 1 — indices: tightest spreads, no binary risk, no earnings gaps
 # Tier 2 — mega-cap tech: $0.01-0.05 wide near-the-money, massive volume, clean execution
 # Tier 3 — large cap tradeable: $0.05-0.15 wide, usable but needs care on entry/exit; avoid earnings windows
-# Below the line: everything else (pharma binary risk, thin mid-caps, sector ETFs with wide spreads)
+#           Tier 3 is the outer boundary — beyond this slippage eats the edge
+# Below the line: everything else (pharma binary risk, thin enterprise SaaS, mid-caps, sector ETFs with wide spreads)
 SPREAD_UNIVERSE = {
     # Tier 1 — indices
     'SPY':  1,
@@ -194,11 +195,12 @@ SPREAD_UNIVERSE = {
     'AMZN': 2,
     'GOOGL':2,
     'TSLA': 2,
-    # Tier 3 — large cap, tradeable outside earnings
+    # Tier 3 — large cap, tradeable outside earnings (outer boundary)
     'MU':   3,  # semi, $0.05-0.15 wide, avoid earnings window
     'AMD':  3,  # AI accelerator challenger, similar liquidity profile to MU
     'JPM':  3,  # financials, decent volume, macro-driven not binary
     'GS':   3,  # same tier as JPM
+    'NFLX': 3,  # consumer streaming, surprisingly liquid options; avoid earnings (8-12% moves)
 }
 
 def get_fundamentals(ticker):
