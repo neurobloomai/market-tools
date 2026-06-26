@@ -157,6 +157,8 @@ WATCHLIST = [
     # --- Healthcare / mRNA ---
     'MRNA',  # Moderna — mRNA platform pioneer post-COVID restructuring; personalized cancer vaccines (mRNA-4157 w/ Merck) + flu + RSV pipeline; D/EV 0.064, net cash; OM -131.1% in rebuild phase; watch revenue base rebuild
     'BNTX',  # BioNTech — mRNA pioneer (Pfizer COVID partner); cancer + infectious disease pipeline; D/EV 0.032; OM -576.6% post-COVID revenue collapse; rebuilding commercial revenue base; mRNA platform value intact
+    # --- Battery Technology ---
+    'ENVX',  # Enovix — silicon-dominant lithium-ion batteries (100% silicon anode vs graphite); Fab2 Malaysia manufacturing; consumer electronics + defense markets; most commercially advanced of the silicon anode cohort (vs AMPX/EOSE); blockers: pre-profitability, gross margin not yet consistently positive, all quality filters failing; watch for Fab2 ramp execution + gross margin turning positive + OM inflecting toward 0% — that's the gate to WATCHLIST action; thesis: silicon anode = structural step-change in energy density, first mover with real production
     # --- Critical Materials ---
     'ALB',   # Albemarle — largest lithium producer (Chile/Australia mines); OM 24.8%, FCF 4.1%, D/EV 0.095; NM -4.2% from lithium price cycle (not structural); long-term EV battery supply chain position
     'MP',    # MP Materials — only US rare earth miner + processor (Mountain Pass CA); DoD contract + Tesla partnership; RevG 118.6%, D/EV 0.103; OM -7.9% (processing build-out phase); national security + EV magnet supply chain
