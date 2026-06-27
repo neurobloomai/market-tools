@@ -84,7 +84,6 @@ WATCHLIST = [
     'ADANIGREEN.NS',  # Adani Green — heavy capex, debt, P/E stretched but 57% op margin
     'SWIGGY.NS',      # Swiggy — food delivery, profitability inflecting, duopoly with Zomato
     'IXIGO.NS',       # ixigo — travel-tech, recently listed, margins building
-    'OLAELEC.NS',     # Ola Electric — EV two-wheeler, high growth, deeply loss-making, margins inflecting
     'DIXON.NS',       # Dixon Technologies — EMS/contract manufacturing, ROE 37% but OM ~3% by design (assembler model)
     'KAYNES.NS',      # Kaynes Technology — defense/semi electronics, OM 11% but FCF -10% (heavy capex ramp) + ROE just under threshold
     'APOLLOHOSP.NS',  # Apollo Hospitals — healthcare brand growing well, FCF inconsistent due to hospital capex
@@ -95,6 +94,13 @@ WATCHLIST = [
     'ANANDRATHI.NS',  # Anand Rathi Wealth — wealth management, asset-light; OM 40%, NM 32%, ROE 47%, RevG 48%; PE ~82x (just above 80x threshold); watch for earnings growth to bring PE sub-80
     'HSCL.NS',        # Himadri Speciality Chemical — pivoting to battery anode materials + LFP cathodes for EV supply chain; OM 20%, NM 16%, ROE 18%; D/E 16 + FCF -0.4% blocking (heavy capex ramp); watch for FCF turning positive + debt reduction as capacity ramps
 ]
+
+# Future radar — too early for weekly scanning, revisit after 2-3 quarters
+# Not fetched, not graded. Documented here so the thesis isn't lost.
+# Rule: if the blocker is the business model (survival risk, no path to profit), it belongs here not WATCHLIST
+FUTURE_RADAR = {
+    'OLAELEC.NS': 'Ola Electric — EV two-wheeler, high growth but deeply loss-making; competitive market (Hero, Ather, TVS iQube, Bajaj Chetak all competing) = structural pressure not just cycle; path to profitability unclear; gate to watchlist: OM turning positive sustained + FCF inflection + competitive position stabilising',
+}
 
 def get_fundamentals(ticker):
     try:
