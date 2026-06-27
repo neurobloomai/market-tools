@@ -90,7 +90,8 @@ UNIVERSE = [
     'LITE',                       # Lumentum — photonics/optical components (datacenter transceivers + 3D sensing + telecom); OM 21.8%, NM 17.7%, D/EV 0.056, RevG 90.1%; AI datacenter interconnect tailwind; A+
 ]
 
-# Future contenders — great businesses not yet qualifying, tracked separately
+# Future contenders — moat proven, one or two filters blocking, no survival risk
+# Rule: if the blocker is a number, it belongs here. If the blocker is the business model, it doesn't.
 WATCHLIST = [
     'AXON','MELI','ARM','SNOW','BILL',   # ALAB promoted to universe; CRWD removed — already in universe; PLTR promoted to universe
     'MDB','NET','HUBS','TEAM','MKC','DPZ','GEV','CEG',
@@ -107,20 +108,10 @@ WATCHLIST = [
     'CLS',   # Celestica — AI infra contract manufacturer (servers, networking), ROE 52%, D/EV 0.02, gross margin 12% blocks universe
     'MRAM',  # Everspin Technologies — MRAM chips, non-volatile fast RAM, AI edge inference angle; Op margin -18% and FCF negative blocking
     'SSNC',  # SS&C Technologies — fund admin infra, $1.28B FCF, extreme switching costs, debt 0.32 only blocker
-    'SMR',   # NuScale Power — small modular reactors; pre-revenue but first-mover in licensed SMR tech
-    'OKLO',  # Oklo — micro-reactors, Sam Altman-backed; nuclear theme beneath NLR ETF
-    'XE',    # X-energy — Gen IV HTGR (Xe-100, 80 MWe pebble bed); Amazon/AWS committed offtake for datacenter power + DOE ARDP $1.2B+ funding; pre-revenue, structural nuclear/AI power theme
     'SYM',   # Symbotic — warehouse AI robotics, Walmart-backed; revenue scaling, margins early
-    'RKLB',  # Rocket Lab — only end-to-end small launch + space systems; revenue real, path to profit
     'AMSC',  # American Superconductor — power electronics, grid/defense; OpM 5.1%, one filter away
     'BMY',   # Bristol-Myers Squibb — de-lever + profit growth play; Celgene debt paydown near complete, Eliquis+Opdivo FCF, NI inflecting
     'BIIB',  # Biogen — neuroscience pure-play; Leqembi (lecanemab, w/ Eisai) first approved Alzheimer's disease-modifier, subcutaneous monthly formulation removes IV burden; zuranolone (depression) via Sage partnership; ROE 7.7% + D/EV 0.21 blocking; MS revenue decline (Tecfidera generics) masking neuro pipeline value
-    'CRSP',  # CRISPR Therapeutics — Swiss-HQ, NASDAQ-listed; co-founded by Nobel laureate Emmanuelle Charpentier; Casgevy (w/ Vertex) = first-ever FDA-approved CRISPR therapy (sickle cell + beta-thal, Dec 2023); pre-profit, all filters blocking; most commercially advanced gene editor
-    'NTLA',  # Intellia Therapeutics — in vivo CRISPR (edits genes inside body, no cell removal); Regeneron partnership; NTLA-2001 for transthyretin amyloidosis late-stage; pre-profit, all filters blocking
-    'BEAM',  # Beam Therapeutics — base editing (David Liu/Harvard); single base changes without DNA double-strand cuts, fewer off-target effects than classical CRISPR; sickle cell + AML programs; pre-profit, all filters blocking
-
-    'RXRX',  # Recursion Pharmaceuticals — AI drug discovery (phenomics at scale); NVIDIA-backed (Jensen Huang), Roche/Genentech $150M partnership, Bayer neuro deal; merging with Exscientia; AI + biology intersection, pre-profit, D/EV 0.064 clean
-    'RARE',  # Ultragenyx — rare/orphan genetic disease; Crysvita (XLH bone disorder), Dojolvi, gene therapy pipeline (GTX-102 for Angelman syndrome); founder Emil Kakkis (rare disease pioneer); D/EV 0.344 + pre-profit blocking; established rare disease franchise with gene therapy optionality
     'COST',  # Costco — membership moat, not a margin story; OM ~3% by design (merchandise passes savings to members, fee stream runs at ~95% margin); screen blocks on OM/NM — low margins are the product, not a flaw; measure by membership fee growth + renewal rate (~93%) + ROIC, not OM or NM
     'ORLY',  # O'Reilly Auto Parts — Akre compounder; 18% OM, 14% NM, ROA 13.8% (ROE negative from 20yrs buybacks); ROA just below 15% threshold; D/EV 0.10, P/E 29x, exceptional execution
     'TDG',   # TransDigm — aerospace parts monopolist, 47% OM, 22% NM; D/EV 0.325 structural debt (leveraged rollup model, won't change); watch if debt pays down or FCF re-rates
@@ -146,20 +137,10 @@ WATCHLIST = [
     'COIN',  # Coinbase — digital asset exchange, crypto theme proxy; 85.5% gross margin, FCF 5.4%; OM -7.1% + rev growth -30.8% (crypto volume cycle) blocking; grades B, 0/4 MA; cyclical — watch for volume recovery + OM turning positive
     # --- Photonics / Optical Interconnect ---
     'COHR',  # Coherent Corp — optical components (800G/1.6T datacenter interconnect + telecom); OM 13.6%, NM 7.1%, D/EV 0.045; ROE 4.7% + FCF -0.3% blocking; post II-VI merger integration phase; watch FCF inflection
-    'AAOI',  # Applied Optoelectronics — datacenter optical transceivers (800G/1.6T AI fabric); RevG 51.4%, D/EV 0.024; OM -8.6% scaling toward profitability; AI datacenter interconnect demand driver
     # --- Defense / Drones ---
     'AVAV',  # AeroVironment — defense drones (Switchblade loitering munition, Puma ISR); RevG 143.4%, D/EV 0.108; OM -5.1% scaling with DoD contracts; proven battlefield platform
-    # --- Space ---
-    'ASTS',  # AST SpaceMobile — satellite broadband direct-to-device (no special handset needed); AT&T/Verizon partnerships, BlueWalker satellites deployed; pre-revenue, D/EV 0.134; RevG 1952% from tiny base; space connectivity infrastructure
-    'LUNR',  # Intuitive Machines — only commercial lunar lander to successfully land (IM-1 2024); NASA NSNS + payload contracts; RevG 198.7%, pre-profit; lunar economy infrastructure theme
-    # --- Quantum Computing ---
-    'IONQ',  # IonQ — trapped ion quantum computing (most commercially advanced); D/EV 0.002 (near-zero debt), RevG 754.7%; OM deeply negative (pre-scale); Microsoft/AWS marketplace partnerships; quantum leader
-    # --- Healthcare / mRNA ---
-    'MRNA',  # Moderna — mRNA platform pioneer post-COVID restructuring; personalized cancer vaccines (mRNA-4157 w/ Merck) + flu + RSV pipeline; D/EV 0.064, net cash; OM -131.1% in rebuild phase; watch revenue base rebuild
-    'BNTX',  # BioNTech — mRNA pioneer (Pfizer COVID partner); cancer + infectious disease pipeline; D/EV 0.032; OM -576.6% post-COVID revenue collapse; rebuilding commercial revenue base; mRNA platform value intact
     # --- Critical Materials ---
     'ALB',   # Albemarle — largest lithium producer (Chile/Australia mines); OM 24.8%, FCF 4.1%, D/EV 0.095; NM -4.2% from lithium price cycle (not structural); long-term EV battery supply chain position
-    'MP',    # MP Materials — only US rare earth miner + processor (Mountain Pass CA); DoD contract + Tesla partnership; RevG 118.6%, D/EV 0.103; OM -7.9% (processing build-out phase); national security + EV magnet supply chain
     'FCX',   # Freeport-McMoRan — world's largest publicly traded copper producer (US-based, AZ HQ); copper cycle proxy; margins swing with copper price (not a compounder); copper demand structural via grid + EVs + AI datacenters; ETN/LIN/GEV are the cleaner expression inside the universe
     'INOD',  # Innodata — AI data annotation + services (training data for LLMs); D/EV 0.002, OM 18.8%, NM 13.9%, ROE 38.6%, RevG 54.4%; passes all quality filters but services business (not SaaS) — moat thinner, customer concentration risk (few large AI labs); watch for durability as model efficiency reduces annotation demand
     # --- Solar ---
@@ -174,6 +155,17 @@ WATCHLIST = [
 # Gate to promote: gross margin consistently positive + OM inflecting toward 0%
 FUTURE_RADAR = {
     'ENVX': 'Enovix — silicon-dominant batteries (100% silicon anode); Fab2 Malaysia in ramp; consumer electronics + defense; most commercially advanced silicon anode play (vs AMPX/EOSE); all quality filters blocking now — gate to watchlist: Fab2 ramp execution + gross margin turning consistently positive + OM inflecting toward 0%; revisit Q3/Q4 2026',
+    'RKLB': 'Rocket Lab — only end-to-end small launch + space systems provider; real revenue, real launches; path to profit is long and capex-heavy; gate to watchlist: OM turning positive + FCF inflection; revisit when launch cadence drives margin scale',
+    'AVAV': 'AeroVironment — battlefield-proven defense drones (Switchblade loitering munition, Puma ISR); DoD contracts real; OM -5.1% scaling but not yet positive; gate to watchlist: OM crossing 0% sustained + FCF turning positive',
+    'AAOI': 'Applied Optoelectronics — datacenter optical transceivers (800G/1.6T AI fabric); real revenue, real AI datacenter demand; OM -8.6% not yet turning; gate to watchlist: OM inflecting positive as AI interconnect volumes scale',
+    'MP':   'MP Materials — only US rare earth miner + processor (Mountain Pass CA); DoD contract + Tesla partnership; national security supply chain angle; OM -7.9% from processing build-out; gate to watchlist: processing ramp drives OM positive + FCF inflection',
+    # Removed entirely — pre-revenue or survival risk (not FUTURE_RADAR material):
+    # SMR (NuScale — first project cancelled), OKLO, XE (pre-revenue nuclear ventures)
+    # IONQ (quantum — deeply pre-scale, survival timeline)
+    # CRSP, NTLA, BEAM (gene editing — pre-profit, all filters blocking, binary clinical risk)
+    # RXRX, RARE (pre-profit biopharma, survival timeline)
+    # MRNA (OM -131%), BNTX (OM -576%) — revenue base collapsed, rebuild uncertain
+    # ASTS (pre-revenue space), LUNR (pre-profit lunar)
 }
 
 # Spread universe — tiered by options liquidity
