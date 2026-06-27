@@ -105,7 +105,18 @@ Names that look like good chart setups but fall below the line (VRTX, NEM, FTNT,
 
 **Early warning system** — Special Mention catches names before they qualify. You're not chasing; you're watching the base build. A/D Line and OBV divergence add an extra layer — when smart money starts accumulating before the monthly regime flips, the volume picture changes before the price structure does. When a name finally surfaces in the aligned list, it's not a surprise — it was already on the radar with the volume story already forming.
 
-**Honest watchlist** — every entry has a thesis and a blocker noted. Not just a ticker dump. You know exactly why something isn't in the universe yet and what has to change for it to qualify.
+**Honest watchlist** — every entry has a thesis and a blocker noted. Not just a ticker dump. You know exactly why something isn't in the universe yet and what has to change for it to qualify. The rule: if the blocker is a number, it belongs in the watchlist. If the blocker is the business model, it doesn't.
+
+**Three-tier universe structure:**
+
+| Tier | What it is | Gate to next tier |
+|---|---|---|
+| `UNIVERSE` | Quality cleared, structure confirmed — core tracked names | Already here |
+| `WATCHLIST` | Moat proven, one or two metrics blocking — scanned weekly | Metric clears the filter |
+| `FUTURE_RADAR` | Real product, real revenue, path to profit unclear — not scanned | OM turns positive + FCF inflects |
+| Removed entirely | Pre-revenue ventures, survival risk, all filters blocking | Not tracked |
+
+Names removed from watchlist in this cleanup: SMR, OKLO, XE (pre-revenue nuclear), IONQ (quantum), CRSP/NTLA/BEAM (gene editing), RXRX/RARE (biopharma), MRNA/BNTX (revenue collapsed), ASTS/LUNR (space ventures). India: OLAELEC (deeply loss-making EV in structurally competitive market). These are interesting themes — not watchlist material.
 
 **Both markets** — US and India running the same framework. Same discipline, same filters, different universes. The logic doesn't change because the geography does.
 
