@@ -229,6 +229,18 @@ If a name matters to you, add it. If a threshold feels wrong for a sector you un
 
 Think of this as a basic scaffold — not a finished house. The value is in bending it to fit your own thinking, your own watchlist, your own sense of what quality means in the industries you follow. More data points, more puzzle pieces. Fewer blind spots.
 
+## Future Vision — The Missing Layer
+
+The framework finds the setup. It cannot tell you how much to size it.
+
+That gap is real and acknowledged. Position sizing is where most losses actually happen — not from wrong stock picks, but from right picks sized incorrectly that get shaken out before the thesis plays out. A 25% drawdown on a 2% position is noise. The same drawdown on a 20% position forces a decision you shouldn't have to make.
+
+The vision: a personal risk profile layer that takes the screener's signal quality as one input and the user's actual financial parameters as another — account size, income stability, time horizon, obligations — and returns a position size that survives the specific drawdown that setup could produce. Not a static conservative/moderate/aggressive bucket. Dynamic: a 4/4 + CMF+ + RS 1.5x + A+ confluence earns more size than a borderline 3/4 setup. The setup quality and the personal risk profile together determine how much.
+
+This is not a feature that can be added with a few lines of code. The reasoning layer is solvable — LLMs can already do this kind of contextual sizing analysis if inputs are structured correctly. What's hard is everything around it: regulatory (personalized sizing guidance in the US touches SEC/FINRA territory), accuracy (people systematically overestimate drawdown tolerance until they're actually in one), and trust (a sizing recommendation is only as good as what the user inputs honestly about their real situation).
+
+Whether this gets built here, somewhere else, or not at all — the gap it would close is real. The screener half works. The survivability half doesn't exist yet at the individual stock level, personalized to who you actually are financially. That combination is where the value is.
+
 ## Disclaimer
 
 For informational purposes only. Not financial advice.
