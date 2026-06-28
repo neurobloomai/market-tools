@@ -93,6 +93,11 @@ WATCHLIST = [
     'ASTRAL.NS',      # Astral Ltd — pipes/adhesives/bathing compounder; OM ~13%, ROE ~18%, low debt; consistent but may grade B by filter thresholds
     'ANANDRATHI.NS',  # Anand Rathi Wealth — wealth management, asset-light; OM 40%, NM 32%, ROE 47%, RevG 48%; PE ~82x (just above 80x threshold); watch for earnings growth to bring PE sub-80
     'HSCL.NS',        # Himadri Speciality Chemical — pivoting to battery anode materials + LFP cathodes for EV supply chain; OM 20%, NM 16%, ROE 18%; D/E 16 + FCF -0.4% blocking (heavy capex ramp); watch for FCF turning positive + debt reduction as capacity ramps
+    # --- SIP universe additions — scan to grade before promoting ---
+    'MCX.NS',         # Multi Commodity Exchange — India's commodity derivatives toll booth (CME analog); every gold/silver/crude/agri futures trade pays MCX; structural monopoly in commodity derivatives; SIP candidate pending quality grade confirmation
+    'KFINTECH.NS',    # KFin Technologies — second MF registrar after CAMS (~30% market share); same structural model as CAMS; also diversified into international fund admin + corporate registry; SIP candidate pending quality grade confirmation
+    'CRISIL.NS',      # CRISIL — India's dominant credit rating agency, S&P Global subsidiary; SPGI analog for India; every corporate bond needs a CRISIL rating; data + analytics division; SIP candidate pending quality grade confirmation
+    'ICRA.NS',        # ICRA — Moody's India subsidiary (~52% Moody's stake); MCO analog for India; CRISIL + ICRA form India's rating duopoly; SIP candidate pending quality grade confirmation
 ]
 
 # Future radar — too early for weekly scanning, revisit after 2-3 quarters
