@@ -106,9 +106,17 @@ FUTURE_RADAR = {
 # Buy regularly via SIP regardless of short-term price. Not traded — owned.
 # Common thread: asset-light, fee/infrastructure income, no balance sheet risk, compound with India's financial deepening.
 SIP_WATCHLIST = {
-    'HDFCAMC.NS': 'HDFC Asset Management — second largest AMC by AUM; fee income as % of AUM, asset-light, 50%+ OM, near-zero debt; every rupee of SIP inflow into Indian markets grows their AUM; financialisation of Indian household savings (shift from gold/real estate to mutual funds) is early innings; own the toll booth on India\'s mutual fund industry',
-    'CAMS.NS':    'Computer Age Management Services — processes ~70% of all India mutual fund transactions (SIPs, redemptions, folios) across all AMCs; more defensive than any single AMC — revenue grows with industry AUM regardless of which AMC wins market share; pure infrastructure toll, zero market risk on balance sheet; A+ in screener',
-    'CDSL.NS':    'Central Depository Services — every demat account and dematerialised security in India runs through CDSL or NSDL; India adding ~3M new demat accounts/month; account maintenance + transaction fees compound directly with India\'s investor base growth; depository infrastructure is permanent — no competition can displace it structurally; A+ in screener',
+    # --- Mutual Fund Infrastructure ---
+    'HDFCAMC.NS':  'HDFC Asset Management — second largest AMC by AUM; fee income as % of AUM, asset-light, 50%+ OM, near-zero debt; every SIP rupee into Indian markets grows their AUM; financialisation of Indian household savings (shift from gold/real estate to MFs) is early innings; own the toll booth on India\'s mutual fund industry',
+    'CAMS.NS':     'Computer Age Management Services — processes ~70% of all India MF transactions (SIPs, redemptions, folios) across all AMCs; more defensive than any single AMC — revenue grows with industry AUM regardless of which AMC wins; pure infrastructure toll, zero market risk; A+ in screener',
+    'KFINTECH.NS': 'KFin Technologies — second MF registrar/transfer agent after CAMS (~30% market share vs CAMS ~70%); same structural model, same SIP inflow tailwind; more diversified than CAMS into international fund admin and corporate registry; runner-up to CAMS but compounding with the same wave',
+    # --- Depository Infrastructure ---
+    'CDSL.NS':     'Central Depository Services — every demat account and dematerialised security in India runs through CDSL or NSDL; India adding ~3M demat accounts/month; account maintenance + transaction fees compound with India\'s investor base growth; depository infrastructure is permanent; A+ in screener',
+    # --- Exchange Infrastructure ---
+    'BSE.NS':      'BSE (Bombay Stock Exchange) — India\'s NDAQ analog; toll on every BSE trade, every SME listing, every currency derivative contract; dominant in currency derivatives and SME listings; gaining options market share; A+ in screener; own the exchange, not the stocks on it',
+    'MCX.NS':      'Multi Commodity Exchange — India\'s dominant commodity derivatives exchange (CME analog); every gold/silver/crude/agri futures contract pays MCX; structural monopoly in commodity derivatives; commodity demand growth + financial inclusion in India compounds the fee base',
+    # --- Credit Rating / Data ---
+    'CRISIL.NS':   'CRISIL — India\'s dominant credit rating agency, S&P Global subsidiary; every corporate bond in India needs a rating; recurring fees from every rated entity; data + analytics division (CRISIL Research) adds subscription revenue; MCO/SPGI analog for India; regulatory entrenchment makes it near-impossible to displace',
 }
 
 def get_fundamentals(ticker):

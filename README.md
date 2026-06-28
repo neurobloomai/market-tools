@@ -272,13 +272,34 @@ Note: NDAQ ≠ Nasdaq Composite ≠ QQQ. QQQ pays licensing fees *to* NDAQ. Owni
 
 Common thread: asset-light, fee or infrastructure income, no balance sheet risk, compound directly with India's financial deepening.
 
+**Mutual Fund Infrastructure:**
+
 | Name | What it is | Why SIP |
 |---|---|---|
-| **HDFCAMC** | HDFC Asset Management — second largest AMC by AUM | Fee income as % of AUM; every SIP rupee in India grows their AUM; financialisation of Indian savings is early innings |
-| **CAMS** | Computer Age Management Services — processes ~70% of all India MF transactions | More defensive than any single AMC — wins regardless of which AMC wins market share; pure infrastructure toll |
-| **CDSL** | Central Depository Services — every demat account runs through CDSL | India adding ~3M demat accounts/month; account maintenance + transaction fees compound with investor base growth |
+| **HDFCAMC** | HDFC Asset Management — second largest AMC by AUM | Fee income as % of AUM; every SIP rupee in India grows their AUM; financialisation of Indian savings early innings |
+| **CAMS** | Computer Age Management — processes ~70% of all India MF transactions | More defensive than any single AMC; wins regardless of which AMC wins; pure infrastructure toll |
+| **KFintech** | KFin Technologies — second MF registrar after CAMS (~30% share) | Same model as CAMS, same tailwind; diversified into international fund admin + corporate registry |
 
-All three are A+ in the India screener. The hierarchy: CAMS owns the road, CDSL owns the parking lot, HDFCAMC owns one of the cars — all three compound with the same structural tailwind.
+**Depository Infrastructure:**
+
+| Name | What it is | Why SIP |
+|---|---|---|
+| **CDSL** | Central Depository Services — every demat account in India | India adding ~3M demat accounts/month; permanent infrastructure, no structural competition |
+
+**Exchange Infrastructure:**
+
+| Name | What it is | Why SIP |
+|---|---|---|
+| **BSE** | Bombay Stock Exchange — India's NDAQ analog | Toll on every BSE trade, SME listing, currency derivative; own the exchange not the stocks |
+| **MCX** | Multi Commodity Exchange — India's CME analog | Every gold/silver/crude/agri futures trade pays MCX; structural monopoly in commodity derivatives |
+
+**Credit Rating / Data:**
+
+| Name | What it is | Why SIP |
+|---|---|---|
+| **CRISIL** | India's dominant credit rating agency, S&P subsidiary | Every corporate bond needs a rating; MCO/SPGI analog for India; regulatory entrenchment permanent |
+
+The hierarchy: CAMS owns the road, CDSL owns the parking lot, HDFCAMC owns one of the cars, BSE owns the building — all compound with India's financial deepening.
 
 ## Future Vision — The Missing Layer
 
