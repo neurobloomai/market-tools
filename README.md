@@ -297,7 +297,8 @@ Common thread: asset-light, fee or infrastructure income, no balance sheet risk,
 
 | Name | What it is | Why SIP |
 |---|---|---|
-| **CRISIL** | India's dominant credit rating agency, S&P subsidiary | Every corporate bond needs a rating; MCO/SPGI analog for India; regulatory entrenchment permanent |
+| **CRISIL** | India's dominant credit rating agency, S&P Global subsidiary | Every corporate bond needs a rating; SPGI analog for India; regulatory entrenchment permanent |
+| **ICRA** | Moody's India subsidiary (~52% Moody's stake) | CRISIL + ICRA = India's rating duopoly, mirrors S&P + Moody's globally; MCO analog for India |
 
 The hierarchy: CAMS owns the road, CDSL owns the parking lot, HDFCAMC owns one of the cars, BSE owns the building — all compound with India's financial deepening.
 

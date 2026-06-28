@@ -116,7 +116,8 @@ SIP_WATCHLIST = {
     'BSE.NS':      'BSE (Bombay Stock Exchange) — India\'s NDAQ analog; toll on every BSE trade, every SME listing, every currency derivative contract; dominant in currency derivatives and SME listings; gaining options market share; A+ in screener; own the exchange, not the stocks on it',
     'MCX.NS':      'Multi Commodity Exchange — India\'s dominant commodity derivatives exchange (CME analog); every gold/silver/crude/agri futures contract pays MCX; structural monopoly in commodity derivatives; commodity demand growth + financial inclusion in India compounds the fee base',
     # --- Credit Rating / Data ---
-    'CRISIL.NS':   'CRISIL — India\'s dominant credit rating agency, S&P Global subsidiary; every corporate bond in India needs a rating; recurring fees from every rated entity; data + analytics division (CRISIL Research) adds subscription revenue; MCO/SPGI analog for India; regulatory entrenchment makes it near-impossible to displace',
+    'CRISIL.NS':   'CRISIL — India\'s dominant credit rating agency, S&P Global subsidiary; every corporate bond in India needs a rating; recurring fees from every rated entity; data + analytics division (CRISIL Research) adds subscription revenue; SPGI analog for India; regulatory entrenchment makes it near-impossible to displace',
+    'ICRA.NS':     'ICRA — Moody\'s India subsidiary (Moody\'s ~52% stake); credit ratings for corporate bonds, bank loans, structured finance, municipal bonds; research + analytics division; CRISIL + ICRA form India\'s rating duopoly — exact mirror of S&P + Moody\'s globally; MCO analog for India; every rated entity pays recurring surveillance fees',
 }
 
 def get_fundamentals(ticker):
