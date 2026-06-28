@@ -231,6 +231,20 @@ If a name matters to you, add it. If a threshold feels wrong for a sector you un
 
 Think of this as a basic scaffold — not a finished house. The value is in bending it to fit your own thinking, your own watchlist, your own sense of what quality means in the industries you follow. More data points, more puzzle pieces. Fewer blind spots.
 
+## India SIP Watchlist
+
+`SIP_WATCHLIST` in `india_screener.py` — high-quality toll-booth businesses on India's financial system growth. Not traded. Owned regularly via SIP regardless of short-term price.
+
+Common thread: asset-light, fee or infrastructure income, no balance sheet risk, compound directly with India's financial deepening.
+
+| Name | What it is | Why SIP |
+|---|---|---|
+| **HDFCAMC** | HDFC Asset Management — second largest AMC by AUM | Fee income as % of AUM; every SIP rupee in India grows their AUM; financialisation of Indian savings is early innings |
+| **CAMS** | Computer Age Management Services — processes ~70% of all India MF transactions | More defensive than any single AMC — wins regardless of which AMC wins market share; pure infrastructure toll |
+| **CDSL** | Central Depository Services — every demat account runs through CDSL | India adding ~3M demat accounts/month; account maintenance + transaction fees compound with investor base growth |
+
+All three are A+ in the India screener. The hierarchy: CAMS owns the road, CDSL owns the parking lot, HDFCAMC owns one of the cars — all three compound with the same structural tailwind.
+
 ## Future Vision — The Missing Layer
 
 The framework finds the setup. It cannot tell you how much to size it.

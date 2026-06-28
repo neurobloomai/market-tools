@@ -102,6 +102,15 @@ FUTURE_RADAR = {
     'OLAELEC.NS': 'Ola Electric — EV two-wheeler, high growth but deeply loss-making; competitive market (Hero, Ather, TVS iQube, Bajaj Chetak all competing) = structural pressure not just cycle; path to profitability unclear; gate to watchlist: OM turning positive sustained + FCF inflection + competitive position stabilising',
 }
 
+# SIP candidates — high-quality toll-booth businesses on India's financial system growth.
+# Buy regularly via SIP regardless of short-term price. Not traded — owned.
+# Common thread: asset-light, fee/infrastructure income, no balance sheet risk, compound with India's financial deepening.
+SIP_WATCHLIST = {
+    'HDFCAMC.NS': 'HDFC Asset Management — second largest AMC by AUM; fee income as % of AUM, asset-light, 50%+ OM, near-zero debt; every rupee of SIP inflow into Indian markets grows their AUM; financialisation of Indian household savings (shift from gold/real estate to mutual funds) is early innings; own the toll booth on India\'s mutual fund industry',
+    'CAMS.NS':    'Computer Age Management Services — processes ~70% of all India mutual fund transactions (SIPs, redemptions, folios) across all AMCs; more defensive than any single AMC — revenue grows with industry AUM regardless of which AMC wins market share; pure infrastructure toll, zero market risk on balance sheet; A+ in screener',
+    'CDSL.NS':    'Central Depository Services — every demat account and dematerialised security in India runs through CDSL or NSDL; India adding ~3M new demat accounts/month; account maintenance + transaction fees compound directly with India\'s investor base growth; depository infrastructure is permanent — no competition can displace it structurally; A+ in screener',
+}
+
 def get_fundamentals(ticker):
     try:
         t    = yf.Ticker(ticker)
