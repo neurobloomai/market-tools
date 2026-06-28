@@ -231,6 +231,16 @@ If a name matters to you, add it. If a threshold feels wrong for a sector you un
 
 Think of this as a basic scaffold — not a finished house. The value is in bending it to fit your own thinking, your own watchlist, your own sense of what quality means in the industries you follow. More data points, more puzzle pieces. Fewer blind spots.
 
+## SIP Watchlist — US
+
+`SIP_WATCHLIST` in `screener.py` — toll-booth businesses on US financial market infrastructure. Not traded. Owned regularly via DCA/SIP regardless of short-term price.
+
+| Name | What it is | Why SIP |
+|---|---|---|
+| **NDAQ** | Nasdaq, Inc. — owns the Nasdaq exchange, Nordic exchanges, market technology, financial data | Every trade on Nasdaq, every listing, every index product (including QQQ) pays NDAQ; own the exchange, not the stocks on it |
+
+Note: NDAQ ≠ Nasdaq Composite index ≠ QQQ. QQQ is an ETF that *pays licensing fees to NDAQ*. Owning NDAQ means owning the company that collects those fees.
+
 ## India SIP Watchlist
 
 `SIP_WATCHLIST` in `india_screener.py` — high-quality toll-booth businesses on India's financial system growth. Not traded. Owned regularly via SIP regardless of short-term price.

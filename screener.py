@@ -160,6 +160,13 @@ FUTURE_RADAR = {
     # ASTS (pre-revenue space), LUNR (pre-profit lunar)
 }
 
+# SIP candidates — toll-booth businesses on US financial market infrastructure.
+# Buy regularly via SIP/DCA regardless of short-term price. Not traded — owned.
+# Common thread: asset-light, exchange/index/data fee income, compound with market growth.
+SIP_WATCHLIST = {
+    'NDAQ': 'Nasdaq, Inc. — owns and operates the Nasdaq exchange + Nordic exchanges + market technology platform + financial data subscriptions; NOT the index or QQQ (QQQ pays NDAQ licensing fees to use the Nasdaq 100 index); every trade on Nasdaq, every company listing, every index product pays NDAQ; Adenza acquisition (2023, $10.9B) loaded debt temporarily weighing on structure — business model unchanged; own the exchange, not the stocks listed on it',
+}
+
 # Spread universe — tiered by options liquidity
 # Rule: only spread where bid-ask is tight enough that slippage doesn't eat the edge
 # Tier 1 — indices: tightest spreads, no binary risk, no earnings gaps
