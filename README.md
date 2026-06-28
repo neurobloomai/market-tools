@@ -233,13 +233,38 @@ Think of this as a basic scaffold — not a finished house. The value is in bend
 
 ## SIP Watchlist — US
 
-`SIP_WATCHLIST` in `screener.py` — toll-booth businesses on US financial market infrastructure. Not traded. Owned regularly via DCA/SIP regardless of short-term price.
+`SIP_WATCHLIST` in `screener.py` — toll-booth businesses on durable US infrastructure. Not traded. Owned regularly via DCA regardless of short-term price. Common thread: asset-light, fee/royalty/toll income, compound with secular structural growth.
+
+**Financial Market Infrastructure:**
 
 | Name | What it is | Why SIP |
 |---|---|---|
-| **NDAQ** | Nasdaq, Inc. — owns the Nasdaq exchange, Nordic exchanges, market technology, financial data | Every trade on Nasdaq, every listing, every index product (including QQQ) pays NDAQ; own the exchange, not the stocks on it |
+| **NDAQ** | Nasdaq, Inc. — exchange + technology + data | Every trade, listing, index product (QQQ pays NDAQ) pays NDAQ; own the exchange not the stocks |
+| **MSCI** | Index royalty — MSCI EM, MSCI World, MSCI ACWI | Every ETF tracking these indices pays MSCI forever; purest royalty model in financial markets |
+| **MCO** | Moody's — ratings duopoly (~80% global share with S&P) | Every bond issued globally needs a rating; Buffett-proven, near-impossible to displace |
+| **SPGI** | S&P Global — S&P 500 licensing + ratings + data | Every SPY/VOO/IVV pays SPGI; combines index royalty + ratings oligopoly |
+| **ICE** | Intercontinental Exchange — NYSE + futures + mortgage tech | Toll on NYSE trades + futures contracts + mortgage origination platform |
 
-Note: NDAQ ≠ Nasdaq Composite index ≠ QQQ. QQQ is an ETF that *pays licensing fees to NDAQ*. Owning NDAQ means owning the company that collects those fees.
+**Payment Networks:**
+
+| Name | What it is | Why SIP |
+|---|---|---|
+| **V** | Visa — global card network | Toll on every card transaction globally; no credit risk; cashless transition compounds it |
+| **MA** | Mastercard — Visa's global duopoly partner | Same model, slightly more international mix; cross-border fees compound with global commerce |
+
+**Payroll Infrastructure:**
+
+| Name | What it is | Why SIP |
+|---|---|---|
+| **ADP** | Automatic Data Processing — payroll for millions of US businesses | Extreme switching costs; every new US job = more ADP revenue; already A+ in UNIVERSE |
+
+**Waste Infrastructure:**
+
+| Name | What it is | Why SIP |
+|---|---|---|
+| **WM** | Waste Management — regulated waste oligopoly | Every community needs waste removed; landfill permit moat; recycling + renewable gas tailwind |
+
+Note: NDAQ ≠ Nasdaq Composite ≠ QQQ. QQQ pays licensing fees *to* NDAQ. Owning NDAQ means owning the company that collects those fees.
 
 ## India SIP Watchlist
 

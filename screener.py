@@ -160,11 +160,23 @@ FUTURE_RADAR = {
     # ASTS (pre-revenue space), LUNR (pre-profit lunar)
 }
 
-# SIP candidates — toll-booth businesses on US financial market infrastructure.
-# Buy regularly via SIP/DCA regardless of short-term price. Not traded — owned.
-# Common thread: asset-light, exchange/index/data fee income, compound with market growth.
+# SIP candidates — toll-booth businesses on durable US infrastructure.
+# Buy regularly via DCA regardless of short-term price. Not traded — owned.
+# Common thread: asset-light, fee/royalty/toll income, compound with secular structural growth.
 SIP_WATCHLIST = {
-    'NDAQ': 'Nasdaq, Inc. — owns and operates the Nasdaq exchange + Nordic exchanges + market technology platform + financial data subscriptions; NOT the index or QQQ (QQQ pays NDAQ licensing fees to use the Nasdaq 100 index); every trade on Nasdaq, every company listing, every index product pays NDAQ; Adenza acquisition (2023, $10.9B) loaded debt temporarily weighing on structure — business model unchanged; own the exchange, not the stocks listed on it',
+    # --- Financial Market Infrastructure ---
+    'NDAQ': 'Nasdaq, Inc. — owns Nasdaq exchange + Nordic exchanges + market technology + financial data; QQQ pays NDAQ licensing fees to use the Nasdaq 100 index; own the exchange, not the stocks on it; Adenza acquisition debt temporary overhang, business model unchanged',
+    'MSCI': 'MSCI Inc. — purest index royalty in the world; licenses MSCI EM, MSCI World, MSCI ACWI indices; every ETF tracking these (Vanguard, BlackRock, State Street) pays MSCI a fee forever; no market risk, no execution risk — pure royalty; global passive investing growth = MSCI royalty growth; most asset-light toll booth in financial markets',
+    'MCO':  'Moody\'s — ratings duopoly (Moody\'s + S&P = ~80% global market share), entrenched by regulation; every bond issued globally needs a rating; recurring monitoring fees from every rated entity; Buffett held for decades; near-impossible to displace; asset-light, extreme pricing power, debt issuance grows structurally over time',
+    'SPGI': 'S&P Global — owns S&P 500 index licensing (every SPY/VOO/IVV pays them) + Platts commodity data + credit ratings + market intelligence; every S&P 500 index fund that exists or will ever exist pays SPGI; combines index royalty + ratings oligopoly + data subscriptions',
+    'ICE':  'Intercontinental Exchange — owns NYSE + ICE futures exchanges + large mortgage technology platform (Encompass); toll on every NYSE trade, every ICE futures contract; mortgage tech adds recurring software revenue on top of exchange infrastructure; most operationally complex of the five but dominant positions across asset classes',
+    # --- Payment Networks ---
+    'V':    'Visa — global payment network toll; every card transaction worldwide pays Visa a small %; does not hold credit risk (that\'s the banks); pure toll on global commerce; compound with cashless transition globally; already A+ 4/4 in UNIVERSE — SIP on pullbacks',
+    'MA':   'Mastercard — Visa\'s global duopoly partner; same model, slightly more international revenue mix; every cross-border transaction is incremental fee income; global commerce growth = MA growth; already in UNIVERSE',
+    # --- Payroll / HR Infrastructure ---
+    'ADP':  'Automatic Data Processing — processes paychecks for millions of US businesses; extreme switching costs (HR/payroll systems deeply embedded, re-implementation risk keeps customers locked in); recurring subscription revenue, float income on payroll cash; every new US job added = more ADP revenue; already A+ in UNIVERSE',
+    # --- Waste Infrastructure ---
+    'WM':   'Waste Management — regulated waste collection oligopoly (WM + RSG = ~50% US market); every community needs waste removed, pricing power structural; long-term municipal contracts, landfill permit moat (impossible to build new landfills); secular tailwind from recycling + renewable natural gas from landfills; quietly compounding business',
 }
 
 # Spread universe — tiered by options liquidity
