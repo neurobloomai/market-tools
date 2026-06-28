@@ -97,16 +97,12 @@ WATCHLIST = [
     'MDB','NET','HUBS','TEAM','MKC','DPZ','GEV','CEG',
     'NEE',   # NextEra — utility debt heavy; clean energy moat, Dominion merger / long-term value
     'NRG',   # NRG Energy — de-lever play; LS Power acq doubled fleet+debt, targeting 3x net leverage, Fwd P/E 11x, yield-sensitive re-rate when 10yr < 4.0%
-    'PCG',   # PG&E — regulated CA utility, NOT a datacenter play (unlike CEG/NEE/VST); wildfire liability + rate-case risk, de-lever story only
     'VST',   # Vistra — nuclear+gas deregulated moat; D/EV 0.27, qualifies as debt pays down
     'KTOS',  # Kratos — drone/defense tech; margins thin now, scaling with DoD contracts
     'BWXT',  # BWX Technologies — sole-source Navy nuclear propulsion (submarines/carriers) + nuclear components + medical isotopes; ROE 29%, OM 10%, D/EV 0.099, government contract moat; grade B, watch for OM expanding above 15%
-    'CELH',  # Celsius — ROE at 8.1%, one point under threshold; margin recovery play
     'SOFI',  # SoFi — neobank scaling; ROE 6.6% and trending right
     'UPWK',  # Upwork — freelance marketplace; D/EV 0.44 (converts) only blocker, margins/FCF solid
-    'CORZ',  # Core Scientific — leadership in high-density infrastructure; BTC miner label masks AI/HPC pivot
     'CLS',   # Celestica — AI infra contract manufacturer (servers, networking), ROE 52%, D/EV 0.02, gross margin 12% blocks universe
-    'MRAM',  # Everspin Technologies — MRAM chips, non-volatile fast RAM, AI edge inference angle; Op margin -18% and FCF negative blocking
     'SSNC',  # SS&C Technologies — fund admin infra, $1.28B FCF, extreme switching costs, debt 0.32 only blocker
     'SYM',   # Symbotic — warehouse AI robotics, Walmart-backed; revenue scaling, margins early
     'AMSC',  # American Superconductor — power electronics, grid/defense; OpM 5.1%, one filter away
@@ -126,14 +122,10 @@ WATCHLIST = [
     'SITM',  # SiTime — MEMS precision timing chips; near-monopoly, 65% gross margin, AI datacenter + 5G tailwind; cyclical recovery in progress
     'LSCC',  # Lattice Semiconductor — low-power FPGAs, 60%+ gross margin, zero debt; AI edge + industrial; cyclical trough recovery
     'ONTO',  # Onto Innovation — advanced packaging inspection/metrology; HBM + chiplet complexity = more inspection; picks-and-shovels for AI silicon
-    'AMKR',  # Amkor Technology — OSAT advanced packaging + test; HBM stacking, chiplet assembly; lower margins (services model) may block universe
     'AMD',   # AMD — AI accelerator (MI300X/MI350) + x86 CPU challenger; OM ~21%, NM scaling; D/EV low; FCF building as datacenter GPU mix grows; watch for ROE/NM qualification
     'INTC',  # Intel — x86 architect in foundry transition (Intel 18A); OM/NM/ROE all blocking post-Gelsinger restructuring; Lip-Bu Tan CEO, cost reset underway; multi-year turnaround
-    'MOD',   # Modine Manufacturing — AI datacenter thermal/cooling (heat exchangers); 47.5% rev growth, D/EV 0.037; NM 3.8% + FCF -0.7% + ROE/ROA below threshold blocking; grades B, 4/4 MA aligned at add time
     'TOST',  # Toast — restaurant POS/payments platform; ROE 22.5%, FCF 4%, rev growth 21.9%, near-zero debt; OM 6.7% + NM 6.4% blocking; grades A, 0/4 MA; strong switching costs, margins scaling
     'FIG',   # Figma — design collaboration SaaS; 79.8% gross margin, FCF 8.6%, 46.1% rev growth; OM -41.2% post-IPO investment spend blocking; grades A, 0/4 MA; Adobe tried $20B acquisition, IPO'd at $9.5B — quality business finding its level
-    'KLAR',  # Klarna — BNPL/payments platform; 44.4% rev growth; OM 1.7%, FCF -23.8%, D/EV 0.391 blocking; grades B, 2/4 MA; credit cycle risk inherent to BNPL model, watch margin inflection
-    'UPST',  # Upstart — AI-powered lending platform; 82.7% gross margin, 44.6% rev growth, OM 0.9% (just turning); FCF -10.1% + D/EV 0.431 (converts) + ROA 1.8% blocking; grades B, 2/4 MA; platform gross margin story, watch FCF inflection
     'COIN',  # Coinbase — digital asset exchange, crypto theme proxy; 85.5% gross margin, FCF 5.4%; OM -7.1% + rev growth -30.8% (crypto volume cycle) blocking; grades B, 0/4 MA; cyclical — watch for volume recovery + OM turning positive
     # --- Photonics / Optical Interconnect ---
     'COHR',  # Coherent Corp — optical components (800G/1.6T datacenter interconnect + telecom); OM 13.6%, NM 7.1%, D/EV 0.045; ROE 4.7% + FCF -0.3% blocking; post II-VI merger integration phase; watch FCF inflection
@@ -141,11 +133,8 @@ WATCHLIST = [
     'AVAV',  # AeroVironment — defense drones (Switchblade loitering munition, Puma ISR); RevG 143.4%, D/EV 0.108; OM -5.1% scaling with DoD contracts; proven battlefield platform
     # --- Critical Materials ---
     'ALB',   # Albemarle — largest lithium producer (Chile/Australia mines); OM 24.8%, FCF 4.1%, D/EV 0.095; NM -4.2% from lithium price cycle (not structural); long-term EV battery supply chain position
-    'FCX',   # Freeport-McMoRan — world's largest publicly traded copper producer (US-based, AZ HQ); copper cycle proxy; margins swing with copper price (not a compounder); copper demand structural via grid + EVs + AI datacenters; ETN/LIN/GEV are the cleaner expression inside the universe
-    'INOD',  # Innodata — AI data annotation + services (training data for LLMs); D/EV 0.002, OM 18.8%, NM 13.9%, ROE 38.6%, RevG 54.4%; passes all quality filters but services business (not SaaS) — moat thinner, customer concentration risk (few large AI labs); watch for durability as model efficiency reduces annotation demand
     # --- Solar ---
     'ENPH',  # Enphase Energy — microinverter monopoly + battery storage (IQ8/Encharge); cycle trough from high-rate residential solar slowdown, not structural; gross margins ~45%+ holding even in trough; OM -9.1% + RevG -20.6% blocking now; 3/4 MA recovering, -61.6% from highs; when rates normalize + installs recover = A+ candidate; engine intact
-    'SEDG',  # SolarEdge Technologies — power optimizer + string inverter (Israel HQ, NASDAQ); solar theme proxy alongside ENPH; OM -15.3%, NM -28.6%, ROE -72.5% — deeper hole than ENPH and not purely cyclical; Chinese inverters (Huawei/Sungrow) took European market share (competitive pressure, not just demand slowdown); FCF 8.7% positive (likely inventory liquidation); RevG 41.5%, 3/4 MA; watch gap vs ENPH to close before treating as equivalent recovery
     'S',     # SentinelOne — AI-native cybersecurity platform, direct CrowdStrike competitor; GrossM 73.2%, RevG 20.8%, FCF 5.0% (positive, unusual for loss-making SaaS); OM -28.8% + NM -30.4% hard blockers; ROE -21.4%; watch OM crossing 0% and trending toward 10%+ over 2-3 quarters as scale drives margin inflection
 
 ]
@@ -159,6 +148,9 @@ FUTURE_RADAR = {
     'AVAV': 'AeroVironment — battlefield-proven defense drones (Switchblade loitering munition, Puma ISR); DoD contracts real; OM -5.1% scaling but not yet positive; gate to watchlist: OM crossing 0% sustained + FCF turning positive',
     'AAOI': 'Applied Optoelectronics — datacenter optical transceivers (800G/1.6T AI fabric); real revenue, real AI datacenter demand; OM -8.6% not yet turning; gate to watchlist: OM inflecting positive as AI interconnect volumes scale',
     'MP':   'MP Materials — only US rare earth miner + processor (Mountain Pass CA); DoD contract + Tesla partnership; national security supply chain angle; OM -7.9% from processing build-out; gate to watchlist: processing ramp drives OM positive + FCF inflection',
+    'CORZ': 'Core Scientific — BTC miner pivoting to high-density AI/HPC datacenter infrastructure; CoreWeave + other AI contracts signed; pivot execution unproven, BTC mining revenue is commodity-priced and non-compounding; gate to watchlist: HPC/AI revenue majority of revenue mix + OM turning consistently positive',
+    'MOD':  'Modine Manufacturing — AI datacenter thermal/cooling (heat exchangers); B grade, multiple metrics blocking (NM 3.8%, FCF negative, ROE/ROA below threshold); industrial company riding AI cooling theme, not a platform moat; gate to watchlist: NM crossing 5% + FCF turning positive as datacenter cooling project mix scales',
+    'UPST': 'Upstart — AI-powered lending platform; 82.7% gross margin, OM just turning (0.9%); credit cycle exposure structural to lending model; D/EV 0.431 (converts) + FCF -10.1% + ROA 1.8% blocking; gate to watchlist: FCF consistently positive + converts resolved + through-cycle credit performance demonstrated',
     # Removed entirely — pre-revenue or survival risk (not FUTURE_RADAR material):
     # SMR (NuScale — first project cancelled), OKLO, XE (pre-revenue nuclear ventures)
     # IONQ (quantum — deeply pre-scale, survival timeline)
