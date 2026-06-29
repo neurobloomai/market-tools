@@ -302,3 +302,51 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 
 
 ---
+## Week of Jun 29 2026
+
+### 4/4 Aligned — 67 names
+
+**Universe (55):** ABBV, ABNB, ACGL, AFL, ALAB, ALGN, AMAT, ASML, BRK-B, CB, CDNS, CHD, CHRW, CINF, CL, CRDO, CRWD, CW, DDOG, DHI, EW, EXPD, FAST, FTNT, HEI, HWM, IBKR, INCY, ITW, JBHT, JNJ, JPM, KLAC, KRYS, LIN, LLY, LRCX, MASI, MNST, MRK, MRVL, MTSI, MU, NBIX, PANW, SEZL, TER, TOL, TRV, TSM, UNH, V, VRTX, WSM, WST
+
+**Watchlist (12):** AMD, ARM, BIIB, COHR, GEV, GFS, INTC, LSCC, NET, ONTO, SNOW, TDG
+
+
+### 3/4 Near-Aligned — 31 names
+
+AAPL, ADI, ANET, BMY, CASH, CIEN, CLS, CTRA, ENPH, ETN, FSLR, HOOD, IHS, KMB, LITE, MCHP, MDB, MTD, NVO, ODFL, PG, PGR, PWR, QCOM, RLI, SAIA, SITM, TMO, TXN, UTHR, VST
+
+
+### Tightest Coils — FullCoil ≤ 5%
+
+| Ticker | | MA | FullCoil | ST Gap | Vol | Slope |
+|--------|--|-----|---------|--------|-----|-------|
+| **PG** | [U] | 3/4 | 1.3% | 1.3% | 1.0x | ↑ |
+| **ABBV** | [U] | 4/4 | 1.3% | 0.3% | 0.9x | ↑ |
+| **BRK-B** | [U] | 4/4 | 1.5% | 0.4% | 1.0x | ↑ |
+| **ACGL** | [U] | 4/4 | 2.0% | 1.5% | 1.0x | ↓ |
+| **DHI** | [U] | 4/4 | 2.1% | 0.9% | 1.0x | ↑ |
+| **JPM** | [U] | 4/4 | 2.4% | 2.4% | 1.2x | ↑ |
+| **VRTX** | [U] | 4/4 | 2.7% | 1.6% | 1.2x | ↑ |
+| **HEI** | [U] | 4/4 | 2.7% | 1.6% | 0.6x | ↑ |
+| **TOL** | [U] | 4/4 | 2.9% | 0.8% | 1.2x | ↑ |
+| **ITW** | [U] | 4/4 | 3.1% | 3.1% | 1.1x | ↓ |
+| **WSM** | [U] | 4/4 | 3.2% | 2.0% | 1.2x | ↑ |
+| **FAST** | [U] | 4/4 | 3.5% | 0.7% | 0.9x | ↓ |
+| **DECK** | [U] | 1/4 | 3.5% | 0.5% | 1.0x | ↑ |
+| **EW** | [U] | 4/4 | 3.6% | 2.4% | 0.8x | ↑ |
+| **CINF** | [U] | 4/4 | 3.9% | 1.6% | 1.5x | ↑ |
+| **V** | [U] | 4/4 | 4.0% | 2.3% | 1.0x | ↑ |
+| **NDAQ** | [U] | 0/4 | 4.0% | 2.2% | 1.5x | ↑ |
+| **COST** | [W] | 0/4 | 4.2% | 0.3% | 0.9x | ↓ |
+| **PGR** | [U] | 3/4 | 4.4% | 0.3% | 1.2x | ↑ |
+| **MSCI** | [U] | 0/4 | 4.6% | 3.9% | 0.8x | ↑ |
+
+### Notes
+
+_Weekly observations — what to watch, what is coiling, what to avoid._
+
+
+> **Disclaimer:** For informational purposes only. Not financial advice.
+
+
+---
