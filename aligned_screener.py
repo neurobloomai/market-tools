@@ -11,7 +11,7 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 warnings.filterwarnings('ignore')
 
-from screener import UNIVERSE, WATCHLIST, get_fundamentals, passes_quality_filter, quality_grade
+from screener import UNIVERSE, WATCHLIST, get_fundamentals, passes_quality_filter, quality_grade, failing_filters
 
 # Local tracking — not in public screener, internal watch only
 EXTRA = [
@@ -760,14 +760,21 @@ if __name__ == '__main__':
     price_map = {r['t']: r['p'] for r in valid}
     score_map = {r['t']: r['s'] for r in valid}
     promos = []
+    near_miss = []
     for t in WATCHLIST:
         d = get_fundamentals(t)
+        p  = price_map.get(t, 0)
+        ma = score_map.get(t, 0)
         if d and passes_quality_filter(d):
-            g  = quality_grade(d)
-            p  = price_map.get(t, 0)
-            ma = score_map.get(t, 0)
+            g = quality_grade(d)
             promos.append((t, round(p, 2), g, ma))
+        elif ma >= 2:
+            g = quality_grade(d) if d else '—'
+            fails = failing_filters(d) if d else [('No data', '—', '—')]
+            blockers = ', '.join(f"{n} {v} (need {thr})" for n, v, thr in fails)
+            near_miss.append((t, round(p, 2), g, ma, blockers))
     promos.sort(key=lambda x: (0 if x[2]=='A+' else 1, x[0]))
+    near_miss.sort(key=lambda x: -x[3])
 
     print(f"\n  WATCHLIST PROMOTION CANDIDATES — {len(promos)} qualifying")
     print(f"  {'─'*48}")
@@ -777,6 +784,13 @@ if __name__ == '__main__':
             print(f"  [W]  {t:8}  {g:<3}  {price_str}  [{ma}/4 MA]  ← promote to UNIVERSE?")
     else:
         print(f"  none — all watchlist names below quality threshold")
+
+    if near_miss:
+        print(f"\n  NEAR-MISS (≥ 2/4 MA, quality blockers remaining)")
+        print(f"  {'─'*48}")
+        for t, p, g, ma, blockers in near_miss:
+            price_str = f'${p:.2f}' if p else '—'
+            print(f"  [W]  {t:8}  {g:<3}  {price_str}  [{ma}/4 MA]  blocking: {blockers}")
 
     # ── Auto-detect Special Mention ──────────────────────────────────────────
     # Quality name (A+/A) + structure broken (≤1/4) + far from highs (<-30%)

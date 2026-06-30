@@ -94,7 +94,7 @@ UNIVERSE = [
 # Rule: if the blocker is a number, it belongs here. If the blocker is the business model, it doesn't.
 WATCHLIST = [
     'AXON','MELI','ARM','SNOW','BILL',   # ALAB promoted to universe; CRWD removed — already in universe; PLTR promoted to universe
-    'MDB','NET','HUBS','TEAM','MKC','DPZ','GEV','CEG',
+    'MDB','NET','HUBS','TEAM','MKC','DPZ','GEV','CEG',  # CEG: promote to UNIVERSE at 2/4 MA alignment (see MA_GATE)
     'NEE',   # NextEra — utility debt heavy; clean energy moat, Dominion merger / long-term value
     'NRG',   # NRG Energy — de-lever play; LS Power acq doubled fleet+debt, targeting 3x net leverage, Fwd P/E 11x, yield-sensitive re-rate when 10yr < 4.0%
     'VST',   # Vistra — nuclear+gas deregulated moat; D/EV 0.27, qualifies as debt pays down
