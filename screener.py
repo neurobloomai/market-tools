@@ -101,7 +101,7 @@ WATCHLIST = [
     'NEE',   # NextEra — world's largest renewable platform (wind/solar/battery) + FPL (best-run regulated utility in US); OM 30.2%, NM 29.4%, ROE 10.3%; D/EV 0.352 (Dominion acq debt, can resolve) + FCF -10.2% (renewable capex → contracted cash flows once online, not perpetual like DUK); grade A, 2 blockers both have resolution paths; at 40w MA support, 10% off highs 2026-07-01
     'AMG',   # Affiliated Managers Group — multi-boutique AM (AQR, Tweedy Browne etc.); owns fee economics in independent boutiques, asset-light; OM 22.1%, NM 35.5%, ROE 21.8%, FCF 2.6%, fwd P/E 8.5x; D/EV 0.245 only blocker (structural debt to buy stakes, paying down with FCF); grade A
     'NRG',   # NRG Energy — de-lever play; LS Power acq doubled fleet+debt, targeting 3x net leverage, Fwd P/E 11x, yield-sensitive re-rate when 10yr < 4.0%
-    'VST',   # Vistra — nuclear+gas deregulated moat; D/EV 0.27, qualifies as debt pays down
+    'VST',   # Vistra — deregulated nuclear+gas (Energy Harbor acq), Texas/ERCOT exposure; OM 26.6%, ROE 42.9%, FCF +0.9%, RevG 43.4%, fwd P/E 14.1x; D/EV 0.265 only blocker (closer to threshold than NEE); grade A single blocker — cleaner than CEG on framework metrics; 27.6% off 52w high, below 20w+40w MAs; promote when D/EV ≤ 0.20 + MA structure recovers
     'KTOS',  # Kratos — drone/defense tech; margins thin now, scaling with DoD contracts
     'SOFI',  # SoFi — neobank scaling; ROE 6.6% and trending right
     'UPWK',  # Upwork — freelance marketplace; D/EV 0.44 (converts) only blocker, margins/FCF solid
