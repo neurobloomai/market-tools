@@ -91,6 +91,8 @@ UNIVERSE = [
     'BWXT',                    # BWX Technologies — sole-source Navy nuclear propulsion (submarines/carriers) + nuclear components + medical isotopes; ROE 29%, OM 10%, D/EV 0.099, government contract moat; grade B, watch for OM expanding above 15%; auto-promoted 2026-06-30 [grade B, 1/4 MA]
     'CIEN',                    # Ciena — optical networking, AI datacenter interconnect tailwind; net margin 4.5% and ROE/P/E blocking, 33% rev growth; auto-promoted 2026-06-30 [grade B, 3/4 MA]
     'CEG',                       # Constellation Energy — largest US nuclear operator; 21.9% OM, 12.7% NM, ROE 16.1%, RevG 63.8%; AI/datacenter PPAs (Microsoft Crane restart); D/EV 0.201 (just over 0.20 threshold) + FCF -5.3% (capex from new nuclear capacity build-out); grade B; added 2026-07-01
+    'BLK',                       # BlackRock — world's largest asset manager ($10T+ AUM); iShares ETF franchise (largest globally) + Aladdin risk platform (SaaS-like, used by central banks/SWFs); every index fund = AUM fee; OM 35.6%, NM 24.4%, FCF 4.4%, D/EV 0.095, RevG 27%, fwd P/E 16.1x; A+
+    'BX',                        # Blackstone — world's largest alternatives manager ($1T+ AUM); PE + real estate + credit + infrastructure; mgmt fees sticky, carried interest is performance upside; retail alternatives push = decade-long runway; OM 38.0%, NM 21.2%, ROE 29.5%, D/EV 0.130, fwd P/E 15.8x; A
 ]
 
 # Future contenders — moat proven, one or two filters blocking, no survival risk
