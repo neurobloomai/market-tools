@@ -653,6 +653,58 @@ def grade_ticker(ticker):
         return '—'
     return quality_grade(d)
 
+def auto_promote_tickers(promos, repo_path):
+    """
+    Auto-promote qualifying watchlist names to UNIVERSE in screener.py.
+    Edits the file in-place, updates in-memory UNIVERSE/WATCHLIST, and commits.
+    promos: list of (ticker, price, grade, ma_score)
+    """
+    if not promos:
+        return
+    import re, subprocess
+    from pathlib import Path
+    from datetime import date
+
+    screener_path = Path(repo_path) / 'screener.py'
+    src = screener_path.read_text()
+    today = date.today().strftime('%Y-%m-%d')
+    promoted = []
+
+    for ticker, price, grade, ma in promos:
+        # Capture WATCHLIST comment if ticker has its own line
+        m = re.search(rf"^\s+'{re.escape(ticker)}',[ \t]+#[ \t]+(.+)$", src, re.MULTILINE)
+        watchlist_note = m.group(1).strip() if m else None
+
+        # Remove own-line entry (with or without comment)
+        src = re.sub(rf"^\s+'{re.escape(ticker)}',[ \t]*(#[^\n]*)?\n", '', src, flags=re.MULTILINE)
+        # Remove from multi-ticker line
+        src = re.sub(rf"'{re.escape(ticker)}',[ \t]*", '', src)
+
+        # Build and insert UNIVERSE entry before its closing ]
+        note = f"{watchlist_note}; " if watchlist_note else ''
+        pad  = ' ' * max(1, 24 - len(ticker))
+        entry = f"    '{ticker}',{pad}# {note}auto-promoted {today} [grade {grade}, {ma}/4 MA]\n"
+        src = re.sub(r'(\])\n(\n# Future contenders)', rf'{entry}]\n\2', src, count=1)
+
+        # Update in-memory lists so rest of this run stays consistent
+        if ticker not in UNIVERSE:
+            UNIVERSE.append(ticker)
+        if ticker in WATCHLIST:
+            WATCHLIST.remove(ticker)
+
+        promoted.append(ticker)
+
+    screener_path.write_text(src)
+
+    tickers_str = ', '.join(promoted)
+    commit_msg = (f"screener: auto-promote {tickers_str} to UNIVERSE\n\n"
+                  f"Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>")
+    subprocess.run(['git', 'add', 'screener.py'], cwd=repo_path, capture_output=True)
+    result = subprocess.run(['git', 'commit', '-m', commit_msg], cwd=repo_path, capture_output=True, text=True)
+    status = 'committed' if result.returncode == 0 else f'commit failed: {result.stderr.strip()}'
+    print(f"\n  AUTO-PROMOTED → UNIVERSE: {tickers_str}  ({status})")
+
+
 def sm_signal(rs, mcmf_trend):
     """Signal tag for Special Mention names.
     ◎ base building = MthCMF turning up
@@ -776,12 +828,15 @@ if __name__ == '__main__':
     promos.sort(key=lambda x: (0 if x[2]=='A+' else 1, x[0]))
     near_miss.sort(key=lambda x: -x[3])
 
+    repo_path = os.path.dirname(os.path.abspath(__file__))
+    auto_promote_tickers(promos, repo_path)
+
     print(f"\n  WATCHLIST PROMOTION CANDIDATES — {len(promos)} qualifying")
     print(f"  {'─'*48}")
     if promos:
         for t, p, g, ma in promos:
             price_str = f'${p:.2f}' if p else '—'
-            print(f"  [W]  {t:8}  {g:<3}  {price_str}  [{ma}/4 MA]  ← promote to UNIVERSE?")
+            print(f"  [U]  {t:8}  {g:<3}  {price_str}  [{ma}/4 MA]  ✓ promoted to UNIVERSE")
     else:
         print(f"  none — all watchlist names below quality threshold")
 
