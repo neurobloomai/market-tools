@@ -90,13 +90,14 @@ UNIVERSE = [
     'LITE',                       # Lumentum — photonics/optical components (datacenter transceivers + 3D sensing + telecom); OM 21.8%, NM 17.7%, D/EV 0.056, RevG 90.1%; AI datacenter interconnect tailwind; A+
     'BWXT',                    # BWX Technologies — sole-source Navy nuclear propulsion (submarines/carriers) + nuclear components + medical isotopes; ROE 29%, OM 10%, D/EV 0.099, government contract moat; grade B, watch for OM expanding above 15%; auto-promoted 2026-06-30 [grade B, 1/4 MA]
     'CIEN',                    # Ciena — optical networking, AI datacenter interconnect tailwind; net margin 4.5% and ROE/P/E blocking, 33% rev growth; auto-promoted 2026-06-30 [grade B, 3/4 MA]
+    'CEG',                       # Constellation Energy — largest US nuclear operator; 21.9% OM, 12.7% NM, ROE 16.1%, RevG 63.8%; AI/datacenter PPAs (Microsoft Crane restart); D/EV 0.201 (just over 0.20 threshold) + FCF -5.3% (capex from new nuclear capacity build-out); grade B; added 2026-07-01
 ]
 
 # Future contenders — moat proven, one or two filters blocking, no survival risk
 # Rule: if the blocker is a number, it belongs here. If the blocker is the business model, it doesn't.
 WATCHLIST = [
     'AXON','MELI','ARM','SNOW','BILL',   # ALAB promoted to universe; CRWD removed — already in universe; PLTR promoted to universe
-    'MDB','NET','HUBS','TEAM','MKC','DPZ','GEV','CEG',  # CEG: promote to UNIVERSE at 2/4 MA alignment (see MA_GATE)
+    'MDB','NET','HUBS','TEAM','MKC','DPZ','GEV',
     'NEE',   # NextEra — utility debt heavy; clean energy moat, Dominion merger / long-term value
     'NRG',   # NRG Energy — de-lever play; LS Power acq doubled fleet+debt, targeting 3x net leverage, Fwd P/E 11x, yield-sensitive re-rate when 10yr < 4.0%
     'VST',   # Vistra — nuclear+gas deregulated moat; D/EV 0.27, qualifies as debt pays down
