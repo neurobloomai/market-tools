@@ -1,14 +1,18 @@
 """
-ma_scanner.py — Tight MA Proximity Scanner
-===========================================
+ma_scanner.py — MA Proximity Scanner
+======================================
 
 Scans UNIVERSE tickers across three timeframes for a specific setup:
 
-    price > MA10 > MA20
-    price is 0–2% above MA10   (tight — not extended, not lagging)
-    MA10 is rising              (slope positive over lookback window)
-    MA20 is flat or rising      (no downtrend)
-    Daily: price > MA50         (broader trend gate)
+    MA10 > MA20                        (alignment intact)
+    price within -3% to +3% of MA10   (band: approaching OR just above)
+    MA10 is rising                     (slope positive over lookback window)
+    MA20 is flat or rising             (no downtrend)
+    Daily: price > MA50                (broader trend gate)
+
+The -3% to +3% band gives early signals:
+  negative side: price testing MA10 from below — approaching reclaim
+  positive side: price just above MA10 — confirmed but not extended
 
 Timeframes
 ----------
@@ -43,7 +47,8 @@ from screener import UNIVERSE
 
 # ── Configuration ─────────────────────────────────────────────────────────────
 
-MAX_PCT_ABOVE    = 2.0   # max % price can be above MA10
+BAND_LOW         = -3.0  # price can be up to 3% BELOW MA10 (early/approaching signal)
+BAND_HIGH        =  3.0  # price can be up to 3% ABOVE MA10 (confirmed but not extended)
 SLOPE_LOOKBACK_1H = 5    # bars back to measure MA10 slope on 1H
 SLOPE_LOOKBACK_4H = 4    # bars back on 4H
 SLOPE_LOOKBACK_D  = 5    # bars back on Daily
@@ -111,10 +116,10 @@ def check_tf(closes, slope_lb, require_ma50=False):
         ma50_ok = not pd.isna(m50) and p > m50
 
     passes = (
-        p > m10 > m20 and
-        0 <= pct <= MAX_PCT_ABOVE and
-        m10_slope > 0 and
-        m20_slope >= 0 and
+        m10 > m20 and                    # alignment: MA10 above MA20
+        BAND_LOW <= pct <= BAND_HIGH and # price within -3% to +3% of MA10
+        m10_slope > 0 and                # MA10 rising
+        m20_slope >= 0 and               # MA20 flat or rising
         ma50_ok
     )
 
@@ -167,7 +172,7 @@ def scan_ticker(ticker):
 if __name__ == '__main__':
     today = date.today().strftime('%Y-%m-%d')
     print(f"\nMA Proximity Scanner  [{today}]")
-    print(f"Setup: price > MA10 > MA20 | 0–{MAX_PCT_ABOVE}% above MA10 | MA10 rising | Daily: price > MA50")
+    print(f"Setup: MA10 > MA20 | price {BAND_LOW}% to {BAND_HIGH:+}% of MA10 | MA10 rising | MA20 flat+ | Daily: price > MA50")
     print(f"Scanning {len(UNIVERSE)} UNIVERSE tickers across 1H / 4H / Daily...\n")
 
     with ThreadPoolExecutor(max_workers=20) as ex:
