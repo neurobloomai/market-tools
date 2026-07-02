@@ -106,7 +106,7 @@ UNIVERSE = [
     'HD',    # Home Depot — home improvement duopoly; 11.9% OM, 2.8% yield, FCF 3.0%, D/EV 0.160, P/E 23.9; B
 
     # Dividend ETF — diversified quality basket
-    'SCHD',  # Schwab U.S. Dividend Equity ETF — tracks Dow Jones U.S. Dividend 100 Index; screens for 10yr+ dividend history, strong FCF/debt ratio, ROE, and dividend yield; ~$60B+ AUM, 0.06% ER (near-zero cost); ~3.5%+ yield, ~10% dividend CAGR over 10yr; top holdings overlap this universe (CVX, ABBV, VZ, KO, TXN etc.); use as a core dividend position or benchmark against individual name selection; chart-only tracking (ETF — quality/margin filters not applicable)
+    'SCHD',  # Schwab U.S. Dividend Equity ETF — tracks Dow Jones U.S. Dividend 100 Index; screens for 10yr+ consecutive dividend payment + composite score (FCF/debt, ROE, yield, 5yr div growth); ~$60B+ AUM, 0.06% ER; ~3.5%+ yield, ~10% div CAGR over 10yr; partial overlap with this universe (CVX, ABBV, VZ, KO, TXN) but diverges in two ways: (1) SCHD is yield-weighted — excludes low-yield compounders like MSFT/AAPL that we track; (2) SCHD requires 10yr proven payer history — excludes recovery names (NKE, KHC, CVS) that we carry with a thesis; think of SCHD as what this universe looks like filtered for yield + dividend history — a quality subset, not a mirror; chart-only tracking (ETF)
 ]
 
 
