@@ -1,7 +1,8 @@
 """
 weekly_snapshot.py — Weekly alignment + squeeze snapshot
 Reads UNIVERSE and WATCHLIST from screener.py, runs MA alignment and squeeze,
-appends a dated markdown section to weekly_notes.md.
+overwrites weekly_notes.md with the current week's snapshot.
+History is preserved in git — each run creates a new commit.
 Run: python weekly_snapshot.py
 """
 
@@ -142,24 +143,18 @@ if __name__ == '__main__':
         thesis_md = (thesis[:70] + '…') if len(thesis) > 70 else thesis
         lines.append(f"| **{t}** | {price_str} | {ma_str} | {grade} | {blockers} | {thesis_md} |")
 
-    lines.append('\n---\n')
+    header = (
+        '# Weekly Market Notes\n\n'
+        'Current week snapshot — MA alignment, squeeze setups, and watchlist status.\n'
+        'Run `python weekly_snapshot.py` each week to refresh. History is in git.\n\n'
+        '---\n\n'
+    )
 
-    md = '\n'.join(lines)
+    md = header + '\n'.join(lines) + '\n'
 
-    if not os.path.exists('weekly_notes.md'):
-        with open('weekly_notes.md', 'w') as f:
-            f.write('# Weekly Market Notes\n\n')
-            f.write('Alignment + squeeze snapshots from the quality screener universe.\n')
-            f.write('Run `python weekly_snapshot.py` each week to append the latest entry.\n\n')
-            f.write('---\n\n')
-
-    existing = open('weekly_notes.md').read()
-    if f'## {label}' in existing:
-        print(f'  Already logged for {label} — skipping append')
-    else:
-        with open('weekly_notes.md', 'a') as f:
-            f.write(md)
-        print(f'  Appended → weekly_notes.md')
+    with open('weekly_notes.md', 'w') as f:
+        f.write(md)
+    print(f'  Written → weekly_notes.md  ({label})')
     print(f'  4/4: {len(aligned_4)}   3/4: {len(aligned_3)}   Coils ≤5%: {len([d for d in data if d["spread"] <= 5.0])}')
 
     import subprocess
