@@ -37,7 +37,8 @@ from datetime import date
 import warnings
 warnings.filterwarnings('ignore')
 
-from screener import UNIVERSE
+import argparse
+from screener import UNIVERSE, WATCHLIST
 
 # ── Configuration ─────────────────────────────────────────────────────────────
 
@@ -185,18 +186,9 @@ def scan_ticker(ticker):
     return ticker, results
 
 
-# ── Main ──────────────────────────────────────────────────────────────────────
+# ── Output ────────────────────────────────────────────────────────────────────
 
-if __name__ == '__main__':
-    today = date.today().strftime('%Y-%m-%d')
-    print(f"\nMA Scanner — Timeframe Hierarchy  [{today}]")
-    print(f"Weekly gate → Daily in band → 4H (if D passes) → 1H (if 4H passes)")
-    print(f"Band: {BAND_LOW}% to {BAND_HIGH:+}% of MA10  |  Daily requires price > MA50")
-    print(f"Scanning {len(UNIVERSE)} tickers...\n")
-
-    with ThreadPoolExecutor(max_workers=20) as ex:
-        all_results = list(ex.map(scan_ticker, UNIVERSE))
-
+def print_results(all_results, total, label):
     hits = {t: r for t, r in all_results if r}
     sorted_hits = sorted(hits.items(), key=lambda x: -len(x[1]))
 
@@ -224,5 +216,27 @@ if __name__ == '__main__':
     print(f"Full waterfall D+4H+1H : {len(full)}")
     print(f"D+4H                   : {len(partial)}")
     print(f"D only (W+D aligned)   : {len(d_only)}")
-    print(f"Total                  : {len(hits)} / {len(UNIVERSE)}")
+    print(f"Total                  : {len(hits)} / {total}  [{label}]")
+
+
+# ── Main ──────────────────────────────────────────────────────────────────────
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='MA Proximity Scanner')
+    parser.add_argument('--watchlist', action='store_true', help='Scan WATCHLIST instead of UNIVERSE')
+    args = parser.parse_args()
+
+    tickers = WATCHLIST if args.watchlist else UNIVERSE
+    label   = 'WATCHLIST' if args.watchlist else 'UNIVERSE'
+
+    today = date.today().strftime('%Y-%m-%d')
+    print(f"\nMA Scanner — Timeframe Hierarchy  [{today}]")
+    print(f"Weekly gate → Daily in band → 4H (if D passes) → 1H (if 4H passes)")
+    print(f"Band: {BAND_LOW}% to {BAND_HIGH:+}% of MA10  |  Daily requires price > MA50")
+    print(f"Scanning {len(tickers)} {label} tickers...\n")
+
+    with ThreadPoolExecutor(max_workers=20) as ex:
+        all_results = list(ex.map(scan_ticker, tickers))
+
+    print_results(all_results, len(tickers), label)
     print(f"\nDISCLAIMER: Research tool only. Not financial advice.")
