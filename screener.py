@@ -47,7 +47,7 @@ UNIVERSE = [
     'ADBE','CRM','NOW','INTU','ORCL','FTNT','PANW','CRWD','ZS','DDOG',
     'VEEV','WDAY','TTD','PAYC',
     'BRK-B','CB','AFL','TRV','PGR','AJG','AON','WTW','CINF',
-    'NVO','ISRG','EW','ALGN','IDXX','MASI','PODD','WST',
+    'NVO','ISRG','EW','ALGN','IDXX','PODD','WST',
     'MCO','SPGI','MSCI','ICE','CME','CBOE','FDS','BR','NDAQ',
     'ODFL','EXPD','CHRW','XPO','JBHT','SAIA','KNSL','RLI','CASH','FICO',
     'ROL','CTAS','CPRT','ADP','PAYX','EFX','TRI','IHS','VRSK','IT',
