@@ -14,6 +14,8 @@ Free, open-source market dashboards and quality stock screeners powered by Yahoo
 | `weekly_snapshot.py` | 🇺🇸 US | Appends weekly alignment snapshot to `weekly_notes.md` |
 | `india_aligned_screener.py` | 🇮🇳 India | Weekly MA alignment scanner for India — same framework, RS vs NIFTY 50, A/D Line + OBV divergence |
 | `india_weekly_snapshot.py` | 🇮🇳 India | Appends weekly India alignment snapshot to `india_weekly_notes.md` |
+| `ma_scanner.py` | 🇺🇸 US | MA Proximity Scanner — timeframe hierarchy (Weekly → Daily → 4H → 1H), UNIVERSE or WATCHLIST |
+| `ma_scanner_india.py` | 🇮🇳 India | MA Proximity Scanner — same hierarchy for NSE universe |
 | `dividend_plays_for_longterm.py` | 🇺🇸 US | Curated long-term dividend universe — quality-filtered, thesis-annotated |
 | `run_aligned.sh` | — | Cron entry point — runs all four scripts (US + India), auto-pushes to GitHub |
 
@@ -83,6 +85,53 @@ bash run_aligned.sh
 **Pullback Watch** — A+/A quality names at exactly 2/4 MA, -10% to -28% from highs. Long-term structure (10m/20m) intact, short-term MAs broken. Different from Special Mention: weeks away from reclaiming, not months. Watch 20w MA as the first gate back to 3/4.
 
 **Philosophy:** medium and long-term orientation. The framework is not built for scalping or short-term noise. Quality names in full MA alignment with tight coils and accumulation signals — hold the structure, wait for the move.
+
+## MA Proximity Scanner
+
+`ma_scanner.py` (US) and `ma_scanner_india.py` (India / NSE) scan the quality universe for names where price is close to a rising MA10 — but only after confirming the higher timeframe structure is intact. The key principle: **higher timeframe alignment gates lower timeframe signals.** Checking 1H when the weekly is broken is noise, not signal.
+
+### Timeframe hierarchy
+
+```
+Weekly  → MA10 > MA20, slope rising       (mandatory gate — no band check)
+Daily   → MA10 > MA20, price in band      (first actionable signal)
+4H      → MA10 > MA20, price in band      (only if Daily passes)
+1H      → MA10 > MA20, price in band      (only if 4H passes)
+```
+
+If the weekly is not aligned, the ticker is skipped entirely. If the daily is not in setup, 4H and 1H are not evaluated. Each level must hold before the next one is checked.
+
+### Signal levels
+
+| Signal | What it means |
+|---|---|
+| `D+4H+1H` | Full waterfall — all three tradeable TFs aligned under a confirmed weekly. Strongest. |
+| `D+4H` | Daily + 4H aligned, 1H not yet in band. Structure is there, waiting for 1H confirmation. |
+| `D` | Daily aligned under weekly, 4H not yet confirming. Earlier stage. |
+
+### Band — ▲ vs ▽
+
+Price within **-3% to +3% of MA10**:
+- `▲` — price above MA10 (confirmed, not extended)
+- `▽` — price approaching MA10 from below (early signal — MA alignment still intact, price pulling back into MA10)
+
+### Usage
+
+```bash
+# US
+python3 ma_scanner.py                   # scan UNIVERSE (161 quality names)
+python3 ma_scanner.py --watchlist       # scan WATCHLIST (thesis names awaiting setup)
+
+# India / NSE
+python3 ma_scanner_india.py             # scan India UNIVERSE (76 NSE names)
+python3 ma_scanner_india.py --watchlist # scan India WATCHLIST
+```
+
+### What this scanner is — and is not
+
+This is a **pullback-to-MA scanner in confirmed uptrends**, not a breakout predictor. By the time all levels align, the move has already started — you are buying a pullback in an established trend, not front-running a reversal. That is deliberate. Front-running requires acting before higher timeframes confirm, which conflicts with the hierarchy principle and makes losses harder to survive.
+
+The weekly gate typically reduces the signal count significantly (from 70–80% of tickers to 10–15%). That reduction is the filter working correctly, not a failure.
 
 ## Options Spread Universe
 
