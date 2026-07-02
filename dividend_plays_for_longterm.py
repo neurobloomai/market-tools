@@ -104,6 +104,9 @@ UNIVERSE = [
     'KMB',   # Kimberly-Clark — tissue/personal care staple; 19.6% OM, 4.9% yield, FCF 3.0%, D/EV 0.172, P/E 20.2; A
     'TRI',   # Thomson Reuters — legal/news data platform; 30.3% OM, 3.1% yield, FCF 4.7%, D/EV 0.072, P/E 23.4; A
     'HD',    # Home Depot — home improvement duopoly; 11.9% OM, 2.8% yield, FCF 3.0%, D/EV 0.160, P/E 23.9; B
+
+    # Dividend ETF — diversified quality basket
+    'SCHD',  # Schwab U.S. Dividend Equity ETF — tracks Dow Jones U.S. Dividend 100 Index; screens for 10yr+ dividend history, strong FCF/debt ratio, ROE, and dividend yield; ~$60B+ AUM, 0.06% ER (near-zero cost); ~3.5%+ yield, ~10% dividend CAGR over 10yr; top holdings overlap this universe (CVX, ABBV, VZ, KO, TXN etc.); use as a core dividend position or benchmark against individual name selection; chart-only tracking (ETF — quality/margin filters not applicable)
 ]
 
 
