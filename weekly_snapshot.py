@@ -5,13 +5,14 @@ appends a dated markdown section to weekly_notes.md.
 Run: python weekly_snapshot.py
 """
 
-import sys, yfinance as yf, warnings
+import sys, os, re, yfinance as yf, warnings
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
+from pathlib import Path
 warnings.filterwarnings('ignore')
 
 sys.path.insert(0, '.')
-from screener import UNIVERSE, WATCHLIST
+from screener import UNIVERSE, WATCHLIST, get_fundamentals, quality_grade, failing_filters
 
 ALL = list(dict.fromkeys(UNIVERSE + WATCHLIST))
 
@@ -58,6 +59,17 @@ def ma_data(ticker):
         return None
 
 
+def parse_watchlist_notes():
+    """Parse per-ticker thesis from inline comments in screener.py WATCHLIST."""
+    src = (Path(__file__).parent / 'screener.py').read_text()
+    notes = {}
+    for ticker in WATCHLIST:
+        m = re.search(rf"^\s+'{re.escape(ticker)}',[ \t]+#[ \t]+(.+)$", src, re.MULTILINE)
+        if m:
+            notes[ticker] = m.group(1).strip()
+    return notes
+
+
 if __name__ == '__main__':
     now   = datetime.utcnow()
     label = now.strftime('Week of %b %d %Y')
@@ -71,8 +83,8 @@ if __name__ == '__main__':
     aligned_3 = sorted([d for d in data if d['score'] == 3], key=lambda x: x['ticker'])
     squeeze   = sorted([d for d in data if d['spread'] <= 5.0], key=lambda x: x['spread'])[:20]
 
-    u4 = [d['ticker'] for d in aligned_4 if d['in_universe']]
-    w4 = [d['ticker'] for d in aligned_4 if not d['in_universe']]
+    u4   = [d['ticker'] for d in aligned_4 if d['in_universe']]
+    w4   = [d['ticker'] for d in aligned_4 if not d['in_universe']]
     near = [d['ticker'] for d in aligned_3]
 
     lines = [f'## {label}\n']
@@ -100,11 +112,40 @@ if __name__ == '__main__':
     lines.append('\n### Notes\n')
     lines.append('_Weekly observations — what to watch, what is coiling, what to avoid._\n')
     lines.append('\n> **Disclaimer:** For informational purposes only. Not financial advice.\n')
+
+    # ── Watchlist Status ──────────────────────────────────────────────────────
+    print(f'  Fetching fundamentals for {len(WATCHLIST)} watchlist tickers ...', flush=True)
+    with ThreadPoolExecutor(max_workers=10) as ex:
+        wl_funds = dict(zip(WATCHLIST, ex.map(get_fundamentals, WATCHLIST)))
+
+    wl_map   = {d['ticker']: d for d in data if d['ticker'] in WATCHLIST}
+    notes    = parse_watchlist_notes()
+    wl_order = sorted(WATCHLIST, key=lambda t: (-wl_map.get(t, {}).get('score', 0), t))
+
+    lines.append('\n### Watchlist Status\n')
+    lines.append('| Ticker | Price | MA | Grade | Blockers | Thesis |')
+    lines.append('|:-------|------:|:--:|:-----:|:---------|:-------|')
+
+    for t in wl_order:
+        md  = wl_map.get(t)
+        price_str = f"${md['price']:.2f}" if md else '—'
+        ma_str    = f"{md['score']}/4"    if md else '—'
+        f = wl_funds.get(t)
+        if f:
+            grade    = quality_grade(f)
+            fails    = failing_filters(f)
+            blockers = ' / '.join(f"{n} {v}" for n, v, _ in fails) if fails else '—'
+        else:
+            grade    = 'ETF'
+            blockers = '—'
+        thesis = notes.get(t, '—')
+        thesis_md = (thesis[:70] + '…') if len(thesis) > 70 else thesis
+        lines.append(f"| **{t}** | {price_str} | {ma_str} | {grade} | {blockers} | {thesis_md} |")
+
     lines.append('\n---\n')
 
     md = '\n'.join(lines)
 
-    import os
     if not os.path.exists('weekly_notes.md'):
         with open('weekly_notes.md', 'w') as f:
             f.write('# Weekly Market Notes\n\n')
