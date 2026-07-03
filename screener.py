@@ -118,6 +118,7 @@ WATCHLIST = [
     'SYM',   # Symbotic — warehouse AI robotics, Walmart-backed; revenue scaling, margins early
     'AMSC',  # American Superconductor — power electronics, grid/defense; OpM 5.1%, one filter away
     'BMY',   # Bristol-Myers Squibb — de-lever + profit growth play; Celgene debt paydown near complete, Eliquis+Opdivo FCF, NI inflecting
+    'ACAD',  # Acadia Pharmaceuticals — CNS/rare disease; Nuplazid (only FDA-approved Parkinson's psychosis drug) + DAYBUE (Rett syndrome, 2023); NM 34.3%, ROE 37.3%, D/E 0.041, FCF $154M; OM -1.7% only blocker (R&D drag, not structural); 4/4 MA aligned, but price extended +10% above MA10d — entry on pullback to $23-24
     'BIIB',  # Biogen — neuroscience pure-play; Leqembi (lecanemab, w/ Eisai) first approved Alzheimer's disease-modifier, subcutaneous monthly formulation removes IV burden; zuranolone (depression) via Sage partnership; ROE 7.7% + D/EV 0.21 blocking; MS revenue decline (Tecfidera generics) masking neuro pipeline value
     'COST',  # Costco — membership moat, not a margin story; OM ~3% by design (merchandise passes savings to members, fee stream runs at ~95% margin); screen blocks on OM/NM — low margins are the product, not a flaw; measure by membership fee growth + renewal rate (~93%) + ROIC, not OM or NM
     'ORLY',  # O'Reilly Auto Parts — Akre compounder; 18% OM, 14% NM, ROA 13.8% (ROE negative from 20yrs buybacks); ROA just below 15% threshold; D/EV 0.10, P/E 29x, exceptional execution
