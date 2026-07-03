@@ -8,6 +8,7 @@ on:
   workflow_run:
     workflows: ["Weekly Screener — US", "Weekly Screener — India"]
     types: [completed]
+  workflow_dispatch:
 
 permissions:
   contents: read
