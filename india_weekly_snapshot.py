@@ -1,22 +1,26 @@
 """
 india_weekly_snapshot.py — Weekly alignment + squeeze snapshot (India)
 Reads UNIVERSE and WATCHLIST from india_screener.py, runs MA alignment and squeeze,
-appends a dated markdown section to india_weekly_notes.md.
+overwrites india_weekly_notes.md with the current week's snapshot.
+History is preserved in git — each run creates a new commit.
 Run: python india_weekly_snapshot.py
 """
 
-import sys, yfinance as yf, warnings, subprocess, os
+import sys, os, re, yfinance as yf, warnings
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
+from pathlib import Path
 warnings.filterwarnings('ignore')
 
 sys.path.insert(0, '.')
-from india_screener import UNIVERSE, WATCHLIST
+from india_screener import UNIVERSE, WATCHLIST, get_fundamentals, quality_grade, failing_filters
 
 ALL = list(dict.fromkeys(UNIVERSE + WATCHLIST))
 
+
 def disp(t):
     return t.replace('.NS', '').replace('.BO', '')
+
 
 def ma_data(ticker):
     try:
@@ -58,6 +62,17 @@ def ma_data(ticker):
         }
     except:
         return None
+
+
+def parse_watchlist_notes():
+    """Parse per-ticker thesis from inline comments in india_screener.py WATCHLIST."""
+    src = (Path(__file__).parent / 'india_screener.py').read_text()
+    notes = {}
+    for ticker in WATCHLIST:
+        m = re.search(rf"^\s+'{re.escape(ticker)}',[ \t]+#[ \t]+(.+)$", src, re.MULTILINE)
+        if m:
+            notes[ticker] = m.group(1).strip()
+    return notes
 
 
 if __name__ == '__main__':
@@ -102,33 +117,57 @@ if __name__ == '__main__':
     lines.append('\n### Notes\n')
     lines.append('_Weekly observations — what to watch, what is coiling, what to avoid._\n')
     lines.append('\n> **Disclaimer:** For informational purposes only. Not financial advice.\n')
-    lines.append('\n---\n')
 
-    md = '\n'.join(lines)
+    # ── Watchlist Status ──────────────────────────────────────────────────────
+    print(f'  Fetching fundamentals for {len(WATCHLIST)} watchlist tickers ...', flush=True)
+    with ThreadPoolExecutor(max_workers=10) as ex:
+        wl_funds = dict(zip(WATCHLIST, ex.map(get_fundamentals, WATCHLIST)))
+
+    wl_map   = {d['ticker']: d for d in data if d['ticker'] in WATCHLIST}
+    notes    = parse_watchlist_notes()
+    wl_order = sorted(WATCHLIST, key=lambda t: (-wl_map.get(t, {}).get('score', 0), disp(t)))
+
+    lines.append('\n### Watchlist Status\n')
+    lines.append('| Ticker | Price | MA | Grade | Blockers | Thesis |')
+    lines.append('|:-------|------:|:--:|:-----:|:---------|:-------|')
+
+    for t in wl_order:
+        md   = wl_map.get(t)
+        price_str = f"₹{md['price']:.2f}" if md else '—'
+        ma_str    = f"{md['score']}/4"     if md else '—'
+        f = wl_funds.get(t)
+        if f:
+            grade    = quality_grade(f)
+            fails    = failing_filters(f)
+            blockers = ' / '.join(f"{n} {v}" for n, v, _ in fails) if fails else '—'
+        else:
+            grade    = 'ETF'
+            blockers = '—'
+        thesis = notes.get(t, '—')
+        thesis_md = (thesis[:70] + '…') if len(thesis) > 70 else thesis
+        lines.append(f"| **{disp(t)}** | {price_str} | {ma_str} | {grade} | {blockers} | {thesis_md} |")
+
+    header = (
+        '# India Weekly Market Notes\n\n'
+        'Current week snapshot — MA alignment, squeeze setups, and watchlist status.\n'
+        'Run `python india_weekly_snapshot.py` each week to refresh. History is in git.\n\n'
+        '---\n\n'
+    )
+
+    md = header + '\n'.join(lines) + '\n'
 
     notes_file = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'india_weekly_notes.md')
-    if not os.path.exists(notes_file):
-        with open(notes_file, 'w') as f:
-            f.write('# India Weekly Market Notes\n\n')
-            f.write('Alignment + squeeze snapshots from the India quality screener universe.\n')
-            f.write('Run `python india_weekly_snapshot.py` each week to append the latest entry.\n\n')
-            f.write('---\n\n')
-
-    existing = open(notes_file).read()
-    if f'## {label}' in existing:
-        print(f'  Already logged for {label} — skipping append')
-    else:
-        with open(notes_file, 'a') as f:
-            f.write(md)
-        print(f'  Appended → india_weekly_notes.md')
+    with open(notes_file, 'w') as f:
+        f.write(md)
+    print(f'  Written → india_weekly_notes.md  ({label})')
     print(f'  4/4: {len(aligned_4)}   3/4: {len(aligned_3)}   Coils ≤5%: {len([d for d in data if d["spread"] <= 5.0])}')
 
+    import subprocess
     try:
-        repo       = os.path.dirname(notes_file)
         commit_msg = f'india_weekly_notes: {label}'
-        subprocess.run(['git', 'add', 'india_weekly_notes.md'], cwd=repo, check=True, capture_output=True)
-        subprocess.run(['git', 'commit', '-m', commit_msg],     cwd=repo, check=True, capture_output=True)
-        subprocess.run(['git', 'push'],                          cwd=repo, check=True, capture_output=True)
+        subprocess.run(['git', 'add', 'india_weekly_notes.md'], check=True, capture_output=True)
+        subprocess.run(['git', 'commit', '-m', commit_msg],     check=True, capture_output=True)
+        subprocess.run(['git', 'push'],                          check=True, capture_output=True)
         print(f'  Pushed → GitHub  ({commit_msg})')
     except subprocess.CalledProcessError as e:
         msg = e.stderr.decode().strip() if e.stderr else str(e)
