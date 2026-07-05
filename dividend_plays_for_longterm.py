@@ -105,6 +105,9 @@ UNIVERSE = [
     'TRI',   # Thomson Reuters — legal/news data platform; 30.3% OM, 3.1% yield, FCF 4.7%, D/EV 0.072, P/E 23.4; A
     'HD',    # Home Depot — home improvement duopoly; 11.9% OM, 2.8% yield, FCF 3.0%, D/EV 0.160, P/E 23.9; B
 
+    # BDC — Business Development Company
+    'MAIN',  # Main Street Capital — BDC lending to lower middle market; internally managed (removes fee conflict vs externally managed peers); ~8.4% yield paid monthly + semi-annual special dividends; trades at ~1.55x NAV (premium unusual for BDCs, reflects management quality); ROE 14.4%; BDC structure means OM/D/E filters don't apply cleanly — judge by: NAV growth + dividend coverage + management track record
+
     # Dividend ETF — diversified quality basket
     'SCHD',  # Schwab U.S. Dividend Equity ETF — tracks Dow Jones U.S. Dividend 100 Index; screens for 10yr+ consecutive dividend payment + composite score (FCF/debt, ROE, yield, 5yr div growth); ~$60B+ AUM, 0.06% ER; ~3.5%+ yield, ~10% div CAGR over 10yr; partial overlap with this universe (CVX, ABBV, VZ, KO, TXN) but diverges in two ways: (1) SCHD is yield-weighted — excludes low-yield compounders like MSFT/AAPL that we track; (2) SCHD requires 10yr proven payer history — excludes recovery names (NKE, KHC, CVS) that we carry with a thesis; think of SCHD as what this universe looks like filtered for yield + dividend history — a quality subset, not a mirror; chart-only tracking (ETF)
 ]
