@@ -5,18 +5,18 @@ Run `python weekly_snapshot.py` each week to refresh. History is in git.
 
 ---
 
-## Week of Jul 03 2026
+## Week of Jul 05 2026
 
-### 4/4 Aligned — 75 names
+### 4/4 Aligned — 78 names
 
 **Universe (62):** AAPL, ABBV, ABNB, ACGL, AFL, ALAB, ALGN, AMAT, ANET, AON, ASML, BRK-B, CASH, CB, CDNS, CHD, CHRW, CINF, CL, CRDO, CRWD, CW, DDOG, DHI, EW, EXPD, FAST, FTNT, HEI, HOOD, HWM, IBKR, INCY, ITW, JBHT, JNJ, JPM, KLAC, KRYS, LIN, LLY, LRCX, MA, MCO, MNST, MRK, MRVL, MSCI, MU, NBIX, PANW, PGR, SCHW, SEZL, TOL, TRV, TSM, UNH, V, VRTX, WSM, WST
 
-**Watchlist (13):** AMD, AMG, APD, ARM, BIIB, BMY, GEV, INTC, MDB, NET, ONTO, SNOW, TDG
+**Watchlist (16):** ACAD, AMD, AMG, APD, ARM, BIIB, BMY, GEV, INTC, MDB, NET, ONTO, SNOW, TDG, TGTX, VCYT
 
 
-### 3/4 Near-Aligned — 35 names
+### 3/4 Near-Aligned — 34 names
 
-ADI, ADP, AJG, AMZN, APP, AXON, COHR, CTRA, ETN, GFS, GOOGL, HD, IHS, IOT, KMB, LSCC, MCHP, MTD, MTSI, NVO, ODFL, PAYX, PG, PWR, QCOM, RLI, S, SAIA, SITM, SPGI, TER, TMO, TXN, UTHR, XPO
+ADI, ADP, AJG, AMZN, APP, AXON, COHR, ETN, GFS, GOOGL, HD, IHS, IOT, KMB, LSCC, MCHP, MTD, MTSI, NVO, ODFL, PAYX, PG, PWR, QCOM, RLI, S, SAIA, SITM, SPGI, TER, TMO, TXN, UTHR, XPO
 
 
 ### Tightest Coils — FullCoil ≤ 5%
@@ -57,6 +57,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | Ticker | Price | MA | Grade | Blockers | Thesis |
 |:-------|------:|:--:|:-----:|:---------|:-------|
 | **ABBV** | $261.07 | 4/4 | A+ | ROE/ROA ROE None% / ROA 10.0% | AbbVie — Allergan amortization masking strong cash earnings; FCF/Debt … |
+| **ACAD** | $25.97 | 4/4 | A+ | Op Margin -1.7% | Acadia Pharmaceuticals — CNS/rare disease; Nuplazid (only FDA-approved… |
 | **AMD** | $517.82 | 4/4 | B | ROE/ROA ROE 8.1% / ROA 3.6% | AMD — AI accelerator (MI300X/MI350) + x86 CPU challenger; OM ~21%, NM … |
 | **AMG** | $344.60 | 4/4 | A | Debt/EV 0.242 | Affiliated Managers Group — multi-boutique AM (AQR, Tweedy Browne etc.… |
 | **APD** | $314.19 | 4/4 | B | Debt/EV 0.205 / FCF Yield -5.0% | Air Products — industrial gases, green/blue hydrogen megaproject bet (… |
@@ -70,10 +71,11 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **ONTO** | $307.58 | 4/4 | B | ROE/ROA ROE 5.3% / ROA 5.4% | Onto Innovation — advanced packaging inspection/metrology; HBM + chipl… |
 | **SNOW** | $260.15 | 4/4 | B | Op Margin -22.2% / Net Margin -23.8% / ROE/ROA ROE -54.9% / ROA -9.7% | — |
 | **TDG** | $1348.49 | 4/4 | A | Debt/EV 0.309 / ROE/ROA ROE None% / ROA 11.8% | TransDigm — aerospace parts monopolist, 47% OM, 22% NM; D/EV 0.325 str… |
+| **TGTX** | $53.31 | 4/4 | A | FCF Yield -0.4% | TG Therapeutics — Briumvi (ublituximab, anti-CD20 MS); faster infusion… |
+| **VCYT** | $57.08 | 4/4 | A | ROE/ROA ROE 6.9% / ROA 3.8% | Veracyte — genomic diagnostics; moat = guideline inclusion (NCCN/medic… |
 | **AXON** | $597.04 | 3/4 | B | Op Margin 3.7% / ROE/ROA ROE 6.8% / ROA 0.1% | — |
 | **COHR** | $333.36 | 3/4 | B | ROE/ROA ROE 4.7% / ROA 3.1% / FCF Yield -0.3% | Coherent Corp — optical components (800G/1.6T datacenter interconnect … |
 | **GFS** | $69.84 | 3/4 | B | ROE/ROA ROE 6.8% / ROA 3.1% | GlobalFoundries — specialty foundry (RF, automotive, IoT); 5/6 filters… |
-| **GOOGL** | $359.91 | 3/4 | A+ | Passes all filters — | Google — watching for price to reclaim weekly MA10 (~$374); weekly str… |
 | **IOT** | $35.93 | 3/4 | A | Op Margin 1.5% / Net Margin 3.3% / ROE/ROA ROE 4.4% / ROA -0.3% | Samsara — fleet/IoT SaaS, GM 76%, zero debt, 30% RevG, FCF just turned… |
 | **LSCC** | $136.53 | 3/4 | A | Net Margin 3.5% / ROE/ROA ROE 2.7% / ROA 2.5% | Lattice Semiconductor — low-power FPGAs, 60%+ gross margin, zero debt;… |
 | **PWR** | $668.31 | 3/4 | B | Op Margin 4.2% / Net Margin 3.7% | Quanta Services — dominant grid/electrical infrastructure contractor; … |
@@ -82,6 +84,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **BILL** | $40.48 | 2/4 | B | Debt/EV 0.504 / Op Margin 1.1% / Net Margin 0.0% / ROE/ROA ROE 0.0% / ROA -0.3% | — |
 | **CLS** | $336.21 | 2/4 | A | Op Margin 6.6% | Celestica — AI infra contract manufacturer (servers, networking), ROE … |
 | **COPX** | $76.65 | 2/4 | ETF | — | Global X Copper Miners ETF — AUM $8.0B; copper = AI datacenter + grid … |
+| **FCX** | $60.97 | 2/4 | B | Passes all filters — | Freeport-McMoRan — largest US copper producer (Grasberg mine, Indonesi… |
 | **MELI** | $1763.36 | 2/4 | B | Op Margin 6.9% / FCF Yield -4.6% | — |
 | **MKC** | $53.45 | 2/4 | A | Debt/EV 0.252 | — |
 | **NEE** | $88.34 | 2/4 | A | Debt/EV 0.35 / FCF Yield -10.0% | NextEra — world's largest renewable platform (wind/solar/battery) + FP… |
@@ -98,12 +101,14 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **SLV** | $55.02 | 1/4 | ETF | — | iShares Silver ETF — AUM $37B, silver price proxy; 49% off 6mo highs (… |
 | **TEAM** | $83.84 | 1/4 | A | Op Margin 9.4% / Net Margin -3.5% / ROE/ROA ROE -19.3% / ROA 0.5% | — |
 | **UPWK** | $9.16 | 1/4 | B | Debt/EV 0.408 | Upwork — freelance marketplace; D/EV 0.44 (converts) only blocker, mar… |
+| **ADBE** | $219.72 | 0/4 | A+ | Passes all filters — | Adobe — creative cloud monopoly (Photoshop/Illustrator/Acrobat); OM 35… |
 | **COIN** | $165.48 | 0/4 | B | Op Margin -7.1% / ROE/ROA ROE 6.7% / ROA 1.9% | Coinbase — digital asset exchange, crypto theme proxy; 85.5% gross mar… |
 | **COST** | $951.67 | 0/4 | A | Op Margin 3.7% / Net Margin 3.0% | Costco — membership moat, not a margin story; OM ~3% by design (mercha… |
 | **DPZ** | $311.66 | 0/4 | B | Debt/EV 0.336 | — |
 | **FIG** | — | — | A | Op Margin -41.2% / Net Margin -123.8% / ROE/ROA ROE -101.7% / ROA -43.6% | Figma — design collaboration SaaS; 79.8% gross margin, FCF 8.6%, 46.1%… |
 | **FISV** | $52.33 | 0/4 | B | Debt/EV missing / Op Margin missing / Net Margin missing / ROE/ROA ROE None% / ROA None% / FCF Yield missing (no data relief) | Fiserv — payment processing + Clover POS + banking tech, extreme switc… |
 | **HUBS** | $192.12 | 0/4 | A | Op Margin 3.3% / Net Margin 3.0% / ROE/ROA ROE 5.0% / ROA 1.1% | — |
+| **INTU** | $275.35 | 0/4 | A+ | Passes all filters — | Intuit — TurboTax + QuickBooks + Credit Karma franchise; near-monopoly… |
 | **KTOS** | $55.35 | 0/4 | B | Op Margin 1.8% / Net Margin 2.1% / ROE/ROA ROE 1.2% / ROA 0.6% / FCF Yield -1.0% | Kratos — drone/defense tech; margins thin now, scaling with DoD contra… |
 | **ORLY** | $90.25 | 0/4 | B | ROE/ROA ROE None% / ROA 13.8% | O'Reilly Auto Parts — Akre compounder; 18% OM, 14% NM, ROA 13.8% (ROE … |
 | **SSNC** | $65.52 | 0/4 | B | Debt/EV 0.331 | SS&C Technologies — fund admin infra, $1.28B FCF, extreme switching co… |
