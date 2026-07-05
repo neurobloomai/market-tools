@@ -232,6 +232,16 @@ def liquid_status(ticker):
         if len(wk) < 22 or len(dy) < 52:
             return None
         price    = float(dy.iloc[-1])
+
+        # Sanity check: flag if price is outside the 52-week range (genuinely broken data)
+        info  = t.info
+        lo52  = info.get('fiftyTwoWeekLow')
+        hi52  = info.get('fiftyTwoWeekHigh')
+        live  = info.get('currentPrice') or info.get('regularMarketPrice')
+        ref   = live or price
+        if lo52 and hi52 and (ref < lo52 * 0.5 or ref > hi52 * 1.5):
+            return (ticker, ref, None, None, None, 'DATA?', None)
+
         m10w     = float(wk.rolling(10).mean().iloc[-2])
         m20w     = float(wk.rolling(20).mean().iloc[-2])
         w_slope  = m10w - float(wk.rolling(10).mean().iloc[-2 - SLOPE_LOOKBACK_W])
@@ -258,8 +268,11 @@ def liquid_panel_md() -> str:
         if row is None:
             continue
         sym, price, wg, p10, p50, band, slope = row
-        wg_s = '✓' if wg else '✗'
-        lines.append(f"| **{sym}** | ${price:.2f} | {wg_s} | {p10:+.1f}% | {p50:+.1f}% | {band} | {slope:+.2f} |")
+        if band == 'DATA?':
+            lines.append(f"| **{sym}** | ${price:.2f} | — | — | — | ⚠ DATA? | — |")
+        else:
+            wg_s = '✓' if wg else '✗'
+            lines.append(f"| **{sym}** | ${price:.2f} | {wg_s} | {p10:+.1f}% | {p50:+.1f}% | {band} | {slope:+.2f} |")
     return '\n'.join(lines) + '\n'
 
 
@@ -276,8 +289,11 @@ def print_liquid_panel():
         if row is None:
             continue
         sym, price, wg, p10, p50, band, slope = row
-        wg_s = '✓' if wg else '✗'
-        print(f"  {sym:<7} ${price:>7.2f}  {wg_s:>5}  {p10:>+8.1f}%  {p50:>+8.1f}%  {band:>5}  {slope:>+8.2f}")
+        if band == 'DATA?':
+            print(f"  {sym:<7} ${price:>7.2f}  {'—':>5}  {'—':>9}  {'—':>9}  ⚠ DATA?")
+        else:
+            wg_s = '✓' if wg else '✗'
+            print(f"  {sym:<7} ${price:>7.2f}  {wg_s:>5}  {p10:>+8.1f}%  {p50:>+8.1f}%  {band:>5}  {slope:>+8.2f}")
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
