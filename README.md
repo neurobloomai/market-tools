@@ -127,11 +127,51 @@ python3 ma_scanner_india.py             # scan India UNIVERSE (76 NSE names)
 python3 ma_scanner_india.py --watchlist # scan India WATCHLIST
 ```
 
+### Liquid Names Status Panel
+
+Every run of `ma_scanner.py` ends with a fixed status panel for the 9 most liquid, spread-worthy names regardless of whether they pass any gate:
+
+```
+NVDA · META · MSFT · AAPL · AMZN · GOOGL · AVGO · MU · NFLX
+```
+
+| Column | What it shows |
+|--------|---------------|
+| **Wkly Gate** | ✓ = MA10w > MA20w with rising slope. ✗ = weekly structure broken — no spread regardless of daily setup |
+| **vs MA10d** | How far price is from the daily MA10. IN band = within ±3%. +EXT = too extended above. -EXT = still in pullback |
+| **Band** | IN = actionable entry zone. +EXT = wait for pullback. -EXT = structure recovering |
+| **W.Slope** | Weekly MA10 slope — direction and momentum of the weekly trend |
+
+The panel solves a specific problem: liquid names go invisible in the main scan when they're extended beyond the ±3% band. Without the panel, a well-positioned NVDA at -2.8% from MA10d with weekly gate passing doesn't appear anywhere. The panel ensures the names you can actually trade are always visible — setup or not.
+
+The same panel is written into `weekly_notes.md` each week, so end-of-week status for all 9 names is preserved in git history.
+
+A built-in sanity check flags `⚠ DATA?` if a price falls outside 50%–150% of the 52-week range — catches genuinely broken yfinance data without false-positives on stock splits or large legitimate price moves.
+
 ### What this scanner is — and is not
 
 This is a **pullback-to-MA scanner in confirmed uptrends**, not a breakout predictor. By the time all levels align, the move has already started — you are buying a pullback in an established trend, not front-running a reversal. That is deliberate. Front-running requires acting before higher timeframes confirm, which conflicts with the hierarchy principle and makes losses harder to survive.
 
 The weekly gate typically reduces the signal count significantly (from 70–80% of tickers to 10–15%). That reduction is the filter working correctly, not a failure.
+
+## The Binary Entry Rule
+
+**Either fully aligned or fully discounted. Nothing in between.**
+
+The mushy middle — 2/4 MA, "kind of set up," "not too expensive," "almost qualifying" — is where most losses come from. Not because the stock is bad, but because there's no conviction when it moves against you. You entered on hope, not on signal.
+
+**Fully aligned** means the market has confirmed the thesis. 4/4 MA structure intact, weekly gate passing, price in band, CMF accumulating. The business has quality, the structure has momentum — you are buying a pullback in a confirmed uptrend. The chart agrees with the fundamentals.
+
+**Fully discounted** means the market is wrong or panicking. Quality business, broken chart, price well below all MAs — but the fundamentals haven't changed. You are buying the business, not the chart. This requires stronger conviction because you have no structure support — only thesis. Entry here is thesis-driven, not signal-driven.
+
+Everything between those two states is noise. A 3/4 name with a good story is not a setup — it's a candidate. A name with a "reasonable" valuation and weak structure is not a value buy — it's a hope trade. The watchlist exists precisely to hold names in this middle state without acting on them. The rule: if it's not fully aligned and not fully discounted, it lives in the watchlist and nowhere else.
+
+**The practical application:**
+- NVDA at -2.8% from MA10d with weekly gate passing → fully aligned, actionable
+- ADBE at fwd PE 8x with 89% gross margins but 0/4 MA → fully discounted thesis, small position only
+- COST at 0/4 MA with CMF -0.20 → neither state, watchlist, wait
+
+The framework is built to enforce this binary. The scanner only surfaces names at the right entry zone. The watchlist documents everything else. The FUTURE_RADAR holds the rest. The bin between them is intentionally empty.
 
 ## Options Spread Universe
 
@@ -313,6 +353,14 @@ Think of this as a basic scaffold — not a finished house. The value is in bend
 |---|---|---|
 | **WM** | Waste Management — regulated waste oligopoly | Every community needs waste removed; landfill permit moat; recycling + renewable gas tailwind |
 
+**BDC / Income:**
+
+| Name | What it is | Why SIP |
+|---|---|---|
+| **MAIN** | Main Street Capital — BDC lending to lower middle market companies | ~8.4% yield paid monthly + semi-annual specials; internally managed (removes fee conflict vs externally managed BDC peers); trades at premium to NAV — rare for BDCs, reflects management quality; not a growth compounder, a durable income machine |
+
+Note: MAIN is judged differently from the rest of this list — standard OM/D/E filters don't apply cleanly to BDC structure. Judge by NAV growth, dividend coverage, and management track record instead.
+
 Note: NDAQ ≠ Nasdaq Composite ≠ QQQ. QQQ pays licensing fees *to* NDAQ. Owning NDAQ means owning the company that collects those fees.
 
 ## India SIP Watchlist
@@ -350,6 +398,17 @@ Common thread: asset-light, fee or infrastructure income, no balance sheet risk,
 | **ICRA** | Moody's India subsidiary (~52% Moody's stake) | CRISIL + ICRA = India's rating duopoly, mirrors S&P + Moody's globally; MCO analog for India |
 
 The hierarchy: CAMS owns the road, CDSL owns the parking lot, HDFCAMC owns one of the cars, BSE owns the building — all compound with India's financial deepening.
+
+## India FUTURE_RADAR
+
+`FUTURE_RADAR` in `india_screener.py` — not scanned, not graded. Real businesses with real revenue but path to profitability unclear, or structural change pending before the thesis activates.
+
+| Name | Gate to watchlist |
+|------|------------------|
+| **OLAELEC** | OM turning positive sustained + FCF inflection + competitive position stabilising in EV two-wheeler market |
+| **RELIANCE** | Jio IPO / Reliance Retail listing / O2C demerger announced — today's C grade is conglomerate blending; Jio + Retail in isolation are A-grade businesses trapped inside O2C margin drag |
+
+RELIANCE note: the thesis is not the stock today — it's what the stock becomes when the O2C (oil-to-chemicals) refining business is separated. Jio is a telecom duopoly platform. Reliance Retail is India's largest retailer. Both would grade A+ as standalone listed entities. The demerger timeline is 2026–2028. Until then, the blended entity grades C and belongs here, not in the watchlist.
 
 ## Future Vision — The Missing Layer
 
