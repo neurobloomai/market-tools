@@ -7,16 +7,16 @@ Run `python india_weekly_snapshot.py` each week to refresh. History is in git.
 
 ## Week of Jul 05 2026 (India)
 
-### 4/4 Aligned — 43 names
+### 4/4 Aligned — 44 names
 
-**Universe (33):** AARTIIND, ADANIPORTS, ANGELONE, AUROPHARMA, BAJFINANCE, BHARATFORG, CAMS, CHOLAFIN, CIPLA, DATAPATTNS, DIVISLAB, DRREDDY, EICHERMOT, GRINDWELL, HAL, HDFCAMC, ICICIBANK, KPIL, LALPATHLAB, LAURUSLABS, LT, MANKIND, MARICO, MOTHERSON, NAVINFLUOR, NESTLEIND, PAGEIND, PARAS, POLYCAB, SBIN, SRF, SUNPHARMA, TITAN
+**Universe (34):** AARTIIND, ADANIPORTS, ANGELONE, ASIANPAINT, AUROPHARMA, BAJFINANCE, BHARATFORG, CAMS, CHOLAFIN, CIPLA, DATAPATTNS, DIVISLAB, DRREDDY, EICHERMOT, GRINDWELL, HAL, HDFCAMC, ICICIBANK, KPIL, LALPATHLAB, LAURUSLABS, LT, MANKIND, MARICO, MOTHERSON, NAVINFLUOR, NESTLEIND, PAGEIND, PARAS, POLYCAB, SBIN, SRF, SUNPHARMA, TITAN
 
 **Watchlist (10):** 360ONE, ADANIENT, ADANIGREEN, ANANDRATHI, APOLLOHOSP, DELHIVERY, ETERNAL, HSCL, IXIGO, NYKAA
 
 
-### 3/4 Near-Aligned — 9 names
+### 3/4 Near-Aligned — 11 names
 
-ABB, BAJAJ-AUTO, BSE, CUMMINSIND, MCX, MTARTECH, SIEMENS, THERMAX, TIINDIA
+ABB, BAJAJ-AUTO, BHARTIARTL, BSE, CUMMINSIND, MARUTI, MCX, MTARTECH, SIEMENS, THERMAX, TIINDIA
 
 
 ### Tightest Coils — FullCoil ≤ 5%
@@ -35,6 +35,7 @@ ABB, BAJAJ-AUTO, BSE, CUMMINSIND, MCX, MTARTECH, SIEMENS, THERMAX, TIINDIA
 | **BEL** | [U] | 1/4 | 3.8% | 2.4% | 0.9x | ↓ |
 | **LT** | [U] | 4/4 | 4.1% | 2.3% | 0.7x | ↑ |
 | **HAL** | [U] | 4/4 | 4.5% | 4.5% | 0.8x | ↑ |
+| **BHARTIARTL** | [W] | 3/4 | 4.5% | 0.2% | 0.6x | ↑ |
 | **KOTAKBANK** | [U] | 2/4 | 4.6% | 1.0% | 0.6x | ↑ |
 | **TATAPOWER** | [U] | 0/4 | 4.8% | 1.7% | 0.8x | ↓ |
 | **DMART** | [U] | 0/4 | 4.8% | 1.6% | 0.7x | ↓ |
@@ -61,10 +62,13 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **HSCL** | ₹681.60 | 4/4 | A+ | FCF Yield -0.4% | Himadri Speciality Chemical — pivoting to battery anode materials + LF… |
 | **IXIGO** | ₹223.05 | 4/4 | A | Op Margin 6.6% / ROE/ROA ROE 5.3% / ROA 2.1% | ixigo — travel-tech, recently listed, margins building |
 | **NYKAA** | ₹307.40 | 4/4 | A | Op Margin 5.2% / Net Margin 2.0% / P/E 112.1x | profitability still building |
+| **BHARTIARTL** | ₹1909.00 | 3/4 | A+ | Passes all filters — | Bharti Airtel — telecom duopoly (Jio + Airtel); OM 32.2%, NM 12.7%, RO… |
+| **MARUTI** | ₹14343.00 | 3/4 | B | Passes all filters — | Maruti Suzuki — 50% India car market share, Suzuki tech, largest deale… |
 | **MCX** | ₹2804.10 | 3/4 | A+ | Passes all filters — | Multi Commodity Exchange — India's commodity derivatives toll booth (C… |
 | **ARE&M** | ₹853.05 | 2/4 | B | Op Margin 6.4% / FCF Yield -1.9% | Amara Raja Energy — Op margin just under threshold, clean balance shee… |
 | **BAJAJHFL** | ₹91.11 | 2/4 | A | ROE (financial) 12.1% | Bajaj Housing Finance — fast-growing NBFC, recently listed; ROE buildi… |
 | **DIXON** | ₹12440.00 | 2/4 | B | Op Margin 2.9% / Net Margin 2.9% | Dixon Technologies — EMS/contract manufacturing, ROE 37% but OM ~3% by… |
+| **M&M** | ₹3137.60 | 2/4 | A | Debt/EV 0.304 | Mahindra & Mahindra — farm equipment + SUV (Scorpio/XUV) + EV; OM 16.4… |
 | **KFINTECH** | ₹879.75 | 1/4 | A+ | Passes all filters — | KFin Technologies — second MF registrar after CAMS (~30% market share)… |
 | **POLICYBZR** | ₹1586.00 | 1/4 | B | ROE/ROA ROE 9.7% / ROA 2.9% / ROE (financial) 9.7% | high growth, early stage |
 | **ASTRAL** | ₹1384.00 | 0/4 | B | Passes all filters — | Astral Ltd — pipes/adhesives/bathing compounder; OM ~13%, ROE ~18%, lo… |
