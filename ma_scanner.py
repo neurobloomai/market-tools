@@ -219,6 +219,50 @@ def print_results(all_results, total, label):
     print(f"Total                  : {len(hits)} / {total}  [{label}]")
 
 
+# ── Liquid Names Status Panel ─────────────────────────────────────────────────
+
+LIQUID_NAMES = ['NVDA', 'META', 'MSFT', 'AAPL', 'AMZN', 'GOOGL', 'AVGO', 'MU']
+
+
+def liquid_status(ticker):
+    try:
+        t  = yf.Ticker(ticker)
+        wk = t.history(period='1y', interval='1wk', prepost=False)['Close'].dropna()
+        dy = t.history(period='3mo', interval='1d', prepost=False)['Close'].dropna()
+        if len(wk) < 22 or len(dy) < 52:
+            return None
+        price    = float(dy.iloc[-1])
+        m10w     = float(wk.rolling(10).mean().iloc[-2])
+        m20w     = float(wk.rolling(20).mean().iloc[-2])
+        w_slope  = m10w - float(wk.rolling(10).mean().iloc[-2 - SLOPE_LOOKBACK_W])
+        w_gate   = m10w > m20w and w_slope > 0
+        m10d     = float(dy.rolling(10).mean().iloc[-2])
+        m50d     = float(dy.rolling(50).mean().iloc[-2])
+        pct10d   = (price / m10d - 1) * 100
+        pct50d   = (price / m50d - 1) * 100
+        band_str = 'IN' if BAND_LOW <= pct10d <= BAND_HIGH else ('+EXT' if pct10d > BAND_HIGH else '-EXT')
+        return (ticker, price, w_gate, pct10d, pct50d, band_str, w_slope)
+    except Exception:
+        return None
+
+
+def print_liquid_panel():
+    with ThreadPoolExecutor(max_workers=8) as ex:
+        rows = list(ex.map(liquid_status, LIQUID_NAMES))
+
+    print(f"\n{'─' * 74}")
+    print(f"  LIQUID NAMES — STATUS PANEL")
+    print(f"{'─' * 74}")
+    print(f"  {'Ticker':<7} {'Price':>8}  {'Wkly':>5}  {'vs MA10d':>9}  {'vs MA50d':>9}  {'Band':>5}  {'W.Slope':>8}")
+    print(f"  {'─'*7} {'─'*8}  {'─'*5}  {'─'*9}  {'─'*9}  {'─'*5}  {'─'*8}")
+    for row in rows:
+        if row is None:
+            continue
+        sym, price, wg, p10, p50, band, slope = row
+        wg_s = '✓' if wg else '✗'
+        print(f"  {sym:<7} ${price:>7.2f}  {wg_s:>5}  {p10:>+8.1f}%  {p50:>+8.1f}%  {band:>5}  {slope:>+8.2f}")
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 if __name__ == '__main__':
@@ -239,4 +283,5 @@ if __name__ == '__main__':
         all_results = list(ex.map(scan_ticker, tickers))
 
     print_results(all_results, len(tickers), label)
+    print_liquid_panel()
     print(f"\nDISCLAIMER: Research tool only. Not financial advice.")
