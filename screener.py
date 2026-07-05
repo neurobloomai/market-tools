@@ -195,6 +195,8 @@ SIP_WATCHLIST = {
     'ADP':  'Automatic Data Processing — processes paychecks for millions of US businesses; extreme switching costs (HR/payroll systems deeply embedded, re-implementation risk keeps customers locked in); recurring subscription revenue, float income on payroll cash; every new US job added = more ADP revenue; already A+ in UNIVERSE',
     # --- Waste Infrastructure ---
     'WM':   'Waste Management — regulated waste collection oligopoly (WM + RSG = ~50% US market); every community needs waste removed, pricing power structural; long-term municipal contracts, landfill permit moat (impossible to build new landfills); secular tailwind from recycling + renewable natural gas from landfills; quietly compounding business',
+    # --- BDC / Income ---
+    'MAIN': 'Main Street Capital — BDC lending to lower middle market companies; internally managed (removes fee conflict that plagues most BDCs); ~8.4% yield paid monthly + semi-annual special dividends; trades at ~1.55x NAV (premium unusual for BDCs, reflects management quality); ROE 14.4%; not a growth compounder — a durable income machine; SIP monthly for yield compounding',
 }
 
 # Spread universe — tiered by options liquidity
