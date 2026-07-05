@@ -61,6 +61,7 @@ UNIVERSE = [
     # Consumer & FMCG
     'HINDUNILVR.NS','NESTLEIND.NS','BRITANNIA.NS','DABUR.NS','MARICO.NS',
     'TITAN.NS','PAGEIND.NS','TATACONSUM.NS',
+    'ASIANPAINT.NS',  # A+ (7/7) — 50%+ decorative paints market share, pricing power + 3-tier distribution moat; OM 16%, ROE 21%, D/E 0.18, FCF positive, RevG 11%; 4/4 MA aligned slope +209
 
     # Infrastructure & Logistics
     'ADANIPORTS.NS','CONCOR.NS','IRCTC.NS',
@@ -93,6 +94,9 @@ WATCHLIST = [
     'ASTRAL.NS',      # Astral Ltd — pipes/adhesives/bathing compounder; OM ~13%, ROE ~18%, low debt; consistent but may grade B by filter thresholds
     'ANANDRATHI.NS',  # Anand Rathi Wealth — wealth management, asset-light; OM 40%, NM 32%, ROE 47%, RevG 48%; PE ~82x (just above 80x threshold); watch for earnings growth to bring PE sub-80
     'HSCL.NS',        # Himadri Speciality Chemical — pivoting to battery anode materials + LFP cathodes for EV supply chain; OM 20%, NM 16%, ROE 18%; D/E 16 + FCF -0.4% blocking (heavy capex ramp); watch for FCF turning positive + debt reduction as capacity ramps
+    'BHARTIARTL.NS',  # Bharti Airtel — telecom duopoly (Jio + Airtel); OM 32.2%, NM 12.7%, ROE 19.4%, FCF ₹610B, RevG 15.7%; D/E 0.997 only blocker (structural 5G spectrum + tower capex — same read as VZ, not deteriorating); 3/4 MA; A (6/7)
+    'MARUTI.NS',      # Maruti Suzuki — 50% India car market share, Suzuki tech, largest dealer network; B (3/7); OM 8.4%/NM 8%/GrossM 28% thin by auto OEM design (not a flaw — same read as COST); near-zero D/E 0.001, RevG 28%, FCF real; 3/4 MA; watch for margin improvement
+    'M&M.NS',         # Mahindra & Mahindra — farm equipment + SUV (Scorpio/XUV) + EV; OM 16.4%, ROE 18.8%, RevG 31%; D/E 1.25 inflated by Mahindra Finance NBFC subsidiary (standalone auto/farm D/E much lower); NM 8.5% + GrossM 39% just below threshold; B (4/7); 2/4 MA broken — wait for recovery
     'INDUSTOWER.NS',  # Indus Towers — largest India tower infra company; leases tower space to Airtel/Jio/Vi; permanent passive infrastructure, recurring tenancy rental, 5G rollout = more equipment per tower; Airtel ~42% shareholder; blocker: Vodafone Idea dues (Vi owes thousands of crores unpaid) + potential Vi collapse risk (25-30% revenue exposure); watch for Vi situation resolving — either stabilises or exits cleanly; business model A+ in isolation
     # --- SIP universe additions — scan to grade before promoting ---
     'MCX.NS',         # Multi Commodity Exchange — India's commodity derivatives toll booth (CME analog); every gold/silver/crude/agri futures trade pays MCX; structural monopoly in commodity derivatives; SIP candidate pending quality grade confirmation
