@@ -109,7 +109,8 @@ WATCHLIST = [
 # Not fetched, not graded. Documented here so the thesis isn't lost.
 # Rule: if the blocker is the business model (survival risk, no path to profit), it belongs here not WATCHLIST
 FUTURE_RADAR = {
-    'OLAELEC.NS': 'Ola Electric — EV two-wheeler, high growth but deeply loss-making; competitive market (Hero, Ather, TVS iQube, Bajaj Chetak all competing) = structural pressure not just cycle; path to profitability unclear; gate to watchlist: OM turning positive sustained + FCF inflection + competitive position stabilising',
+    'OLAELEC.NS':  'Ola Electric — EV two-wheeler, high growth but deeply loss-making; competitive market (Hero, Ather, TVS iQube, Bajaj Chetak all competing) = structural pressure not just cycle; path to profitability unclear; gate to watchlist: OM turning positive sustained + FCF inflection + competitive position stabilising',
+    'RELIANCE.NS': 'Reliance Industries — conglomerate discount masking two A-grade businesses: Jio (telecom/digital platform, duopoly with Airtel, growing ARPU) + Reliance Retail (largest Indian retailer); O2C (oil-to-chemicals) is the margin drag blending quality metrics to C grade today; thesis: Jio IPO / Retail listing / O2C demerger expected 2026-2028 — revisit when structure clarifies; gate to watchlist: demerger announced OR Jio/Retail listed separately',
 }
 
 # SIP candidates — high-quality toll-booth businesses on India's financial system growth.
