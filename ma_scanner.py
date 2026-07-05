@@ -221,7 +221,7 @@ def print_results(all_results, total, label):
 
 # ── Liquid Names Status Panel ─────────────────────────────────────────────────
 
-LIQUID_NAMES = ['NVDA', 'META', 'MSFT', 'AAPL', 'AMZN', 'GOOGL', 'AVGO', 'MU']
+LIQUID_NAMES = ['NVDA', 'META', 'MSFT', 'AAPL', 'AMZN', 'GOOGL', 'AVGO', 'MU', 'NFLX']
 
 
 def liquid_status(ticker):
