@@ -246,6 +246,23 @@ def liquid_status(ticker):
         return None
 
 
+def liquid_panel_md() -> str:
+    with ThreadPoolExecutor(max_workers=8) as ex:
+        rows = list(ex.map(liquid_status, LIQUID_NAMES))
+    lines = [
+        '\n### Liquid Names — Status Panel\n',
+        '| Ticker | Price | Wkly Gate | vs MA10d | vs MA50d | Band | W.Slope |',
+        '|:------:|------:|:---------:|---------:|---------:|:----:|--------:|',
+    ]
+    for row in rows:
+        if row is None:
+            continue
+        sym, price, wg, p10, p50, band, slope = row
+        wg_s = '✓' if wg else '✗'
+        lines.append(f"| **{sym}** | ${price:.2f} | {wg_s} | {p10:+.1f}% | {p50:+.1f}% | {band} | {slope:+.2f} |")
+    return '\n'.join(lines) + '\n'
+
+
 def print_liquid_panel():
     with ThreadPoolExecutor(max_workers=8) as ex:
         rows = list(ex.map(liquid_status, LIQUID_NAMES))

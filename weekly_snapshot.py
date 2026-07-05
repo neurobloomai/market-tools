@@ -14,6 +14,7 @@ warnings.filterwarnings('ignore')
 
 sys.path.insert(0, '.')
 from screener import UNIVERSE, WATCHLIST, get_fundamentals, quality_grade, failing_filters
+from ma_scanner import liquid_panel_md
 
 ALL = list(dict.fromkeys(UNIVERSE + WATCHLIST))
 
@@ -150,7 +151,8 @@ if __name__ == '__main__':
         '---\n\n'
     )
 
-    md = header + '\n'.join(lines) + '\n'
+    print(f'  Fetching liquid names panel ...', flush=True)
+    md = header + '\n'.join(lines) + '\n' + liquid_panel_md()
 
     with open('weekly_notes.md', 'w') as f:
         f.write(md)
