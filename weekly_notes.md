@@ -114,3 +114,16 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **SSNC** | $65.52 | 0/4 | B | Debt/EV 0.331 | SS&C Technologies — fund admin infra, $1.28B FCF, extreme switching co… |
 | **SYM** | $42.74 | 0/4 | B | Op Margin 1.1% / Net Margin -0.3% / ROE/ROA ROE -5.7% / ROA -0.6% | Symbotic — warehouse AI robotics, Walmart-backed; revenue scaling, mar… |
 | **VST** | $151.05 | 0/4 | A | Debt/EV 0.274 | Vistra — deregulated nuclear+gas (Energy Harbor acq), Texas/ERCOT expo… |
+
+### Liquid Names — Status Panel
+
+| Ticker | Price | Wkly Gate | vs MA10d | vs MA50d | Band | W.Slope |
+|:------:|------:|:---------:|---------:|---------:|:----:|--------:|
+| **NVDA** | $194.83 | ✓ | -2.8% | -7.1% | IN | +4.14 |
+| **META** | $582.90 | ✗ | +3.0% | -3.9% | IN | -19.72 |
+| **MSFT** | $390.49 | ✗ | +5.1% | -4.3% | +EXT | -2.15 |
+| **AAPL** | $308.63 | ✓ | +6.3% | +5.5% | +EXT | +8.70 |
+| **AMZN** | $242.67 | ✓ | +2.7% | -5.0% | IN | +1.69 |
+| **GOOGL** | $359.91 | ✓ | +2.1% | -2.8% | IN | +11.10 |
+| **AVGO** | $360.45 | ✓ | -5.7% | -12.0% | -EXT | +6.63 |
+| **MU** | $975.56 | ✓ | -12.6% | +15.9% | -EXT | +200.60 |
