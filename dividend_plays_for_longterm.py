@@ -78,6 +78,7 @@ UNIVERSE = [
     # Water & Utilities — regulated moats, infrastructure compounders
     'AWK',   # American Water Works — largest US water utility; ~37% OM, ~2.2% yield, regulated monopoly model, 15yr+ div growth; D/EV ~0.22 structural (capex-heavy utility), FCF thin from infrastructure spend; grades A
     'XYL',   # Xylem — water tech (pumps, treatment, smart metering); ~13% OM, ~1.3% yield, Evoqua acquisition adds scale; D/EV ~0.17, FCF covers dividend; grades A/B depending on yield gate
+    'WEC',   # WEC Energy Group — regulated Midwest utility (Wisconsin/Illinois/Michigan); ~3.5% yield, 20yr+ consecutive dividend growth; OM 29%, NM 16%; D/E structural IOU capex (PUC-approved rate base) + FCF negative from grid/AI datacenter buildout; ROE PUC-capped ~11%; DCA name — buy regularly, hold long; AI datacenter load growth in Wisconsin corridor = rate base expansion = higher allowed earnings over time
 
     # Recovery / future flywheel — watching, not yet qualifying
     'NKE',   # Nike — OM 6.9%/NM 4.8% abysmal now (DTC transition + China); brand moat intact,
