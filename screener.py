@@ -44,7 +44,7 @@ UNIVERSE = [
     'AAPL','MSFT','META','NVDA','V','MA','UNH','LLY','JPM',
     'JNJ','PG','HD','ABBV','MRK','TMO','ACN','AVGO','TXN',
     'QCOM','DHR','AMAT','LRCX','KLAC','MCHP','ADI','SNPS','CDNS',
-    'ADBE','CRM','NOW','INTU','ORCL','FTNT','PANW','CRWD','ZS','DDOG',
+    'CRM','NOW','ORCL','FTNT','PANW','CRWD','ZS','DDOG',
     'VEEV','WDAY','TTD','PAYC',
     'ZM',                            # Zoom Video — post-COVID valuation reset complete; A+ (7/7): OM 25%, NM 42%, GrossM 78%, ROE 22%, D/E 0.006, FCF $1.98B (~7.6% FCF yield at $87), RevG 5.5%; near-zero debt + massive cash pile; AI Companion + Zoom Contact Center = monetization runway; fwd P/E 13.8x, priced like value, runs like software; 2/4 MA, below MA10w $98 — scan will surface on weekly alignment
     'BRK-B','CB','AFL','TRV','PGR','AJG','AON','WTW','CINF',
@@ -96,6 +96,9 @@ UNIVERSE = [
     'BLK',                       # BlackRock — world's largest asset manager ($10T+ AUM); iShares ETF franchise (largest globally) + Aladdin risk platform (SaaS-like, used by central banks/SWFs); every index fund = AUM fee; OM 35.6%, NM 24.4%, FCF 4.4%, D/EV 0.095, RevG 27%, fwd P/E 16.1x; A+
     'BX',                        # Blackstone — world's largest alternatives manager ($1T+ AUM); PE + real estate + credit + infrastructure; mgmt fees sticky, carried interest is performance upside; retail alternatives push = decade-long runway; OM 38.0%, NM 21.2%, ROE 29.5%, D/EV 0.130, fwd P/E 15.8x; A
     'GOOGL',                   # Google — watching for price to reclaim weekly MA10 (~$374); weekly structure intact (MA10w > MA20w); thesis not fully formed yet — chart trigger first, fundamentals next; auto-promoted 2026-07-03 [grade A+, 3/4 MA]
+    'ADBE',                    # Adobe — creative cloud monopoly (Photoshop/Illustrator/Acrobat); OM 35.3%, NM 28.7%, GrossM 89.4%, ROE 63%, FCF $9.2B, fwd P/E 8x; D/E 0.61 only blocker (corporate bonds ~$4B, FCF paydown path clear); Figma deal dead Dec 2023 (CMA blocked, $1B termination fee paid); chart 0/4 MA broken on AI disruption fear; Firefly/GenStudio is the AI answer — watch for MA recovery; auto-promoted 2026-07-06 [grade A+, 0/4 MA]
+    'INTU',                    # Intuit — TurboTax + QuickBooks + Credit Karma franchise; near-monopoly on SMB accounting + tax prep; OM 47%, NM 21.9%, GrossM 80.8%, ROE 22.5%, FCF $5.2B, fwd P/E 10x; D/E 0.33 only blocker (Credit Karma acq debt, FCF paydown path clear); 0/4 MA, slope -59 — chart badly broken; watch for weekly MA structure recovery; auto-promoted 2026-07-06 [grade A+, 0/4 MA]
+    'FCX',                     # Freeport-McMoRan — largest US copper producer (Grasberg mine, Indonesia); AMZN-Rio Tinto 2yr datacenter copper deal confirms AI infrastructure demand thesis; OM 31.1%, ROE 15.6%, FCF $1.7B, fwd P/E 15.4x, D/EV 0.33; NM 10.3% only soft blocker; weekly gate ✓ (MA10w $63.29 > MA20w $62.52, slope +2); price $60.97 below MA10w — entry on MA10w reclaim; auto-promoted 2026-07-06 [grade B, 2/4 MA]
 ]
 
 # Future contenders — moat proven, one or two filters blocking, no survival risk
@@ -128,8 +131,6 @@ WATCHLIST = [
     'COST',  # Costco — membership moat, not a margin story; OM ~3% by design (merchandise passes savings to members, fee stream runs at ~95% margin); screen blocks on OM/NM — low margins are the product, not a flaw; measure by membership fee growth + renewal rate (~93%) + ROIC; currently 0/4 MA (CMF -0.20, distribution); promote to UNIVERSE on 4/4 recovery
     'ORLY',  # O'Reilly Auto Parts — Akre compounder; 18% OM, 14% NM, ROA 13.8% (ROE negative from 20yrs buybacks); ROA just below 15% threshold; D/EV 0.10, P/E 29x, exceptional execution
     'TDG',   # TransDigm — aerospace parts monopolist, 47% OM, 22% NM; D/EV 0.325 structural debt (leveraged rollup model, won't change); watch if debt pays down or FCF re-rates
-    'ADBE',  # Adobe — creative cloud monopoly (Photoshop/Illustrator/Acrobat); OM 35.3%, NM 28.7%, GrossM 89.4%, ROE 63%, FCF $9.2B, fwd P/E 8x; D/E 0.61 only blocker (corporate bonds ~$4B, FCF paydown path clear); Figma deal dead Dec 2023 (CMA blocked, $1B termination fee paid); chart 0/4 MA broken on AI disruption fear; Firefly/GenStudio is the AI answer — watch for MA recovery
-    'INTU',  # Intuit — TurboTax + QuickBooks + Credit Karma franchise; near-monopoly on SMB accounting + tax prep; OM 47%, NM 21.9%, GrossM 80.8%, ROE 22.5%, FCF $5.2B, fwd P/E 10x; D/E 0.33 only blocker (Credit Karma acq debt, FCF paydown path clear); 0/4 MA, slope -59 — chart badly broken; watch for weekly MA structure recovery
     'FISV',  # Fiserv — payment processing + Clover POS + banking tech, extreme switching costs; ~33% OM, 15% NM; D/EV ~0.26 from First Data acquisition; ~$3-4B FCF/yr paydown, 1-2yr to threshold
     'APD',   # Air Products — industrial gases, green/blue hydrogen megaproject bet ($15B+, NEOM/Louisiana); D/EV 0.224 + FCF -5.6% from capex cycle both blocking; new CEO reviewing strategy; watch for FCF inflection as projects come online
     'PYPL',  # PayPal — OM 18%, NM 15%, ROE 25%, FCF 11%, P/E 7.8x; D/EV 0.30 only blocker (customer float structural); Chriss margin recovery showing in numbers
@@ -150,7 +151,6 @@ WATCHLIST = [
     # --- Defense / Drones ---
     'AVAV',  # AeroVironment — defense drones (Switchblade loitering munition, Puma ISR); RevG 143.4%, D/EV 0.108; OM -5.1% scaling with DoD contracts; proven battlefield platform
     # --- Critical Materials ---
-    'FCX',   # Freeport-McMoRan — largest US copper producer (Grasberg mine, Indonesia); AMZN-Rio Tinto 2yr datacenter copper deal confirms AI infrastructure demand thesis; OM 31.1%, ROE 15.6%, FCF $1.7B, fwd P/E 15.4x, D/EV 0.33; NM 10.3% only soft blocker; weekly gate ✓ (MA10w $63.29 > MA20w $62.52, slope +2); price $60.97 below MA10w — entry on MA10w reclaim
     'ALB',   # Albemarle — largest lithium producer (Chile/Australia mines); OM 24.8%, FCF 4.1%, D/EV 0.095; NM -4.2% from lithium price cycle (not structural); long-term EV battery supply chain position
     # --- Solar ---
     'ENPH',  # Enphase Energy — microinverter monopoly + battery storage (IQ8/Encharge); cycle trough from high-rate residential solar slowdown, not structural; gross margins ~45%+ holding even in trough; OM -9.1% + RevG -20.6% blocking now; 3/4 MA recovering, -61.6% from highs; when rates normalize + installs recover = A+ candidate; engine intact
