@@ -46,6 +46,7 @@ UNIVERSE = [
     'QCOM','DHR','AMAT','LRCX','KLAC','MCHP','ADI','SNPS','CDNS',
     'ADBE','CRM','NOW','INTU','ORCL','FTNT','PANW','CRWD','ZS','DDOG',
     'VEEV','WDAY','TTD','PAYC',
+    'ZM',                            # Zoom Video — post-COVID valuation reset complete; A+ (7/7): OM 25%, NM 42%, GrossM 78%, ROE 22%, D/E 0.006, FCF $1.98B (~7.6% FCF yield at $87), RevG 5.5%; near-zero debt + massive cash pile; AI Companion + Zoom Contact Center = monetization runway; fwd P/E 13.8x, priced like value, runs like software; 2/4 MA, below MA10w $98 — scan will surface on weekly alignment
     'BRK-B','CB','AFL','TRV','PGR','AJG','AON','WTW','CINF',
     'NVO','ISRG','EW','ALGN','IDXX','PODD','WST',
     'MCO','SPGI','MSCI','ICE','CME','CBOE','FDS','BR','NDAQ',
@@ -65,6 +66,7 @@ UNIVERSE = [
     'SEZL',                       # Sezzle — fee-based BNPL pivot, 61% op margin, 92% ROE, 74% gross margin, zero debt, A+
     'INCY',                       # Incyte — Jakafi franchise pharma, zero debt, 26% op margin, 27% net margin, ROE 31%, A
     'UTHR',                       # United Therapeutics — PAH franchise (Tyvaso/Remodulin/Orenitram), zero debt, 41% OM, 40% NM, ROE 20%; xenotransplantation moonshot optionality, A+
+    'BMRN',                       # BioMarin Pharmaceutical — rare disease ERT specialist; Voxzogo (achondroplasia, orphan drug moat) + hemophilia + PKU pipeline; OM 18%, GrossM 51%, D/E 0.23, FCF $459M, fwd P/E 9.1x; NM 8.3% (just under 10%) + ROE 4.5% (goodwill from acquired programs, not operational weakness) — 2 soft blockers; A (5/7); 3/4 MA, slope +1.08
     'EQT',                        # EQT — largest US nat gas producer, Appalachia low-cost, vertically integrated; 57% OM, 50% RevG, D/EV 0.14; powers the structures
     'RRC',                        # Range Resources — Appalachia nat gas, D/EV 0.10, 44% OM, ROE 21%; clean balance sheet, powers the structures
     'CTRA',                       # Coterra Energy — nat gas + oil, D/EV 0.13, 28% OM, 23% NM; diversified Appalachia/Permian, powers the structures
@@ -110,6 +112,7 @@ WATCHLIST = [
     'AMG',   # Affiliated Managers Group — multi-boutique AM (AQR, Tweedy Browne etc.); owns fee economics in independent boutiques, asset-light; OM 22.1%, NM 35.5%, ROE 21.8%, FCF 2.6%, fwd P/E 8.5x; D/EV 0.245 only blocker (structural debt to buy stakes, paying down with FCF); grade A
     'NRG',   # NRG Energy — de-lever play; LS Power acq doubled fleet+debt, targeting 3x net leverage, Fwd P/E 11x, yield-sensitive re-rate when 10yr < 4.0%
     'VST',   # Vistra — deregulated nuclear+gas (Energy Harbor acq), Texas/ERCOT exposure; OM 26.6%, ROE 42.9%, FCF +0.9%, RevG 43.4%, fwd P/E 14.1x; D/EV 0.265 only blocker (closer to threshold than NEE); grade A single blocker — cleaner than CEG on framework metrics; 27.6% off 52w high, below 20w+40w MAs; promote when D/EV ≤ 0.20 + MA structure recovers
+    'LNG',   # Cheniere Energy — largest US LNG export terminal operator (Sabine Pass + Corpus Christi); long-term take-or-pay SPAs (20yr contracts) = utility-like contracted cash flows; Europe permanent de-Russian gas = structural LNG demand floor; FCF $1.7B + ROE 28.9% show real economics; D/E 3.2 structural terminal infrastructure debt (same read as telecom capex, not deteriorating); GAAP OM distorted by commodity MTM hedging accounting — FCF is the signal, not OM; B (3/7); MA 3/4, slope negative — below MA20w $249, entry on weekly alignment recovery
     'KTOS',  # Kratos — drone/defense tech; margins thin now, scaling with DoD contracts
     'SOFI',  # SoFi — neobank scaling; ROE 6.6% and trending right
     'UPWK',  # Upwork — freelance marketplace; D/EV 0.44 (converts) only blocker, margins/FCF solid
@@ -140,7 +143,7 @@ WATCHLIST = [
     'AMD',   # AMD — AI accelerator (MI300X/MI350) + x86 CPU challenger; OM ~21%, NM scaling; D/EV low; FCF building as datacenter GPU mix grows; watch for ROE/NM qualification
     'INTC',  # Intel — x86 architect in foundry transition (Intel 18A); OM/NM/ROE all blocking post-Gelsinger restructuring; Lip-Bu Tan CEO, cost reset underway; multi-year turnaround
     'TOST',  # Toast — restaurant POS/payments platform; ROE 22.5%, FCF 4%, rev growth 21.9%, near-zero debt; OM 6.7% + NM 6.4% blocking; grades A, 0/4 MA; strong switching costs, margins scaling
-    'FIG',   # Figma — design collaboration SaaS; 79.8% gross margin, FCF 8.6%, 46.1% rev growth; OM -41.2% post-IPO investment spend blocking; grades A, 0/4 MA; Adobe tried $20B acquisition, IPO'd at $9.5B — quality business finding its level
+    'FIG',   # Figma — design collaboration SaaS; 79.8% gross margin, FCF 8.6%, 46.1% rev growth; OM -41.2% post-IPO investment spend blocking; grades B (OM negative caps grade); Adobe tried $20B acquisition, IPO'd at $9.5B — quality business finding its level
     'COIN',  # Coinbase — digital asset exchange, crypto theme proxy; 85.5% gross margin, FCF 5.4%; OM -7.1% + rev growth -30.8% (crypto volume cycle) blocking; grades B, 0/4 MA; cyclical — watch for volume recovery + OM turning positive
     # --- Photonics / Optical Interconnect ---
     'COHR',  # Coherent Corp — optical components (800G/1.6T datacenter interconnect + telecom); OM 13.6%, NM 7.1%, D/EV 0.045; ROE 4.7% + FCF -0.3% blocking; post II-VI merger integration phase; watch FCF inflection
@@ -396,9 +399,16 @@ def quality_grade(d):
 
     # Max score: 9 (D/EV 2 + GM 1 + OM 2 + NM 1 + ROE 1 + FCF 1 + RevG 1)
     # Thresholds unchanged — OM reweighting rewards strong OM, doesn't penalize rest
-    if score >= 6: return 'A+'
-    if score >= 4: return 'A'
-    return 'B'
+    if score >= 6: grade = 'A+'
+    elif score >= 4: grade = 'A'
+    else: grade = 'B'
+
+    # Cap at B when operating margin is negative — pre-profit businesses can score on
+    # gross margin + FCF + growth, but an A/A+ alongside OM -40% is misleading
+    om = d.get('operating_margin')
+    if om is not None and om < 0 and grade in ('A+', 'A'):
+        grade = 'B'
+    return grade
 
 def fmt(val, suffix='', prefix=''):
     if val is None: return '<span style="color:#484f58">—</span>'
