@@ -54,21 +54,21 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 |:-------|------:|:--:|:-----:|:---------|:-------|
 | **360ONE** | ₹1109.50 | 4/4 | A | ROE (financial) 14.4% | 360 ONE WAM (formerly IIFL Wealth) — HNI/ultra-HNI wealth + asset mgmt… |
 | **ADANIENT** | ₹3212.10 | 4/4 | B | Debt/EV 0.205 / Op Margin 5.5% / FCF Yield -7.2% | conglomerate, debt heavy |
-| **ADANIGREEN** | ₹1556.20 | 4/4 | A | Debt/EV 0.283 / ROE/ROA ROE 7.6% / ROA 3.7% / FCF Yield -9.7% | Adani Green — heavy capex, debt, P/E stretched but 57% op margin |
-| **ANANDRATHI** | ₹2061.70 | 4/4 | A+ | P/E 90.1x | Anand Rathi Wealth — wealth management, asset-light; OM 40%, NM 32%, R… |
+| **ADANIGREEN** | ₹1556.20 | 4/4 | A | Debt/EV 0.284 / ROE/ROA ROE 7.6% / ROA 3.7% / FCF Yield -9.9% | Adani Green — heavy capex, debt, P/E stretched but 57% op margin |
+| **ANANDRATHI** | ₹2061.70 | 4/4 | A+ | P/E 89.2x | Anand Rathi Wealth — wealth management, asset-light; OM 40%, NM 32%, R… |
 | **APOLLOHOSP** | ₹8893.50 | 4/4 | B | Passes all filters — | Apollo Hospitals — healthcare brand growing well, FCF inconsistent due… |
 | **DELHIVERY** | ₹507.45 | 4/4 | A | Op Margin 1.1% / Net Margin 1.5% / ROE/ROA ROE 1.6% / ROA -0.3% / FCF Yield -0.6% | logistics, margins building |
 | **ETERNAL** | ₹281.65 | 4/4 | B | Op Margin 0.1% / Net Margin 0.7% / ROE/ROA ROE 1.2% / ROA -0.6% / FCF Yield -1.1% | Eternal (formerly Zomato) — food delivery + quick commerce; profitabil… |
 | **HSCL** | ₹680.65 | 4/4 | A+ | FCF Yield -0.4% | Himadri Speciality Chemical — pivoting to battery anode materials + LF… |
 | **IXIGO** | ₹222.23 | 4/4 | A | Op Margin 6.6% / ROE/ROA ROE 5.3% / ROA 2.1% | ixigo — travel-tech, recently listed, margins building |
-| **NYKAA** | ₹310.30 | 4/4 | A | Op Margin 5.2% / Net Margin 2.0% / P/E 113.7x | profitability still building |
+| **NYKAA** | ₹310.30 | 4/4 | A | Op Margin 5.2% / Net Margin 2.0% / P/E 114.3x | profitability still building |
 | **BHARTIARTL** | ₹1910.40 | 3/4 | A+ | Passes all filters — | Bharti Airtel — telecom duopoly (Jio + Airtel); OM 32.2%, NM 12.7%, RO… |
 | **MARUTI** | ₹14366.00 | 3/4 | B | Passes all filters — | Maruti Suzuki — 50% India car market share, Suzuki tech, largest deale… |
 | **MCX** | ₹2814.00 | 3/4 | A+ | Passes all filters — | Multi Commodity Exchange — India's commodity derivatives toll booth (C… |
 | **ARE&M** | ₹855.15 | 2/4 | B | Op Margin 6.4% / FCF Yield -1.9% | Amara Raja Energy — Op margin just under threshold, clean balance shee… |
 | **BAJAJHFL** | ₹91.35 | 2/4 | A | ROE (financial) 12.1% | Bajaj Housing Finance — fast-growing NBFC, recently listed; ROE buildi… |
 | **DIXON** | ₹12456.00 | 2/4 | B | Op Margin 2.9% / Net Margin 2.9% | Dixon Technologies — EMS/contract manufacturing, ROE 37% but OM ~3% by… |
-| **M&M** | ₹3136.90 | 2/4 | A | Debt/EV 0.304 | Mahindra & Mahindra — farm equipment + SUV (Scorpio/XUV) + EV; OM 16.4… |
+| **M&M** | ₹3136.90 | 2/4 | A | Debt/EV 0.298 | Mahindra & Mahindra — farm equipment + SUV (Scorpio/XUV) + EV; OM 16.4… |
 | **KFINTECH** | ₹880.05 | 1/4 | A+ | Passes all filters — | KFin Technologies — second MF registrar after CAMS (~30% market share)… |
 | **POLICYBZR** | ₹1591.20 | 1/4 | B | ROE/ROA ROE 9.7% / ROA 2.9% / ROE (financial) 9.7% | high growth, early stage |
 | **ASTRAL** | ₹1385.00 | 0/4 | B | Passes all filters — | Astral Ltd — pipes/adhesives/bathing compounder; OM ~13%, ROE ~18%, lo… |
@@ -76,4 +76,4 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **ICRA** | ₹5286.50 | 0/4 | A+ | Passes all filters — | ICRA — Moody's India subsidiary (~52% Moody's stake); MCO analog for I… |
 | **INDUSTOWER** | ₹383.30 | 0/4 | A+ | Passes all filters — | Indus Towers — largest India tower infra company; leases tower space t… |
 | **KAYNES** | ₹3333.80 | 0/4 | A | ROE/ROA ROE 9.6% / ROA 5.1% / FCF Yield -8.9% | Kaynes Technology — defense/semi electronics, OM 11% but FCF -10% (hea… |
-| **SWIGGY** | — | — | A | Op Margin -15.8% / Net Margin -18.0% / ROE/ROA ROE -29.1% / ROA -13.7% / FCF Yield -9.3% | Swiggy — food delivery, profitability inflecting, duopoly with Zomato |
+| **SWIGGY** | — | — | A | Op Margin -15.8% / Net Margin -18.0% / ROE/ROA ROE -29.1% / ROA -13.7% / FCF Yield -9.2% | Swiggy — food delivery, profitability inflecting, duopoly with Zomato |
