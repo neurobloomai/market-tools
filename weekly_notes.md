@@ -5,7 +5,7 @@ Run `python weekly_snapshot.py` each week to refresh. History is in git.
 
 ---
 
-## Week of Jul 05 2026
+## Week of Jul 06 2026
 
 ### 4/4 Aligned — 78 names
 
@@ -14,9 +14,9 @@ Run `python weekly_snapshot.py` each week to refresh. History is in git.
 **Watchlist (16):** ACAD, AMD, AMG, APD, ARM, BIIB, BMY, GEV, INTC, MDB, NET, ONTO, SNOW, TDG, TGTX, VCYT
 
 
-### 3/4 Near-Aligned — 34 names
+### 3/4 Near-Aligned — 37 names
 
-ADI, ADP, AJG, AMZN, APP, AXON, COHR, ETN, GFS, GOOGL, HD, IHS, IOT, KMB, LSCC, MCHP, MTD, MTSI, NVO, ODFL, PAYX, PG, PWR, QCOM, RLI, S, SAIA, SITM, SPGI, TER, TMO, TXN, UTHR, XPO
+ADI, ADP, AJG, AMZN, APP, AXON, BMRN, COHR, CTRA, ETN, GFS, GOOGL, HD, IHS, IOT, KMB, LNG, LSCC, MCHP, MTD, MTSI, NVO, ODFL, PAYX, PG, PWR, QCOM, RLI, S, SAIA, SITM, SPGI, TER, TMO, TXN, UTHR, XPO
 
 
 ### Tightest Coils — FullCoil ≤ 5%
@@ -25,6 +25,7 @@ ADI, ADP, AJG, AMZN, APP, AXON, COHR, ETN, GFS, GOOGL, HD, IHS, IOT, KMB, LSCC, 
 |--------|--|-----|---------|--------|-----|-------|
 | **PG** | [U] | 3/4 | 0.9% | 0.7% | 1.2x | ↑ |
 | **BRK-B** | [U] | 4/4 | 1.1% | 0.2% | 1.2x | ↑ |
+| **BMRN** | [U] | 3/4 | 1.4% | 1.3% | 1.2x | ↑ |
 | **ACGL** | [U] | 4/4 | 1.8% | 1.0% | 0.9x | ↓ |
 | **TOL** | [U] | 4/4 | 2.3% | 0.1% | 1.3x | ↑ |
 | **DECK** | [U] | 1/4 | 2.3% | 0.3% | 1.4x | ↑ |
@@ -42,7 +43,6 @@ ADI, ADP, AJG, AMZN, APP, AXON, COHR, ETN, GFS, GOOGL, HD, IHS, IOT, KMB, LSCC, 
 | **COST** | [W] | 0/4 | 3.8% | 0.6% | 1.6x | ↓ |
 | **EW** | [U] | 4/4 | 4.2% | 2.4% | 1.2x | ↑ |
 | **TDG** | [W] | 4/4 | 4.3% | 0.9% | 1.2x | ↑ |
-| **MSCI** | [U] | 4/4 | 4.4% | 3.1% | 1.7x | ↑ |
 
 ### Notes
 
@@ -57,7 +57,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | Ticker | Price | MA | Grade | Blockers | Thesis |
 |:-------|------:|:--:|:-----:|:---------|:-------|
 | **ABBV** | $261.07 | 4/4 | A+ | ROE/ROA ROE None% / ROA 10.0% | AbbVie — Allergan amortization masking strong cash earnings; FCF/Debt … |
-| **ACAD** | $25.97 | 4/4 | A+ | Op Margin -1.7% | Acadia Pharmaceuticals — CNS/rare disease; Nuplazid (only FDA-approved… |
+| **ACAD** | $25.97 | 4/4 | B | Op Margin -1.7% | Acadia Pharmaceuticals — CNS/rare disease; Nuplazid (only FDA-approved… |
 | **AMD** | $517.82 | 4/4 | B | ROE/ROA ROE 8.1% / ROA 3.6% | AMD — AI accelerator (MI300X/MI350) + x86 CPU challenger; OM ~21%, NM … |
 | **AMG** | $344.60 | 4/4 | A | Debt/EV 0.242 | Affiliated Managers Group — multi-boutique AM (AQR, Tweedy Browne etc.… |
 | **APD** | $314.19 | 4/4 | B | Debt/EV 0.205 / FCF Yield -5.0% | Air Products — industrial gases, green/blue hydrogen megaproject bet (… |
@@ -66,7 +66,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **BMY** | $58.13 | 4/4 | A+ | Debt/EV 0.3 | Bristol-Myers Squibb — de-lever + profit growth play; Celgene debt pay… |
 | **GEV** | $1113.11 | 4/4 | A+ | Op Margin 5.5% | GE Vernova — picks-and-shovels for entire energy transition; supplies … |
 | **INTC** | $120.35 | 4/4 | B | Op Margin 6.9% / Net Margin -5.9% / ROE/ROA ROE -2.9% / ROA 0.6% / FCF Yield -1.4% | Intel — x86 architect in foundry transition (Intel 18A); OM/NM/ROE all… |
-| **MDB** | $354.88 | 4/4 | A | Op Margin -3.6% / Net Margin -1.1% / ROE/ROA ROE -1.0% / ROA -1.8% | — |
+| **MDB** | $354.88 | 4/4 | B | Op Margin -3.6% / Net Margin -1.1% / ROE/ROA ROE -1.0% / ROA -1.8% | — |
 | **NET** | $242.41 | 4/4 | B | Op Margin -9.7% / Net Margin -3.7% / ROE/ROA ROE -5.9% / ROA -2.7% / P/E 153.6x | — |
 | **ONTO** | $307.58 | 4/4 | B | ROE/ROA ROE 5.3% / ROA 5.4% | Onto Innovation — advanced packaging inspection/metrology; HBM + chipl… |
 | **SNOW** | $260.15 | 4/4 | B | Op Margin -22.2% / Net Margin -23.8% / ROE/ROA ROE -54.9% / ROA -9.7% | — |
@@ -77,9 +77,10 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **COHR** | $333.36 | 3/4 | B | ROE/ROA ROE 4.7% / ROA 3.1% / FCF Yield -0.3% | Coherent Corp — optical components (800G/1.6T datacenter interconnect … |
 | **GFS** | $69.84 | 3/4 | B | ROE/ROA ROE 6.8% / ROA 3.1% | GlobalFoundries — specialty foundry (RF, automotive, IoT); 5/6 filters… |
 | **IOT** | $35.93 | 3/4 | A | Op Margin 1.5% / Net Margin 3.3% / ROE/ROA ROE 4.4% / ROA -0.3% | Samsara — fleet/IoT SaaS, GM 76%, zero debt, 30% RevG, FCF just turned… |
+| **LNG** | $245.97 | 3/4 | B | Debt/EV 0.336 / Op Margin -53.7% | Cheniere Energy — largest US LNG export terminal operator (Sabine Pass… |
 | **LSCC** | $136.53 | 3/4 | A | Net Margin 3.5% / ROE/ROA ROE 2.7% / ROA 2.5% | Lattice Semiconductor — low-power FPGAs, 60%+ gross margin, zero debt;… |
 | **PWR** | $668.31 | 3/4 | B | Op Margin 4.2% / Net Margin 3.7% | Quanta Services — dominant grid/electrical infrastructure contractor; … |
-| **S** | $17.51 | 3/4 | A | Op Margin -28.8% / Net Margin -30.4% / ROE/ROA ROE -21.4% / ROA -7.9% | SentinelOne — AI-native cybersecurity platform, direct CrowdStrike com… |
+| **S** | $17.51 | 3/4 | B | Op Margin -28.8% / Net Margin -30.4% / ROE/ROA ROE -21.4% / ROA -7.9% | SentinelOne — AI-native cybersecurity platform, direct CrowdStrike com… |
 | **SITM** | $601.66 | 3/4 | B | Op Margin -4.2% / Net Margin -6.4% / ROE/ROA ROE -2.6% / ROA -2.3% | SiTime — MEMS precision timing chips; near-monopoly, 65% gross margin,… |
 | **BILL** | $40.48 | 2/4 | B | Debt/EV 0.504 / Op Margin 1.1% / Net Margin 0.0% / ROE/ROA ROE 0.0% / ROA -0.3% | — |
 | **CLS** | $336.21 | 2/4 | A | Op Margin 6.6% | Celestica — AI infra contract manufacturer (servers, networking), ROE … |
@@ -105,7 +106,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **COIN** | $165.48 | 0/4 | B | Op Margin -7.1% / ROE/ROA ROE 6.7% / ROA 1.9% | Coinbase — digital asset exchange, crypto theme proxy; 85.5% gross mar… |
 | **COST** | $951.67 | 0/4 | A | Op Margin 3.7% / Net Margin 3.0% | Costco — membership moat, not a margin story; OM ~3% by design (mercha… |
 | **DPZ** | $311.66 | 0/4 | B | Debt/EV 0.336 | — |
-| **FIG** | — | — | A | Op Margin -41.2% / Net Margin -123.8% / ROE/ROA ROE -101.7% / ROA -43.6% | Figma — design collaboration SaaS; 79.8% gross margin, FCF 8.6%, 46.1%… |
+| **FIG** | — | — | B | Op Margin -41.2% / Net Margin -123.8% / ROE/ROA ROE -101.7% / ROA -43.6% | Figma — design collaboration SaaS; 79.8% gross margin, FCF 8.6%, 46.1%… |
 | **FISV** | $52.33 | 0/4 | B | Debt/EV missing / Op Margin missing / Net Margin missing / ROE/ROA ROE None% / ROA None% / FCF Yield missing (no data relief) | Fiserv — payment processing + Clover POS + banking tech, extreme switc… |
 | **HUBS** | $192.12 | 0/4 | A | Op Margin 3.3% / Net Margin 3.0% / ROE/ROA ROE 5.0% / ROA 1.1% | — |
 | **INTU** | $275.35 | 0/4 | A+ | Passes all filters — | Intuit — TurboTax + QuickBooks + Credit Karma franchise; near-monopoly… |
