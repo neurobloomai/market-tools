@@ -8,13 +8,14 @@ Run: python weekly_snapshot.py
 
 import sys, os, re, yfinance as yf, warnings
 from concurrent.futures import ThreadPoolExecutor
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 warnings.filterwarnings('ignore')
 
 sys.path.insert(0, '.')
 from screener import UNIVERSE, WATCHLIST, get_fundamentals, quality_grade, failing_filters
 from ma_scanner import liquid_panel_md
+from notes_renderer import md_to_html
 
 ALL = list(dict.fromkeys(UNIVERSE + WATCHLIST))
 
@@ -74,7 +75,9 @@ def parse_watchlist_notes():
 
 if __name__ == '__main__':
     now   = datetime.utcnow()
-    label = now.strftime('Week of %b %d %Y')
+    # Anchor label to Monday of current week (consistent regardless of run day/time)
+    monday = now - timedelta(days=now.weekday())
+    label  = monday.strftime('Week of %b %d %Y')
 
     print(f'  Fetching {len(ALL)} tickers ...', flush=True)
     with ThreadPoolExecutor(max_workers=20) as ex:
@@ -157,12 +160,17 @@ if __name__ == '__main__':
     with open('weekly_notes.md', 'w') as f:
         f.write(md)
     print(f'  Written → weekly_notes.md  ({label})')
+
+    html = md_to_html(md, title=f'US Weekly Notes — {label}')
+    with open('weekly_notes.html', 'w') as f:
+        f.write(html)
+    print(f'  Written → weekly_notes.html  ({label})')
     print(f'  4/4: {len(aligned_4)}   3/4: {len(aligned_3)}   Coils ≤5%: {len([d for d in data if d["spread"] <= 5.0])}')
 
     import subprocess
     try:
         commit_msg = f'weekly_notes: {label}'
-        subprocess.run(['git', 'add', 'weekly_notes.md'], check=True, capture_output=True)
+        subprocess.run(['git', 'add', 'weekly_notes.md', 'weekly_notes.html'], check=True, capture_output=True)
         subprocess.run(['git', 'commit', '-m', commit_msg], check=True, capture_output=True)
         subprocess.run(['git', 'push'], check=True, capture_output=True)
         print(f'  Pushed → GitHub  ({commit_msg})')
