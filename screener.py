@@ -233,6 +233,7 @@ SPREAD_UNIVERSE = {
     'JPM':  3,  # financials, decent volume, macro-driven not binary
     'GS':   3,  # same tier as JPM
     'NFLX': 3,  # consumer streaming, surprisingly liquid options; avoid earnings (8-12% moves)
+    'AVGO': 3,  # Broadcom — $1.7T, AI networking + custom silicon; options liquid enough; avoid earnings (10-15% moves)
 }
 
 def get_fundamentals(ticker):
