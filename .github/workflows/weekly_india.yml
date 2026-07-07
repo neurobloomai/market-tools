@@ -29,11 +29,20 @@ jobs:
       - name: Dashboard
         run: python india_dashboard.py --refresh
 
+      - name: Sync after dashboard
+        run: git pull --rebase origin main || true
+
       - name: Weekly snapshot
         run: python india_weekly_snapshot.py
 
+      - name: Sync after snapshot
+        run: git pull --rebase origin main || true
+
       - name: Quality screener
         run: python india_screener.py
+
+      - name: Sync after screener
+        run: git pull --rebase origin main || true
 
       - name: Aligned screener
         run: python india_aligned_screener.py
