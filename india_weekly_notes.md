@@ -5,7 +5,7 @@ Run `python india_weekly_snapshot.py` each week to refresh. History is in git.
 
 ---
 
-## Week of Jul 07 2026 (India)
+## Week of Jul 06 2026 (India)
 
 ### 4/4 Aligned — 40 names
 
