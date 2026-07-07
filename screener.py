@@ -99,12 +99,13 @@ UNIVERSE = [
     'ADBE',                    # Adobe — creative cloud monopoly (Photoshop/Illustrator/Acrobat); OM 35.3%, NM 28.7%, GrossM 89.4%, ROE 63%, FCF $9.2B, fwd P/E 8x; D/E 0.61 only blocker (corporate bonds ~$4B, FCF paydown path clear); Figma deal dead Dec 2023 (CMA blocked, $1B termination fee paid); chart 0/4 MA broken on AI disruption fear; Firefly/GenStudio is the AI answer — watch for MA recovery; auto-promoted 2026-07-06 [grade A+, 0/4 MA]
     'INTU',                    # Intuit — TurboTax + QuickBooks + Credit Karma franchise; near-monopoly on SMB accounting + tax prep; OM 47%, NM 21.9%, GrossM 80.8%, ROE 22.5%, FCF $5.2B, fwd P/E 10x; D/E 0.33 only blocker (Credit Karma acq debt, FCF paydown path clear); 0/4 MA, slope -59 — chart badly broken; watch for weekly MA structure recovery; auto-promoted 2026-07-06 [grade A+, 0/4 MA]
     'FCX',                     # Freeport-McMoRan — largest US copper producer (Grasberg mine, Indonesia); AMZN-Rio Tinto 2yr datacenter copper deal confirms AI infrastructure demand thesis; OM 31.1%, ROE 15.6%, FCF $1.7B, fwd P/E 15.4x, D/EV 0.33; NM 10.3% only soft blocker; weekly gate ✓ (MA10w $63.29 > MA20w $62.52, slope +2); price $60.97 below MA10w — entry on MA10w reclaim; auto-promoted 2026-07-06 [grade B, 2/4 MA]
+    'ARM',                     # auto-promoted 2026-07-07 [grade A+, 3/4 MA]
 ]
 
 # Future contenders — moat proven, one or two filters blocking, no survival risk
 # Rule: if the blocker is a number, it belongs here. If the blocker is the business model, it doesn't.
 WATCHLIST = [
-    'AXON','MELI','ARM','SNOW','BILL',   # ALAB promoted to universe; CRWD removed — already in universe; PLTR promoted to universe
+    'AXON','MELI','SNOW','BILL',   # ALAB promoted to universe; CRWD removed — already in universe; PLTR promoted to universe
     'MDB','NET','HUBS','TEAM','MKC','DPZ',
     'GEV',                       # GE Vernova — picks-and-shovels for entire energy transition; supplies wind turbines, gas turbines, grid (transformers/switchgear/HVDC) — every renewable project + datacenter power need touches GEV; OM 5.5% only blocker (offshore wind losses dragging profitable gas+grid mix; inflects as wind rolls off); D/EV 0.012, ROE 75.7%, FCF +3.0%, fwd P/E 46.8x; grade A+; at 52w highs +113% from low, 42% above 40w MA — wait for 20-25% correction (~$870-920)
     'COPX',  # Global X Copper Miners ETF — AUM $8.0B; copper = AI datacenter + grid + EV structural demand; 21% off 6mo highs ($95), 9.4% above 6mo lows ($69); below MA10 ($81) + MA20 ($83) + MA50 ($83), all slopes negative; chart-only (ETF); entry: daily MA10 reclaim ~$81
