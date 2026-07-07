@@ -2,6 +2,18 @@
 
 Free, open-source market dashboards and quality stock screeners powered by Yahoo Finance.
 
+## The Idea
+
+Two filters before touching anything.
+
+First — is it a quality business? Profitable, generates cash, not drowning in debt.
+
+Second — is the price trend confirmed? Four moving averages, price above all four.
+
+Both have to say yes. If only one says yes, you wait. That's it.
+
+The rest of this README is the manual for how those two filters are built and applied.
+
 ## Tools
 
 | File | Market | What it does |
