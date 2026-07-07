@@ -16,6 +16,8 @@ Free, open-source market dashboards and quality stock screeners powered by Yahoo
 | `india_weekly_snapshot.py` | 🇮🇳 India | Appends weekly India alignment snapshot to `india_weekly_notes.md` |
 | `ma_scanner.py` | 🇺🇸 US | MA Proximity Scanner — timeframe hierarchy (Weekly → Daily → 4H → 1H), UNIVERSE or WATCHLIST |
 | `ma_scanner_india.py` | 🇮🇳 India | MA Proximity Scanner — same hierarchy for NSE universe |
+| `ma_live.py` | 🇺🇸 US | **Live** MA Scanner — uses `currentPrice` + `iloc[-1]`; run during market hours for intraday read |
+| `india_ma_live.py` | 🇮🇳 India | **Live** MA Scanner — same as `ma_live.py` for NSE names; run during IST market hours |
 | `dividend_plays_for_longterm.py` | 🇺🇸 US | Curated long-term dividend universe — quality-filtered, thesis-annotated |
 | `run_aligned.sh` | — | Cron entry point — runs all four scripts (US + India), auto-pushes to GitHub |
 
@@ -118,14 +120,20 @@ Price within **-3% to +3% of MA10**:
 ### Usage
 
 ```bash
-# US
-python3 ma_scanner.py                   # scan UNIVERSE (161 quality names)
-python3 ma_scanner.py --watchlist       # scan WATCHLIST (thesis names awaiting setup)
+# US — confirmed closes (weekly cadence)
+python3 ma_scanner.py                   # scan UNIVERSE (confirmed close, iloc[-2])
+python3 ma_scanner.py --watchlist       # scan WATCHLIST
 
-# India / NSE
-python3 ma_scanner_india.py             # scan India UNIVERSE (76 NSE names)
+# India / NSE — confirmed closes (weekly cadence)
+python3 ma_scanner_india.py             # scan India UNIVERSE
 python3 ma_scanner_india.py --watchlist # scan India WATCHLIST
+
+# Live — intraday read (run during market hours)
+python3 ma_live.py                      # US live: liquid panel + watchlist + universe
+python3 india_ma_live.py                # India live: liquid panel + watchlist + universe
 ```
+
+> **`ma_scanner.py` vs `ma_live.py`:** The weekly scanner uses `iloc[-2]` (last confirmed closed bar) — safe and stable for weekly notes. The live scanner uses `currentPrice` + `iloc[-1]` (latest bar, possibly incomplete intraday) — use it during market hours to catch moves before the close confirms.
 
 ### Liquid Names Status Panel
 
