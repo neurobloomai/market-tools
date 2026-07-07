@@ -77,7 +77,7 @@ def live_scan(ticker):
         sym = ticker.replace('.NS', '')
         return dict(ticker=sym, price=price, score=score, w_gate=w_gate,
                     pct10d=pct10d, pct10w=pct10w, pct20d=pct20d,
-                    m10w=m10w, m20w=m20w, band=band, w_slope=w_slope, d_pass=d_pass)
+                    m10w=m10w, m20w=m20w, m50d=m50d, band=band, w_slope=w_slope, d_pass=d_pass)
     except Exception:
         return None
 
@@ -86,13 +86,13 @@ def print_liquid(rows):
     print(f"\n{'─'*74}")
     print(f"  LIQUID NAMES (INDIA) — LIVE")
     print(f"{'─'*74}")
-    print(f"  {'Ticker':<12} {'Price':>9}  {'Wkly':>5}  {'vs MA20d':>9}  {'vs MA10w':>9}  {'MA10w':>9}  {'Band':>5}  {'W.Slope':>8}")
-    print(f"  {'─'*12} {'─'*9}  {'─'*5}  {'─'*9}  {'─'*9}  {'─'*9}  {'─'*5}  {'─'*8}")
+    print(f"  {'Ticker':<12} {'Price':>9}  {'Wkly':>5}  {'vs MA20d':>9}  {'vs MA10w':>9}  {'MA10w':>9}  {'MA50d':>9}  {'Band':>5}  {'W.Slope':>8}")
+    print(f"  {'─'*12} {'─'*9}  {'─'*5}  {'─'*9}  {'─'*9}  {'─'*9}  {'─'*9}  {'─'*5}  {'─'*8}")
     for r in rows:
         if not r:
             continue
         wg = '✓' if r['w_gate'] else '✗'
-        print(f"  {r['ticker']:<12} ₹{r['price']:>8.2f}  {wg:>5}  {r['pct20d']:>+8.1f}%  {r['pct10w']:>+8.1f}%  ₹{r['m10w']:>8.2f}  {r['band']:>5}  {r['w_slope']:>+8.2f}")
+        print(f"  {r['ticker']:<12} ₹{r['price']:>8.2f}  {wg:>5}  {r['pct20d']:>+8.1f}%  {r['pct10w']:>+8.1f}%  ₹{r['m10w']:>8.2f}  ₹{r['m50d']:>8.2f}  {r['band']:>5}  {r['w_slope']:>+8.2f}")
 
 
 def print_setups(hits, label):
