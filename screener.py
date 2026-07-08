@@ -51,11 +51,10 @@ def calc_rsi(closes, period=14):
 
 def get_tech_signal(ticker):
     """
-    Signal cascade on weekly bars (1 year history):
-      1. RSI-14 divergence       — momentum exhaustion (leading)
-      2. MACD(12,26,9) histogram divergence — broader momentum (secondary)
-      3. MACD line crossover     — trend flip confirmation (fallback)
-    Returns (direction, source) e.g. ('bull', 'RSI') or None.
+    Dual confirmation on weekly bars (1 year history):
+    RSI-14 divergence AND MACD(12,26,9) histogram divergence must agree.
+    Single-indicator signals and contradictions are silenced.
+    Returns ('bull'|'bear', 'RSI+MACD') or None.
     """
     try:
         hist = yf.Ticker(ticker).history(period='1y', interval='1wk')
@@ -71,46 +70,44 @@ def get_tech_signal(ticker):
                 return [i for i in range(1, len(arr)-1) if arr[i] >= arr[i-1] and arr[i] >= arr[i+1]]
             return [i for i in range(1, len(arr)-1) if arr[i] <= arr[i-1] and arr[i] <= arr[i+1]]
 
+        MIN_SWING = 0.0075  # price must move ≥ 0.75% between swings to count
+
         def _divergence(indicator_vals, price_h, price_l, n):
             sh = _swings(price_h, 'high')
             if len(sh) >= 2:
                 i2, i1 = sh[-1], sh[-2]
                 if (n-1-i2) <= RECENCY and price_h[i2] > price_h[i1] and indicator_vals[i2] < indicator_vals[i1]:
-                    return 'bear'
+                    if (price_h[i2] - price_h[i1]) / price_h[i1] >= MIN_SWING:
+                        return 'bear'
             sl = _swings(price_l, 'low')
             if len(sl) >= 2:
                 i2, i1 = sl[-1], sl[-2]
                 if (n-1-i2) <= RECENCY and price_l[i2] < price_l[i1] and indicator_vals[i2] > indicator_vals[i1]:
-                    return 'bull'
+                    if (price_l[i1] - price_l[i2]) / price_l[i1] >= MIN_SWING:
+                        return 'bull'
             return None
 
-        # 1 — RSI divergence
+        # RSI-14 divergence
         rsi = calc_rsi(closes, 14).dropna()
+        rsi_sig = None
         if len(rsi) >= 5:
             idx = rsi.index
-            sig = _divergence(rsi.values, highs.loc[idx].values, lows.loc[idx].values, len(rsi))
-            if sig:
-                return (sig, 'RSI')
+            rsi_sig = _divergence(rsi.values, highs.loc[idx].values, lows.loc[idx].values, len(rsi))
 
-        # 2 — MACD histogram divergence
-        ema12  = closes.ewm(span=12, adjust=False).mean()
-        ema26  = closes.ewm(span=26, adjust=False).mean()
-        macd   = ema12 - ema26
-        signal = macd.ewm(span=9, adjust=False).mean()
-        histo  = (macd - signal).dropna()
+        # MACD(12,26,9) histogram divergence
+        ema12    = closes.ewm(span=12, adjust=False).mean()
+        ema26    = closes.ewm(span=26, adjust=False).mean()
+        macd     = ema12 - ema26
+        macd_sig_line = macd.ewm(span=9, adjust=False).mean()
+        histo    = (macd - macd_sig_line).dropna()
+        macd_sig = None
         if len(histo) >= 5:
             idx = histo.index
-            sig = _divergence(histo.values, highs.loc[idx].values, lows.loc[idx].values, len(histo))
-            if sig:
-                return (sig, 'MACD')
+            macd_sig = _divergence(histo.values, highs.loc[idx].values, lows.loc[idx].values, len(histo))
 
-        # 3 — MACD crossover (within last 2 bars)
-        m, s = macd.values, signal.values
-        if len(m) >= 2:
-            if m[-2] < s[-2] and m[-1] >= s[-1]:
-                return ('bull', 'MACD')
-            if m[-2] > s[-2] and m[-1] <= s[-1]:
-                return ('bear', 'MACD')
+        # Only fire when both agree — contradictions and lone signals are silenced
+        if rsi_sig and macd_sig and rsi_sig == macd_sig:
+            return (rsi_sig, 'RSI+MACD')
 
         return None
     except Exception:
