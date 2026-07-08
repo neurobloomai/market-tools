@@ -692,6 +692,35 @@ def build_html(results, watchlist=None, universe_failing=None):
 </html>"""
 
 if __name__ == '__main__':
+    import sys
+
+    # Ad-hoc signal check: python screener.py --signal TICKER [TICKER ...]
+    if len(sys.argv) > 1 and sys.argv[1] == '--signal':
+        tickers = [t.upper() for t in sys.argv[2:]]
+        if not tickers:
+            print("Usage: python screener.py --signal TICKER [TICKER ...]")
+            sys.exit(1)
+        print()
+        with ThreadPoolExecutor(max_workers=8) as ex:
+            funds = list(ex.map(get_fundamentals, tickers))
+            sigs  = list(ex.map(get_tech_signal,  tickers))
+        for t, d, s in zip(tickers, funds, sigs):
+            if s:
+                arrow  = '⬆' if s[0] == 'bull' else '⬇'
+                sig_str = f'{arrow} {s[0]:4}  {s[1]}'
+            else:
+                sig_str = '—'
+            if d:
+                grade   = quality_grade(d) if passes_quality_filter(d) else '–'
+                blocker = ''
+                if not passes_quality_filter(d):
+                    blocker = '  blockers: ' + ', '.join(f[0] for f in failing_filters(d) if f[0] != 'Passes all filters')
+                print(f"  {t:6}  signal: {sig_str:20}  ${d['price']}  grade: {grade}{blocker}")
+            else:
+                print(f"  {t:6}  no data")
+        print()
+        sys.exit(0)
+
     now = datetime.now().strftime('%Y-%m-%d %H:%M')
     print(f"\n  Quality Screener — {now}", flush=True)
     print(f"  Screening {len(UNIVERSE)} companies ...", flush=True)
