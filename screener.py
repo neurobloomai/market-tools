@@ -39,12 +39,90 @@ def get_fmp_forward_pe(ticker, price):
     except Exception:
         return None
 
+def calc_rsi(closes, period=14):
+    delta    = closes.diff()
+    gain     = delta.clip(lower=0)
+    loss     = (-delta).clip(lower=0)
+    avg_gain = gain.ewm(alpha=1/period, min_periods=period, adjust=False).mean()
+    avg_loss = loss.ewm(alpha=1/period, min_periods=period, adjust=False).mean()
+    avg_loss = avg_loss.replace(0, 1e-10)
+    rs       = avg_gain / avg_loss
+    return 100 - (100 / (1 + rs))
+
+def get_tech_signal(ticker):
+    """
+    Signal cascade on weekly bars (1 year history):
+      1. RSI-14 divergence       — momentum exhaustion (leading)
+      2. MACD(12,26,9) histogram divergence — broader momentum (secondary)
+      3. MACD line crossover     — trend flip confirmation (fallback)
+    Returns (direction, source) e.g. ('bull', 'RSI') or None.
+    """
+    try:
+        hist = yf.Ticker(ticker).history(period='1y', interval='1wk')
+        if len(hist) < 35:
+            return None
+        closes = hist['Close'].dropna()
+        highs  = hist['High'].reindex(closes.index)
+        lows   = hist['Low'].reindex(closes.index)
+        RECENCY = 4
+
+        def _swings(arr, mode='high'):
+            if mode == 'high':
+                return [i for i in range(1, len(arr)-1) if arr[i] >= arr[i-1] and arr[i] >= arr[i+1]]
+            return [i for i in range(1, len(arr)-1) if arr[i] <= arr[i-1] and arr[i] <= arr[i+1]]
+
+        def _divergence(indicator_vals, price_h, price_l, n):
+            sh = _swings(price_h, 'high')
+            if len(sh) >= 2:
+                i2, i1 = sh[-1], sh[-2]
+                if (n-1-i2) <= RECENCY and price_h[i2] > price_h[i1] and indicator_vals[i2] < indicator_vals[i1]:
+                    return 'bear'
+            sl = _swings(price_l, 'low')
+            if len(sl) >= 2:
+                i2, i1 = sl[-1], sl[-2]
+                if (n-1-i2) <= RECENCY and price_l[i2] < price_l[i1] and indicator_vals[i2] > indicator_vals[i1]:
+                    return 'bull'
+            return None
+
+        # 1 — RSI divergence
+        rsi = calc_rsi(closes, 14).dropna()
+        if len(rsi) >= 5:
+            idx = rsi.index
+            sig = _divergence(rsi.values, highs.loc[idx].values, lows.loc[idx].values, len(rsi))
+            if sig:
+                return (sig, 'RSI')
+
+        # 2 — MACD histogram divergence
+        ema12  = closes.ewm(span=12, adjust=False).mean()
+        ema26  = closes.ewm(span=26, adjust=False).mean()
+        macd   = ema12 - ema26
+        signal = macd.ewm(span=9, adjust=False).mean()
+        histo  = (macd - signal).dropna()
+        if len(histo) >= 5:
+            idx = histo.index
+            sig = _divergence(histo.values, highs.loc[idx].values, lows.loc[idx].values, len(histo))
+            if sig:
+                return (sig, 'MACD')
+
+        # 3 — MACD crossover (within last 2 bars)
+        m, s = macd.values, signal.values
+        if len(m) >= 2:
+            if m[-2] < s[-2] and m[-1] >= s[-1]:
+                return ('bull', 'MACD')
+            if m[-2] > s[-2] and m[-1] <= s[-1]:
+                return ('bear', 'MACD')
+
+        return None
+    except Exception:
+        return None
+
 # Broad universe — S&P 500 quality names worth screening
 UNIVERSE = [
     'AAPL','MSFT','META','NVDA','V','MA','UNH','LLY','JPM',
     'JNJ','PG','HD','ABBV','MRK','TMO','ACN','AVGO','TXN',
     'QCOM','DHR','AMAT','LRCX','KLAC','MCHP','ADI','SNPS','CDNS',
-    'CRM','NOW','ORCL','FTNT','PANW','CRWD','ZS','DDOG',
+    'CRM','NOW','FTNT','PANW','CRWD','ZS','DDOG','FFIV',
+    'ORCL',                    # Oracle — enterprise software franchise (database + ERP) + OCI cloud infra; cloud commitments driving 20% RevG; OM 36%, NM 25%, GrossM 66%, ROE 53%; D/EV 0.305 (Cerner acq + OCI build debt) + FCF -6.1% (contracted OCI datacenter capex, not speculative — same pattern as CEG nuclear build) both blocking; grade B; gates: D/EV ≤ 0.20 + FCF inflection as OCI capex cycle peaks; added 2026-07-08
     'VEEV','WDAY','TTD','PAYC',
     'ZM',                            # Zoom Video — post-COVID valuation reset complete; A+ (7/7): OM 25%, NM 42%, GrossM 78%, ROE 22%, D/E 0.006, FCF $1.98B (~7.6% FCF yield at $87), RevG 5.5%; near-zero debt + massive cash pile; AI Companion + Zoom Contact Center = monetization runway; fwd P/E 13.8x, priced like value, runs like software; 2/4 MA, below MA10w $98 — scan will surface on weekly alignment
     'BRK-B','CB','AFL','TRV','PGR','AJG','AON','WTW','CINF',
@@ -107,6 +185,8 @@ UNIVERSE = [
 WATCHLIST = [
     'AXON','MELI','SNOW','BILL',   # ALAB promoted to universe; CRWD removed — already in universe; PLTR promoted to universe
     'MDB','NET','HUBS','TEAM','MKC','DPZ',
+    'FROG',  # JFrog — universal artifact repository (Artifactory) + software supply chain security (Xray); every build artifact, package, dependency stored and scanned here; deeply embedded in CI/CD pipelines = extreme switching costs once deployed enterprise-wide; GrossM 77.5%, FCF $170M positive (real cash despite negative GAAP OM), RevG 25.8%, near zero debt ($16M total); OM -7.4% only blocker (stock-comp heavy — FCF is the honest signal); software supply chain security tailwind (Log4j/SolarWinds made artifact scanning mandatory); gate: OM crossing 0% as scale drives leverage on R&D/S&M
+    'GTLB',  # GitLab — complete DevSecOps platform (source control + CI/CD + security scanning + project mgmt) in a single application; enterprise moat = single-platform control vs GitHub's patchwork integrations, strong self-hosted/air-gap compliance appeal; GrossM 86.8% (higher than FROG), FCF $313M positive, RevG 23.1%, zero debt; OM -6.0% only blocker — closer to crossing 0% than FROG; fwd PE 31x (vs FROG 82x) = more conservatively priced; 39% off 52w highs; same story as FROG — 2-3 quarters tells it; gate: OM crossing 0% sustained
     'GEV',                       # GE Vernova — picks-and-shovels for entire energy transition; supplies wind turbines, gas turbines, grid (transformers/switchgear/HVDC) — every renewable project + datacenter power need touches GEV; OM 5.5% only blocker (offshore wind losses dragging profitable gas+grid mix; inflects as wind rolls off); D/EV 0.012, ROE 75.7%, FCF +3.0%, fwd P/E 46.8x; grade A+; at 52w highs +113% from low, 42% above 40w MA — wait for 20-25% correction (~$870-920)
     'COPX',  # Global X Copper Miners ETF — AUM $8.0B; copper = AI datacenter + grid + EV structural demand; 21% off 6mo highs ($95), 9.4% above 6mo lows ($69); below MA10 ($81) + MA20 ($83) + MA50 ($83), all slopes negative; chart-only (ETF); entry: daily MA10 reclaim ~$81
     'GLD',   # SPDR Gold ETF — AUM $150B, gold price proxy; 25% off 6mo highs ($496), 1.3% above 6mo lows ($366); below MA10 ($378) + MA50 ($409); chart-only tracking (ETF); entry: MA10 reclaim or hold at 6mo low support
@@ -134,10 +214,12 @@ WATCHLIST = [
     'COST',  # Costco — membership moat, not a margin story; OM ~3% by design (merchandise passes savings to members, fee stream runs at ~95% margin); screen blocks on OM/NM — low margins are the product, not a flaw; measure by membership fee growth + renewal rate (~93%) + ROIC; currently 0/4 MA (CMF -0.20, distribution); promote to UNIVERSE on 4/4 recovery
     'ORLY',  # O'Reilly Auto Parts — Akre compounder; 18% OM, 14% NM, ROA 13.8% (ROE negative from 20yrs buybacks); ROA just below 15% threshold; D/EV 0.10, P/E 29x, exceptional execution
     'TDG',   # TransDigm — aerospace parts monopolist, 47% OM, 22% NM; D/EV 0.325 structural debt (leveraged rollup model, won't change); watch if debt pays down or FCF re-rates
+    'ESE',   # ESCO Technologies — niche industrials: RF/EMC test chambers (ETS-Lindgren), utility grid modernization/power quality, aerospace filtration (VACCO); GrossM 41.9%, OM 15.5%, FCF $320M positive, RevG 33.5%, D/EV 0.024 (near zero debt); ROE 9.2% only blocker — same niche-industrial profile as HEICO but murkier moat (collection of niches vs HEICO's unambiguous FAA-PMA franchise); NM 24.7% > OM 15.5% anomaly — likely one-time tax benefit, watch normalize; fwd PE 36x (cheaper than HEI at 50x); B grade; gate: ROE crossing 12%+ as revenue scale compounds
     'FISV',  # Fiserv — payment processing + Clover POS + banking tech, extreme switching costs; ~33% OM, 15% NM; D/EV ~0.26 from First Data acquisition; ~$3-4B FCF/yr paydown, 1-2yr to threshold
     'APD',   # Air Products — industrial gases, green/blue hydrogen megaproject bet ($15B+, NEOM/Louisiana); D/EV 0.224 + FCF -5.6% from capex cycle both blocking; new CEO reviewing strategy; watch for FCF inflection as projects come online
     'PYPL',  # PayPal — OM 18%, NM 15%, ROE 25%, FCF 11%, P/E 7.8x; D/EV 0.30 only blocker (customer float structural); Chriss margin recovery showing in numbers
     'IOT',   # Samsara — fleet/IoT SaaS, GM 76%, zero debt, 30% RevG, FCF just turned positive; OM 1.5% blocking, 2yr runway to A/A+ as scale drives margin
+    'ATEN',  # A10 Networks — application delivery controllers (ADC) + DDoS protection for carriers and enterprises; deeply embedded infrastructure, not flashy; GrossM 79.3%, OM 17.3%, NM 14.9%, ROE 21.4%, FCF margin ~17% ($50M on $299M rev), RevG 13.4%, D/EV 0.091; ROA 5.2% only blocker (cash pile dragging denominator — operating asset returns cleaner than headline); growth angle: AI/5G traffic surge → carrier ADC capacity upgrades + DDoS threat surface expanding; not a dividend play (0.66% yield); gate: ROA crossing 10%+ as revenue scale compounds on the asset base
     'ABBV',  # AbbVie — Allergan amortization masking strong cash earnings; FCF/Debt 28.5%, IC improving 6.3→7.8×, Skyrizi/Rinvoq replacing Humira
     'GFS',   # GlobalFoundries — specialty foundry (RF, automotive, IoT); 5/6 filters pass, ROE 6.8% only blocker (capital-heavy fab structure)
     'PWR',   # Quanta Services — dominant grid/electrical infrastructure contractor; OM 4% blocks now, watch for 7-8% as AI datacenter + grid modernization drives project mix higher
@@ -150,6 +232,7 @@ WATCHLIST = [
     'FIG',   # Figma — design collaboration SaaS; 79.8% gross margin, FCF 8.6%, 46.1% rev growth; OM -41.2% post-IPO investment spend blocking; grades B (OM negative caps grade); Adobe tried $20B acquisition, IPO'd at $9.5B — quality business finding its level
     'COIN',  # Coinbase — digital asset exchange, crypto theme proxy; 85.5% gross margin, FCF 5.4%; OM -7.1% + rev growth -30.8% (crypto volume cycle) blocking; grades B, 0/4 MA; cyclical — watch for volume recovery + OM turning positive
     # --- Photonics / Optical Interconnect ---
+    'FTAI',  # FTAI Aviation — CFM56 engine platform (powers 737/A320, largest narrowbody fleet in the world); buys used engines, refurbishes modules, leases/sells back to airlines at discount to OEM — toll booth on aviation, not the airline itself; OM 22.5%, NM 18.9%, ROA 11.3%, RevG 65.5%, fwd PE 18.5x; FCF -$320M ✗ (main blocker — growth capex consuming cash or structural, unclear); D/EV 0.132 manageable (D/E 809 is buyback-distorted equity, not leverage deterioration); infrastructure segment separation adds complexity; Hindenburg short report (2024) raised accounting concerns — not fully resolved; down -34% from highs; gate: FCF turning positive + infrastructure separation complete + short report overhang cleared; Buffett/Munger would disapprove (aviation industry) — but this is the toll booth, not the airline
     'COHR',  # Coherent Corp — optical components (800G/1.6T datacenter interconnect + telecom); OM 13.6%, NM 7.1%, D/EV 0.045; ROE 4.7% + FCF -0.3% blocking; post II-VI merger integration phase; watch FCF inflection
     # --- Defense / Drones ---
     'AVAV',  # AeroVironment — defense drones (Switchblade loitering munition, Puma ISR); RevG 143.4%, D/EV 0.108; OM -5.1% scaling with DoD contracts; proven battlefield platform
@@ -175,6 +258,8 @@ FUTURE_RADAR = {
     'UPST': 'Upstart — AI-powered lending platform; 82.7% gross margin, OM just turning (0.9%); credit cycle exposure structural to lending model; D/EV 0.431 (converts) + FCF -10.1% + ROA 1.8% blocking; gate to watchlist: FCF consistently positive + converts resolved + through-cycle credit performance demonstrated',
     'RIVN': 'Rivian Automotive — EV maker (R1T/R1S + commercial vans for Amazon); gross margin just turned positive (1%) — unit economics no longer underwater, direction is right; VW partnership ($5.8B) extends runway; R2 (mass-market ~$45k) is the volume inflection catalyst; OM -63.8%, FCF -$1.3B, D/E 1.18 — fixed cost absorption gap will close only with volume scale; gate to watchlist: gross margin consistently above 10% + FCF trajectory turning less negative quarter over quarter; 3-4 quarters minimum',
     'CBRS': 'Cerebras Systems — Wafer-Scale Engine (WSE-3): entire silicon wafer as single chip, 900K AI cores, 44GB on-chip SRAM; eliminates inter-chip communication latency that limits NVDA GPU clusters; inference specialist — NVDA trains, Cerebras runs models fast; RevG +94%, GrossM 40%, OM -7.8% (close to breakeven); revenue heavily concentrated (G42/UAE deal dominant — geopolitical scrutiny risk); FCF not yet positive; fwd PE 184x priced for perfection; gate to watchlist: OM turning positive + revenue diversification beyond concentrated customers + FCF inflection; few more quarters tells the real story — revisit Q2/Q3 2026 results',
+    'QXO':  'QXO — Brad Jacobs (built XPO Logistics $0→$16B, United Rentals same playbook) applying tech-enabled distribution ops to building products; acquired Beacon Roofing Supply ($11B) — largest roofing distributor in North America; thesis: fragmented building products distribution + Jacobs\' operational playbook = margin expansion over time; currently in integration phase — OM -11.8%, FCF -$1.23B, all filters blocking; RevG 12,716% is Beacon consolidation not organic; D/EV ~0.30 acquisition debt; fwd PE 19x = market pricing eventual normalization; price near 52w low ($14 vs $27.61 high) — market skeptical of integration pace; gate: OM turning positive + FCF inflection + D/E delevering as integration costs roll off; revisit 3-4 quarters',
+    'PRAX': 'Praxis Precision Medicine — neurological disease pure-play; ulixacaltamide (PRAX-944) targeting essential tremor (7M+ US patients, current beta-blocker/primidone standard-of-care has poor tolerability = large unmet need); PRAX-628/PRAX-562 Nav1.6 epilepsy inhibitors in pipeline; Phase 3 T-CALM data drove $37→$366 in one year — the clinical home run has likely printed, now a binary FDA approval bet; pre-revenue ($9B market cap on zero revenue), FCF -$176M burn, near-zero debt; all quality filters block — not a framework name; gate: FDA approval + early commercial revenue traction; if approval comes, re-evaluate as a commercial-stage specialty pharma',
     'QDEL': 'QuidelOrtho — diagnostics platform formed from Quidel (Sofia/QuickVue rapid POC tests) + Ortho Clinical (hospital immunoassay/clinical chemistry); scale across both POC and centralized lab = durable infrastructure; GrossM 45%, FCF $208M positive — real cash generation; OM -4.1% and NM/ROE deeply negative are Ortho acquisition goodwill impairment distortions, not operational failure; RevG -10.5% from COVID rapid test cliff normalizing; D/E 1.55 structural merger debt; fwd PE 6.9x — priced like it is broken when FCF says it is not; gate to watchlist: OM crossing 0% sustained + revenue growth flat or positive (COVID cliff absorbed) + impairment charges rolling off NM; 1-2 quarters',
     # Removed entirely — pre-revenue or survival risk (not FUTURE_RADAR material):
     # SMR (NuScale — first project cancelled), OKLO, XE (pre-revenue nuclear ventures)
@@ -207,6 +292,8 @@ SIP_WATCHLIST = {
     'WM':   'Waste Management — regulated waste collection oligopoly (WM + RSG = ~50% US market); every community needs waste removed, pricing power structural; long-term municipal contracts, landfill permit moat (impossible to build new landfills); secular tailwind from recycling + renewable natural gas from landfills; quietly compounding business',
     # --- BDC / Income ---
     'MAIN': 'Main Street Capital — BDC lending to lower middle market companies; internally managed (removes fee conflict that plagues most BDCs); ~8.4% yield paid monthly + semi-annual special dividends; trades at ~1.55x NAV (premium unusual for BDCs, reflects management quality); ROE 14.4%; not a growth compounder — a durable income machine; SIP monthly for yield compounding',
+    # --- Packaging / Industrial Dividend ---
+    'SW':   'Smurfit Westrock — world\'s largest paper-based packaging company (WestRock + Smurfit Kappa merger 2024); corrugated boxes are durable secular demand — every e-commerce shipment (Amazon, Shopify, retail) needs packaging; ~4% dividend yield, FCF $1.36B positive = dividend is FCF-supported not earnings-dependent (NM 1.2% is thin but payout off earnings is misleading); D/E 78.8 is merger debt overhang — same structural pattern as post-acq industrials, manageable given FCF; OM 6.8%, fwd PE 12.9x; ROE 2.1% and NM block quality screener — tracked here as a dividend/income name, not a compounder; SIP on dips for yield accumulation',
 }
 
 # Spread universe — tiered by options liquidity
@@ -431,6 +518,13 @@ def pe_html(d):
         return f'{show:.0f}x<span style="font-size:9px;color:#8b949e">f</span>'
     return f'{pe:.1f}x'
 
+def signal_html(sig):
+    if sig is None: return '<span style="color:#484f58">—</span>'
+    direction, source = sig
+    color = '#3fb950' if direction == 'bull' else '#f85149'
+    arrow = '⬆' if direction == 'bull' else '⬇'
+    return f'<span style="color:{color};font-weight:700">{arrow} {direction}</span><span style="color:#484f58;font-size:9px"> {source}</span>'
+
 def pct_color(val, good_above=0):
     if val is None: return '<span style="color:#484f58">—</span>'
     c = '#3fb950' if val >= good_above else '#f85149'
@@ -517,6 +611,7 @@ def build_html(results, watchlist=None, universe_failing=None):
           <td>{pct_color(d['fcf_yield'], 2)}</td>
           <td>{pct_color(d['rev_growth'], 5)}</td>
           <td>{pe_html(d)}</td>
+          <td>{signal_html(d.get('signal'))}</td>
         </tr>"""
 
     aplus = sum(1 for d in results if d['grade'] == 'A+')
@@ -585,7 +680,7 @@ def build_html(results, watchlist=None, universe_failing=None):
     <tr>
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th><th>Mkt Cap</th>
       <th>Grade</th><th>Debt/EV</th><th>Gross%</th><th>Op%</th><th>Net%</th>
-      <th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th>
+      <th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>Signal (wk)</th>
     </tr>
   </thead>
   <tbody>{rows}</tbody>
@@ -614,6 +709,15 @@ if __name__ == '__main__':
     passed.sort(key=lambda x: (0 if x['grade']=='A+' else 1 if x['grade']=='A' else 2, -(x['market_cap_b'] or 0)))
 
     print(f"  ✅  {len(passed)} companies passed filters  ({len(failing)} in universe not yet qualifying)")
+
+    sig_tickers = [d['ticker'] for d in passed if d['grade'] in ('A+', 'A')]
+    print(f"  Computing weekly signals for {len(sig_tickers)} A/A+ names ...", flush=True)
+    with ThreadPoolExecutor(max_workers=8) as ex:
+        sig_vals = list(ex.map(get_tech_signal, sig_tickers))
+    sig_map = dict(zip(sig_tickers, sig_vals))
+    for d in passed:
+        d['signal'] = sig_map.get(d['ticker'])
+
     print(f"\n  Fetching {len(WATCHLIST)} watchlist contenders ...", flush=True)
 
     with ThreadPoolExecutor(max_workers=10) as ex:
@@ -646,8 +750,7 @@ if __name__ == '__main__':
 
     try:
         repo = _os.path.dirname(out_path)
-        subprocess.run(['git', 'checkout', '--', 'quality_screener.html'], cwd=repo, capture_output=True)
-        subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'],      cwd=repo, check=True, capture_output=True)
+        subprocess.run(['git', 'pull', '--rebase', '--autostash', 'origin', 'main'], cwd=repo, check=True, capture_output=True)
         with open(out_path, 'w') as f:
             f.write(html)
         subprocess.run(['git', 'add',    'quality_screener.html'], cwd=repo, check=True, capture_output=True)
