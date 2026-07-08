@@ -20,7 +20,7 @@ The rest of this README is the manual for how those two filters are built and ap
 |---|---|---|
 | `dashboard.py` | 🇺🇸 US | Sector ETF momentum dashboard — MA signals across 50D/20W/10M/20M |
 | `india_dashboard.py` | 🇮🇳 India | NSE sector index briefing — same MA framework for Indian markets |
-| `screener.py` | 🇺🇸 US | Quality growth screener — low debt, high ROIC, strong margins, FCF |
+| `screener.py` | 🇺🇸 US | Quality growth screener — low debt, high ROIC, strong margins, FCF · weekly signal column (RSI+MACD dual confirmation, A/A+ only) |
 | `india_screener.py` | 🇮🇳 India | India quality growth screener — NSE universe across key themes |
 | `aligned_screener.py` | 🇺🇸 US | Weekly MA alignment scanner — 4/4 aligned names, squeeze setups, CMF, RS vs SPY, A/D Line + OBV divergence |
 | `weekly_snapshot.py` | 🇺🇸 US | Appends weekly alignment snapshot to `weekly_notes.md` |
@@ -290,8 +290,12 @@ python india_dashboard.py
 python india_dashboard.py --refresh
 python india_dashboard.py --refresh --browser
 
-# US screener
+# US screener (full run)
 python screener.py
+
+# Ad-hoc signal check — no full run, instant result
+python screener.py --signal TICKER [TICKER ...]
+# e.g. python screener.py --signal COST TXN BSX GOOGL
 
 # India screener
 python india_screener.py
@@ -306,6 +310,18 @@ Both dashboards output a CLI table and save an HTML file locally (`~/market_brie
 - ROE ≥ 10% · FCF yield ≥ 0% · P/E ≤ 100x (forward P/E used as fallback)
 - FCF gap relief: None allowed when rev growth ≥ 50% AND net margin ≥ 10%
 - Grading: A+ ≥ 6pts · A ≥ 4pts · OM weighted at 2pts (primary signal)
+
+### Weekly Signal Column — `Signal (wk)`
+
+Shown only for A and A+ names. Fires only when **both** RSI-14 divergence and MACD(12,26,9) histogram divergence agree on the same direction — on weekly bars, over 1 year of history.
+
+| Signal | Meaning |
+|---|---|
+| `⬆ bull · RSI+MACD` | Price made a lower low, both RSI and MACD histogram made a higher low — momentum recovering ahead of price |
+| `⬇ bear · RSI+MACD` | Price made a higher high, both RSI and MACD histogram made a lower high — momentum fading into the extension |
+| `—` | No confirmed signal, or B grade (not evaluated) |
+
+Single-indicator signals are silenced. Contradictions (RSI says bull, MACD says bear) are silenced. Near-flat swing pairs (< 0.75% price move between swing points) are silenced. What remains is a narrow, high-conviction read on weekly structure — not a trade trigger, but a directional bias on quality names worth attention.
 
 ### India (`india_screener.py`)
 - Debt/EV ≤ 0.20 · Operating margin ≥ 8% · Net margin ≥ 5%
