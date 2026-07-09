@@ -15,6 +15,32 @@ from screener import UNIVERSE
 
 # ── data ─────────────────────────────────────────────────────────────────────
 
+BUCKETS = [
+    ('all4',         '#3fb950'),
+    ('ma20_50_100',  '#ffa657'),
+    ('ma20_50',      '#e3b341'),
+    ('ma20_only',    '#d29922'),
+    ('ma200_pullbk', '#58a6ff'),
+    ('none',         '#f85149'),
+]
+BUCKET_LABEL = {
+    'all4':         'MA20+50+100+200',
+    'ma20_50_100':  'MA20+50+100',
+    'ma20_50':      'MA20+50',
+    'ma20_only':    'MA20 only',
+    'ma200_pullbk': 'Above MA200 only',
+    'none':         'Below all',
+}
+BUCKET_COLOR = {k: c for k, c in BUCKETS}
+
+def _assign_bucket(a20, a50, a100, a200):
+    if a20 and a50 and a100 and a200: return 'all4'
+    if a20 and a50 and a100:          return 'ma20_50_100'
+    if a20 and a50:                   return 'ma20_50'
+    if a20:                           return 'ma20_only'
+    if a200:                          return 'ma200_pullbk'
+    return 'none'
+
 def compute_breadth(tickers):
     import pandas as pd
     print(f"  Downloading daily data for {len(tickers)} names ...", flush=True)
@@ -33,42 +59,30 @@ def compute_breadth(tickers):
         price = s.iloc[-1]
         ma20  = s.iloc[-20:].mean()  if len(s) >= 20  else None
         ma50  = s.iloc[-50:].mean()  if len(s) >= 50  else None
+        ma100 = s.iloc[-100:].mean() if len(s) >= 100 else None
         ma200 = s.iloc[-200:].mean() if len(s) >= 200 else None
         a20  = ma20  is not None and price > ma20
         a50  = ma50  is not None and price > ma50
+        a100 = ma100 is not None and price > ma100
         a200 = ma200 is not None and price > ma200
-
-        if a200 and a50 and a20:
-            bucket = 'all3'
-        elif a50 and a20:
-            bucket = 'ma20_ma50'
-        elif a20:
-            bucket = 'ma20_only'
-        else:
-            bucket = 'none'
 
         rows.append(dict(
             ticker=col,
             price=round(price, 2),
-            ma20=round(ma20, 2) if ma20 is not None else None,
-            ma50=round(ma50, 2) if ma50 is not None else None,
+            ma20=round(ma20, 2)   if ma20  is not None else None,
+            ma50=round(ma50, 2)   if ma50  is not None else None,
+            ma100=round(ma100, 2) if ma100 is not None else None,
             ma200=round(ma200, 2) if ma200 is not None else None,
-            a20=a20, a50=a50, a200=a200,
-            bucket=bucket,
+            a20=a20, a50=a50, a100=a100, a200=a200,
+            bucket=_assign_bucket(a20, a50, a100, a200),
         ))
 
     total = len(rows)
-    pct20  = round(sum(1 for r in rows if r['a20'])  / total * 100, 1) if total else 0
-    pct50  = round(sum(1 for r in rows if r['a50'])  / total * 100, 1) if total else 0
-    pct200 = round(sum(1 for r in rows if r['a200']) / total * 100, 1) if total else 0
+    def pct(flag): return round(sum(1 for r in rows if r[flag]) / total * 100, 1) if total else 0
 
-    buckets = {
-        'all3':      [r for r in rows if r['bucket'] == 'all3'],
-        'ma20_ma50': [r for r in rows if r['bucket'] == 'ma20_ma50'],
-        'ma20_only': [r for r in rows if r['bucket'] == 'ma20_only'],
-        'none':      [r for r in rows if r['bucket'] == 'none'],
-    }
-    return dict(total=total, pct20=pct20, pct50=pct50, pct200=pct200,
+    buckets = {k: [r for r in rows if r['bucket'] == k] for k, _ in BUCKETS}
+    return dict(total=total,
+                pct20=pct('a20'), pct50=pct('a50'), pct100=pct('a100'), pct200=pct('a200'),
                 rows=rows, buckets=buckets)
 
 # ── html ──────────────────────────────────────────────────────────────────────
@@ -97,31 +111,20 @@ def _ma_cell(price, ma, above):
             f'({sign}{diff_pct:.1f}%)</span></td>')
 
 def _table_rows(rows):
-    BUCKET_COLOR = {
-        'all3':      '#3fb950',
-        'ma20_ma50': '#ffa657',
-        'ma20_only': '#e3b341',
-        'none':      '#f85149',
-    }
-    BUCKET_LABEL = {
-        'all3':      'MA20+50+200',
-        'ma20_ma50': 'MA20+50',
-        'ma20_only': 'MA20 only',
-        'none':      'Below all',
-    }
     html = ''
     for r in rows:
         color = BUCKET_COLOR[r['bucket']]
         label = BUCKET_LABEL[r['bucket']]
-        dot_cell = (f'<td><span style="font-size:10px;font-weight:700;color:{color};'
-                    f'background:{color}18;border:1px solid {color}40;'
-                    f'border-radius:3px;padding:1px 6px">{label}</span></td>')
+        badge = (f'<span style="font-size:10px;font-weight:700;color:{color};'
+                 f'background:{color}18;border:1px solid {color}40;'
+                 f'border-radius:3px;padding:1px 6px">{label}</span>')
         html += f"""<tr>
           <td style="font-weight:700;color:#e6edf3">{r['ticker']}</td>
           <td>${r['price']:.2f}</td>
-          {dot_cell}
+          <td>{badge}</td>
           {_ma_cell(r['price'], r['ma20'],  r['a20'])}
           {_ma_cell(r['price'], r['ma50'],  r['a50'])}
+          {_ma_cell(r['price'], r['ma100'], r['a100'])}
           {_ma_cell(r['price'], r['ma200'], r['a200'])}
         </tr>"""
     return html
@@ -137,22 +140,18 @@ def _chips(rows, color):
 
 def build_html(b):
     now = datetime.now().strftime('%B %d, %Y  %H:%M')
-    all3      = b['buckets']['all3']
-    ma20_ma50 = b['buckets']['ma20_ma50']
-    ma20_only = b['buckets']['ma20_only']
-    none_     = b['buckets']['none']
 
-    def bucket_block(label, color, rows):
+    def bucket_block(key, label):
+        color = BUCKET_COLOR[key]
+        rows  = b['buckets'][key]
         return f"""
 <div style="margin-bottom:20px">
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-    <span style="font-size:12px;font-weight:700;color:{color}">{label}</span>
+    <span style="font-size:12px;font-weight:700;color:{color}">● {label}</span>
     <span style="font-size:10px;color:#484f58">({len(rows)})</span>
   </div>
   <div style="line-height:2">{_chips(rows, color)}</div>
 </div>"""
-
-    table_rows_html = _table_rows(b['rows'])
 
     return f"""<!DOCTYPE html>
 <html>
@@ -182,16 +181,19 @@ def build_html(b):
   <div class="card-title">% Names Above Moving Average</div>
   {_bar(b['pct20'],  'Above MA20d (short-term momentum)')}
   {_bar(b['pct50'],  'Above MA50d (intermediate trend)')}
+  {_bar(b['pct100'], 'Above MA100d (medium-term trend)')}
   {_bar(b['pct200'], 'Above MA200d (long-term trend)')}
   <div class="legend">Green ≥70% broad rally · Amber 50–70% mixed · Red &lt;50% narrow / correcting</div>
 </div>
 
 <div class="card">
   <div class="card-title">Breakdown by MA Alignment</div>
-  {bucket_block('● Above MA20 + MA50 + MA200 — confirmed uptrend', '#3fb950', all3)}
-  {bucket_block('● Above MA20 + MA50 only — recovering, not yet long-term', '#ffa657', ma20_ma50)}
-  {bucket_block('● Above MA20 only — just lifting off lows', '#e3b341', ma20_only)}
-  {bucket_block('● Below all MAs — downtrend', '#f85149', none_)}
+  {bucket_block('all4',         'Above MA20 + MA50 + MA100 + MA200 — confirmed uptrend')}
+  {bucket_block('ma20_50_100',  'Above MA20 + MA50 + MA100 only — recovering, not yet long-term')}
+  {bucket_block('ma20_50',      'Above MA20 + MA50 only — short-term momentum')}
+  {bucket_block('ma20_only',    'Above MA20 only — early lift')}
+  {bucket_block('ma200_pullbk', 'Above MA200 only — long-term intact, pulling back')}
+  {bucket_block('none',         'Below all MAs — downtrend')}
 </div>
 
 <div class="card">
@@ -200,10 +202,10 @@ def build_html(b):
     <thead>
       <tr>
         <th>Ticker</th><th>Price</th><th>Alignment</th>
-        <th>MA20d (vs price)</th><th>MA50d (vs price)</th><th>MA200d (vs price)</th>
+        <th>MA20d</th><th>MA50d</th><th>MA100d</th><th>MA200d</th>
       </tr>
     </thead>
-    <tbody>{table_rows_html}</tbody>
+    <tbody>{_table_rows(b['rows'])}</tbody>
   </table>
 </div>
 
@@ -218,9 +220,10 @@ def build_html(b):
 if __name__ == '__main__':
     print(f"\n  US Market Breadth — {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     b = compute_breadth(UNIVERSE)
-    print(f"  MA20d {b['pct20']}%  ·  MA50d {b['pct50']}%  ·  MA200d {b['pct200']}%  ({b['total']} names)")
-    print(f"  all3={len(b['buckets']['all3'])}  ma20+50={len(b['buckets']['ma20_ma50'])}  "
-          f"ma20only={len(b['buckets']['ma20_only'])}  below={len(b['buckets']['none'])}\n")
+    print(f"  MA20d {b['pct20']}%  ·  MA50d {b['pct50']}%  ·  MA100d {b['pct100']}%  ·  MA200d {b['pct200']}%  ({b['total']} names)")
+    for key, _ in BUCKETS:
+        print(f"  {BUCKET_LABEL[key]:30} {len(b['buckets'][key])}")
+    print()
 
     html = build_html(b)
     out  = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'us_marketbreadth.html')
