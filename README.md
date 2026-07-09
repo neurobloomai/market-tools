@@ -356,6 +356,18 @@ If a name matters to you, add it. If a threshold feels wrong for a sector you un
 
 Think of this as a basic scaffold — not a finished house. The value is in bending it to fit your own thinking, your own watchlist, your own sense of what quality means in the industries you follow. More data points, more puzzle pieces. Fewer blind spots.
 
+## Multiple Lenses, Honest Limitations
+
+No single tool closes the loop. RSI divergence catches momentum exhaustion. MACD histogram confirms it. MA alignment tells you where price lives structurally. Market breadth tells you if a move is broad or narrow. Each one has a blind spot the others partially cover.
+
+These are filters for reducing confusion, not tools for eliminating uncertainty. A name that fails the weekly signal but sits above all four MAs isn't a contradiction — it's two different questions being asked on different timeframes. The weekly signal asks "is momentum turning?" The MA stack asks "where is price relative to its own history?"
+
+A signal that works on one timeframe can look like failure on another. That isn't failure — it's limitation. Good coverage means knowing what each lens sees and what it cannot. No framework is supposed to be complete.
+
+Completeness would be a bug, not a feature. If the framework said "buy this, definitely" it would be lying.
+
+These tools do not recommend. They do not provide tailored advice. They are one person's attempt to organize a few questions about quality, structure, and momentum — and share that attempt openly. What you do with the output is entirely your own judgment, your own context, and your own responsibility.
+
 ## SIP Watchlist — US
 
 `SIP_WATCHLIST` in `screener.py` — toll-booth businesses on durable US infrastructure. Not traded. Owned regularly via DCA regardless of short-term price. Common thread: asset-light, fee/royalty/toll income, compound with secular structural growth.
