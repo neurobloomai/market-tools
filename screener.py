@@ -70,20 +70,25 @@ def get_tech_signal(ticker):
                 return [i for i in range(1, len(arr)-1) if arr[i] >= arr[i-1] and arr[i] >= arr[i+1]]
             return [i for i in range(1, len(arr)-1) if arr[i] <= arr[i-1] and arr[i] <= arr[i+1]]
 
-        MIN_SWING = 0.0075  # price must move ≥ 0.75% between swings to count
+        MIN_SWING = 0.0075  # price must move ≥ 0.75% between swings — eliminates flat noise
+        MAX_SWING = 0.15    # price must NOT move > 15% between swings — eliminates distress/freefall signals
+                            # true divergence: price barely makes new extreme, momentum clearly disagrees
+                            # if price crashes 15-20% between swing lows, that's continuation, not divergence
 
         def _divergence(indicator_vals, price_h, price_l, n):
             sh = _swings(price_h, 'high')
             if len(sh) >= 2:
                 i2, i1 = sh[-1], sh[-2]
                 if (n-1-i2) <= RECENCY and price_h[i2] > price_h[i1] and indicator_vals[i2] < indicator_vals[i1]:
-                    if (price_h[i2] - price_h[i1]) / price_h[i1] >= MIN_SWING:
+                    swing = (price_h[i2] - price_h[i1]) / price_h[i1]
+                    if MIN_SWING <= swing <= MAX_SWING:
                         return 'bear'
             sl = _swings(price_l, 'low')
             if len(sl) >= 2:
                 i2, i1 = sl[-1], sl[-2]
                 if (n-1-i2) <= RECENCY and price_l[i2] < price_l[i1] and indicator_vals[i2] > indicator_vals[i1]:
-                    if (price_l[i1] - price_l[i2]) / price_l[i1] >= MIN_SWING:
+                    swing = (price_l[i1] - price_l[i2]) / price_l[i1]
+                    if MIN_SWING <= swing <= MAX_SWING:
                         return 'bull'
             return None
 
@@ -144,7 +149,6 @@ UNIVERSE = [
     'BMRN',                       # BioMarin Pharmaceutical — rare disease ERT specialist; Voxzogo (achondroplasia, orphan drug moat) + hemophilia + PKU pipeline; OM 18%, GrossM 51%, D/E 0.23, FCF $459M, fwd P/E 9.1x; NM 8.3% (just under 10%) + ROE 4.5% (goodwill from acquired programs, not operational weakness) — 2 soft blockers; A (5/7); 3/4 MA, slope +1.08
     'EQT',                        # EQT — largest US nat gas producer, Appalachia low-cost, vertically integrated; 57% OM, 50% RevG, D/EV 0.14; powers the structures
     'RRC',                        # Range Resources — Appalachia nat gas, D/EV 0.10, 44% OM, ROE 21%; clean balance sheet, powers the structures
-    'CTRA',                       # Coterra Energy — nat gas + oil, D/EV 0.13, 28% OM, 23% NM; diversified Appalachia/Permian, powers the structures
     'CF',                         # CF Industries — largest N. American ammonia/nitrogen producer; green ammonia pivot, D/EV 0.17, 34% OM, ROE 27%; foundation for structures, grades A
     'LIN',                        # Linde — world's largest industrial gases (O2/N2/H2); on-site plant model = permanent switching costs; 28% OM, 20% NM, D/EV 0.10, 8% RevG; slow compounder, never exciting, never disappoints; A
     'ETN',                        # Eaton Corp — electrical switchgear, circuit breakers, power distribution; sits above PWR in grid value chain, 16% OM, 14% NM, ROE 21%, D/EV 0.12
@@ -182,6 +186,7 @@ UNIVERSE = [
 WATCHLIST = [
     'AXON','MELI','SNOW','BILL',   # ALAB promoted to universe; CRWD removed — already in universe; PLTR promoted to universe
     'MDB','NET','HUBS','TEAM','MKC','DPZ',
+    'DRI',   # Darden Restaurants — Olive Garden + LongHorn + Fine Dining (Capital Grille/Eddie V's); casual dining scale moat + loyalty data + franchise-like unit economics; ROE 53.7%, FCF 4.6%, OM 14.3%, RevG 13.7%, P/E 19.3x — strong across the board; D/EV 0.259 only blocker (restaurant operating leverage + lease obligations, not acquisition debt); grade B; gate: D/EV ≤ 0.20 as FCF compounds down the debt
     'FROG',  # JFrog — universal artifact repository (Artifactory) + software supply chain security (Xray); every build artifact, package, dependency stored and scanned here; deeply embedded in CI/CD pipelines = extreme switching costs once deployed enterprise-wide; GrossM 77.5%, FCF $170M positive (real cash despite negative GAAP OM), RevG 25.8%, near zero debt ($16M total); OM -7.4% only blocker (stock-comp heavy — FCF is the honest signal); software supply chain security tailwind (Log4j/SolarWinds made artifact scanning mandatory); gate: OM crossing 0% as scale drives leverage on R&D/S&M
     'GTLB',  # GitLab — complete DevSecOps platform (source control + CI/CD + security scanning + project mgmt) in a single application; enterprise moat = single-platform control vs GitHub's patchwork integrations, strong self-hosted/air-gap compliance appeal; GrossM 86.8% (higher than FROG), FCF $313M positive, RevG 23.1%, zero debt; OM -6.0% only blocker — closer to crossing 0% than FROG; fwd PE 31x (vs FROG 82x) = more conservatively priced; 39% off 52w highs; same story as FROG — 2-3 quarters tells it; gate: OM crossing 0% sustained
     'GEV',                       # GE Vernova — picks-and-shovels for entire energy transition; supplies wind turbines, gas turbines, grid (transformers/switchgear/HVDC) — every renewable project + datacenter power need touches GEV; OM 5.5% only blocker (offshore wind losses dragging profitable gas+grid mix; inflects as wind rolls off); D/EV 0.012, ROE 75.7%, FCF +3.0%, fwd P/E 46.8x; grade A+; at 52w highs +113% from low, 42% above 40w MA — wait for 20-25% correction (~$870-920)
@@ -193,6 +198,7 @@ WATCHLIST = [
     'WEC',   # WEC Energy Group — regulated Midwest utility (Wisconsin/Illinois/Michigan); OM 29%, NM 16.2%, ROE 11.7%, RevG 9%; D/E 1.53 (IOU rate-based capex, FERC/PUC approved — structural not deteriorating) + FCF -$2B (grid modernization + AI datacenter load buildout in Wisconsin corridor) + ROE PUC-capped at ~11%; B (4/7); 4/4 MA aligned, slope +0.12 — cleaner margins than LNT, AI datacenter demand angle (Microsoft/hyperscaler buildout in Wisconsin)
     'LNT',   # Alliant Energy — regulated Midwest utility (Iowa/Wisconsin); OM 21%, NM 18.6%, ROE 11.3%, RevG 5%; D/E 1.60 + FCF -$1.2B + ROE PUC-capped — same structural blockers as WEC; B (4/7); 4/4 MA aligned, slope +1.53; smaller ($20B) and less differentiated than WEC/NEE — watching for margin improvement
     'AMG',   # Affiliated Managers Group — multi-boutique AM (AQR, Tweedy Browne etc.); owns fee economics in independent boutiques, asset-light; OM 22.1%, NM 35.5%, ROE 21.8%, FCF 2.6%, fwd P/E 8.5x; D/EV 0.245 only blocker (structural debt to buy stakes, paying down with FCF); grade A
+    'DVN',   # Devon Energy — formed from CTRA+DVN merger; Permian + Appalachia nat gas/oil; NM 14.2%, ROE 15.2%, FCF 3.2%, P/E 11.8x — solid underlying economics; D/EV 0.257 (merger leverage) + OM 6.9% both blocking; gate: D/EV ≤ 0.20 as merger debt amortizes + OM ≥ 10% on commodity price recovery
     'NRG',   # NRG Energy — de-lever play; LS Power acq doubled fleet+debt, targeting 3x net leverage, Fwd P/E 11x, yield-sensitive re-rate when 10yr < 4.0%
     'VST',   # Vistra — deregulated nuclear+gas (Energy Harbor acq), Texas/ERCOT exposure; OM 26.6%, ROE 42.9%, FCF +0.9%, RevG 43.4%, fwd P/E 14.1x; D/EV 0.265 only blocker (closer to threshold than NEE); grade A single blocker — cleaner than CEG on framework metrics; 27.6% off 52w high, below 20w+40w MAs; promote when D/EV ≤ 0.20 + MA structure recovers
     'LNG',   # Cheniere Energy — largest US LNG export terminal operator (Sabine Pass + Corpus Christi); long-term take-or-pay SPAs (20yr contracts) = utility-like contracted cash flows; Europe permanent de-Russian gas = structural LNG demand floor; FCF $1.7B + ROE 28.9% show real economics; D/E 3.2 structural terminal infrastructure debt (same read as telecom capex, not deteriorating); GAAP OM distorted by commodity MTM hedging accounting — FCF is the signal, not OM; B (3/7); MA 3/4, slope negative — below MA20w $249, entry on weekly alignment recovery
