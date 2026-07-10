@@ -69,6 +69,9 @@ def compute_breadth(tickers):
         # fully stacked: price > MA20 > MA50 > MA100 > MA200 (MAs in order too)
         stacked = (all([ma20, ma50, ma100, ma200]) and
                    price > ma20 > ma50 > ma100 > ma200)
+        # intermediate stack: price > MA20 > MA50 > MA100, not yet through MA200
+        stacked_100 = (all([ma20, ma50, ma100]) and
+                       price > ma20 > ma50 > ma100 and not stacked)
 
         rows.append(dict(
             ticker=col,
@@ -79,6 +82,7 @@ def compute_breadth(tickers):
             ma200=round(ma200, 2) if ma200 is not None else None,
             a20=a20, a50=a50, a100=a100, a200=a200,
             stacked=stacked,
+            stacked_100=stacked_100,
             bucket=_assign_bucket(a20, a50, a100, a200),
         ))
 
@@ -86,10 +90,11 @@ def compute_breadth(tickers):
     def pct(flag): return round(sum(1 for r in rows if r[flag]) / total * 100, 1) if total else 0
 
     buckets = {k: [r for r in rows if r['bucket'] == k] for k, _ in BUCKETS}
-    stacked = sorted([r for r in rows if r['stacked']], key=lambda r: r['ticker'])
+    stacked     = sorted([r for r in rows if r['stacked']],     key=lambda r: r['ticker'])
+    stacked_100 = sorted([r for r in rows if r['stacked_100']], key=lambda r: r['ticker'])
     return dict(total=total,
                 pct20=pct('a20'), pct50=pct('a50'), pct100=pct('a100'), pct200=pct('a200'),
-                rows=rows, buckets=buckets, stacked=stacked)
+                rows=rows, buckets=buckets, stacked=stacked, stacked_100=stacked_100)
 
 # ── html ──────────────────────────────────────────────────────────────────────
 
@@ -198,6 +203,14 @@ def build_html(b):
     MAs in perfect ascending order — the cleanest uptrend structure in the universe ({len(b['stacked'])} names)
   </div>
   <div style="line-height:2.2">{_chips(b['stacked'], '#3fb950')}</div>
+</div>
+
+<div class="card" style="border-color:#ffa65740">
+  <div class="card-title" style="color:#ffa657">◈ Intermediate Stack — Price &gt; MA20 &gt; MA50 &gt; MA100 (not yet MA200)</div>
+  <div style="font-size:10px;color:#484f58;margin-bottom:14px">
+    MAs stacked through 100d, long-term still being reclaimed — recovering setup, weekly band intact ({len(b['stacked_100'])} names)
+  </div>
+  <div style="line-height:2.2">{_chips(b['stacked_100'], '#ffa657')}</div>
 </div>
 
 <div class="card">
