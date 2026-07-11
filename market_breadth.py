@@ -92,6 +92,12 @@ def compute_breadth(tickers):
     buckets = {k: [r for r in rows if r['bucket'] == k] for k, _ in BUCKETS}
     stacked     = sorted([r for r in rows if r['stacked']],     key=lambda r: r['ticker'])
     stacked_100 = sorted([r for r in rows if r['stacked_100']], key=lambda r: r['ticker'])
+    # exclude all stacked names from breakdown buckets — they appear in their dedicated sections
+    # stacked_100 names can land in either all4 or ma20_50_100 depending on MA200 position,
+    # so exclude from every bucket rather than assuming which one
+    excluded = {r['ticker'] for r in stacked} | {r['ticker'] for r in stacked_100}
+    for key in buckets:
+        buckets[key] = [r for r in buckets[key] if r['ticker'] not in excluded]
     return dict(total=total,
                 pct20=pct('a20'), pct50=pct('a50'), pct100=pct('a100'), pct200=pct('a200'),
                 rows=rows, buckets=buckets, stacked=stacked, stacked_100=stacked_100)
@@ -215,8 +221,8 @@ def build_html(b):
 
 <div class="card">
   <div class="card-title">Breakdown by MA Alignment</div>
-  {bucket_block('all4',         'Above MA20 + MA50 + MA100 + MA200 — confirmed uptrend')}
-  {bucket_block('ma20_50_100',  'Above MA20 + MA50 + MA100 only — recovering, not yet long-term')}
+  {bucket_block('all4',         'Above MA20 + MA50 + MA100 + MA200 — MAs out of order')}
+  {bucket_block('ma20_50_100',  'Above MA20 + MA50 + MA100 only — MAs out of order')}
   {bucket_block('ma20_50',      'Above MA20 + MA50 only — short-term momentum')}
   {bucket_block('ma20_only',    'Above MA20 only — early lift')}
   {bucket_block('ma200_pullbk', 'Above MA200 only — long-term intact, pulling back')}
