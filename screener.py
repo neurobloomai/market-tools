@@ -128,7 +128,7 @@ UNIVERSE = [
     'VEEV','WDAY','TTD','PAYC',
     'ZM',                            # Zoom Video — post-COVID valuation reset complete; A+ (7/7): OM 25%, NM 42%, GrossM 78%, ROE 22%, D/E 0.006, FCF $1.98B (~7.6% FCF yield at $87), RevG 5.5%; near-zero debt + massive cash pile; AI Companion + Zoom Contact Center = monetization runway; fwd P/E 13.8x, priced like value, runs like software; 2/4 MA, below MA10w $98 — scan will surface on weekly alignment
     'BRK-B','CB','AFL','TRV','PGR','AJG','AON','WTW','CINF',
-    'NVO','ISRG','EW','ALGN','IDXX','PODD','WST',
+    'NVO','ISRG','EW','ALGN','IDXX','PODD','WST','DXCM',
     'MCO','SPGI','MSCI','ICE','CME','CBOE','FDS','BR','NDAQ',
     'ODFL','EXPD','CHRW','XPO','JBHT','SAIA','KNSL','RLI','CASH','FICO',
     'ROL','CTAS','CPRT','ADP','PAYX','EFX','TRI','IHS','VRSK','IT',
@@ -136,6 +136,7 @@ UNIVERSE = [
     'MTD','MANH','FAST','MNST','POOL','NVR','DHI','LEN','TOL','DOCS','MKTX','ACGL',
     'CHD','CL','HSY','TJX','GIS','NFLX','LULU','WSM','KMB','VRTX','DECK',
     'HWM','FSLR','DUOL','PLAB',   # promoted from watchlist — pass all quality filters
+    'DXCM',                       # Dexcom — CGM (continuous glucose monitoring) platform leader; G7 sensor + pump integrations (Omnipod, Tandem) = switching costs; GrossM 61.5%, OM 18.9%, NM 19.3%, FCF 21.9%, D/EV 5%, ROE 35.6%, RevG 15%, P/E 24.4x; A+; GLP-1 (Ozempic/Wegovy) is the thesis debate — better glucose control from GLP-1s raises the question of CGM necessity, but CGM addressable market expanding as Type 2 management broadens beyond insulin-dependent patients; stock halved from 2024 highs on GLP-1 fear, quality intact; 4/4 MA aligned, fully stacked
     'WPM',                        # Wheaton Precious Metals — streaming model, 85% gross/65% net margin, zero debt, A+
     'NEM',                        # Newmont — world's largest gold miner; 61.4% OM, 33.9% NM, ROE 25.8%, D/EV 0.049, FCF 8.7%, 45.8% rev growth (Newcrest acq); A+
     'CCJ',                        # Cameco — world's largest uranium producer; OM 18%, NM 18%, D/EV 0.022; ROE ~9-10% cycles with uranium price; nuclear fuel supply for the buildout
