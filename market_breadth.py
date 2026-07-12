@@ -72,6 +72,10 @@ def compute_breadth(tickers):
         # intermediate stack: price > MA20 > MA50 > MA100, not yet through MA200
         stacked_100 = (all([ma20, ma50, ma100]) and
                        price > ma20 > ma50 > ma100 and not stacked)
+        # trend intact: price > MA50 > MA100 > MA200, MA20 position irrelevant
+        # catches names that dipped below MA20 but long-term structure is holding
+        stacked_50 = (all([ma50, ma100, ma200]) and
+                      price > ma50 > ma100 > ma200 and not stacked)
 
         rows.append(dict(
             ticker=col,
@@ -83,6 +87,7 @@ def compute_breadth(tickers):
             a20=a20, a50=a50, a100=a100, a200=a200,
             stacked=stacked,
             stacked_100=stacked_100,
+            stacked_50=stacked_50,
             bucket=_assign_bucket(a20, a50, a100, a200),
         ))
 
@@ -92,15 +97,15 @@ def compute_breadth(tickers):
     buckets = {k: [r for r in rows if r['bucket'] == k] for k, _ in BUCKETS}
     stacked     = sorted([r for r in rows if r['stacked']],     key=lambda r: r['ticker'])
     stacked_100 = sorted([r for r in rows if r['stacked_100']], key=lambda r: r['ticker'])
+    stacked_50  = sorted([r for r in rows if r['stacked_50']],  key=lambda r: r['ticker'])
     # exclude all stacked names from breakdown buckets — they appear in their dedicated sections
-    # stacked_100 names can land in either all4 or ma20_50_100 depending on MA200 position,
-    # so exclude from every bucket rather than assuming which one
     excluded = {r['ticker'] for r in stacked} | {r['ticker'] for r in stacked_100}
     for key in buckets:
         buckets[key] = [r for r in buckets[key] if r['ticker'] not in excluded]
     return dict(total=total,
                 pct20=pct('a20'), pct50=pct('a50'), pct100=pct('a100'), pct200=pct('a200'),
-                rows=rows, buckets=buckets, stacked=stacked, stacked_100=stacked_100)
+                rows=rows, buckets=buckets, stacked=stacked, stacked_100=stacked_100,
+                stacked_50=stacked_50)
 
 # ── html ──────────────────────────────────────────────────────────────────────
 
@@ -209,6 +214,14 @@ def build_html(b):
     MAs in perfect ascending order — the cleanest uptrend structure in the universe ({len(b['stacked'])} names)
   </div>
   <div style="line-height:2.2">{_chips(b['stacked'], '#3fb950')}</div>
+</div>
+
+<div class="card" style="border-color:#79c0ff40">
+  <div class="card-title" style="color:#79c0ff">◇ Trend Intact — Price &gt; MA50 &gt; MA100 &gt; MA200 (MA20 not required)</div>
+  <div style="font-size:10px;color:#484f58;margin-bottom:14px">
+    Long-term structure holding, short-term MA20 may have dipped — pulled back within an uptrend ({len(b['stacked_50'])} names, excludes Fully Stacked)
+  </div>
+  <div style="line-height:2.2">{_chips(b['stacked_50'], '#79c0ff')}</div>
 </div>
 
 <div class="card" style="border-color:#ffa65740">
