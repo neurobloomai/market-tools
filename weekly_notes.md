@@ -7,11 +7,11 @@ Run `python weekly_snapshot.py` each week to refresh. History is in git.
 
 ## Week of Jul 06 2026
 
-### 4/4 Aligned — 93 names
+### 4/4 Aligned — 94 names
 
-**Universe (70):** AAPL, ABBV, ABNB, ACGL, AFL, ALAB, ALGN, AMAT, ANET, AON, ARM, ASML, BMRN, BRK-B, CASH, CB, CDNS, CHRW, CINF, CL, CRDO, CRWD, CW, DDOG, DHI, ETN, EW, EXPD, FAST, FFIV, FTNT, HEI, HOOD, HWM, IBKR, IHS, INCY, ITW, JBHT, JNJ, JPM, KLAC, KRYS, LIN, LLY, LRCX, MCO, META, MNST, MRK, MRVL, MSCI, MU, NBIX, NVDA, ODFL, PANW, PGR, SCHW, SEZL, TMO, TOL, TRV, TSM, TXN, UNH, V, VRTX, WSM, WST
+**Universe (69):** AAPL, ABBV, ABNB, ACGL, AFL, ALAB, AMAT, ANET, AON, ARM, ASML, BMRN, BRK-B, CASH, CB, CDNS, CHRW, CINF, CL, CRDO, CRWD, CW, DDOG, DHI, ETN, EW, EXPD, FAST, FFIV, FTNT, HEI, HOOD, HWM, IBKR, IHS, INCY, ITW, JBHT, JNJ, JPM, KLAC, KRYS, LIN, LLY, LRCX, MCO, META, MNST, MRK, MRVL, MSCI, MU, NBIX, NVDA, ODFL, PANW, PGR, SCHW, SEZL, TMO, TOL, TRV, TSM, TXN, UNH, V, VRTX, WSM, WST
 
-**Watchlist (23):** ACAD, AMD, AMG, APD, ATEN, BMY, CPAY, DRI, ESE, EXPE, FROG, GEV, LNG, LNT, MDB, NET, ONTO, PEG, SNOW, TDG, TGTX, VCYT, WEC
+**Watchlist (25):** ACAD, ALGN, AMD, AMG, APD, ATEN, BMY, CPAY, DRI, DXCM, ESE, EXPE, FROG, GEV, LNG, LNT, MDB, NET, ONTO, PEG, SNOW, TDG, TGTX, VCYT, WEC
 
 
 ### 3/4 Near-Aligned — 34 names
@@ -42,7 +42,7 @@ ADI, ADP, AJG, AMZN, AVGO, AXON, BIIB, BLK, CF, CHD, CLS, COHR, GFS, GOOGL, INTC
 | **COST** | [W] | 0/4 | 3.6% | 1.2% | 1.0x | ↓ |
 | **EXPE** | [W] | 4/4 | 3.7% | 0.2% | 0.7x | ↓ |
 | **ABBV** | [U] | 4/4 | 3.8% | 3.3% | 0.9x | ↑ |
-| **AON** | [U] | 4/4 | 4.1% | 0.9% | 0.8x | ↑ |
+| **DXCM** | [W] | 4/4 | 4.0% | 3.8% | 0.6x | ↑ |
 
 ### Notes
 
@@ -54,9 +54,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 
 ### Tier Movements — Week over Week
 
-↑ **Improved:** **NVDA** (◈ Intermediate → ◇ Trend Intact), **ASML** (◈ Intermediate → ◇ Trend Intact), **ARM** (MA50+100 → ◇ Trend Intact)
-
-↓ **Dropped:** **AMAT** (✦ Fully Stacked → ◇ Trend Intact), **LRCX** (✦ Fully Stacked → ◇ Trend Intact), **KLAC** (✦ Fully Stacked → ◇ Trend Intact), **MSFT** (◇ Trend Intact → MA20 only), **NFLX** (MA50 → Below all)
+↑ **Improved:** **QCOM** (MA200 only → MA100+MA200), **MCHP** (MA200 only → MA100+MA200), **ADI** (MA200 only → MA100+MA200), **BRK-B** (MA200 only → MA100+MA200), **SAIA** (MA200 only → MA100+MA200), **DHI** (MA200 only → MA100+MA200), **DECK** (MA200 only → MA100+MA200), **MTSI** (MA200 only → MA100+MA200), **TER** (MA200 only → MA100+MA200), **PEG** (MA200 only → MA100+MA200), **WEC** (MA200 only → MA100+MA200), **ALGN** (MA200 only → MA100+MA200), **BIIB** (MA200 only → MA100+MA200), **TDG** (MA200 only → MA100+MA200), **GFS** (MA200 only → MA100+MA200), **PWR** (MA200 only → MA100+MA200), **SITM** (MA200 only → MA100+MA200), **LSCC** (MA200 only → MA100+MA200), **INTC** (MA200 only → MA100+MA200), **COHR** (MA200 only → MA100+MA200)
 
 
 ### Watchlist Status
@@ -65,6 +63,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 |:-------|------:|:--:|:-----:|:---------|:-------|
 | **ABBV** | $248.08 | 4/4 | A+ | ROE/ROA ROE None% / ROA 10.0% | AbbVie — Allergan amortization masking strong cash earnings; FCF/Debt … |
 | **ACAD** | $26.22 | 4/4 | B | Op Margin -1.7% | Acadia Pharmaceuticals — CNS/rare disease; Nuplazid (only FDA-approved… |
+| **ALGN** | $179.45 | 4/4 | A | Passes all filters — | Align Technology — Invisalign category creator; clear aligner technolo… |
 | **AMD** | $557.89 | 4/4 | B | ROE/ROA ROE 8.1% / ROA 3.6% | AMD — AI accelerator (MI300X/MI350) + x86 CPU challenger; OM ~21%, NM … |
 | **AMG** | $366.41 | 4/4 | A | Debt/EV 0.231 | Affiliated Managers Group — multi-boutique AM (AQR, Tweedy Browne etc.… |
 | **APD** | $299.53 | 4/4 | B | Debt/EV 0.213 / FCF Yield -5.3% | Air Products — industrial gases, green/blue hydrogen megaproject bet (… |
@@ -72,6 +71,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **BMY** | $57.58 | 4/4 | A+ | Debt/EV 0.302 | Bristol-Myers Squibb — de-lever + profit growth play; Celgene debt pay… |
 | **CPAY** | $353.64 | 4/4 | A+ | Debt/EV 0.334 | Corpay (formerly FleetCor) — V/MA-like toll economics on corporate pay… |
 | **DRI** | $204.25 | 4/4 | B | Debt/EV 0.257 | Darden Restaurants — Olive Garden + LongHorn + Fine Dining (Capital Gr… |
+| **DXCM** | $74.96 | 4/4 | A+ | Passes all filters — | Dexcom — CGM platform leader (G7 sensor + pump integrations); A+ metri… |
 | **ESE** | $329.12 | 4/4 | A | ROE/ROA ROE 9.2% / ROA 5.8% | ESCO Technologies — niche industrials: RF/EMC test chambers (ETS-Lindg… |
 | **EXPE** | $270.83 | 4/4 | A | Op Margin 7.1% | Expedia Group — online travel marketplace (Expedia.com, Hotels.com, Vr… |
 | **FROG** | $90.74 | 4/4 | B | Op Margin -7.4% / Net Margin -10.9% / ROE/ROA ROE -7.1% / ROA -3.7% | JFrog — universal artifact repository (Artifactory) + software supply … |
@@ -100,6 +100,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **SITM** | $628.94 | 3/4 | B | Op Margin -4.2% / Net Margin -6.4% / ROE/ROA ROE -2.6% / ROA -2.3% | SiTime — MEMS precision timing chips; near-monopoly, 65% gross margin,… |
 | **BILL** | $41.36 | 2/4 | B | Debt/EV 0.492 / Op Margin 1.1% / Net Margin 0.0% / ROE/ROA ROE 0.0% / ROA -0.3% | — |
 | **COPX** | $76.54 | 2/4 | ETF | — | Global X Copper Miners ETF — AUM $8.0B; copper = AI datacenter + grid … |
+| **DUOL** | $124.76 | 2/4 | A+ | Passes all filters — | Duolingo — gamified language learning platform, strong engagement moat… |
 | **DVN** | $42.23 | 2/4 | B | Debt/EV 0.262 / Op Margin 6.9% | Devon Energy — formed from CTRA+DVN merger; Permian + Appalachia nat g… |
 | **FLUT** | $110.66 | 2/4 | B | Debt/EV 0.406 / Op Margin 2.3% / Net Margin -2.2% / ROE/ROA ROE -5.0% / ROA 1.2% / FCF Yield -4.6% | Flutter Entertainment — global online sports betting; FanDuel #1 US (~… |
 | **FTAI** | $227.35 | 2/4 | A+ | FCF Yield -1.4% | FTAI Aviation — CFM56 engine platform (powers 737/A320, largest narrow… |
@@ -140,6 +141,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **META** | $669.21 | ✗ | +15.5% | +12.6% | $594.18 | $600.12 | +EXT | -28.12 |
 | **MSFT** | $385.10 | ✗ | +1.0% | -5.3% | $406.79 | $404.19 | IN | -7.28 |
 | **AAPL** | $315.32 | ✓ | +6.2% | +5.7% | $298.29 | $296.83 | +EXT | +8.94 |
+| **AMZN** | $245.34 | ✗ | +2.3% | -3.7% | $254.64 | $254.32 | IN | -3.32 |
 | **GOOGL** | $357.18 | ✓ | -0.2% | -4.5% | $373.87 | $372.47 | IN | +6.26 |
 | **AVGO** | $399.97 | ✗ | +4.9% | -0.9% | $403.68 | $405.96 | +EXT | -6.28 |
 | **MU** | $979.30 | ✓ | -6.6% | +11.0% | $882.18 | $889.42 | -EXT | +186.92 |
