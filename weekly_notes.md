@@ -54,7 +54,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 
 ### Tier Movements — Week over Week
 
-_First run — no previous week to compare._
+_No tier changes this week._
 
 
 ### Watchlist Status
