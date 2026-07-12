@@ -54,7 +54,9 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 
 ### Tier Movements — Week over Week
 
-_No tier changes this week._
+↑ **Improved:** **NVDA** (◈ Intermediate → ◇ Trend Intact), **ASML** (◈ Intermediate → ◇ Trend Intact), **ARM** (MA50+100 → ◇ Trend Intact)
+
+↓ **Dropped:** **AMAT** (✦ Fully Stacked → ◇ Trend Intact), **LRCX** (✦ Fully Stacked → ◇ Trend Intact), **KLAC** (✦ Fully Stacked → ◇ Trend Intact), **MSFT** (◇ Trend Intact → MA20 only), **NFLX** (MA50 → Below all)
 
 
 ### Watchlist Status
@@ -138,7 +140,6 @@ _No tier changes this week._
 | **META** | $669.21 | ✗ | +15.5% | +12.6% | $594.18 | $600.12 | +EXT | -28.12 |
 | **MSFT** | $385.10 | ✗ | +1.0% | -5.3% | $406.79 | $404.19 | IN | -7.28 |
 | **AAPL** | $315.32 | ✓ | +6.2% | +5.7% | $298.29 | $296.83 | +EXT | +8.94 |
-| **AMZN** | $245.34 | ✗ | +2.3% | -3.7% | $254.64 | $254.32 | IN | -3.32 |
 | **GOOGL** | $357.18 | ✓ | -0.2% | -4.5% | $373.87 | $372.47 | IN | +6.26 |
 | **AVGO** | $399.97 | ✗ | +4.9% | -0.9% | $403.68 | $405.96 | +EXT | -6.28 |
 | **MU** | $979.30 | ✓ | -6.6% | +11.0% | $882.18 | $889.42 | -EXT | +186.92 |
