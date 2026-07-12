@@ -10,6 +10,7 @@
 !weekly_notes.html
 !india_weekly_notes.html
 *.json
+!breadth_history.json
 __pycache__/
 *.pyc
 .env
