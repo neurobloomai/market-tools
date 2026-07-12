@@ -6,11 +6,55 @@ History is preserved in git — each run creates a new commit.
 Run: python weekly_snapshot.py
 """
 
-import sys, os, re, yfinance as yf, warnings
+import sys, os, re, json, yfinance as yf, warnings
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta
 from pathlib import Path
 warnings.filterwarnings('ignore')
+
+HISTORY_FILE = Path(__file__).parent / 'breadth_history.json'
+
+TIER_ORDER = [
+    'fully_stacked', 'trend_intact', 'stacked_100',
+    'all4_up', 'ma20_50_100', 'ma20_50', 'ma20_only',
+    'ma100_200', 'ma200_pullbk', 'none',
+]
+TIER_LABEL = {
+    'fully_stacked': '✦ Fully Stacked',
+    'trend_intact':  '◇ Trend Intact',
+    'stacked_100':   '◈ Intermediate',
+    'all4_up':       'All4 (unordered)',
+    'ma20_50_100':   'MA50+100',
+    'ma20_50':       'MA50',
+    'ma20_only':     'MA20 only',
+    'ma100_200':     'MA100+MA200',
+    'ma200_pullbk':  'MA200 only',
+    'none':          'Below all',
+}
+
+def _tier(price, ma4, ma10, ma20, ma40):
+    """Breadth tier from approximate weekly-MA equivalents of daily MAs."""
+    if None in (ma4, ma10, ma20, ma40):
+        return 'unknown'
+    if price > ma4 > ma10 > ma20 > ma40:
+        return 'fully_stacked'
+    if price > ma10 > ma20 > ma40:
+        return 'trend_intact'
+    if price > ma4 > ma10 > ma20:
+        return 'stacked_100'
+    if price > ma4 and price > ma10 and price > ma20 and price > ma40:
+        return 'all4_up'
+    if price > ma4 and price > ma10 and price > ma20:
+        return 'ma20_50_100'
+    if price > ma4 and price > ma10:
+        return 'ma20_50'
+    if price > ma4:
+        return 'ma20_only'
+    if price > ma20 and price > ma40:   # ma20 here = ma20w ≈ MA100d
+        return 'ma100_200'
+    if price > ma40:
+        return 'ma200_pullbk'
+    return 'none'
 
 sys.path.insert(0, '.')
 from screener import UNIVERSE, WATCHLIST, get_fundamentals, quality_grade, failing_filters
@@ -28,8 +72,10 @@ def ma_data(ticker):
         if len(close) < 87:
             return None
         price = float(close.iloc[-1])
-        ma10w = float(close.tail(10).mean())
-        ma20w = float(close.tail(20).mean())
+        ma4w  = float(close.tail(4).mean())   # ≈ MA20d
+        ma10w = float(close.tail(10).mean())  # ≈ MA50d
+        ma20w = float(close.tail(20).mean())  # ≈ MA100d
+        ma40w = float(close.tail(40).mean())  # ≈ MA200d
         ma10m = float(close.tail(43).mean())
         ma20m = float(close.tail(87).mean())
         ma35w = float(close.tail(35).mean())
@@ -57,6 +103,7 @@ def ma_data(ticker):
             'vol':         round(vol_ratio, 1),
             'slope':       slope,
             'in_universe': ticker in UNIVERSE,
+            'tier':        _tier(price, ma4w, ma10w, ma20w, ma40w),
         }
     except:
         return None
@@ -92,6 +139,25 @@ if __name__ == '__main__':
     w4   = [d['ticker'] for d in aligned_4 if not d['in_universe']]
     near = [d['ticker'] for d in aligned_3]
 
+    # ── Traceability: tier snapshot + week-over-week movements ───────────────
+    current_tiers = {d['ticker']: d['tier'] for d in data if d.get('tier') != 'unknown'}
+
+    history = json.loads(HISTORY_FILE.read_text()) if HISTORY_FILE.exists() else []
+    prev_tiers = history[-1]['tiers'] if history else {}
+
+    movements = {
+        t: (prev_tiers[t], cur)
+        for t, cur in current_tiers.items()
+        if t in prev_tiers and prev_tiers[t] != cur and cur != 'unknown'
+    }
+
+    history.append({
+        'week':  label,
+        'date':  monday.strftime('%Y-%m-%d'),
+        'tiers': current_tiers,
+    })
+    HISTORY_FILE.write_text(json.dumps(history, indent=2))
+
     lines = [f'## {label}\n']
 
     lines.append(f'### 4/4 Aligned — {len(aligned_4)} names\n')
@@ -117,6 +183,26 @@ if __name__ == '__main__':
     lines.append('\n### Notes\n')
     lines.append('_Weekly observations — what to watch, what is coiling, what to avoid._\n')
     lines.append('\n> **Disclaimer:** For informational purposes only. Not financial advice.\n')
+
+    # ── Tier Movements ───────────────────────────────────────────────────────
+    lines.append('\n### Tier Movements — Week over Week\n')
+    if not prev_tiers:
+        lines.append('_First run — no previous week to compare._\n')
+    elif not movements:
+        lines.append('_No tier changes this week._\n')
+    else:
+        improved  = sorted([(t, p, c) for t, (p, c) in movements.items()
+                            if TIER_ORDER.index(c) < TIER_ORDER.index(p)],
+                           key=lambda x: TIER_ORDER.index(x[2]))
+        downgraded = sorted([(t, p, c) for t, (p, c) in movements.items()
+                             if TIER_ORDER.index(c) > TIER_ORDER.index(p)],
+                            key=lambda x: TIER_ORDER.index(x[1]))
+        if improved:
+            parts = ', '.join(f"**{t}** ({TIER_LABEL[p]} → {TIER_LABEL[c]})" for t, p, c in improved)
+            lines.append(f'↑ **Improved:** {parts}\n')
+        if downgraded:
+            parts = ', '.join(f"**{t}** ({TIER_LABEL[p]} → {TIER_LABEL[c]})" for t, p, c in downgraded)
+            lines.append(f'↓ **Dropped:** {parts}\n')
 
     # ── Watchlist Status ──────────────────────────────────────────────────────
     print(f'  Fetching fundamentals for {len(WATCHLIST)} watchlist tickers ...', flush=True)
@@ -170,7 +256,7 @@ if __name__ == '__main__':
     import subprocess
     try:
         commit_msg = f'weekly_notes: {label}'
-        subprocess.run(['git', 'add', 'weekly_notes.md', 'weekly_notes.html'], check=True, capture_output=True)
+        subprocess.run(['git', 'add', 'weekly_notes.md', 'weekly_notes.html', 'breadth_history.json'], check=True, capture_output=True)
         subprocess.run(['git', 'commit', '-m', commit_msg], check=True, capture_output=True)
         subprocess.run(['git', 'push'], check=True, capture_output=True)
         print(f'  Pushed → GitHub  ({commit_msg})')
