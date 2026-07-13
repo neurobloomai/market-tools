@@ -54,7 +54,25 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 
 ### Tier Movements — Week over Week
 
-_No tier changes this week._
+✦ **Entered Fully Stacked**
+
+  Universe — **CL** (◇ Trend Intact → ✦ Fully Stacked), **ETN** (◇ Trend Intact → ✦ Fully Stacked)
+
+  Watchlist — **FROG** (◇ Trend Intact → ✦ Fully Stacked)
+
+✦ **Left Fully Stacked**
+
+  Universe — **CDNS** (✦ Fully Stacked → ◇ Trend Intact), **MNST** (✦ Fully Stacked → ◇ Trend Intact)
+
+  Watchlist — **APD** (✦ Fully Stacked → All4 (unordered))
+
+↑ **Improved**
+
+  Universe — **BMRN** (MA100+MA200 → ◈ Intermediate), **NDAQ** (MA50+100 → All4 (unordered))
+
+↓ **Dropped**
+
+  Universe — **IHS** (◇ Trend Intact → MA200 only), **CW** (◇ Trend Intact → MA100+MA200), **TSM** (◇ Trend Intact → MA100+MA200), **ASML** (◇ Trend Intact → MA100+MA200)
 
 
 ### Watchlist Status
