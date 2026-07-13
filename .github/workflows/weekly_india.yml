@@ -55,3 +55,12 @@ jobs:
 
       - name: Aligned screener
         run: python india_aligned_screener.py
+
+      - name: Sync after aligned screener
+        run: |
+          git stash --include-untracked || true
+          git pull --rebase origin main || true
+          git stash pop || true
+
+      - name: Market breadth
+        run: python india_marketbreadth.py
