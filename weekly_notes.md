@@ -9,9 +9,9 @@ Run `python weekly_snapshot.py` each week to refresh. History is in git.
 
 ### 4/4 Aligned — 88 names
 
-**Universe (63):** AAPL, ABBV, ABNB, ACGL, AFL, ALAB, AMAT, ANET, AON, BMRN, BRK-B, CASH, CB, CDNS, CF, CHD, CHRW, CINF, CL, CRDO, CRWD, DDOG, ETN, EW, EXPD, FAST, FFIV, FTNT, HEI, HOOD, HWM, IBKR, INCY, ITW, JBHT, JNJ, JPM, KLAC, KRYS, LIN, LLY, MA, MCO, META, MNST, MRK, MSCI, NBIX, NDAQ, ODFL, PANW, PGR, SCHW, SEZL, TMO, TOL, TRV, UNH, V, VRTX, WSM, WST, XPO
+**Universe (66):** AAPL, ABBV, ABNB, ACGL, AFL, ALAB, ALGN, AMAT, ANET, AON, ATEN, BMRN, BRK-B, CASH, CB, CDNS, CF, CHD, CHRW, CINF, CL, CRDO, CRWD, DDOG, DXCM, ETN, EW, EXPD, FAST, FFIV, FTNT, HEI, HOOD, HWM, IBKR, INCY, ITW, JBHT, JNJ, JPM, KLAC, KRYS, LIN, LLY, MA, MCO, META, MNST, MRK, MSCI, NBIX, NDAQ, ODFL, PANW, PGR, SCHW, SEZL, TMO, TOL, TRV, UNH, V, VRTX, WSM, WST, XPO
 
-**Watchlist (25):** ACAD, ALGN, AMD, AMG, APD, ATEN, BIIB, BMY, CPAY, DXCM, ESE, EXPE, FROG, GEV, LNG, LNT, MDB, NET, ONTO, PEG, S, SNOW, TGTX, VCYT, WEC
+**Watchlist (22):** ACAD, AMD, AMG, APD, BIIB, BMY, CPAY, ESE, EXPE, FROG, GEV, LNG, LNT, MDB, NET, ONTO, PEG, S, SNOW, TGTX, VCYT, WEC
 
 
 ### 3/4 Near-Aligned — 37 names
@@ -54,25 +54,9 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 
 ### Tier Movements — Week over Week
 
-✦ **Entered Fully Stacked**
+↑ **Improved:** **CL** (◇ Trend Intact → ✦ Fully Stacked), **ETN** (◇ Trend Intact → ✦ Fully Stacked), **CHD** (MA100+MA200 → ◇ Trend Intact), **BMRN** (MA100+MA200 → ◈ Intermediate), **CTAS** (MA50+100 → All4 (unordered)), **BLK** (MA20 only → MA50+100), **VST** (Below all → MA50+100), **DPZ** (MA20 only → MA50), **NEE** (MA200 only → MA50)
 
-  Universe — **CL** (◇ Trend Intact → ✦ Fully Stacked), **ETN** (◇ Trend Intact → ✦ Fully Stacked)
-
-  Watchlist — **FROG** (◇ Trend Intact → ✦ Fully Stacked)
-
-✦ **Left Fully Stacked**
-
-  Universe — **CDNS** (✦ Fully Stacked → ◇ Trend Intact), **MNST** (✦ Fully Stacked → ◇ Trend Intact)
-
-  Watchlist — **APD** (✦ Fully Stacked → All4 (unordered))
-
-↑ **Improved**
-
-  Universe — **BMRN** (MA100+MA200 → ◈ Intermediate), **NDAQ** (MA50+100 → All4 (unordered))
-
-↓ **Dropped**
-
-  Universe — **IHS** (◇ Trend Intact → MA200 only), **CW** (◇ Trend Intact → MA100+MA200), **TSM** (◇ Trend Intact → MA100+MA200), **ASML** (◇ Trend Intact → MA100+MA200)
+↓ **Dropped:** **CDNS** (✦ Fully Stacked → ◇ Trend Intact), **CRDO** (✦ Fully Stacked → ◇ Trend Intact), **TXN** (◇ Trend Intact → MA20 only), **CW** (◇ Trend Intact → MA100+MA200), **TSM** (◇ Trend Intact → MA100+MA200), **ASML** (◇ Trend Intact → MA100+MA200), **NVO** (◈ Intermediate → MA100+MA200), **SOFI** (◈ Intermediate → Below all), **ALGN** (All4 (unordered) → MA100+MA200), **TOST** (All4 (unordered) → MA50+100), **UBER** (MA50+100 → Below all), **HUBS** (MA50+100 → MA50), **TTD** (MA50 → MA20 only), **QCOM** (MA20 only → MA100+MA200), **ADI** (MA20 only → MA100+MA200), **SNPS** (MA20 only → Below all), **BSX** (MA20 only → Below all), **LITE** (MA20 only → MA200 only), **CIEN** (MA20 only → MA200 only), **SYM** (MA20 only → Below all), **COIN** (MA20 only → Below all), **IHS** (MA100+MA200 → MA200 only), **DHI** (MA100+MA200 → Below all), **GFS** (MA100+MA200 → MA200 only)
 
 
 ### Watchlist Status
@@ -81,15 +65,12 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 |:-------|------:|:--:|:-----:|:---------|:-------|
 | **ABBV** | $248.00 | 4/4 | A+ | ROE/ROA ROE None% / ROA 10.0% | AbbVie — Allergan amortization masking strong cash earnings; FCF/Debt … |
 | **ACAD** | $25.50 | 4/4 | B | Op Margin -1.7% | Acadia Pharmaceuticals — CNS/rare disease; Nuplazid (only FDA-approved… |
-| **ALGN** | $180.59 | 4/4 | A | Passes all filters — | Align Technology — Invisalign category creator; clear aligner technolo… |
 | **AMD** | $534.39 | 4/4 | B | ROE/ROA ROE 8.1% / ROA 3.6% | AMD — AI accelerator (MI300X/MI350) + x86 CPU challenger; OM ~21%, NM … |
 | **AMG** | $359.78 | 4/4 | A | Debt/EV 0.231 | Affiliated Managers Group — multi-boutique AM (AQR, Tweedy Browne etc.… |
 | **APD** | $301.96 | 4/4 | B | Debt/EV 0.213 / FCF Yield -5.2% | Air Products — industrial gases, green/blue hydrogen megaproject bet (… |
-| **ATEN** | $36.79 | 4/4 | A | Passes all filters — | A10 Networks — application delivery controllers (ADC) + DDoS protectio… |
 | **BIIB** | $209.03 | 4/4 | A | Debt/EV 0.207 / ROE/ROA ROE 7.7% / ROA 6.0% | Biogen — neuroscience pure-play; Leqembi (lecanemab, w/ Eisai) first a… |
 | **BMY** | $59.34 | 4/4 | A+ | Debt/EV 0.302 | Bristol-Myers Squibb — de-lever + profit growth play; Celgene debt pay… |
 | **CPAY** | $362.06 | 4/4 | A+ | Debt/EV 0.334 | Corpay (formerly FleetCor) — V/MA-like toll economics on corporate pay… |
-| **DXCM** | $76.35 | 4/4 | A+ | Passes all filters — | Dexcom — CGM platform leader (G7 sensor + pump integrations); A+ metri… |
 | **ESE** | $320.82 | 4/4 | A | ROE/ROA ROE 9.2% / ROA 5.8% | ESCO Technologies — niche industrials: RF/EMC test chambers (ETS-Lindg… |
 | **EXPE** | $265.63 | 4/4 | A | Op Margin 7.1% | Expedia Group — online travel marketplace (Expedia.com, Hotels.com, Vr… |
 | **FROG** | $92.02 | 4/4 | B | Op Margin -7.4% / Net Margin -10.9% / ROE/ROA ROE -7.1% / ROA -3.7% | JFrog — universal artifact repository (Artifactory) + software supply … |
@@ -116,7 +97,6 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **CLS** | $345.18 | 2/4 | A | Op Margin 6.6% | Celestica — AI infra contract manufacturer (servers, networking), ROE … |
 | **COHR** | $307.39 | 2/4 | B | ROE/ROA ROE 4.7% / ROA 3.1% / FCF Yield -0.3% | Coherent Corp — optical components (800G/1.6T datacenter interconnect … |
 | **DRI** | $196.69 | 2/4 | B | Debt/EV 0.257 | Darden Restaurants — Olive Garden + LongHorn + Fine Dining (Capital Gr… |
-| **DUOL** | $132.34 | 2/4 | A+ | Passes all filters — | Duolingo — gamified language learning platform, strong engagement moat… |
 | **DVN** | $43.73 | 2/4 | B | Debt/EV 0.262 / Op Margin 6.9% | Devon Energy — formed from CTRA+DVN merger; Permian + Appalachia nat g… |
 | **FLUT** | $112.40 | 2/4 | B | Debt/EV 0.406 / Op Margin 2.3% / Net Margin -2.2% / ROE/ROA ROE -5.0% / ROA 1.2% / FCF Yield -4.5% | Flutter Entertainment — global online sports betting; FanDuel #1 US (~… |
 | **GFS** | $63.94 | 2/4 | B | ROE/ROA ROE 6.8% / ROA 3.1% | GlobalFoundries — specialty foundry (RF, automotive, IoT); 5/6 filters… |
