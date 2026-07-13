@@ -3,6 +3,8 @@
 Current week snapshot — MA alignment, squeeze setups, and watchlist status.
 Run `python india_weekly_snapshot.py` each week to refresh. History is in git.
 
+→ [India Market Breadth](india_marketbreadth.html) — % above MA20/50/100/200 · Fully Stacked · Trend Intact · bucket breakdown
+
 ---
 
 ## Week of Jul 13 2026 (India)
@@ -52,9 +54,9 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | Ticker | Price | MA | Grade | Blockers | Thesis |
 |:-------|------:|:--:|:-----:|:---------|:-------|
 | **360ONE** | ₹1129.00 | 4/4 | A | ROE (financial) 14.4% | 360 ONE WAM (formerly IIFL Wealth) — HNI/ultra-HNI wealth + asset mgmt… |
-| **ADANIENT** | ₹3157.30 | 4/4 | B | Debt/EV 0.208 / Op Margin 5.5% / FCF Yield -7.0% | conglomerate, debt heavy |
-| **ADANIGREEN** | ₹1536.60 | 4/4 | A | Debt/EV 0.286 / ROE/ROA ROE 7.6% / ROA 3.7% / FCF Yield -9.9% | Adani Green — heavy capex, debt, P/E stretched but 57% op margin |
-| **ANANDRATHI** | ₹2146.80 | 4/4 | A | ROE/ROA ROE None% / ROA None% / ROE (financial) missing | Anand Rathi Wealth — wealth management, asset-light; OM 40%, NM 32%, R… |
+| **ADANIENT** | ₹3157.30 | 4/4 | B | Debt/EV 0.207 / Op Margin 5.5% / FCF Yield -7.0% | conglomerate, debt heavy |
+| **ADANIGREEN** | ₹1536.60 | 4/4 | A | Debt/EV 0.284 / ROE/ROA ROE 7.6% / ROA 3.7% / FCF Yield -9.9% | Adani Green — heavy capex, debt, P/E stretched but 57% op margin |
+| **ANANDRATHI** | ₹2146.80 | 4/4 | A+ | ROE/ROA ROE None% / ROA None% / ROE (financial) missing | Anand Rathi Wealth — wealth management, asset-light; OM 40%, NM 32%, R… |
 | **APOLLOHOSP** | ₹8841.00 | 4/4 | B | Passes all filters — | Apollo Hospitals — healthcare brand growing well, FCF inconsistent due… |
 | **DELHIVERY** | ₹520.30 | 4/4 | A | Op Margin 1.1% / Net Margin 1.5% / ROE/ROA ROE 1.6% / ROA -0.3% / FCF Yield -0.6% | logistics, margins building |
 | **ETERNAL** | ₹289.65 | 4/4 | B | Op Margin 0.1% / Net Margin 0.7% / ROE/ROA ROE 1.2% / ROA -0.6% / FCF Yield -1.1% | Eternal (formerly Zomato) — food delivery + quick commerce; profitabil… |
@@ -68,7 +70,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **BAJAJHFL** | ₹88.07 | 2/4 | A | ROE (financial) 12.1% | Bajaj Housing Finance — fast-growing NBFC, recently listed; ROE buildi… |
 | **CRISIL** | ₹4097.40 | 2/4 | A+ | ROE/ROA ROE None% / ROA None% / ROE (financial) missing | CRISIL — India's dominant credit rating agency, S&P Global subsidiary;… |
 | **KFINTECH** | ₹901.10 | 2/4 | A+ | Passes all filters — | KFin Technologies — second MF registrar after CAMS (~30% market share)… |
-| **M&M** | ₹3129.40 | 2/4 | A | Debt/EV 0.304 | Mahindra & Mahindra — farm equipment + SUV (Scorpio/XUV) + EV; OM 16.4… |
+| **M&M** | ₹3129.40 | 2/4 | A | Debt/EV 0.301 | Mahindra & Mahindra — farm equipment + SUV (Scorpio/XUV) + EV; OM 16.4… |
 | **MCX** | ₹2770.70 | 2/4 | A+ | Passes all filters — | Multi Commodity Exchange — India's commodity derivatives toll booth (C… |
 | **SWIGGY** | ₹273.25 | 2/4 | A | Op Margin -15.8% / Net Margin -18.0% / ROE/ROA ROE -29.1% / ROA -13.7% / FCF Yield -8.6% | Swiggy — food delivery, profitability inflecting, duopoly with Zomato |
 | **INDUSTOWER** | ₹406.15 | 1/4 | A+ | Passes all filters — | Indus Towers — largest India tower infra company; leases tower space t… |
