@@ -3,6 +3,8 @@
 Current week snapshot — MA alignment, squeeze setups, and watchlist status.
 Run `python weekly_snapshot.py` each week to refresh. History is in git.
 
+→ [US Market Breadth](us_marketbreadth.html) — % above MA20/50/100/200 · Fully Stacked · Trend Intact · bucket breakdown
+
 ---
 
 ## Week of Jul 13 2026
@@ -54,9 +56,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 
 ### Tier Movements — Week over Week
 
-↑ **Improved:** **CL** (◇ Trend Intact → ✦ Fully Stacked), **ETN** (◇ Trend Intact → ✦ Fully Stacked), **CHD** (MA100+MA200 → ◇ Trend Intact), **BMRN** (MA100+MA200 → ◈ Intermediate), **CTAS** (MA50+100 → All4 (unordered)), **BLK** (MA20 only → MA50+100), **VST** (Below all → MA50+100), **DPZ** (MA20 only → MA50), **NEE** (MA200 only → MA50)
-
-↓ **Dropped:** **CDNS** (✦ Fully Stacked → ◇ Trend Intact), **CRDO** (✦ Fully Stacked → ◇ Trend Intact), **TXN** (◇ Trend Intact → MA20 only), **CW** (◇ Trend Intact → MA100+MA200), **TSM** (◇ Trend Intact → MA100+MA200), **ASML** (◇ Trend Intact → MA100+MA200), **NVO** (◈ Intermediate → MA100+MA200), **SOFI** (◈ Intermediate → Below all), **ALGN** (All4 (unordered) → MA100+MA200), **TOST** (All4 (unordered) → MA50+100), **UBER** (MA50+100 → Below all), **HUBS** (MA50+100 → MA50), **TTD** (MA50 → MA20 only), **QCOM** (MA20 only → MA100+MA200), **ADI** (MA20 only → MA100+MA200), **SNPS** (MA20 only → Below all), **BSX** (MA20 only → Below all), **LITE** (MA20 only → MA200 only), **CIEN** (MA20 only → MA200 only), **SYM** (MA20 only → Below all), **COIN** (MA20 only → Below all), **IHS** (MA100+MA200 → MA200 only), **DHI** (MA100+MA200 → Below all), **GFS** (MA100+MA200 → MA200 only)
+_No tier changes this week._
 
 
 ### Watchlist Status
