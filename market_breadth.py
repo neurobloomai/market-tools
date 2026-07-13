@@ -282,4 +282,16 @@ if __name__ == '__main__':
     with open(out, 'w') as f:
         f.write(html)
     print(f"  Saved → {out}")
+
+    import subprocess
+    try:
+        commit_msg = f'us_marketbreadth: {datetime.now().strftime("%b %d %Y  %H:%M UTC")}'
+        subprocess.run(['git', 'add', 'us_marketbreadth.html'], check=True, capture_output=True)
+        subprocess.run(['git', 'commit', '-m', commit_msg], check=True, capture_output=True)
+        subprocess.run(['git', 'push'], check=True, capture_output=True)
+        print(f'  Pushed → GitHub  ({commit_msg})')
+    except subprocess.CalledProcessError as e:
+        msg = e.stderr.decode().strip() if e.stderr else str(e)
+        print(f'  Git push skipped: {msg or "nothing new to commit"}')
+
     webbrowser.open(f'file://{out}')
