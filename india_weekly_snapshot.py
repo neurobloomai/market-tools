@@ -153,6 +153,7 @@ if __name__ == '__main__':
         '# India Weekly Market Notes\n\n'
         'Current week snapshot — MA alignment, squeeze setups, and watchlist status.\n'
         'Run `python india_weekly_snapshot.py` each week to refresh. History is in git.\n\n'
+        '→ [India Market Breadth](india_marketbreadth.html) — % above MA20/50/100/200 · Fully Stacked · Trend Intact · bucket breakdown\n\n'
         '---\n\n'
     )
 
