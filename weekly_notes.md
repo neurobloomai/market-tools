@@ -54,13 +54,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 
 ### Tier Movements — Week over Week
 
-✦ **Entered Fully Stacked:** **CL**[U] (◇ Trend Intact → ✦ Fully Stacked), **ETN**[U] (◇ Trend Intact → ✦ Fully Stacked), **FROG**[W] (◇ Trend Intact → ✦ Fully Stacked)
-
-✦ **Left Fully Stacked:** **CDNS**[U] (✦ Fully Stacked → ◇ Trend Intact), **MNST**[U] (✦ Fully Stacked → ◇ Trend Intact), **APD**[W] (✦ Fully Stacked → All4 (unordered))
-
-↑ **Improved:** **BMRN**[U] (MA100+MA200 → ◈ Intermediate), **NDAQ**[U] (MA50+100 → All4 (unordered)), **CTAS**[U] (MA50+100 → All4 (unordered)), **BLK**[U] (MA20 only → MA50+100), **VST**[W] (Below all → MA50+100), **SSNC**[W] (MA50 → MA50+100), **CRM**[U] (MA20 only → MA50), **MKTX**[U] (Below all → MA20 only)
-
-↓ **Dropped:** **IHS**[U] (◇ Trend Intact → MA200 only), **CW**[U] (◇ Trend Intact → MA100+MA200), **TSM**[U] (◇ Trend Intact → MA100+MA200), **ASML**[U] (◇ Trend Intact → MA100+MA200), **SOFI**[W] (◈ Intermediate → Below all), **ALGN**[W] (All4 (unordered) → MA100+MA200), **TTD**[U] (MA50 → MA20 only), **QCOM**[U] (MA20 only → MA100+MA200), **ADI**[U] (MA20 only → MA100+MA200), **LITE**[U] (MA20 only → MA200 only), **CIEN**[U] (MA20 only → MA200 only), **DHI**[U] (MA100+MA200 → Below all), **DRI**[W] (MA100+MA200 → MA200 only), **GFS**[W] (MA100+MA200 → MA200 only)
+_No tier changes this week._
 
 
 ### Watchlist Status
