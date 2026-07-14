@@ -1,0 +1,9 @@
+name            = "neurobloom-subscribe"
+main            = "subscribe.js"
+compatibility_date = "2024-01-01"
+
+# After deploy, your worker URL is:
+#   https://neurobloom-subscribe.<your-account>.workers.dev
+#
+# To use a custom domain (e.g. subscribe.neurobloom.ai):
+#   add a route in Cloudflare dashboard → Workers → your worker → Triggers

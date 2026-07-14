@@ -265,30 +265,56 @@ def _md_to_email_html(md, subject):
 </html>"""
 
 
+def _fetch_subscribers(api_key):
+    """Fetch active contacts from Resend Audience. Falls back to NEWSLETTER_TO if not configured."""
+    audience_id = os.environ.get('RESEND_AUDIENCE_ID', '')
+    if not audience_id:
+        return [os.environ.get('NEWSLETTER_TO', 'amarnath@neurobloom.ai')]
+    try:
+        import requests as _req
+        resp = _req.get(
+            f'https://api.resend.com/audiences/{audience_id}/contacts',
+            headers={'Authorization': f'Bearer {api_key}'},
+            timeout=10,
+        )
+        if resp.status_code == 200:
+            contacts = resp.json().get('data', [])
+            active   = [c['email'] for c in contacts if not c.get('unsubscribed')]
+            print(f'  Subscribers: {len(active)} active from audience')
+            return active if active else [os.environ.get('NEWSLETTER_TO', 'amarnath@neurobloom.ai')]
+        print(f'  Audience fetch failed: {resp.status_code} — falling back to NEWSLETTER_TO')
+    except Exception as e:
+        print(f'  Audience fetch error: {e}')
+    return [os.environ.get('NEWSLETTER_TO', 'amarnath@neurobloom.ai')]
+
+
 def _send_email(subject, md, label):
     api_key = os.environ.get('RESEND_API_KEY', '')
-    to_addr = os.environ.get('NEWSLETTER_TO', 'amarnath@neurobloom.ai')
     if not api_key:
         print('  Email skipped: RESEND_API_KEY not set')
         return
     try:
         import requests as _req
-        html = _md_to_email_html(md, subject)
-        resp = _req.post(
-            'https://api.resend.com/emails',
-            headers={'Authorization': f'Bearer {api_key}', 'Content-Type': 'application/json'},
-            json={
-                'from':    'Market Pulse <newsletter@neurobloom.ai>',
-                'to':      [to_addr],
-                'subject': subject,
-                'html':    html,
-            },
-            timeout=15,
-        )
-        if resp.status_code in (200, 201):
-            print(f'  Email sent → {to_addr}')
-        else:
-            print(f'  Email failed: {resp.status_code} {resp.text}')
+        recipients = _fetch_subscribers(api_key)
+        html       = _md_to_email_html(md, subject)
+        # Resend accepts up to 50 recipients per call
+        for i in range(0, len(recipients), 50):
+            batch = recipients[i:i+50]
+            resp  = _req.post(
+                'https://api.resend.com/emails',
+                headers={'Authorization': f'Bearer {api_key}', 'Content-Type': 'application/json'},
+                json={
+                    'from':    'Market Pulse <newsletter@neurobloom.ai>',
+                    'to':      batch,
+                    'subject': subject,
+                    'html':    html,
+                },
+                timeout=15,
+            )
+            if resp.status_code in (200, 201):
+                print(f'  Email sent → {len(batch)} recipient(s)')
+            else:
+                print(f'  Email failed: {resp.status_code} {resp.text}')
     except Exception as e:
         print(f'  Email error: {e}')
 
