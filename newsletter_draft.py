@@ -265,26 +265,12 @@ def _md_to_email_html(md, subject):
 </html>"""
 
 
-def _fetch_subscribers(api_key):
-    """Fetch active contacts from Resend Audience. Falls back to NEWSLETTER_TO if not configured."""
-    audience_id = os.environ.get('RESEND_AUDIENCE_ID', '')
-    if not audience_id:
-        return [os.environ.get('NEWSLETTER_TO', 'amarnath@neurobloom.ai')]
-    try:
-        import requests as _req
-        resp = _req.get(
-            f'https://api.resend.com/audiences/{audience_id}/contacts',
-            headers={'Authorization': f'Bearer {api_key}'},
-            timeout=10,
-        )
-        if resp.status_code == 200:
-            contacts = resp.json().get('data', [])
-            active   = [c['email'] for c in contacts if not c.get('unsubscribed')]
-            print(f'  Subscribers: {len(active)} active from audience')
-            return active if active else [os.environ.get('NEWSLETTER_TO', 'amarnath@neurobloom.ai')]
-        print(f'  Audience fetch failed: {resp.status_code} — falling back to NEWSLETTER_TO')
-    except Exception as e:
-        print(f'  Audience fetch error: {e}')
+def _load_subscribers():
+    path = Path(__file__).parent / 'subscribers.json'
+    if path.exists():
+        subs = json.loads(path.read_text())
+        print(f'  Subscribers: {len(subs)}')
+        return subs
     return [os.environ.get('NEWSLETTER_TO', 'amarnath@neurobloom.ai')]
 
 
@@ -295,9 +281,8 @@ def _send_email(subject, md, label):
         return
     try:
         import requests as _req
-        recipients = _fetch_subscribers(api_key)
+        recipients = _load_subscribers()
         html       = _md_to_email_html(md, subject)
-        # Resend accepts up to 50 recipients per call
         for i in range(0, len(recipients), 50):
             batch = recipients[i:i+50]
             resp  = _req.post(

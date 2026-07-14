@@ -14,7 +14,13 @@ WL_SNAP       = HERE / 'watchlist_snapshot.json'
 STATE_FILE    = HERE / 'alert_state.json'
 
 RESEND_KEY    = os.environ.get('RESEND_API_KEY', '')
-ALERT_TO      = os.environ.get('NEWSLETTER_TO', 'amarnath@neurobloom.ai')
+
+
+def _load_subscribers():
+    path = HERE / 'subscribers.json'
+    if path.exists():
+        return json.loads(path.read_text())
+    return [os.environ.get('NEWSLETTER_TO', 'amarnath@neurobloom.ai')]
 
 
 def _load(path):
@@ -89,15 +95,18 @@ def send_alert(subject, html):
     if not RESEND_KEY:
         print('  RESEND_API_KEY not set — skipping email')
         return
-    resp = requests.post(
-        'https://api.resend.com/emails',
-        headers={'Authorization': f'Bearer {RESEND_KEY}', 'Content-Type': 'application/json'},
-        json={'from': 'newsletter@neurobloom.ai', 'to': [ALERT_TO], 'subject': subject, 'html': html},
-    )
-    if resp.status_code == 200:
-        print(f'  Alert sent → {ALERT_TO}')
-    else:
-        print(f'  Resend error: {resp.status_code} {resp.text}')
+    recipients = _load_subscribers()
+    for i in range(0, len(recipients), 50):
+        batch = recipients[i:i+50]
+        resp  = requests.post(
+            'https://api.resend.com/emails',
+            headers={'Authorization': f'Bearer {RESEND_KEY}', 'Content-Type': 'application/json'},
+            json={'from': 'Market Pulse <newsletter@neurobloom.ai>', 'to': batch, 'subject': subject, 'html': html},
+        )
+        if resp.status_code in (200, 201):
+            print(f'  Alert sent → {len(batch)} recipient(s)')
+        else:
+            print(f'  Resend error: {resp.status_code} {resp.text}')
 
 
 if __name__ == '__main__':

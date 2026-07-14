@@ -17,6 +17,7 @@
 !setups_snapshot.json
 !watchlist_snapshot.json
 !alert_state.json
+!subscribers.json
 __pycache__/
 *.pyc
 .env
