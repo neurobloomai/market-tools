@@ -71,6 +71,18 @@ jobs:
           git pull --rebase origin main || true
           git stash pop || true
 
+      - name: Alert check
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          NEWSLETTER_TO: amarnath@neurobloom.ai
+        run: python alert_check.py
+
+      - name: Commit alert state
+        run: |
+          git add alert_state.json || true
+          git diff --cached --quiet || git commit -m "alert_state: $(date -u +'%b %d %Y')"
+          git push || true
+
       - name: Newsletter draft
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}

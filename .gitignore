@@ -16,6 +16,7 @@
 !india_breadth_snapshot.json
 !setups_snapshot.json
 !watchlist_snapshot.json
+!alert_state.json
 __pycache__/
 *.pyc
 .env
