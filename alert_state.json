@@ -1,5 +1,6 @@
 {
   "setups": {
+    "AAPL": "IN",
     "MU": "IN"
   },
   "watchlist": {
@@ -29,6 +30,7 @@
     "AMD": 1,
     "TOST": 1,
     "FTAI": 1,
-    "ENPH": 1
+    "ENPH": 1,
+    "SEZL": 1
   }
 }
