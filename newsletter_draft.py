@@ -37,6 +37,33 @@ def _breadth_descriptor(pct20, pct100):
     if diff <= -8: return 'Short-term Leading'   # short-term outpacing long-term
     return 'Aligned'
 
+def _fmt_blocker(name, val, threshold):
+    """Clean blocker string — no redundant label repetition."""
+    if name == 'ROE/ROA':
+        # val is "ROE X% / ROA Y%" — strip None entries, show only failing side
+        parts = [p.strip() for p in val.split('/')]
+        relevant = [p for p in parts if 'None' not in p]
+        v = ' / '.join(relevant) if relevant else val
+        return f"ROE/ROA: {v} (gate {threshold})"
+    return f"{name}: {val} (gate {threshold})"
+
+
+def _extract_thesis(note):
+    """Extract the most useful part of a watchlist comment for newsletter display."""
+    # Strip ticker name prefix (e.g. "AbbVie — " or "ACAD — ")
+    if ' — ' in note:
+        note = note.split(' — ', 1)[1]
+    # Prefer gate clause if present
+    if 'gate:' in note:
+        gate_part = note.split('gate:', 1)[1].strip()
+        # Take up to first semicolon or end
+        gate_part = gate_part.split(';')[0].strip()
+        return f"Gate: {gate_part}"
+    # Otherwise take first meaningful clause (before metrics dump)
+    first = note.split(';')[0].strip()
+    return (first[:100] + '…') if len(first) > 100 else first
+
+
 def _parse_watchlist_notes():
     src = SCREENER_SRC.read_text()
     notes = {}
@@ -261,11 +288,14 @@ if __name__ == '__main__':
 
     lines += ['', '**WATCHLIST WATCH**\n']
     if wl_watch:
-        notes = _parse_watchlist_notes()
         for t, fails, note in wl_watch:
-            blockers = ' / '.join(f"{n} {v}" for n, v, _ in fails) if fails else 'all gates cleared'
-            short_note = (note[:80] + '…') if len(note) > 80 else note
-            lines.append(f"**{t}** — {blockers}. _{short_note}_")
+            if fails and fails[0][0] != 'Passes all filters':
+                blockers = ' · '.join(_fmt_blocker(n, v, th) for n, v, th in fails)
+            else:
+                blockers = 'all gates cleared'
+            thesis = _extract_thesis(note) if note else '—'
+            lines.append(f"**{t}** — {blockers}")
+            lines.append(f"  _{thesis}_")
     else:
         lines.append('No watchlist names approaching gate this week.')
 
