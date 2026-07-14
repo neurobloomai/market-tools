@@ -6,7 +6,7 @@ Free, open-source market dashboards and quality stock screeners powered by Yahoo
 
 Two filters before touching anything.
 
-First — is it a quality business? Profitable, generates cash, not drowning in debt.
+First — is it a quality business with durability? Profitable, generates cash, not drowning in debt.
 
 Second — is the price trend confirmed? Four moving averages, price above all four.
 
