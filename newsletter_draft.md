@@ -1,16 +1,16 @@
-**Subject:** Market Pulse — Week of Jul 13 2026 · Correcting / Aligned
+**Subject:** Market Pulse — Week of Jul 13 2026 · Mixed / Aligned
 
 ---
 
 **POSTURE**
 
-US: 0% above MA20, 0% above MA100 — short-term momentum leading. 0 names Fully Stacked. India: 41.6% above MA20, 61.0% above MA100 — mixed, structure holding. 12 names Fully Stacked.
+US: 64.1% above MA20, 71.3% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 32 names Fully Stacked. India: 41.6% above MA20, 61.0% above MA100 — mixed, structure holding. 12 names Fully Stacked.
 
 
 **WHAT MOVED**
 
 No new Fully Stacked entries this week.
-Left Fully Stacked — Universe: UNH, JBHT, FAST
+Left Fully Stacked — Universe: CW
 
 **SETUPS WORTH WATCHING**
 
@@ -22,10 +22,10 @@ No watchlist names approaching gate this week.
 
 **ONE THOUGHT**
 
-The portfolio's structural divergence has sharpened: US equities have lost all near-term footing while India's intermediate trend remains intact despite mixed momentum, leaving three quality names (UNH, JBHT, FAST) without setup support in the largest market. The absence of new Fully Stacked entries and promotion candidates suggests the market is neither offering fresh conviction nor maintaining existing ones—a state that typically precedes either capitulation or the kind of base-building that rewards patience over urgency.
+The divergence between long-term and short-term positioning in US equities—71% above the 100-day moving average versus 64% above the 20-day—suggests the market is experiencing natural consolidation within an intact uptrend rather than structural deterioration. India's pattern is inverted: short-term weakness (42% above MA20) coexists with solid long-term structure (61% above MA100), which typically precedes either a flush-out or a reacceleration, but not a breakdown. With 32 US names still Fully Stacked and nothing new entering or leaving, the market appears to be shedding weaker participants while preserving the health of its best-positioned holdings—a distinction worth respecting before treating every dip as an opportunity.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-07-14 14:43 UTC · Not financial advice_
+_Draft generated 2026-07-14 14:46 UTC · Not financial advice_
