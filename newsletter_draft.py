@@ -206,6 +206,82 @@ Write ONE short paragraph (3-5 sentences). This is NOT a buy/sell recommendation
         return f"_[ONE THOUGHT generation failed: {e}]_"
 
 
+# ── Email ─────────────────────────────────────────────────────────────────────
+
+def _md_to_email_html(md, subject):
+    """Convert newsletter markdown to clean HTML email."""
+    import re as _re
+    def _inline(s):
+        s = _re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', s)
+        s = _re.sub(r'_(.+?)_',       r'<em>\1</em>', s)
+        s = _re.sub(r'\[(.+?)\]\((.+?)\)', r'<a href="\2" style="color:#58a6ff">\1</a>', s)
+        return s
+
+    rows = []
+    for line in md.split('\n'):
+        s = line.strip()
+        if not s:
+            rows.append('<div style="height:10px"></div>')
+        elif s.startswith('**Subject:**'):
+            pass  # skip — used as email subject line
+        elif s == '---':
+            rows.append('<hr style="border:none;border-top:1px solid #21262d;margin:20px 0">')
+        elif s.startswith('**') and s.endswith('**'):
+            rows.append(f'<h2 style="font-size:13px;font-weight:700;color:#58a6ff;letter-spacing:.08em;text-transform:uppercase;margin:24px 0 8px">{_inline(s)}</h2>')
+        else:
+            rows.append(f'<p style="margin:4px 0;font-size:13px;line-height:1.7;color:#c9d1d9">{_inline(s)}</p>')
+
+    body = '\n'.join(rows)
+    return f"""<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
+<body style="background:#0d1117;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif">
+  <div style="max-width:600px;margin:0 auto;padding:32px 24px">
+    <div style="margin-bottom:24px">
+      <span style="font-size:11px;font-weight:700;color:#3fb950;letter-spacing:.1em;text-transform:uppercase">Market Pulse</span>
+      <span style="font-size:11px;color:#484f58;margin-left:8px">neurobloom.ai</span>
+    </div>
+    <h1 style="font-size:20px;font-weight:700;color:#e6edf3;margin:0 0 24px">{subject}</h1>
+    {body}
+    <div style="margin-top:32px;padding-top:16px;border-top:1px solid #21262d">
+      <p style="font-size:10px;color:#484f58;margin:0">
+        neurobloom.ai · For informational purposes only · Not financial advice<br>
+        <a href="https://neurobloom.ai" style="color:#484f58">neurobloom.ai</a>
+      </p>
+    </div>
+  </div>
+</body>
+</html>"""
+
+
+def _send_email(subject, md, label):
+    api_key = os.environ.get('RESEND_API_KEY', '')
+    to_addr = os.environ.get('NEWSLETTER_TO', 'amarnath@neurobloom.ai')
+    if not api_key:
+        print('  Email skipped: RESEND_API_KEY not set')
+        return
+    try:
+        import requests as _req
+        html = _md_to_email_html(md, subject)
+        resp = _req.post(
+            'https://api.resend.com/emails',
+            headers={'Authorization': f'Bearer {api_key}', 'Content-Type': 'application/json'},
+            json={
+                'from':    'Market Pulse <newsletter@neurobloom.ai>',
+                'to':      [to_addr],
+                'subject': subject,
+                'html':    html,
+            },
+            timeout=15,
+        )
+        if resp.status_code in (200, 201):
+            print(f'  Email sent → {to_addr}')
+        else:
+            print(f'  Email failed: {resp.status_code} {resp.text}')
+    except Exception as e:
+        print(f'  Email error: {e}')
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 if __name__ == '__main__':
@@ -319,3 +395,6 @@ if __name__ == '__main__':
     print(f"\n{'─'*60}")
     print(md)
     print(f"{'─'*60}\n")
+
+    # ── Send email via Resend ─────────────────────────────────────────────────
+    _send_email(subject, md, label)

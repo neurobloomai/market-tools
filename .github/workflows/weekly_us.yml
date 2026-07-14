@@ -74,6 +74,8 @@ jobs:
       - name: Newsletter draft
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          NEWSLETTER_TO: amarnath@neurobloom.ai
         run: python newsletter_draft.py
 
       - name: Commit newsletter draft
