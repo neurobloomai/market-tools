@@ -286,9 +286,13 @@ if __name__ == '__main__':
         'stacked_50':  len(b['stacked_50']),
         'stacked_100': len(b['stacked_100']),
     }
-    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'breadth_snapshot.json'), 'w') as f:
-        _json.dump(snap, f)
-    print(f"  Saved → breadth_snapshot.json")
+    # Guard: only write if data is valid — don't overwrite good snapshot with rate-limit zeros
+    if snap['total'] > 10 and snap['pct20'] > 0:
+        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'breadth_snapshot.json'), 'w') as f:
+            _json.dump(snap, f)
+        print(f"  Saved → breadth_snapshot.json")
+    else:
+        print(f"  breadth_snapshot.json NOT updated — data looks invalid (total={snap['total']}, pct20={snap['pct20']}%)")
 
     html = build_html(b)
     out  = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'us_marketbreadth.html')
