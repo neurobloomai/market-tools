@@ -143,7 +143,6 @@ UNIVERSE = [
     'CRDO',                       # Credo Technology — AI datacenter interconnect silicon (SerDes/AEC), 68% gross/35% op margin, 157% rev growth, zero debt, A+
     'MTSI',                       # MACOM Technology — analog/mixed-signal for 800G/1.6T optical datacenter interconnects; D/EV 0.02, NM 16%, ROE expanding, A
     'SLDE',                       # Slide Insurance Holdings — specialty E&S insurer, 48% op margin, 40% FCF yield, ROE 60%, 38% rev growth, 4.6x P/E, A+
-    'SEZL',                       # Sezzle — fee-based BNPL pivot, 61% op margin, 92% ROE, 74% gross margin, zero debt, A+
     'INCY',                       # Incyte — Jakafi franchise pharma, zero debt, 26% op margin, 27% net margin, ROE 31%, A
     'UTHR',                       # United Therapeutics — PAH franchise (Tyvaso/Remodulin/Orenitram), zero debt, 41% OM, 40% NM, ROE 20%; xenotransplantation moonshot optionality, A+
     'BMRN',                       # BioMarin Pharmaceutical — rare disease ERT specialist; Voxzogo (achondroplasia, orphan drug moat) + hemophilia + PKU pipeline; OM 18%, GrossM 51%, D/E 0.23, FCF $459M, fwd P/E 9.1x; NM 8.3% (just under 10%) + ROE 4.5% (goodwill from acquired programs, not operational weakness) — 2 soft blockers; A (5/7); 3/4 MA, slope +1.08
@@ -251,6 +250,7 @@ WATCHLIST = [
     # --- Solar ---
     'ENPH',  # Enphase Energy — microinverter monopoly + battery storage (IQ8/Encharge); cycle trough from high-rate residential solar slowdown, not structural; gross margins ~45%+ holding even in trough; OM -9.1% + RevG -20.6% blocking now; 3/4 MA recovering, -61.6% from highs; when rates normalize + installs recover = A+ candidate; engine intact
     'S',     # SentinelOne — AI-native cybersecurity platform, direct CrowdStrike competitor; GrossM 73.2%, RevG 20.8%, FCF 5.0% (positive, unusual for loss-making SaaS); OM -28.8% + NM -30.4% hard blockers; ROE -21.4%; watch OM crossing 0% and trending toward 10%+ over 2-3 quarters as scale drives margin inflection
+    'SEZL',  # Sezzle — fee-based BNPL pivot, 61% op margin, 92% ROE, 74% gross margin, zero debt, A+; moved from universe — extended/maxed out at Fully Stacked, risk elevated; gate: 20-25% pullback to re-enter
 
 ]
 
