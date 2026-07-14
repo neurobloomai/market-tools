@@ -1,36 +1,31 @@
-**Subject:** Market Pulse — Week of Jul 13 2026 · Mixed / Aligned
+**Subject:** Market Pulse — Week of Jul 13 2026 · Correcting / Aligned
 
 ---
 
 **POSTURE**
 
-US: 62.9% above MA20, 69.5% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 29 names Fully Stacked. India: 41.6% above MA20, 61.0% above MA100 — mixed, structure holding. 12 names Fully Stacked.
+US: 0% above MA20, 0% above MA100 — short-term momentum leading. 0 names Fully Stacked. India: 42.1% above MA20, 61.8% above MA100 — mixed, structure holding. 12 names Fully Stacked.
 
 
 **WHAT MOVED**
 
-Entered Fully Stacked — Universe: JPM, FAST, MNST, CW
-Entered Fully Stacked — Watchlist: APD, ONTO
-Left Fully Stacked — Universe: WST, CL, NBIX
+Entered Fully Stacked — Universe: CDNS, WST
+No exits from Fully Stacked.
 
 **SETUPS WORTH WATCHING**
 
-**MU** [Universe] — weekly gate open, -EXT, +3.6% vs MA10w, W.slope +159.31
-**AAPL** [Universe] — weekly gate open, IN, +4.0% vs MA10w, W.slope +8.71
+No setups with weekly gate open and band in range this week.
 
 **WATCHLIST WATCH**
 
-**ABBV** — ROE/ROA: ROA 10.0% (gate ≥ 10% / ≥ 15%)
-  _Allergan amortization masking strong cash earnings_
-**ACAD** — Op Margin: -1.7% (gate ≥ 10%)
-  _CNS/rare disease_
+No watchlist names approaching gate this week.
 
 **ONE THOUGHT**
 
-_[ONE THOUGHT — add ANTHROPIC_API_KEY to generate this section]_
+The US market is running on short-term momentum with nothing anchored to longer-term structure—a setup that typically demands either quick validation or quick reversals. India presents the inverse problem: solid structural underpinnings (61.8% above the 100-day line) but mixed near-term conviction, with 12 names meeting full criteria despite only 42% trading above the 20-day average. This divergence suggests the US is front-running sentiment while India is building foundation; momentum-driven reversals tend to be sharper than structure-driven consolidations, which matters for how you think about downside management in each region.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-07-14 14:21 UTC · Not financial advice_
+_Draft generated 2026-07-14 14:34 UTC · Not financial advice_
