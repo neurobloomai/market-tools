@@ -1,31 +1,35 @@
-**Subject:** Market Pulse — Week of Jul 13 2026 · Mixed / Aligned
+**Subject:** Market Pulse — Week of Jul 13 2026 · Mixed / Breadth Diverging
 
 ---
 
 **POSTURE**
 
-US: 64.1% above MA20, 71.3% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 32 names Fully Stacked. India: 41.6% above MA20, 61.0% above MA100 — mixed, structure holding. 12 names Fully Stacked.
+US: 61.1% above MA20, 70.1% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 29 names Fully Stacked. India: 41.6% above MA20, 61.0% above MA100 — mixed, structure holding. 12 names Fully Stacked.
 
 
 **WHAT MOVED**
 
-No new Fully Stacked entries this week.
-Left Fully Stacked — Universe: CW
+Entered Fully Stacked — Universe: SEZL
+Left Fully Stacked — Universe: CDNS, CB
+Left Fully Stacked — Watchlist: APD
 
 **SETUPS WORTH WATCHING**
 
-No setups with weekly gate open and band in range this week.
+**MU** [Universe] — weekly gate open, IN, +5.9% vs MA10w, W.slope +159.31
 
 **WATCHLIST WATCH**
 
-No watchlist names approaching gate this week.
+**ABBV** — ROE/ROA: ROA 10.0% (gate ≥ 10% / ≥ 15%)
+  _Allergan amortization masking strong cash earnings_
+**ACAD** — Op Margin: -1.7% (gate ≥ 10%)
+  _CNS/rare disease_
 
 **ONE THOUGHT**
 
-The divergence between long-term and short-term positioning in US equities—71% above the 100-day moving average versus 64% above the 20-day—suggests the market is experiencing natural consolidation within an intact uptrend rather than structural deterioration. India's pattern is inverted: short-term weakness (42% above MA20) coexists with solid long-term structure (61% above MA100), which typically precedes either a flush-out or a reacceleration, but not a breakdown. With 32 US names still Fully Stacked and nothing new entering or leaving, the market appears to be shedding weaker participants while preserving the health of its best-positioned holdings—a distinction worth respecting before treating every dip as an opportunity.
+The ratio between long-term and short-term structure integrity—70% of US names above their 100-day versus 61% above their 20-day—suggests the market is consolidating rather than accelerating. This gap typically emerges when genuine conviction holders are sitting through noise, and it's appearing alongside a healthy 29 Fully Stacked names, which means there's real participation, not just index drift. The fact that India's structure is holding at 61% above MA100 despite near-term weakness (41.6% above MA20) tells a similar story: durable positions are staying put while short-term traders test exits. In this environment, setups that clear their gates tend to have better staying power because they're moving into holdings that already have reason to own them.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-07-14 14:46 UTC · Not financial advice_
+_Draft generated 2026-07-14 19:54 UTC · Not financial advice_
