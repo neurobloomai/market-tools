@@ -4,13 +4,13 @@
 
 **POSTURE**
 
-US: 0% above MA20, 0% above MA100 — short-term momentum leading. 0 names Fully Stacked. India: 42.1% above MA20, 61.8% above MA100 — mixed, structure holding. 12 names Fully Stacked.
+US: 0% above MA20, 0% above MA100 — short-term momentum leading. 0 names Fully Stacked. India: 41.6% above MA20, 61.0% above MA100 — mixed, structure holding. 12 names Fully Stacked.
 
 
 **WHAT MOVED**
 
-Entered Fully Stacked — Universe: CDNS, WST
-No exits from Fully Stacked.
+No new Fully Stacked entries this week.
+Left Fully Stacked — Universe: UNH, JBHT, FAST
 
 **SETUPS WORTH WATCHING**
 
@@ -22,10 +22,10 @@ No watchlist names approaching gate this week.
 
 **ONE THOUGHT**
 
-The US market is running on short-term momentum with nothing anchored to longer-term structure—a setup that typically demands either quick validation or quick reversals. India presents the inverse problem: solid structural underpinnings (61.8% above the 100-day line) but mixed near-term conviction, with 12 names meeting full criteria despite only 42% trading above the 20-day average. This divergence suggests the US is front-running sentiment while India is building foundation; momentum-driven reversals tend to be sharper than structure-driven consolidations, which matters for how you think about downside management in each region.
+The portfolio's structural divergence has sharpened: US equities have lost all near-term footing while India's intermediate trend remains intact despite mixed momentum, leaving three quality names (UNH, JBHT, FAST) without setup support in the largest market. The absence of new Fully Stacked entries and promotion candidates suggests the market is neither offering fresh conviction nor maintaining existing ones—a state that typically precedes either capitulation or the kind of base-building that rewards patience over urgency.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-07-14 14:34 UTC · Not financial advice_
+_Draft generated 2026-07-14 14:43 UTC · Not financial advice_
