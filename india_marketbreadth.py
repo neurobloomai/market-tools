@@ -268,6 +268,19 @@ if __name__ == '__main__':
         print(f"  {BUCKET_LABEL[key]:30} {len(b['buckets'][key])}")
     print()
 
+    import json as _json
+    snap = {
+        'pct20': b['pct20'], 'pct50': b['pct50'],
+        'pct100': b['pct100'], 'pct200': b['pct200'],
+        'total': b['total'],
+        'stacked':     len(b['stacked']),
+        'stacked_50':  len(b['stacked_50']),
+        'stacked_100': len(b['stacked_100']),
+    }
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'india_breadth_snapshot.json'), 'w') as f:
+        _json.dump(snap, f)
+    print(f"  Saved → india_breadth_snapshot.json")
+
     html = build_html(b)
     out  = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'india_marketbreadth.html')
     with open(out, 'w') as f:

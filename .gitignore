@@ -12,6 +12,8 @@
 !india_weekly_notes.html
 *.json
 !breadth_history.json
+!breadth_snapshot.json
+!india_breadth_snapshot.json
 __pycache__/
 *.pyc
 .env

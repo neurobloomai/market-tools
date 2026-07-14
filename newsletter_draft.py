@@ -79,8 +79,8 @@ def _parse_watchlist_notes():
 def build_posture(us_b, india_b):
     u20, u50, u100, u200 = us_b['pct20'], us_b['pct50'], us_b['pct100'], us_b['pct200']
     i20, i50, i100, i200 = india_b['pct20'], india_b['pct50'], india_b['pct100'], india_b['pct200']
-    us_stacked    = len(us_b['stacked'])
-    india_stacked = len(india_b['stacked'])
+    us_stacked    = us_b['stacked']    if isinstance(us_b.get('stacked'),    int) else len(us_b.get('stacked',    []))
+    india_stacked = india_b['stacked'] if isinstance(india_b.get('stacked'), int) else len(india_b.get('stacked', []))
 
     us_posture    = _posture_label(u200)
     india_posture = _posture_label(i200)
@@ -291,14 +291,25 @@ if __name__ == '__main__':
 
     print(f"\n  Newsletter Draft — {label}")
 
-    # ── Breadth ───────────────────────────────────────────────────────────────
-    print("  Computing US breadth ...", flush=True)
-    us_b = compute_breadth(UNIVERSE)
+    # ── Breadth — read snapshots written by market_breadth.py / india_marketbreadth.py ──
+    us_snap    = Path(__file__).parent / 'breadth_snapshot.json'
+    india_snap = Path(__file__).parent / 'india_breadth_snapshot.json'
 
-    print("  Computing India breadth ...", flush=True)
-    from india_screener import UNIVERSE as INDIA_UNIVERSE
-    from india_marketbreadth import compute_breadth as india_compute_breadth
-    india_b = india_compute_breadth(INDIA_UNIVERSE)
+    if us_snap.exists():
+        us_b = json.loads(us_snap.read_text())
+        print(f"  US breadth loaded from snapshot (MA20 {us_b['pct20']}%)", flush=True)
+    else:
+        print("  US breadth snapshot missing — recomputing ...", flush=True)
+        us_b = compute_breadth(UNIVERSE)
+
+    if india_snap.exists():
+        india_b = json.loads(india_snap.read_text())
+        print(f"  India breadth loaded from snapshot (MA20 {india_b['pct20']}%)", flush=True)
+    else:
+        print("  India breadth snapshot missing — recomputing ...", flush=True)
+        from india_screener import UNIVERSE as INDIA_UNIVERSE
+        from india_marketbreadth import compute_breadth as india_compute_breadth
+        india_b = india_compute_breadth(INDIA_UNIVERSE)
 
     # ── History ───────────────────────────────────────────────────────────────
     history = json.loads(HISTORY_FILE.read_text()) if HISTORY_FILE.exists() else []
