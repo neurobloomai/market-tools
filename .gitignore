@@ -14,6 +14,8 @@
 !breadth_history.json
 !breadth_snapshot.json
 !india_breadth_snapshot.json
+!setups_snapshot.json
+!watchlist_snapshot.json
 __pycache__/
 *.pyc
 .env

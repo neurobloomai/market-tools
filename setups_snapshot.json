@@ -1,0 +1,92 @@
+[
+  {
+    "ticker": "NVDA",
+    "price": 206.7899932861328,
+    "w_gate": false,
+    "pct20d": 2.43,
+    "pct10w": -0.83,
+    "band": "+EXT",
+    "slope": -0.94,
+    "in_universe": true
+  },
+  {
+    "ticker": "META",
+    "price": 660.7000122070312,
+    "w_gate": false,
+    "pct20d": 12.17,
+    "pct10w": 10.06,
+    "band": "+EXT",
+    "slope": -16.81,
+    "in_universe": true
+  },
+  {
+    "ticker": "MSFT",
+    "price": 386.32000732421875,
+    "w_gate": false,
+    "pct20d": 1.52,
+    "pct10w": -4.36,
+    "band": "IN",
+    "slope": -11.06,
+    "in_universe": true
+  },
+  {
+    "ticker": "AAPL",
+    "price": 314.3800048828125,
+    "w_gate": true,
+    "pct20d": 5.08,
+    "pct10w": 4.16,
+    "band": "IN",
+    "slope": 8.71,
+    "in_universe": true
+  },
+  {
+    "ticker": "AMZN",
+    "price": 244.7550048828125,
+    "w_gate": false,
+    "pct20d": 1.78,
+    "pct10w": -3.01,
+    "band": "IN",
+    "slope": -6.21,
+    "in_universe": true
+  },
+  {
+    "ticker": "GOOGL",
+    "price": 356.6199951171875,
+    "w_gate": false,
+    "pct20d": -0.28,
+    "pct10w": -3.89,
+    "band": "IN",
+    "slope": -1.67,
+    "in_universe": true
+  },
+  {
+    "ticker": "AVGO",
+    "price": 394.976806640625,
+    "w_gate": false,
+    "pct20d": 3.25,
+    "pct10w": -1.65,
+    "band": "+EXT",
+    "slope": -12.32,
+    "in_universe": true
+  },
+  {
+    "ticker": "MU",
+    "price": 963.6599731445312,
+    "w_gate": true,
+    "pct20d": -8.27,
+    "pct10w": 4.08,
+    "band": "-EXT",
+    "slope": 159.31,
+    "in_universe": true
+  },
+  {
+    "ticker": "NFLX",
+    "price": 73.44499969482422,
+    "w_gate": false,
+    "pct20d": -2.39,
+    "pct10w": -9.76,
+    "band": "IN",
+    "slope": -5.7,
+    "in_universe": true
+  }
+]

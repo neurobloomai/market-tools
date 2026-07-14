@@ -128,46 +128,57 @@ def build_movements(history):
 
 
 def build_setups():
-    """Scan liquid names + full universe; surface weekly gate ✓ with -EXT or IN band."""
-    print("  Scanning setups ...", flush=True)
-    # Liquid names with detailed band/slope data
-    with ThreadPoolExecutor(max_workers=8) as ex:
-        liquid_rows = list(ex.map(liquid_status, LIQUID_NAMES))
+    """Read setups from snapshot written by weekly_snapshot.py."""
+    snap_file = Path(__file__).parent / 'setups_snapshot.json'
+    if snap_file.exists():
+        rows = json.loads(snap_file.read_text())
+        print(f"  Setups loaded from snapshot ({len(rows)} liquid names)", flush=True)
+    else:
+        print("  setups_snapshot.json missing — scanning live ...", flush=True)
+        with ThreadPoolExecutor(max_workers=8) as ex:
+            liquid_rows = list(ex.map(liquid_status, LIQUID_NAMES))
+        rows = []
+        for row in liquid_rows:
+            if row is None: continue
+            sym, price, w_gate, pct20d, pct10w, m10w, m50d, band, slope = row
+            if band != 'DATA?':
+                rows.append(dict(ticker=sym, price=price, w_gate=bool(w_gate),
+                                 pct10w=pct10w, band=band, slope=slope,
+                                 in_universe=sym in UNIVERSE))
 
-    setups = []
-    for row in liquid_rows:
-        if row is None:
-            continue
-        sym, price, w_gate, pct20d, pct10w, m10w, m50d, band, slope = row
-        if w_gate and band in ('IN', '-EXT') and slope is not None:
-            setups.append(dict(ticker=sym, price=price, band=band,
-                               pct10w=pct10w, slope=slope,
-                               in_universe=sym in UNIVERSE))
-
-    # Sort: -EXT first (pullback > in-band), then by slope desc
-    setups.sort(key=lambda x: (0 if x['band'] == '-EXT' else 1, -x['slope']))
+    setups = [r for r in rows if r.get('w_gate') and r.get('band') in ('IN', '-EXT') and r.get('slope') is not None]
+    setups.sort(key=lambda x: (0 if x['band'] == '-EXT' else 1, -(x['slope'] or 0)))
     return setups[:3]
 
 
 def build_watchlist_watch():
-    """Find watchlist name closest to promotion — fewest blockers or nearest gate."""
-    print("  Fetching watchlist fundamentals ...", flush=True)
-    with ThreadPoolExecutor(max_workers=10) as ex:
-        funds = dict(zip(WATCHLIST, ex.map(get_fundamentals, WATCHLIST)))
-
-    notes = _parse_watchlist_notes()
-    candidates = []
-    for t in WATCHLIST:
-        f = funds.get(t)
-        if not f:
-            continue
-        fails = failing_filters(f)
-        if fails is not None:
-            candidates.append((t, fails, notes.get(t, '')))
-
-    # Closest = fewest failing filters (and among those, first alphabetically)
-    candidates.sort(key=lambda x: (len(x[1]), x[0]))
-    return candidates[:2]   # top 2 closest
+    """Read watchlist status from snapshot written by weekly_snapshot.py."""
+    snap_file = Path(__file__).parent / 'watchlist_snapshot.json'
+    if snap_file.exists():
+        snap = json.loads(snap_file.read_text())
+        print(f"  Watchlist loaded from snapshot ({len(snap)} tickers)", flush=True)
+        candidates = []
+        for t, v in snap.items():
+            fails = [tuple(f) for f in v.get('fails', [])]
+            note  = v.get('note', '')
+            if fails and fails[0][0] != 'Passes all filters':
+                candidates.append((t, fails, note))
+        candidates.sort(key=lambda x: (len(x[1]), x[0]))
+        return candidates[:2]
+    else:
+        print("  watchlist_snapshot.json missing — fetching live ...", flush=True)
+        with ThreadPoolExecutor(max_workers=10) as ex:
+            funds = dict(zip(WATCHLIST, ex.map(get_fundamentals, WATCHLIST)))
+        notes = _parse_watchlist_notes()
+        candidates = []
+        for t in WATCHLIST:
+            f = funds.get(t)
+            if not f: continue
+            fails = failing_filters(f)
+            if fails:
+                candidates.append((t, fails, notes.get(t, '')))
+        candidates.sort(key=lambda x: (len(x[1]), x[0]))
+        return candidates[:2]
 
 
 def build_one_thought(posture_text, fs_entered, fs_left, setups, wl_watch, label):

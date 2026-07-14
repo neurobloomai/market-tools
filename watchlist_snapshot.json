@@ -1,0 +1,967 @@
+{
+  "AXON": {
+    "fails": [
+      [
+        "Op Margin",
+        "3.7%",
+        "\u2265 10%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE 6.8% / ROA 0.1%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": ""
+  },
+  "MELI": {
+    "fails": [
+      [
+        "Op Margin",
+        "6.9%",
+        "\u2265 10%"
+      ],
+      [
+        "FCF Yield",
+        "-4.3%",
+        "> 0%"
+      ]
+    ],
+    "note": ""
+  },
+  "SNOW": {
+    "fails": [
+      [
+        "Op Margin",
+        "-22.2%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-23.8%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -54.9% / ROA -9.7%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "P/E",
+        "101.7x",
+        "\u2264 100x"
+      ]
+    ],
+    "note": ""
+  },
+  "BILL": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.474",
+        "\u2264 0.20"
+      ],
+      [
+        "Op Margin",
+        "1.1%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "0.0%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE 0.0% / ROA -0.3%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": ""
+  },
+  "MDB": {
+    "fails": [
+      [
+        "Op Margin",
+        "-3.6%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-1.1%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -1.0% / ROA -1.8%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": ""
+  },
+  "NET": {
+    "fails": [
+      [
+        "Op Margin",
+        "-9.7%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-3.7%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -5.9% / ROA -2.7%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "P/E",
+        "178.2x",
+        "\u2264 100x"
+      ]
+    ],
+    "note": ""
+  },
+  "HUBS": {
+    "fails": [
+      [
+        "Op Margin",
+        "3.3%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "3.0%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE 5.0% / ROA 1.1%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": ""
+  },
+  "TEAM": {
+    "fails": [
+      [
+        "Op Margin",
+        "9.4%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-3.5%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -19.3% / ROA 0.5%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": ""
+  },
+  "MKC": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.251",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": ""
+  },
+  "DPZ": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.338",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": ""
+  },
+  "CPAY": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.328",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "Corpay (formerly FleetCor) \u2014 V/MA-like toll economics on corporate payments: fleet cards, B2B payments, lodging, Brazil tolls; GrossM 79.7%, OpM 41.4%, FCF 9.1%, RevG 25.4%, P/E 21.2x \u2014 A+ quality on every metric except debt; D/EV 0.334 only blocker \u2014 serial acquirer model means debt is structural (buy payment vertical \u2192 extract margin \u2192 repeat), FCF strong enough to delever fast if acquisitions pause; gate: D/EV \u2264 0.20 sustained 2+ quarters without a new acquisition resetting it"
+  },
+  "DRI": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.264",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "Darden Restaurants \u2014 Olive Garden + LongHorn + Fine Dining (Capital Grille/Eddie V's); casual dining scale moat + loyalty data + franchise-like unit economics; ROE 53.7%, FCF 4.6%, OM 14.3%, RevG 13.7%, P/E 19.3x \u2014 strong across the board; D/EV 0.259 only blocker (restaurant operating leverage + lease obligations, not acquisition debt); grade B; gate: D/EV \u2264 0.20 as FCF compounds down the debt"
+  },
+  "FROG": {
+    "fails": [
+      [
+        "Op Margin",
+        "-7.4%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-10.9%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -7.1% / ROA -3.7%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "JFrog \u2014 universal artifact repository (Artifactory) + software supply chain security (Xray); every build artifact, package, dependency stored and scanned here; deeply embedded in CI/CD pipelines = extreme switching costs once deployed enterprise-wide; GrossM 77.5%, FCF $170M positive (real cash despite negative GAAP OM), RevG 25.8%, near zero debt ($16M total); OM -7.4% only blocker (stock-comp heavy \u2014 FCF is the honest signal); software supply chain security tailwind (Log4j/SolarWinds made artifact scanning mandatory); gate: OM crossing 0% as scale drives leverage on R&D/S&M"
+  },
+  "GTLB": {
+    "fails": [
+      [
+        "Op Margin",
+        "-6.0%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-2.5%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -3.0% / ROA -1.9%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "GitLab \u2014 complete DevSecOps platform (source control + CI/CD + security scanning + project mgmt) in a single application; enterprise moat = single-platform control vs GitHub's patchwork integrations, strong self-hosted/air-gap compliance appeal; GrossM 86.8% (higher than FROG), FCF $313M positive, RevG 23.1%, zero debt; OM -6.0% only blocker \u2014 closer to crossing 0% than FROG; fwd PE 31x (vs FROG 82x) = more conservatively priced; 39% off 52w highs; same story as FROG \u2014 2-3 quarters tells it; gate: OM crossing 0% sustained"
+  },
+  "GEV": {
+    "fails": [
+      [
+        "Op Margin",
+        "5.5%",
+        "\u2265 10%"
+      ]
+    ],
+    "note": "GE Vernova \u2014 picks-and-shovels for entire energy transition; supplies wind turbines, gas turbines, grid (transformers/switchgear/HVDC) \u2014 every renewable project + datacenter power need touches GEV; OM 5.5% only blocker (offshore wind losses dragging profitable gas+grid mix; inflects as wind rolls off); D/EV 0.012, ROE 75.7%, FCF +3.0%, fwd P/E 46.8x; grade A+; at 52w highs +113% from low, 42% above 40w MA \u2014 wait for 20-25% correction (~$870-920)"
+  },
+  "PEG": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.379",
+        "\u2264 0.20"
+      ],
+      [
+        "FCF Yield",
+        "-0.4%",
+        "> 0%"
+      ]
+    ],
+    "note": "PSEG \u2014 integrated NJ utility + nuclear operator (Salem 1&2 + Hope Creek); same AI/datacenter nuclear PPA thesis as CEG but integrated utility (regulated T&D + nuclear generation) vs CEG pure-play; OM 28.4%, NM 17.7%, ROE 13.4% (PUC-capped), RevG 19.4%, P/E 17.8x; D/EV 0.38 (rate-base utility debt, FERC/PUC approved) + FCF -0.4% (barely negative \u2014 nuclear refueling cycles + grid modernization capex) both blocking; grade A; gates: D/EV delevering + FCF inflection as nuclear PPAs convert to contracted cash flows"
+  },
+  "NEE": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.35",
+        "\u2264 0.20"
+      ],
+      [
+        "FCF Yield",
+        "-9.9%",
+        "> 0%"
+      ]
+    ],
+    "note": "NextEra \u2014 world's largest renewable platform (wind/solar/battery) + FPL (best-run regulated utility in US); OM 30.2%, NM 29.4%, ROE 10.3%; D/EV 0.352 (Dominion acq debt, can resolve) + FCF -10.2% (renewable capex \u2192 contracted cash flows once online, not perpetual like DUK); grade A, 2 blockers both have resolution paths; at 40w MA support, 10% off highs 2026-07-01"
+  },
+  "WEC": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.369",
+        "\u2264 0.20"
+      ],
+      [
+        "FCF Yield",
+        "-5.5%",
+        "> 0%"
+      ]
+    ],
+    "note": "WEC Energy Group \u2014 regulated Midwest utility (Wisconsin/Illinois/Michigan); OM 29%, NM 16.2%, ROE 11.7%, RevG 9%; D/E 1.53 (IOU rate-based capex, FERC/PUC approved \u2014 structural not deteriorating) + FCF -$2B (grid modernization + AI datacenter load buildout in Wisconsin corridor) + ROE PUC-capped at ~11%; B (4/7); 4/4 MA aligned, slope +0.12 \u2014 cleaner margins than LNT, AI datacenter demand angle (Microsoft/hyperscaler buildout in Wisconsin)"
+  },
+  "LNT": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.376",
+        "\u2264 0.20"
+      ],
+      [
+        "FCF Yield",
+        "-6.1%",
+        "> 0%"
+      ]
+    ],
+    "note": "Alliant Energy \u2014 regulated Midwest utility (Iowa/Wisconsin); OM 21%, NM 18.6%, ROE 11.3%, RevG 5%; D/E 1.60 + FCF -$1.2B + ROE PUC-capped \u2014 same structural blockers as WEC; B (4/7); 4/4 MA aligned, slope +1.53; smaller ($20B) and less differentiated than WEC/NEE \u2014 watching for margin improvement"
+  },
+  "AMG": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.234",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "Affiliated Managers Group \u2014 multi-boutique AM (AQR, Tweedy Browne etc.); owns fee economics in independent boutiques, asset-light; OM 22.1%, NM 35.5%, ROE 21.8%, FCF 2.6%, fwd P/E 8.5x; D/EV 0.245 only blocker (structural debt to buy stakes, paying down with FCF); grade A"
+  },
+  "DVN": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.255",
+        "\u2264 0.20"
+      ],
+      [
+        "Op Margin",
+        "6.9%",
+        "\u2265 10%"
+      ]
+    ],
+    "note": "Devon Energy \u2014 formed from CTRA+DVN merger; Permian + Appalachia nat gas/oil; NM 14.2%, ROE 15.2%, FCF 3.2%, P/E 11.8x \u2014 solid underlying economics; D/EV 0.257 (merger leverage) + OM 6.9% both blocking; gate: D/EV \u2264 0.20 as merger debt amortizes + OM \u2265 10% on commodity price recovery"
+  },
+  "NRG": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.439",
+        "\u2264 0.20"
+      ],
+      [
+        "Op Margin",
+        "3.6%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "0.7%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE 6.2% / ROA 2.2%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "NRG Energy \u2014 de-lever play; LS Power acq doubled fleet+debt, targeting 3x net leverage, Fwd P/E 11x, yield-sensitive re-rate when 10yr < 4.0%"
+  },
+  "VST": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.265",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "Vistra \u2014 deregulated nuclear+gas (Energy Harbor acq), Texas/ERCOT exposure; OM 26.6%, ROE 42.9%, FCF +0.9%, RevG 43.4%, fwd P/E 14.1x; D/EV 0.265 only blocker (closer to threshold than NEE); grade A single blocker \u2014 cleaner than CEG on framework metrics; 27.6% off 52w high, below 20w+40w MAs; promote when D/EV \u2264 0.20 + MA structure recovers"
+  },
+  "LNG": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.321",
+        "\u2264 0.20"
+      ],
+      [
+        "Op Margin",
+        "-53.7%",
+        "\u2265 10%"
+      ]
+    ],
+    "note": "Cheniere Energy \u2014 largest US LNG export terminal operator (Sabine Pass + Corpus Christi); long-term take-or-pay SPAs (20yr contracts) = utility-like contracted cash flows; Europe permanent de-Russian gas = structural LNG demand floor; FCF $1.7B + ROE 28.9% show real economics; D/E 3.2 structural terminal infrastructure debt (same read as telecom capex, not deteriorating); GAAP OM distorted by commodity MTM hedging accounting \u2014 FCF is the signal, not OM; B (3/7); MA 3/4, slope negative \u2014 below MA20w $249, entry on weekly alignment recovery"
+  },
+  "KTOS": {
+    "fails": [
+      [
+        "Op Margin",
+        "1.8%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "2.1%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE 1.2% / ROA 0.6%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "-1.2%",
+        "> 0%"
+      ]
+    ],
+    "note": "Kratos \u2014 drone/defense tech; margins thin now, scaling with DoD contracts"
+  },
+  "EXPE": {
+    "fails": [
+      [
+        "Op Margin",
+        "7.1%",
+        "\u2265 10%"
+      ]
+    ],
+    "note": "Expedia Group \u2014 online travel marketplace (Expedia.com, Hotels.com, Vrbo, Orbitz); toll booth on travel bookings, asset-light; GrossM 90.3%, NM 9.8%, FCF 22.9% (standout \u2014 structural marketplace cash, not cyclical), D/EV 14.4%, ROE 71.5% (buyback-distorted, ROIC cleaner), RevG 14.7%, P/E 11.7x; OM 7.1% only blocker (just under 8% \u2014 one operating leverage step away); VRBO differentiated (family/group vacation rental, different from Airbnb urban focus); market pricing this as cyclical consumer at 11.7x vs actual toll-booth economics; gate: OM \u2265 8% sustained + RevG holding above 10% as travel recovery normalizes"
+  },
+  "FLUT": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.402",
+        "\u2264 0.20"
+      ],
+      [
+        "Op Margin",
+        "2.3%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-2.2%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -5.0% / ROA 1.2%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "-4.7%",
+        "> 0%"
+      ]
+    ],
+    "note": "Flutter Entertainment \u2014 global online sports betting; FanDuel #1 US (~45% share) + Paddy Power/Betfair (UK/Ireland) + Sportsbet (Australia) + Sisal (Italy) + PokerStars; Betfair exchange model (P2P betting, FLUT takes commission) = structurally lower cost than traditional sportsbook; OM ~12%, NM ~9%, FCF ~4%, RevG ~22%, ROE ~12%; D/EV ~0.30 (serial acquisition debt \u2014 Sisal 2022 + PokerStars integration) only blocker; two-speed business: mature international at high margins subsidizing FanDuel US scale-up; gate: D/EV \u2264 0.20 as FCF deleverages"
+  },
+  "SOFI": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE 6.6% / ROA 1.3%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "missing (no data relief)",
+        "> 0% or rev>50%+margin>10%"
+      ]
+    ],
+    "note": "SoFi \u2014 neobank scaling; ROE 6.6% and trending right"
+  },
+  "UPWK": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.41",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "Upwork \u2014 freelance marketplace; D/EV 0.44 (converts) only blocker, margins/FCF solid"
+  },
+  "CLS": {
+    "fails": [
+      [
+        "Op Margin",
+        "6.6%",
+        "\u2265 10%"
+      ]
+    ],
+    "note": "Celestica \u2014 AI infra contract manufacturer (servers, networking), ROE 52%, D/EV 0.02, gross margin 12% blocks universe"
+  },
+  "SSNC": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.323",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "SS&C Technologies \u2014 fund admin infra, $1.28B FCF, extreme switching costs, debt 0.32 only blocker"
+  },
+  "SYM": {
+    "fails": [
+      [
+        "Op Margin",
+        "1.1%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-0.3%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -5.7% / ROA -0.6%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Symbotic \u2014 warehouse AI robotics, Walmart-backed; revenue scaling, margins early"
+  },
+  "AMSC": {
+    "fails": [
+      [
+        "Op Margin",
+        "5.1%",
+        "\u2265 10%"
+      ]
+    ],
+    "note": "American Superconductor \u2014 power electronics, grid/defense; OpM 5.1%, one filter away"
+  },
+  "BMY": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.295",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "Bristol-Myers Squibb \u2014 de-lever + profit growth play; Celgene debt paydown near complete, Eliquis+Opdivo FCF, NI inflecting"
+  },
+  "TGTX": {
+    "fails": [
+      [
+        "FCF Yield",
+        "-0.4%",
+        "> 0%"
+      ]
+    ],
+    "note": "TG Therapeutics \u2014 Briumvi (ublituximab, anti-CD20 MS); faster infusion than Ocrevus, scaling fast; NM 66%, OM 17%, GrossM 83%, ROE 112%, RevG 69.6%, fwd P/E 18.6x; D/E 1.29 (commercialization converts) + FCF -$30M blocking; watching from distance \u2014 wait for real discount before considering"
+  },
+  "VCYT": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE 6.9% / ROA 3.8%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Veracyte \u2014 genomic diagnostics; moat = guideline inclusion (NCCN/medical society); Afirma (thyroid indeterminate biopsy, prevents unnecessary surgery) + Decipher Prostate (active surveillance vs treatment, growth engine) + Percepta/Envisia; OM 16.3%, NM 16.2%, GrossM 72.9%, D/E 0.029, FCF $105M, RevG 21.5%; ROE 6.9% only blocker (Decipher acq goodwill, resolves as earnings scale); 4/4 MA aligned, price at MA10d"
+  },
+  "ACAD": {
+    "fails": [
+      [
+        "Op Margin",
+        "-1.7%",
+        "\u2265 10%"
+      ]
+    ],
+    "note": "Acadia Pharmaceuticals \u2014 CNS/rare disease; Nuplazid (only FDA-approved Parkinson's psychosis drug) + DAYBUE (Rett syndrome, 2023); NM 34.3%, ROE 37.3%, D/E 0.041, FCF $154M; OM -1.7% only blocker; 2026 earnings outlook bleak \u2014 future consideration, not actionable now"
+  },
+  "BIIB": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE 7.7% / ROA 6.0%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Biogen \u2014 neuroscience pure-play; Leqembi (lecanemab, w/ Eisai) first approved Alzheimer's disease-modifier, subcutaneous monthly formulation removes IV burden; zuranolone (depression) via Sage partnership; ROE 7.7% + D/EV 0.21 blocking; MS revenue decline (Tecfidera generics) masking neuro pipeline value"
+  },
+  "COST": {
+    "fails": [
+      [
+        "Op Margin",
+        "3.7%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "3.0%",
+        "\u2265 5%"
+      ]
+    ],
+    "note": "Costco \u2014 membership moat, not a margin story; OM ~3% by design (merchandise passes savings to members, fee stream runs at ~95% margin); screen blocks on OM/NM \u2014 low margins are the product, not a flaw; measure by membership fee growth + renewal rate (~93%) + ROIC; currently 0/4 MA (CMF -0.20, distribution); promote to UNIVERSE on 4/4 recovery"
+  },
+  "ORLY": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE None% / ROA 13.8%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "O'Reilly Auto Parts \u2014 Akre compounder; 18% OM, 14% NM, ROA 13.8% (ROE negative from 20yrs buybacks); ROA just below 15% threshold; D/EV 0.10, P/E 29x, exceptional execution"
+  },
+  "TDG": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.329",
+        "\u2264 0.20"
+      ],
+      [
+        "ROE/ROA",
+        "ROE None% / ROA 11.8%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "TransDigm \u2014 aerospace parts monopolist, 47% OM, 22% NM; D/EV 0.325 structural debt (leveraged rollup model, won't change); watch if debt pays down or FCF re-rates"
+  },
+  "ESE": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE 9.2% / ROA 5.8%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "ESCO Technologies \u2014 niche industrials: RF/EMC test chambers (ETS-Lindgren), utility grid modernization/power quality, aerospace filtration (VACCO); GrossM 41.9%, OM 15.5%, FCF $320M positive, RevG 33.5%, D/EV 0.024 (near zero debt); ROE 9.2% only blocker \u2014 same niche-industrial profile as HEICO but murkier moat (collection of niches vs HEICO's unambiguous FAA-PMA franchise); NM 24.7% > OM 15.5% anomaly \u2014 likely one-time tax benefit, watch normalize; fwd PE 36x (cheaper than HEI at 50x); B grade; gate: ROE crossing 12%+ as revenue scale compounds"
+  },
+  "FISV": {
+    "fails": [
+      [
+        "Debt/EV",
+        "missing",
+        "\u2264 0.20"
+      ],
+      [
+        "Op Margin",
+        "missing",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "missing",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE None% / ROA None%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "missing (no data relief)",
+        "> 0% or rev>50%+margin>10%"
+      ]
+    ],
+    "note": "Fiserv \u2014 payment processing + Clover POS + banking tech, extreme switching costs; ~33% OM, 15% NM; D/EV ~0.26 from First Data acquisition; ~$3-4B FCF/yr paydown, 1-2yr to threshold"
+  },
+  "APD": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.211",
+        "\u2264 0.20"
+      ],
+      [
+        "FCF Yield",
+        "-5.2%",
+        "> 0%"
+      ]
+    ],
+    "note": "Air Products \u2014 industrial gases, green/blue hydrogen megaproject bet ($15B+, NEOM/Louisiana); D/EV 0.224 + FCF -5.6% from capex cycle both blocking; new CEO reviewing strategy; watch for FCF inflection as projects come online"
+  },
+  "PYPL": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.263",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "PayPal \u2014 OM 18%, NM 15%, ROE 25%, FCF 11%, P/E 7.8x; D/EV 0.30 only blocker (customer float structural); Chriss margin recovery showing in numbers"
+  },
+  "IOT": {
+    "fails": [
+      [
+        "Op Margin",
+        "1.5%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "3.3%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE 4.4% / ROA -0.3%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Samsara \u2014 fleet/IoT SaaS, GM 76%, zero debt, 30% RevG, FCF just turned positive; OM 1.5% blocking, 2yr runway to A/A+ as scale drives margin"
+  },
+  "ABBV": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE None% / ROA 10.0%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "AbbVie \u2014 Allergan amortization masking strong cash earnings; FCF/Debt 28.5%, IC improving 6.3\u21927.8\u00d7, Skyrizi/Rinvoq replacing Humira"
+  },
+  "GFS": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE 6.8% / ROA 3.1%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "GlobalFoundries \u2014 specialty foundry (RF, automotive, IoT); 5/6 filters pass, ROE 6.8% only blocker (capital-heavy fab structure)"
+  },
+  "PWR": {
+    "fails": [
+      [
+        "Op Margin",
+        "4.2%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "3.7%",
+        "\u2265 5%"
+      ]
+    ],
+    "note": "Quanta Services \u2014 dominant grid/electrical infrastructure contractor; OM 4% blocks now, watch for 7-8% as AI datacenter + grid modernization drives project mix higher"
+  },
+  "SITM": {
+    "fails": [
+      [
+        "Op Margin",
+        "-4.2%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-6.4%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -2.6% / ROA -2.3%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "SiTime \u2014 MEMS precision timing chips; near-monopoly, 65% gross margin, AI datacenter + 5G tailwind; cyclical recovery in progress"
+  },
+  "LSCC": {
+    "fails": [
+      [
+        "Net Margin",
+        "3.5%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE 2.7% / ROA 2.5%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Lattice Semiconductor \u2014 low-power FPGAs, 60%+ gross margin, zero debt; AI edge + industrial; cyclical trough recovery"
+  },
+  "ONTO": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE 5.3% / ROA 5.4%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Onto Innovation \u2014 advanced packaging inspection/metrology; HBM + chiplet complexity = more inspection; picks-and-shovels for AI silicon"
+  },
+  "AMD": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE 8.1% / ROA 3.6%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "AMD \u2014 AI accelerator (MI300X/MI350) + x86 CPU challenger; OM ~21%, NM scaling; D/EV low; FCF building as datacenter GPU mix grows; watch for ROE/NM qualification"
+  },
+  "INTC": {
+    "fails": [
+      [
+        "Op Margin",
+        "6.9%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-5.9%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -2.9% / ROA 0.6%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "-1.6%",
+        "> 0%"
+      ]
+    ],
+    "note": "Intel \u2014 x86 architect in foundry transition (Intel 18A); OM/NM/ROE all blocking post-Gelsinger restructuring; Lip-Bu Tan CEO, cost reset underway; multi-year turnaround"
+  },
+  "TOST": {
+    "fails": [
+      [
+        "Op Margin",
+        "6.7%",
+        "\u2265 10%"
+      ]
+    ],
+    "note": "Toast \u2014 restaurant POS/payments platform; ROE 22.5%, FCF 4%, rev growth 21.9%, near-zero debt; OM 6.7% + NM 6.4% blocking; grades A, 0/4 MA; strong switching costs, margins scaling"
+  },
+  "FIG": {
+    "fails": [
+      [
+        "Op Margin",
+        "-41.2%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-123.8%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -101.7% / ROA -43.6%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Figma \u2014 design collaboration SaaS; 79.8% gross margin, FCF 8.6%, 46.1% rev growth; OM -41.2% post-IPO investment spend blocking; grades B (OM negative caps grade); Adobe tried $20B acquisition, IPO'd at $9.5B \u2014 quality business finding its level"
+  },
+  "COIN": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.204",
+        "\u2264 0.20"
+      ],
+      [
+        "Op Margin",
+        "-7.1%",
+        "\u2265 10%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE 6.7% / ROA 1.9%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Coinbase \u2014 digital asset exchange, crypto theme proxy; 85.5% gross margin, FCF 5.4%; OM -7.1% + rev growth -30.8% (crypto volume cycle) blocking; grades B, 0/4 MA; cyclical \u2014 watch for volume recovery + OM turning positive"
+  },
+  "FTAI": {
+    "fails": [
+      [
+        "FCF Yield",
+        "-1.5%",
+        "> 0%"
+      ]
+    ],
+    "note": "FTAI Aviation \u2014 CFM56 engine platform (powers 737/A320, largest narrowbody fleet in the world); buys used engines, refurbishes modules, leases/sells back to airlines at discount to OEM \u2014 toll booth on aviation, not the airline itself; OM 22.5%, NM 18.9%, ROA 11.3%, RevG 65.5%, fwd PE 18.5x; FCF -$320M \u2717 (main blocker \u2014 growth capex consuming cash or structural, unclear); D/EV 0.132 manageable (D/E 809 is buyback-distorted equity, not leverage deterioration); infrastructure segment separation adds complexity; Hindenburg short report (2024) raised accounting concerns \u2014 not fully resolved; down -34% from highs; gate: FCF turning positive + infrastructure separation complete + short report overhang cleared; Buffett/Munger would disapprove (aviation industry) \u2014 but this is the toll booth, not the airline"
+  },
+  "COHR": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE 4.7% / ROA 3.1%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "-0.3%",
+        "> 0%"
+      ]
+    ],
+    "note": "Coherent Corp \u2014 optical components (800G/1.6T datacenter interconnect + telecom); OM 13.6%, NM 7.1%, D/EV 0.045; ROE 4.7% + FCF -0.3% blocking; post II-VI merger integration phase; watch FCF inflection"
+  },
+  "AVAV": {
+    "fails": [
+      [
+        "Op Margin",
+        "2.8%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-13.4%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -10.0% / ROA -1.3%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "-3.4%",
+        "> 0%"
+      ]
+    ],
+    "note": "AeroVironment \u2014 defense drones (Switchblade loitering munition, Puma ISR); RevG 143.4%, D/EV 0.108; OM -5.1% scaling with DoD contracts; proven battlefield platform"
+  },
+  "ALB": {
+    "fails": [
+      [
+        "Net Margin",
+        "-4.2%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -1.8% / ROA 1.6%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Albemarle \u2014 largest lithium producer (Chile/Australia mines); OM 24.8%, FCF 4.1%, D/EV 0.095; NM -4.2% from lithium price cycle (not structural); long-term EV battery supply chain position"
+  },
+  "ENPH": {
+    "fails": [
+      [
+        "Op Margin",
+        "-9.1%",
+        "\u2265 10%"
+      ]
+    ],
+    "note": "Enphase Energy \u2014 microinverter monopoly + battery storage (IQ8/Encharge); cycle trough from high-rate residential solar slowdown, not structural; gross margins ~45%+ holding even in trough; OM -9.1% + RevG -20.6% blocking now; 3/4 MA recovering, -61.6% from highs; when rates normalize + installs recover = A+ candidate; engine intact"
+  },
+  "S": {
+    "fails": [
+      [
+        "Op Margin",
+        "-28.8%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-30.4%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -21.4% / ROA -7.9%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "SentinelOne \u2014 AI-native cybersecurity platform, direct CrowdStrike competitor; GrossM 73.2%, RevG 20.8%, FCF 5.0% (positive, unusual for loss-making SaaS); OM -28.8% + NM -30.4% hard blockers; ROE -21.4%; watch OM crossing 0% and trending toward 10%+ over 2-3 quarters as scale drives margin inflection"
+  }
+}

@@ -58,7 +58,7 @@ def _tier(price, ma4, ma10, ma20, ma40):
 
 sys.path.insert(0, '.')
 from screener import UNIVERSE, WATCHLIST, get_fundamentals, quality_grade, failing_filters
-from ma_scanner import liquid_panel_md
+from ma_scanner import liquid_panel_md, liquid_status, LIQUID_NAMES
 from notes_renderer import md_to_html
 
 ALL = list(dict.fromkeys(UNIVERSE + WATCHLIST))
@@ -213,6 +213,19 @@ if __name__ == '__main__':
     notes    = parse_watchlist_notes()
     wl_order = sorted(WATCHLIST, key=lambda t: (-wl_map.get(t, {}).get('score', 0), t))
 
+    # Save watchlist snapshot for newsletter_draft.py
+    wl_snap = {}
+    for t in WATCHLIST:
+        f = wl_funds.get(t)
+        if f:
+            fails = failing_filters(f)
+            wl_snap[t] = {
+                'fails': [[n, v, th] for n, v, th in fails] if fails else [],
+                'note':  notes.get(t, ''),
+            }
+    Path(HISTORY_FILE.parent / 'watchlist_snapshot.json').write_text(json.dumps(wl_snap, indent=2))
+    print(f'  Saved → watchlist_snapshot.json')
+
     lines.append('\n### Watchlist Status\n')
     lines.append('| Ticker | Price | MA | Grade | Blockers | Thesis |')
     lines.append('|:-------|------:|:--:|:-----:|:---------|:-------|')
@@ -241,7 +254,27 @@ if __name__ == '__main__':
     )
 
     print(f'  Fetching liquid names panel ...', flush=True)
-    md = header + '\n'.join(lines) + '\n' + liquid_panel_md()
+    with ThreadPoolExecutor(max_workers=8) as ex:
+        liquid_rows = list(ex.map(liquid_status, LIQUID_NAMES))
+    setups_snap = []
+    for row in liquid_rows:
+        if row is None:
+            continue
+        sym, price, w_gate, pct20d, pct10w, m10w, m50d, band, slope = row
+        if band != 'DATA?':
+            setups_snap.append(dict(
+                ticker=sym, price=price, w_gate=bool(w_gate),
+                pct20d=round(pct20d, 2) if pct20d is not None else None,
+                pct10w=round(pct10w, 2) if pct10w is not None else None,
+                band=band,
+                slope=round(slope, 2) if slope is not None else None,
+                in_universe=sym in UNIVERSE,
+            ))
+    Path(HISTORY_FILE.parent / 'setups_snapshot.json').write_text(json.dumps(setups_snap, indent=2))
+    print(f'  Saved → setups_snapshot.json')
+
+    from ma_scanner import liquid_panel_md as _liquid_md
+    md = header + '\n'.join(lines) + '\n' + _liquid_md()
 
     with open('weekly_notes.md', 'w') as f:
         f.write(md)

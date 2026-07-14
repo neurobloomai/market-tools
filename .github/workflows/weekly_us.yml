@@ -41,10 +41,10 @@ jobs:
       - name: Market breadth
         run: python market_breadth.py
 
-      - name: Commit breadth snapshots
+      - name: Commit snapshots
         run: |
-          git add breadth_snapshot.json india_breadth_snapshot.json || true
-          git diff --cached --quiet || git commit -m "breadth_snapshot: $(date -u +'%b %d %Y')"
+          git add breadth_snapshot.json india_breadth_snapshot.json setups_snapshot.json watchlist_snapshot.json || true
+          git diff --cached --quiet || git commit -m "snapshots: $(date -u +'%b %d %Y')"
           git push || true
 
       - name: Sync after breadth
