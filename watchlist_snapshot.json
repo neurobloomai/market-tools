@@ -48,7 +48,7 @@
       ],
       [
         "P/E",
-        "102.4x",
+        "102.7x",
         "\u2264 100x"
       ]
     ],
@@ -118,7 +118,7 @@
       ],
       [
         "P/E",
-        "177.0x",
+        "178.5x",
         "\u2264 100x"
       ]
     ],
@@ -963,5 +963,15 @@
       ]
     ],
     "note": "SentinelOne \u2014 AI-native cybersecurity platform, direct CrowdStrike competitor; GrossM 73.2%, RevG 20.8%, FCF 5.0% (positive, unusual for loss-making SaaS); OM -28.8% + NM -30.4% hard blockers; ROE -21.4%; watch OM crossing 0% and trending toward 10%+ over 2-3 quarters as scale drives margin inflection"
+  },
+  "SEZL": {
+    "fails": [
+      [
+        "Passes all filters",
+        "\u2014",
+        "\u2014"
+      ]
+    ],
+    "note": "Sezzle \u2014 fee-based BNPL pivot, 61% op margin, 92% ROE, 74% gross margin, zero debt, A+; moved from universe \u2014 extended/maxed out at Fully Stacked, risk elevated; gate: 20-25% pullback to re-enter"
   }
 }
