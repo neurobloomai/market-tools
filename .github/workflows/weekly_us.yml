@@ -19,7 +19,7 @@ jobs:
           python-version: '3.11'
 
       - name: Install dependencies
-        run: pip install yfinance
+        run: pip install yfinance anthropic
 
       - name: Configure git
         run: |
@@ -64,3 +64,20 @@ jobs:
 
       - name: Market breadth
         run: python market_breadth.py
+
+      - name: Sync after breadth
+        run: |
+          git stash --include-untracked || true
+          git pull --rebase origin main || true
+          git stash pop || true
+
+      - name: Newsletter draft
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python newsletter_draft.py
+
+      - name: Commit newsletter draft
+        run: |
+          git add newsletter_draft.md || true
+          git diff --cached --quiet || git commit -m "newsletter_draft: $(date -u +'%b %d %Y')"
+          git push || true
