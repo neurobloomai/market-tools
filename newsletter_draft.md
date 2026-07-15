@@ -26,10 +26,10 @@ No exits from Fully Stacked.
 
 **ONE THOUGHT**
 
-The divergence between short-term and long-term positioning in US equities suggests the market is consolidating strength rather than extending it—more names holding their structural uptrends than their recent momentum, which is exactly what you'd expect after a sustained rally. India's mixed short-term action against a stable long-term base tells a similar story: both markets are in the kind of quiet phase where conviction matters more than participation, and where the next real move will likely come from names that've already proven they belong (like the 28 and 12 Fully Stacked), not from the crowded edges. The setup pipeline is thin but honest—MU and AAPL at natural re-entry points, ABBV and ACAD one decision away from joining the list—which means patience is the more useful posture than activity right now.
+The divergence between short-term and long-term positioning in the US—more names sustaining above their 100-day than 20-day average—suggests the market is consolidating rather than accelerating. This is the texture of a structure that's holding, not breaking; pullbacks are happening within an intact framework rather than against it. With 28 names Fully Stacked and setups like MU and AAPL near their moving averages at weekly gates, opportunities are appearing as noise rather than as warnings that conviction has shifted.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-07-15 01:31 UTC · Not financial advice_
+_Draft generated 2026-07-15 01:40 UTC · Not financial advice_
