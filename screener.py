@@ -133,8 +133,8 @@ UNIVERSE = [
     'ODFL','EXPD','CHRW','XPO','JBHT','SAIA','KNSL','RLI','CASH','FICO',
     'ROL','CTAS','CPRT','ADP','PAYX','EFX','TRI','IHS','VRSK','IT',
     'MU','MPWR','MRVL','ITW','ROP','SYK','BSX','AMZN','APP',
-    'MTD','MANH','FAST','MNST','POOL','NVR','DHI','LEN','TOL','DOCS','MKTX','ACGL',
-    'CHD','CL','HSY','TJX','GIS','NFLX','LULU','WSM','KMB','VRTX','DECK',
+    'MTD','MANH','FAST','POOL','NVR','DHI','LEN','TOL','DOCS','MKTX','ACGL',
+    'CHD','CL','HSY','TJX','GIS','NFLX','LULU','WSM','KMB','DECK',
     'HWM','FSLR','PLAB',           # promoted from watchlist — pass all quality filters
     'WPM',                        # Wheaton Precious Metals — streaming model, 85% gross/65% net margin, zero debt, A+
     'NEM',                        # Newmont — world's largest gold miner; 61.4% OM, 33.9% NM, ROE 25.8%, D/EV 0.049, FCF 8.7%, 45.8% rev growth (Newcrest acq); A+
@@ -179,7 +179,8 @@ UNIVERSE = [
     'FCX',                     # Freeport-McMoRan — largest US copper producer (Grasberg mine, Indonesia); AMZN-Rio Tinto 2yr datacenter copper deal confirms AI infrastructure demand thesis; OM 31.1%, ROE 15.6%, FCF $1.7B, fwd P/E 15.4x, D/EV 0.33; NM 10.3% only soft blocker; weekly gate ✓ (MA10w $63.29 > MA20w $62.52, slope +2); price $60.97 below MA10w — entry on MA10w reclaim; auto-promoted 2026-07-06 [grade B, 2/4 MA]
     'ARM',                     # auto-promoted 2026-07-07 [grade A+, 3/4 MA]
     'DUOL',                    # Duolingo — gamified language learning platform, strong engagement moat today; AI is both opportunity (AI tutors, conversation practice) and long-term structural threat (LLMs good enough at real-time translation/conversation coaching reduce core value prop); not imminent but moat question growing; gate: AI integration demonstrably deepens retention and expands addressable market rather than being competed around; auto-promoted 2026-07-13 [grade A+, 2/4 MA]
-    'DXCM',                    # Dexcom — CGM platform leader (G7 sensor + pump integrations); A+ metrics: GrossM 61.5%, OM 18.9%, NM 19.3%, FCF 21.9%, D/EV 5%, ROE 35.6%, RevG 15% — numbers pass everything; framework says no: Abbott Libre gaining share, non-invasive CGM in development across multiple players, GLP-1 compressing urgency case, competitive ceiling forming; not a clear compounder even with A+ today; gate: market share stabilisation vs Abbott + GLP-1 thesis resolves into expanding addressable market (Type 2 non-insulin) not shrinking one; auto-promoted 2026-07-13 [grade A+, 4/4 MA]
+    'DXCM',                    # Dexcom — CGM platform leader (G7 sensor + pump integrations); A+ metrics but ceiling forming (Abbott Libre gaining share, non-invasive CGM in development, GLP-1 compressing urgency); moved from universe — extended at Fully Stacked, not a clear compounder; gate: market share stabilisation vs Abbott + GLP-1 thesis resolves into expanding TAM (Type 2 non-insulin)
+    'MNST',                    # Monster Beverage — energy drink category leader, near-zero debt, 50%+ gross margin, asset-light distribution via Coca-Cola; mature growth, extended at Fully Stacked; moved from universe — wait for 15-20% pullback; gate: price/MA50 pullback + rev growth reaccelerating above 10%
     'ALGN',                    # Align Technology — Invisalign category creator; clear aligner technology commoditizing (dental labs making own, generic aligners proliferating); market leader but pricing power eroding as competition closes the gap; metrics still pass filters but ceiling forming — same pattern as DXCM; gate: market share stabilisation + gross margin holding above 70% as commoditisation pressure tests pricing power; auto-promoted 2026-07-13 [grade A, 4/4 MA]
     'ATEN',                    # A10 Networks — application delivery controllers (ADC) + DDoS protection for carriers and enterprises; deeply embedded infrastructure, not flashy; GrossM 79.3%, OM 17.3%, NM 14.9%, ROE 21.4%, FCF margin ~17% ($50M on $299M rev), RevG 13.4%, D/EV 0.091; ROA 5.2% only blocker (cash pile dragging denominator — operating asset returns cleaner than headline); growth angle: AI/5G traffic surge → carrier ADC capacity upgrades + DDoS threat surface expanding; not a dividend play (0.66% yield); gate: ROA crossing 10%+ as revenue scale compounds on the asset base; auto-promoted 2026-07-13 [grade A, 4/4 MA]
 ]
@@ -230,6 +231,7 @@ WATCHLIST = [
     'PYPL',  # PayPal — OM 18%, NM 15%, ROE 25%, FCF 11%, P/E 7.8x; D/EV 0.30 only blocker (customer float structural); Chriss margin recovery showing in numbers
     'IOT',   # Samsara — fleet/IoT SaaS, GM 76%, zero debt, 30% RevG, FCF just turned positive; OM 1.5% blocking, 2yr runway to A/A+ as scale drives margin
     'ABBV',  # AbbVie — Allergan amortization masking strong cash earnings; FCF/Debt 28.5%, IC improving 6.3→7.8×, Skyrizi/Rinvoq replacing Humira
+    'VRTX',  # Vertex Pharmaceuticals — CF franchise monopoly (Trikafta/Casgevy), expanding into pain (suzetrigine) + kidney disease; similar technical setup to ABBV; moved from universe — extended, wait for 20-25% pullback
     'GFS',   # GlobalFoundries — specialty foundry (RF, automotive, IoT); 5/6 filters pass, ROE 6.8% only blocker (capital-heavy fab structure)
     'PWR',   # Quanta Services — dominant grid/electrical infrastructure contractor; OM 4% blocks now, watch for 7-8% as AI datacenter + grid modernization drives project mix higher
     'SITM',  # SiTime — MEMS precision timing chips; near-monopoly, 65% gross margin, AI datacenter + 5G tailwind; cyclical recovery in progress
