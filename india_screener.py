@@ -62,6 +62,7 @@ UNIVERSE = [
     'HINDUNILVR.NS','NESTLEIND.NS','BRITANNIA.NS','DABUR.NS','MARICO.NS',
     'TITAN.NS','PAGEIND.NS','TATACONSUM.NS',
     'ASIANPAINT.NS',  # A+ (7/7) — 50%+ decorative paints market share, pricing power + 3-tier distribution moat; OM 16%, ROE 21%, D/E 0.18, FCF positive, RevG 11%; 4/4 MA aligned slope +209
+    'PIDILITIND.NS',  # Pidilite Industries — Fevicol monopoly + construction chemicals (Dr. Fixit, M-seal); 55% gross margin, ROE 23.5%, zero debt, A+; same distribution moat as Asian Paints, deeply embedded in every construction project in India
 
     # Infrastructure & Logistics
     'ADANIPORTS.NS','CONCOR.NS','IRCTC.NS',
