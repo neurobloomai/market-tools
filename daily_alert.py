@@ -86,31 +86,41 @@ def fetch_current(name):
 
 
 def detect_crossings(current, prev):
+    # No prior state — send current snapshot of actionable names
+    if not prev:
+        alerts = []
+        for ticker, cur in current.items():
+            if cur and cur.get('w_gate') and cur.get('band') in ('IN', '-EXT'):
+                alerts.append((ticker, f"Gate open · {cur['band']} band", 'snapshot'))
+        return alerts
+
     alerts = []
     for ticker, cur in current.items():
         if cur is None:
             continue
-        p = prev.get(ticker, {})
+        p = prev.get(ticker)
+        if p is None:
+            continue
 
         # w_gate flip
-        if p and p.get('w_gate') != cur['w_gate']:
+        if p.get('w_gate') != cur['w_gate']:
             direction = 'OPENED' if cur['w_gate'] else 'CLOSED'
             alerts.append((ticker, f"Weekly gate {direction}", 'gate'))
 
         # band crossing (only meaningful transitions)
         MEANINGFUL = {('IN', '-EXT'), ('-EXT', 'IN'), ('IN', '+EXT'), ('+EXT', 'IN')}
-        if p and (p.get('band'), cur['band']) in MEANINGFUL:
+        if (p.get('band'), cur['band']) in MEANINGFUL:
             alerts.append((ticker, f"Band {p.get('band')} → {cur['band']}", 'band'))
 
         # daily MA20 cross
-        if p and p.get('above_ma20d') is not None and cur['above_ma20d'] is not None:
+        if p.get('above_ma20d') is not None and cur['above_ma20d'] is not None:
             if p['above_ma20d'] and not cur['above_ma20d']:
                 alerts.append((ticker, f"Broke below MA20d ({cur['pct_ma20d']:+.1f}%)", 'daily'))
             elif not p['above_ma20d'] and cur['above_ma20d']:
                 alerts.append((ticker, f"Recovered above MA20d ({cur['pct_ma20d']:+.1f}%)", 'daily'))
 
         # daily MA50 cross
-        if p and p.get('above_ma50d') is not None and cur['above_ma50d'] is not None:
+        if p.get('above_ma50d') is not None and cur['above_ma50d'] is not None:
             if p['above_ma50d'] and not cur['above_ma50d']:
                 alerts.append((ticker, f"Broke below MA50d ({cur['pct_ma50d']:+.1f}%)", 'daily'))
             elif not p['above_ma50d'] and cur['above_ma50d']:
