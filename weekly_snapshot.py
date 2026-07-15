@@ -222,6 +222,7 @@ if __name__ == '__main__':
             wl_snap[t] = {
                 'fails': [[n, v, th] for n, v, th in fails] if fails else [],
                 'note':  notes.get(t, ''),
+                'grade': quality_grade(f),
             }
     Path(HISTORY_FILE.parent / 'watchlist_snapshot.json').write_text(json.dumps(wl_snap, indent=2))
     print(f'  Saved → watchlist_snapshot.json')

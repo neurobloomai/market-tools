@@ -152,7 +152,8 @@ def build_setups():
 
 
 def build_watchlist_watch():
-    """Read watchlist status from snapshot written by weekly_snapshot.py."""
+    """Read watchlist status from snapshot written by weekly_snapshot.py.
+    Only surfaces A/A+ grade names — avoids speculative names with soft blockers."""
     snap_file = Path(__file__).parent / 'watchlist_snapshot.json'
     if snap_file.exists():
         snap = json.loads(snap_file.read_text())
@@ -161,7 +162,8 @@ def build_watchlist_watch():
         for t, v in snap.items():
             fails = [tuple(f) for f in v.get('fails', [])]
             note  = v.get('note', '')
-            if fails and fails[0][0] != 'Passes all filters':
+            grade = v.get('grade', '')
+            if fails and fails[0][0] != 'Passes all filters' and grade in ('A', 'A+'):
                 candidates.append((t, fails, note))
         candidates.sort(key=lambda x: (len(x[1]), x[0]))
         return candidates[:2]
@@ -174,8 +176,9 @@ def build_watchlist_watch():
         for t in WATCHLIST:
             f = funds.get(t)
             if not f: continue
-            fails = failing_filters(f)
-            if fails:
+            fails  = failing_filters(f)
+            grade  = quality_grade(f)
+            if fails and grade in ('A', 'A+'):
                 candidates.append((t, fails, notes.get(t, '')))
         candidates.sort(key=lambda x: (len(x[1]), x[0]))
         return candidates[:2]
