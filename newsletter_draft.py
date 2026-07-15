@@ -266,10 +266,15 @@ def _md_to_email_html(md, subject):
 
 
 def _load_subscribers():
+    env = os.environ.get('SUBSCRIBERS', '')
+    if env:
+        subs = json.loads(env)
+        print(f'  Subscribers: {len(subs)} (from secret)')
+        return subs
     path = Path(__file__).parent / 'subscribers.json'
     if path.exists():
         subs = json.loads(path.read_text())
-        print(f'  Subscribers: {len(subs)}')
+        print(f'  Subscribers: {len(subs)} (from file)')
         return subs
     return [os.environ.get('NEWSLETTER_TO', 'amarnath@neurobloom.ai')]
 

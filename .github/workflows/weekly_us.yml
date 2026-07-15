@@ -74,7 +74,7 @@ jobs:
       - name: Alert check
         env:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          NEWSLETTER_TO: amarnath@neurobloom.ai
+          SUBSCRIBERS: ${{ secrets.SUBSCRIBERS }}
         run: python alert_check.py
 
       - name: Commit alert state
@@ -87,7 +87,7 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          NEWSLETTER_TO: amarnath@neurobloom.ai
+          SUBSCRIBERS: ${{ secrets.SUBSCRIBERS }}
         run: python newsletter_draft.py
 
       - name: Commit newsletter draft

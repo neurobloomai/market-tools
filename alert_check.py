@@ -17,6 +17,9 @@ RESEND_KEY    = os.environ.get('RESEND_API_KEY', '')
 
 
 def _load_subscribers():
+    env = os.environ.get('SUBSCRIBERS', '')
+    if env:
+        return json.loads(env)
     path = HERE / 'subscribers.json'
     if path.exists():
         return json.loads(path.read_text())
