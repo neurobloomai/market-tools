@@ -1,0 +1,101 @@
+{
+  "NVDA": {
+    "w_gate": false,
+    "band": "+EXT",
+    "slope": -0.94,
+    "pct10w": 0.73,
+    "above_ma20d": true,
+    "above_ma50d": true,
+    "pct_ma20d": 3.9,
+    "pct_ma50d": 0.4,
+    "price": 210.05
+  },
+  "META": {
+    "w_gate": false,
+    "band": "+EXT",
+    "slope": -16.81,
+    "pct10w": 11.94,
+    "above_ma20d": true,
+    "above_ma50d": true,
+    "pct_ma20d": 12.4,
+    "pct_ma50d": 11.6,
+    "price": 671.95
+  },
+  "MSFT": {
+    "w_gate": false,
+    "band": "IN",
+    "slope": -11.06,
+    "pct10w": -2.36,
+    "above_ma20d": true,
+    "above_ma50d": false,
+    "pct_ma20d": 3.6,
+    "pct_ma50d": -2.0,
+    "price": 394.42
+  },
+  "AAPL": {
+    "w_gate": true,
+    "band": "+EXT",
+    "slope": 8.71,
+    "pct10w": 7.28,
+    "above_ma20d": true,
+    "above_ma50d": true,
+    "pct_ma20d": 7.6,
+    "pct_ma50d": 8.0,
+    "price": 323.8
+  },
+  "AMZN": {
+    "w_gate": false,
+    "band": "+EXT",
+    "slope": -6.21,
+    "pct10w": 0.59,
+    "above_ma20d": true,
+    "above_ma50d": true,
+    "pct_ma20d": 5.2,
+    "pct_ma50d": 0.1,
+    "price": 253.82
+  },
+  "GOOGL": {
+    "w_gate": false,
+    "band": "IN",
+    "slope": -1.67,
+    "pct10w": -1.08,
+    "above_ma20d": true,
+    "above_ma50d": false,
+    "pct_ma20d": 2.5,
+    "pct_ma50d": -1.4,
+    "price": 367.04
+  },
+  "AVGO": {
+    "w_gate": false,
+    "band": "IN",
+    "slope": -12.32,
+    "pct10w": -2.87,
+    "above_ma20d": true,
+    "above_ma50d": false,
+    "pct_ma20d": 1.9,
+    "pct_ma50d": -3.7,
+    "price": 390.1
+  },
+  "MU": {
+    "w_gate": true,
+    "band": "-EXT",
+    "slope": 159.31,
+    "pct10w": -1.18,
+    "above_ma20d": false,
+    "above_ma50d": false,
+    "pct_ma20d": -12.6,
+    "pct_ma50d": -0.0,
+    "price": 914.97
+  },
+  "NFLX": {
+    "w_gate": false,
+    "band": "IN",
+    "slope": -5.7,
+    "pct10w": -8.54,
+    "above_ma20d": false,
+    "above_ma50d": false,
+    "pct_ma20d": -0.7,
+    "pct_ma50d": -8.8,
+    "price": 74.43
+  }
+}
