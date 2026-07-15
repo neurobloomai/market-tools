@@ -9,7 +9,6 @@
     "DRI": 1,
     "GEV": 1,
     "AMG": 1,
-    "VST": 1,
     "EXPE": 1,
     "UPWK": 1,
     "CLS": 1,
@@ -18,18 +17,15 @@
     "BMY": 1,
     "TGTX": 1,
     "VCYT": 1,
-    "ACAD": 1,
     "ORLY": 1,
     "ESE": 1,
     "PYPL": 1,
     "ABBV": 1,
-    "VRTX": 1,
     "GFS": 1,
     "ONTO": 1,
     "AMD": 1,
     "TOST": 1,
     "FTAI": 1,
-    "ENPH": 1,
-    "SEZL": 1
+    "ENPH": 1
   }
 }
