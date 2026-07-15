@@ -1,7 +1,6 @@
 {
   "setups": {
-    "AAPL": "IN",
-    "MU": "IN"
+    "MU": "-EXT"
   },
   "watchlist": {
     "MKC": 1,
