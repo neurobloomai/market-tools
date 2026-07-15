@@ -93,6 +93,7 @@ WATCHLIST = [
     '360ONE.NS',      # 360 ONE WAM (formerly IIFL Wealth) — HNI/ultra-HNI wealth + asset mgmt; OM 57.7%, NM 27.2%; ROE 14.4% just below 15% financial threshold; D/EV 0.262; near-miss, watch for ROE crossing 15%
     'BAJAJHFL.NS',    # Bajaj Housing Finance — fast-growing NBFC, recently listed; ROE building, financial sector rules apply; 2-3yr story
     'ASTRAL.NS',      # Astral Ltd — pipes/adhesives/bathing compounder; OM ~13%, ROE ~18%, low debt; consistent but may grade B by filter thresholds
+    'SUPREMEIND.NS',  # Supreme Industries — largest plastic pipes/products company; zero debt, RevG 16.5%, ROE 16.1%; grade B (NM 8.5%, GrossM 32% thinner than POLYCAB); gate: NM crossing 10% + ROE sustaining above 18% as CPVC/composite pipe mix grows
     'ANANDRATHI.NS',  # Anand Rathi Wealth — wealth management, asset-light; OM 40%, NM 32%, ROE 47%, RevG 48%; PE ~82x (just above 80x threshold); watch for earnings growth to bring PE sub-80
     'HSCL.NS',        # Himadri Speciality Chemical — pivoting to battery anode materials + LFP cathodes for EV supply chain; OM 20%, NM 16%, ROE 18%; D/E 16 + FCF -0.4% blocking (heavy capex ramp); watch for FCF turning positive + debt reduction as capacity ramps
     'BHARTIARTL.NS',  # Bharti Airtel — telecom duopoly (Jio + Airtel); OM 32.2%, NM 12.7%, ROE 19.4%, FCF ₹610B, RevG 15.7%; D/E 0.997 only blocker (structural 5G spectrum + tower capex — same read as VZ, not deteriorating); 3/4 MA; A (6/7)
