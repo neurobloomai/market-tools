@@ -7,16 +7,16 @@ Run `python weekly_snapshot.py` each week to refresh. History is in git.
 
 ## Week of Jul 13 2026
 
-### 4/4 Aligned — 88 names
+### 4/4 Aligned — 87 names
 
-**Universe (66):** AAPL, ABBV, ABNB, ACGL, AFL, ALAB, ALGN, AMAT, ANET, AON, ASML, ATEN, CASH, CB, CDNS, CF, CHRW, CINF, CL, CRDO, CRWD, CW, DDOG, DXCM, ETN, EW, EXPD, FFIV, FTNT, HEI, HOOD, HWM, IBKR, INCY, ITW, JBHT, JNJ, JPM, KLAC, KRYS, LIN, LLY, LRCX, MA, MCO, META, MNST, MRK, MSCI, MTD, MU, NBIX, NVDA, ODFL, PANW, PGR, SCHW, TMO, TOL, TRV, TXN, UNH, V, WSM, WST, XPO
+**Universe (68):** AAPL, ABBV, ABNB, ACGL, AFL, ALAB, ALGN, AMAT, ANET, AON, ASML, ATEN, CASH, CB, CDNS, CF, CHRW, CINF, CL, CRDO, CRWD, CW, DDOG, DXCM, ETN, EW, EXPD, FFIV, FTNT, HEI, HOOD, HWM, IBKR, INCY, ITW, JBHT, JNJ, JPM, KLAC, KRYS, LIN, LLY, LRCX, MA, MCO, META, MNST, MRK, MSCI, MTD, MU, NBIX, NVDA, ODFL, PANW, PGR, SCHW, SEZL, TMO, TOL, TRV, TXN, UNH, V, VRTX, WSM, WST, XPO
 
-**Watchlist (22):** ACAD, AMD, AMG, APD, CPAY, ESE, EXPE, FROG, GEV, LNG, LNT, MDB, NET, ONTO, PEG, S, SEZL, SNOW, TGTX, VCYT, VRTX, WEC
+**Watchlist (19):** AMD, AMG, APD, CPAY, ESE, EXPE, FROG, GEV, LNG, LNT, MDB, NET, ONTO, PEG, S, SNOW, TGTX, VCYT, WEC
 
 
-### 3/4 Near-Aligned — 36 names
+### 3/4 Near-Aligned — 35 names
 
-ADI, ADP, AJG, AMZN, ARM, AVGO, AXON, BIIB, BMRN, BMY, BRK-B, CTAS, FAST, FDS, GOOGL, GTLB, INTC, IOT, KMB, LSCC, MANH, MCHP, MRVL, NDAQ, NEE, NVO, PAYX, PWR, QCOM, RLI, SAIA, SITM, SPGI, TSM, VRSN, ZM
+ADI, ADP, AJG, AMZN, ARM, AVGO, AXON, BIIB, BMRN, BMY, BRK-B, CTAS, FAST, FDS, GOOGL, GTLB, IOT, KMB, LSCC, MANH, MCHP, MRVL, NDAQ, NEE, NVO, PAYX, PWR, QCOM, RLI, SAIA, SITM, SPGI, TSM, VRSN, ZM
 
 
 ### Tightest Coils — FullCoil ≤ 5%
@@ -62,7 +62,6 @@ _No tier changes this week._
 | Ticker | Price | MA | Grade | Blockers | Thesis |
 |:-------|------:|:--:|:-----:|:---------|:-------|
 | **ABBV** | $244.78 | 4/4 | A+ | ROE/ROA ROE None% / ROA 10.0% | AbbVie — Allergan amortization masking strong cash earnings; FCF/Debt … |
-| **ACAD** | $25.49 | 4/4 | B | Op Margin -1.7% | Acadia Pharmaceuticals — CNS/rare disease; Nuplazid (only FDA-approved… |
 | **AMD** | $548.13 | 4/4 | B | ROE/ROA ROE 8.1% / ROA 3.6% | AMD — AI accelerator (MI300X/MI350) + x86 CPU challenger; OM ~21%, NM … |
 | **AMG** | $366.00 | 4/4 | A | Debt/EV 0.232 | Affiliated Managers Group — multi-boutique AM (AQR, Tweedy Browne etc.… |
 | **APD** | $299.40 | 4/4 | B | Debt/EV 0.213 / FCF Yield -5.3% | Air Products — industrial gases, green/blue hydrogen megaproject bet (… |
@@ -78,17 +77,14 @@ _No tier changes this week._
 | **ONTO** | $319.32 | 4/4 | B | ROE/ROA ROE 5.3% / ROA 5.4% | Onto Innovation — advanced packaging inspection/metrology; HBM + chipl… |
 | **PEG** | $80.50 | 4/4 | A | Debt/EV 0.381 / FCF Yield -0.4% | PSEG — integrated NJ utility + nuclear operator (Salem 1&2 + Hope Cree… |
 | **S** | $19.92 | 4/4 | B | Op Margin -28.8% / Net Margin -30.4% / ROE/ROA ROE -21.4% / ROA -7.9% | SentinelOne — AI-native cybersecurity platform, direct CrowdStrike com… |
-| **SEZL** | $182.39 | 4/4 | A+ | Passes all filters — | Sezzle — fee-based BNPL pivot, 61% op margin, 92% ROE, 74% gross margi… |
 | **SNOW** | $275.94 | 4/4 | B | Op Margin -22.2% / Net Margin -23.8% / ROE/ROA ROE -54.9% / ROA -9.7% / P/E 102.7x | — |
 | **TGTX** | $54.89 | 4/4 | A | FCF Yield -0.4% | TG Therapeutics — Briumvi (ublituximab, anti-CD20 MS); faster infusion… |
 | **VCYT** | $56.62 | 4/4 | A | ROE/ROA ROE 6.9% / ROA 3.8% | Veracyte — genomic diagnostics; moat = guideline inclusion (NCCN/medic… |
-| **VRTX** | $476.31 | 4/4 | A+ | Passes all filters — | Vertex Pharmaceuticals — CF franchise monopoly (Trikafta/Casgevy), exp… |
 | **WEC** | $115.05 | 4/4 | B | Debt/EV 0.371 / FCF Yield -5.5% | WEC Energy Group — regulated Midwest utility (Wisconsin/Illinois/Michi… |
 | **AXON** | $547.26 | 3/4 | B | Op Margin 3.7% / ROE/ROA ROE 6.8% / ROA 0.1% | — |
 | **BIIB** | $191.95 | 3/4 | A | Debt/EV 0.214 / ROE/ROA ROE 7.7% / ROA 6.0% | Biogen — neuroscience pure-play; Leqembi (lecanemab, w/ Eisai) first a… |
 | **BMY** | $56.95 | 3/4 | A+ | Debt/EV 0.305 | Bristol-Myers Squibb — de-lever + profit growth play; Celgene debt pay… |
 | **GTLB** | $32.98 | 3/4 | B | Op Margin -6.0% / Net Margin -2.5% / ROE/ROA ROE -3.0% / ROA -1.9% | GitLab — complete DevSecOps platform (source control + CI/CD + securit… |
-| **INTC** | $107.76 | 3/4 | B | Op Margin 6.9% / Net Margin -5.9% / ROE/ROA ROE -2.9% / ROA 0.6% / FCF Yield -1.5% | Intel — x86 architect in foundry transition (Intel 18A); OM/NM/ROE all… |
 | **IOT** | $36.90 | 3/4 | A | Op Margin 1.5% / Net Margin 3.3% / ROE/ROA ROE 4.4% / ROA -0.3% | Samsara — fleet/IoT SaaS, GM 76%, zero debt, 30% RevG, FCF just turned… |
 | **LSCC** | $133.91 | 3/4 | A | Net Margin 3.5% / ROE/ROA ROE 2.7% / ROA 2.5% | Lattice Semiconductor — low-power FPGAs, 60%+ gross margin, zero debt;… |
 | **NEE** | $89.54 | 3/4 | A | Debt/EV 0.347 / FCF Yield -9.9% | NextEra — world's largest renewable platform (wind/solar/battery) + FP… |
@@ -109,7 +105,7 @@ _No tier changes this week._
 | **PYPL** | $47.37 | 2/4 | A+ | Debt/EV 0.265 | PayPal — OM 18%, NM 15%, ROE 25%, FCF 11%, P/E 7.8x; D/EV 0.30 only bl… |
 | **SOFI** | $18.55 | 2/4 | A | ROE/ROA ROE 6.6% / ROA 1.3% / FCF Yield missing (no data relief) | SoFi — neobank scaling; ROE 6.6% and trending right |
 | **TOST** | $30.00 | 2/4 | A | Op Margin 6.7% | Toast — restaurant POS/payments platform; ROE 22.5%, FCF 4%, rev growt… |
-| **VST** | $158.43 | 2/4 | A | Debt/EV 0.265 | Vistra — deregulated nuclear+gas (Energy Harbor acq), Texas/ERCOT expo… |
+| **VST** | $158.43 | 2/4 | A | Debt/EV 0.271 / FCF Yield -0.3% | Vistra — deregulated nuclear+gas (Energy Harbor acq), Texas/ERCOT expo… |
 | **ALB** | $128.75 | 1/4 | A | Net Margin -4.2% / ROE/ROA ROE -1.8% / ROA 1.6% | Albemarle — largest lithium producer (Chile/Australia mines); OM 24.8%… |
 | **DPZ** | $309.85 | 1/4 | B | Debt/EV 0.338 | — |
 | **FTAI** | $206.22 | 1/4 | A+ | FCF Yield -1.5% | FTAI Aviation — CFM56 engine platform (powers 737/A320, largest narrow… |
@@ -125,6 +121,7 @@ _No tier changes this week._
 | **COST** | $921.75 | 0/4 | A | Op Margin 3.7% / Net Margin 3.0% | Costco — membership moat, not a margin story; OM ~3% by design (mercha… |
 | **FIG** | — | — | B | Op Margin -41.2% / Net Margin -123.8% / ROE/ROA ROE -101.7% / ROA -43.6% | Figma — design collaboration SaaS; 79.8% gross margin, FCF 8.6%, 46.1%… |
 | **FISV** | $49.54 | 0/4 | B | Debt/EV missing / Op Margin missing / Net Margin missing / ROE/ROA ROE None% / ROA None% / FCF Yield missing (no data relief) | Fiserv — payment processing + Clover POS + banking tech, extreme switc… |
+| **INTC** | — | — | B | Op Margin 6.9% / Net Margin -5.9% / ROE/ROA ROE -2.9% / ROA 0.6% / FCF Yield -1.5% | Intel — x86 architect in foundry transition (Intel 18A); OM/NM/ROE all… |
 | **KTOS** | $50.36 | 0/4 | B | Op Margin 1.8% / Net Margin 2.1% / ROE/ROA ROE 1.2% / ROA 0.6% / FCF Yield -1.1% | Kratos — drone/defense tech; margins thin now, scaling with DoD contra… |
 | **NLR** | $111.37 | 0/4 | ETF | — | VanEck Uranium & Nuclear ETF — AUM $4.87B; AI datacenter baseload + ur… |
 | **ORLY** | $85.75 | 0/4 | B | ROE/ROA ROE None% / ROA 13.8% | O'Reilly Auto Parts — Akre compounder; 18% OM, 14% NM, ROA 13.8% (ROE … |
