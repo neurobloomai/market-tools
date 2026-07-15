@@ -26,10 +26,10 @@ No exits from Fully Stacked.
 
 **ONE THOUGHT**
 
-The divergence between short-term and long-term positioning in the US—more names sustaining above their 100-day than 20-day average—suggests the market is consolidating rather than accelerating. This is the texture of a structure that's holding, not breaking; pullbacks are happening within an intact framework rather than against it. With 28 names Fully Stacked and setups like MU and AAPL near their moving averages at weekly gates, opportunities are appearing as noise rather than as warnings that conviction has shifted.
+The divergence between our MA20 and MA100 percentages tells an interesting structural story: US equities are retaining their longer-term uptrends (70% above MA100) even as short-term momentum has cooled relative to that baseline (61% above MA20). This isn't weakness breaking structure—it's the normal friction of a market where intermediate pullbacks are happening *within* established trends rather than against them. For names approaching promotion like ABBV and ACAD, a single blocker away from Fully Stacked status, this environment actually clarifies the test: they need to prove they can hold their longer-term setup through near-term chop, not immediately break higher on a whim.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-07-15 01:40 UTC · Not financial advice_
+_Draft generated 2026-07-15 01:57 UTC · Not financial advice_
