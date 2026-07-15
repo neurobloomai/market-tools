@@ -120,7 +120,7 @@ def get_tech_signal(ticker):
 
 # Broad universe — S&P 500 quality names worth screening
 UNIVERSE = [
-    'AAPL','MSFT','META','NVDA','V','MA','UNH','LLY','JPM',
+    'AAPL','MSFT','META','NVDA','GOOGL','V','MA','UNH','LLY','JPM',
     'JNJ','PG','HD','ABBV','MRK','TMO','ACN','AVGO','TXN',
     'QCOM','DHR','AMAT','LRCX','KLAC','MCHP','ADI','SNPS','CDNS',
     'CRM','NOW','FTNT','PANW','CRWD','ZS','DDOG',
@@ -173,7 +173,6 @@ UNIVERSE = [
     'CEG',                       # Constellation Energy — largest US nuclear operator; 21.9% OM, 12.7% NM, ROE 16.1%, RevG 63.8%; AI/datacenter PPAs (Microsoft Crane restart); D/EV 0.201 (just over 0.20 threshold) + FCF -5.3% (capex from new nuclear capacity build-out); grade B; added 2026-07-01
     'BLK',                       # BlackRock — world's largest asset manager ($10T+ AUM); iShares ETF franchise (largest globally) + Aladdin risk platform (SaaS-like, used by central banks/SWFs); every index fund = AUM fee; OM 35.6%, NM 24.4%, FCF 4.4%, D/EV 0.095, RevG 27%, fwd P/E 16.1x; A+
     'BX',                        # Blackstone — world's largest alternatives manager ($1T+ AUM); PE + real estate + credit + infrastructure; mgmt fees sticky, carried interest is performance upside; retail alternatives push = decade-long runway; OM 38.0%, NM 21.2%, ROE 29.5%, D/EV 0.130, fwd P/E 15.8x; A
-    'GOOGL',                   # Google — watching for price to reclaim weekly MA10 (~$374); weekly structure intact (MA10w > MA20w); thesis not fully formed yet — chart trigger first, fundamentals next; auto-promoted 2026-07-03 [grade A+, 3/4 MA]
     'ADBE',                    # Adobe — creative cloud monopoly (Photoshop/Illustrator/Acrobat); OM 35.3%, NM 28.7%, GrossM 89.4%, ROE 63%, FCF $9.2B, fwd P/E 8x; D/E 0.61 only blocker (corporate bonds ~$4B, FCF paydown path clear); Figma deal dead Dec 2023 (CMA blocked, $1B termination fee paid); chart 0/4 MA broken on AI disruption fear; Firefly/GenStudio is the AI answer — watch for MA recovery; auto-promoted 2026-07-06 [grade A+, 0/4 MA]
     'INTU',                    # Intuit — TurboTax + QuickBooks + Credit Karma franchise; near-monopoly on SMB accounting + tax prep; OM 47%, NM 21.9%, GrossM 80.8%, ROE 22.5%, FCF $5.2B, fwd P/E 10x; D/E 0.33 only blocker (Credit Karma acq debt, FCF paydown path clear); 0/4 MA, slope -59 — chart badly broken; watch for weekly MA structure recovery; auto-promoted 2026-07-06 [grade A+, 0/4 MA]
     'FCX',                     # Freeport-McMoRan — largest US copper producer (Grasberg mine, Indonesia); AMZN-Rio Tinto 2yr datacenter copper deal confirms AI infrastructure demand thesis; OM 31.1%, ROE 15.6%, FCF $1.7B, fwd P/E 15.4x, D/EV 0.33; NM 10.3% only soft blocker; weekly gate ✓ (MA10w $63.29 > MA20w $62.52, slope +2); price $60.97 below MA10w — entry on MA10w reclaim; auto-promoted 2026-07-06 [grade B, 2/4 MA]
