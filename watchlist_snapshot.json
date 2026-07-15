@@ -24,7 +24,7 @@
       ],
       [
         "FCF Yield",
-        "-4.3%",
+        "-4.4%",
         "> 0%"
       ]
     ],
@@ -50,7 +50,7 @@
       ],
       [
         "P/E",
-        "102.7x",
+        "102.5x",
         "\u2264 100x"
       ]
     ],
@@ -123,7 +123,7 @@
       ],
       [
         "P/E",
-        "178.5x",
+        "179.5x",
         "\u2264 100x"
       ]
     ],
@@ -294,7 +294,7 @@
       ],
       [
         "FCF Yield",
-        "-9.9%",
+        "-10.0%",
         "> 0%"
       ]
     ],
@@ -310,7 +310,7 @@
       ],
       [
         "FCF Yield",
-        "-5.5%",
+        "-5.6%",
         "> 0%"
       ]
     ],
@@ -326,7 +326,7 @@
       ],
       [
         "FCF Yield",
-        "-6.1%",
+        "-6.2%",
         "> 0%"
       ]
     ],
@@ -343,6 +343,17 @@
     ],
     "note": "Affiliated Managers Group \u2014 multi-boutique AM (AQR, Tweedy Browne etc.); owns fee economics in independent boutiques, asset-light; OM 22.1%, NM 35.5%, ROE 21.8%, FCF 2.6%, fwd P/E 8.5x; D/EV 0.245 only blocker (structural debt to buy stakes, paying down with FCF); grade A",
     "grade": "A"
+  },
+  "VCTR": {
+    "fails": [
+      [
+        "Passes all filters",
+        "\u2014",
+        "\u2014"
+      ]
+    ],
+    "note": "Victory Capital \u2014 multi-boutique active asset manager; A+ metrics (NM 25.8%, ROE 21.7%, GrossM 56.3%, zero debt); 76.7% RevG is Amundi US acquisition math not organic; active management = performance-dependent AUM, not a toll booth like MSCI/SPGI; gate: organic AUM growth positive + 2+ quarters post-acquisition showing revenue durability without acquisition tailwind",
+    "grade": "A+"
   },
   "DVN": {
     "fails": [
@@ -479,7 +490,7 @@
       ],
       [
         "FCF Yield",
-        "-4.7%",
+        "-4.6%",
         "> 0%"
       ]
     ],
@@ -865,7 +876,7 @@
       ],
       [
         "FCF Yield",
-        "-1.5%",
+        "-1.6%",
         "> 0%"
       ]
     ],
@@ -966,7 +977,7 @@
       ],
       [
         "FCF Yield",
-        "-3.5%",
+        "-3.4%",
         "> 0%"
       ]
     ],
