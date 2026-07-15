@@ -184,6 +184,8 @@ UNIVERSE = [
     'CHRW',                    # C.H. Robinson — largest freight broker in North America; asset-light model, high FCF; cyclical freight market at trough; extended at Fully Stacked; moved from universe; gate: freight cycle upturn visible in volume growth + OM expanding above 4%
     'ALGN',                    # Align Technology — Invisalign category creator; clear aligner technology commoditizing (dental labs making own, generic aligners proliferating); market leader but pricing power eroding as competition closes the gap; metrics still pass filters but ceiling forming — same pattern as DXCM; gate: market share stabilisation + gross margin holding above 70% as commoditisation pressure tests pricing power; auto-promoted 2026-07-13 [grade A, 4/4 MA]
     'ATEN',                    # A10 Networks — application delivery controllers (ADC) + DDoS protection for carriers and enterprises; deeply embedded infrastructure, not flashy; GrossM 79.3%, OM 17.3%, NM 14.9%, ROE 21.4%, FCF margin ~17% ($50M on $299M rev), RevG 13.4%, D/EV 0.091; ROA 5.2% only blocker (cash pile dragging denominator — operating asset returns cleaner than headline); growth angle: AI/5G traffic surge → carrier ADC capacity upgrades + DDoS threat surface expanding; not a dividend play (0.66% yield); gate: ROA crossing 10%+ as revenue scale compounds on the asset base; auto-promoted 2026-07-13 [grade A, 4/4 MA]
+    'SEZL',                    # Sezzle — fee-based BNPL pivot, 61% op margin, 92% ROE, 74% gross margin, zero debt, A+; moved from universe — extended/maxed out at Fully Stacked, risk elevated; gate: 20-25% pullback to re-enter; auto-promoted 2026-07-15 [grade A+, 4/4 MA]
+    'VRTX',                    # Vertex Pharmaceuticals — CF franchise monopoly (Trikafta/Casgevy), expanding into pain (suzetrigine) + kidney disease; similar technical setup to ABBV; moved from universe — extended, wait for 20-25% pullback; auto-promoted 2026-07-15 [grade A+, 4/4 MA]
 ]
 
 # Future contenders — moat proven, one or two filters blocking, no survival risk
@@ -232,7 +234,6 @@ WATCHLIST = [
     'PYPL',  # PayPal — OM 18%, NM 15%, ROE 25%, FCF 11%, P/E 7.8x; D/EV 0.30 only blocker (customer float structural); Chriss margin recovery showing in numbers
     'IOT',   # Samsara — fleet/IoT SaaS, GM 76%, zero debt, 30% RevG, FCF just turned positive; OM 1.5% blocking, 2yr runway to A/A+ as scale drives margin
     'ABBV',  # AbbVie — Allergan amortization masking strong cash earnings; FCF/Debt 28.5%, IC improving 6.3→7.8×, Skyrizi/Rinvoq replacing Humira
-    'VRTX',  # Vertex Pharmaceuticals — CF franchise monopoly (Trikafta/Casgevy), expanding into pain (suzetrigine) + kidney disease; similar technical setup to ABBV; moved from universe — extended, wait for 20-25% pullback
     'GFS',   # GlobalFoundries — specialty foundry (RF, automotive, IoT); 5/6 filters pass, ROE 6.8% only blocker (capital-heavy fab structure)
     'PWR',   # Quanta Services — dominant grid/electrical infrastructure contractor; OM 4% blocks now, watch for 7-8% as AI datacenter + grid modernization drives project mix higher
     'SITM',  # SiTime — MEMS precision timing chips; near-monopoly, 65% gross margin, AI datacenter + 5G tailwind; cyclical recovery in progress
@@ -253,7 +254,6 @@ WATCHLIST = [
     # --- Solar ---
     'ENPH',  # Enphase Energy — microinverter monopoly + battery storage (IQ8/Encharge); cycle trough from high-rate residential solar slowdown, not structural; gross margins ~45%+ holding even in trough; OM -9.1% + RevG -20.6% blocking now; 3/4 MA recovering, -61.6% from highs; when rates normalize + installs recover = A+ candidate; engine intact
     'S',     # SentinelOne — AI-native cybersecurity platform, direct CrowdStrike competitor; GrossM 73.2%, RevG 20.8%, FCF 5.0% (positive, unusual for loss-making SaaS); OM -28.8% + NM -30.4% hard blockers; ROE -21.4%; watch OM crossing 0% and trending toward 10%+ over 2-3 quarters as scale drives margin inflection
-    'SEZL',  # Sezzle — fee-based BNPL pivot, 61% op margin, 92% ROE, 74% gross margin, zero debt, A+; moved from universe — extended/maxed out at Fully Stacked, risk elevated; gate: 20-25% pullback to re-enter
 
 ]
 
