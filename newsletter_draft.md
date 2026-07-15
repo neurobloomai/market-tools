@@ -4,19 +4,18 @@
 
 **POSTURE**
 
-US: 61.7% above MA20, 68.3% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 28 names Fully Stacked. India: 41.6% above MA20, 61.0% above MA100 — mixed, structure holding. 12 names Fully Stacked.
+US: 62.0% above MA20, 68.1% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 25 names Fully Stacked. India: 41.6% above MA20, 61.0% above MA100 — mixed, structure holding. 12 names Fully Stacked.
 
 
 **WHAT MOVED**
 
-Entered Fully Stacked — Universe: CDNS, MSCI, CW, ABNB
-Entered Fully Stacked — Watchlist: VCYT
-Left Fully Stacked — Universe: AFL, TRV, WST, ACGL
-Left Fully Stacked — Watchlist: FROG, ONTO
+Entered Fully Stacked — Universe: AFL
+Left Fully Stacked — Universe: CDNS, CW
+Left Fully Stacked — Watchlist: AMD
 
 **SETUPS WORTH WATCHING**
 
-**MU** [Universe] — weekly gate open, -EXT, +1.8% vs MA10w, W.slope +159.31
+**MU** [Universe] — weekly gate open, -EXT, -1.1% vs MA10w, W.slope +159.31
 
 **WATCHLIST WATCH**
 
@@ -27,10 +26,10 @@ Left Fully Stacked — Watchlist: FROG, ONTO
 
 **ONE THOUGHT**
 
-The composition shift in Fully Stacked names—tech and consumer discretionary entering while insurance and healthcare names exit—suggests the market is rotating toward names that need sustained momentum rather than those that can earn their way through sideways periods. That's a meaningful tell about confidence levels: we're not seeing broad-based strength that accommodates defensive positioning, but rather selective conviction in growth narratives. The US market's ratio (61.7% above MA20 vs. 68.3% above MA100) confirms this isn't weakness; it's selectivity within a structurally sound backdrop.
+The gap between long-term and short-term positioning in US equities (68.1% vs 62.0% above their moving averages) suggests the market is consolidating rather than rolling over—names are holding their structural integrity even as near-term momentum softens. With 25 Fully Stacked names still in place and only three exits this week, the foundation remains intact; what we're watching is whether the near-term weakness becomes a healthy shakeout or signals deeper hesitation. India's inverted picture (stronger long-term structure than short-term action) tells a different story altogether, one worth monitoring separately given the divergence.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-07-15 14:12 UTC · Not financial advice_
+_Draft generated 2026-07-15 14:53 UTC · Not financial advice_
