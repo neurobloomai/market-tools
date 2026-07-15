@@ -123,14 +123,14 @@ UNIVERSE = [
     'AAPL','MSFT','META','NVDA','V','MA','UNH','LLY','JPM',
     'JNJ','PG','HD','ABBV','MRK','TMO','ACN','AVGO','TXN',
     'QCOM','DHR','AMAT','LRCX','KLAC','MCHP','ADI','SNPS','CDNS',
-    'CRM','NOW','FTNT','PANW','CRWD','ZS','DDOG','FFIV',
+    'CRM','NOW','FTNT','PANW','CRWD','ZS','DDOG',
     'ORCL',                    # Oracle — enterprise software franchise (database + ERP) + OCI cloud infra; cloud commitments driving 20% RevG; OM 36%, NM 25%, GrossM 66%, ROE 53%; D/EV 0.305 (Cerner acq + OCI build debt) + FCF -6.1% (contracted OCI datacenter capex, not speculative — same pattern as CEG nuclear build) both blocking; grade B; gates: D/EV ≤ 0.20 + FCF inflection as OCI capex cycle peaks; added 2026-07-08
     'VEEV','WDAY','TTD','PAYC',
     'ZM',                            # Zoom Video — post-COVID valuation reset complete; A+ (7/7): OM 25%, NM 42%, GrossM 78%, ROE 22%, D/E 0.006, FCF $1.98B (~7.6% FCF yield at $87), RevG 5.5%; near-zero debt + massive cash pile; AI Companion + Zoom Contact Center = monetization runway; fwd P/E 13.8x, priced like value, runs like software; 2/4 MA, below MA10w $98 — scan will surface on weekly alignment
     'BRK-B','CB','AFL','TRV','PGR','AJG','AON','WTW','CINF',
     'NVO','ISRG','EW','IDXX','PODD','WST',
     'MCO','SPGI','MSCI','ICE','CME','CBOE','FDS','BR','NDAQ',
-    'ODFL','EXPD','CHRW','XPO','JBHT','SAIA','KNSL','RLI','CASH','FICO',
+    'ODFL','EXPD','XPO','JBHT','SAIA','KNSL','RLI','CASH','FICO',
     'ROL','CTAS','CPRT','ADP','PAYX','EFX','TRI','IHS','VRSK','IT',
     'MU','MPWR','MRVL','ITW','ROP','SYK','BSX','AMZN','APP',
     'MTD','MANH','FAST','POOL','NVR','DHI','LEN','TOL','DOCS','MKTX','ACGL',
@@ -181,6 +181,8 @@ UNIVERSE = [
     'DUOL',                    # Duolingo — gamified language learning platform, strong engagement moat today; AI is both opportunity (AI tutors, conversation practice) and long-term structural threat (LLMs good enough at real-time translation/conversation coaching reduce core value prop); not imminent but moat question growing; gate: AI integration demonstrably deepens retention and expands addressable market rather than being competed around; auto-promoted 2026-07-13 [grade A+, 2/4 MA]
     'DXCM',                    # Dexcom — CGM platform leader (G7 sensor + pump integrations); A+ metrics but ceiling forming (Abbott Libre gaining share, non-invasive CGM in development, GLP-1 compressing urgency); moved from universe — extended at Fully Stacked, not a clear compounder; gate: market share stabilisation vs Abbott + GLP-1 thesis resolves into expanding TAM (Type 2 non-insulin)
     'MNST',                    # Monster Beverage — energy drink category leader, near-zero debt, 50%+ gross margin, asset-light distribution via Coca-Cola; mature growth, extended at Fully Stacked; moved from universe — wait for 15-20% pullback; gate: price/MA50 pullback + rev growth reaccelerating above 10%
+    'FFIV',                    # F5 Networks — legacy ADC/load balancer leader pivoting to multi-cloud app delivery + security; durable installed base, high switching costs; mature growth, extended at Fully Stacked; moved from universe; gate: 15-20% pullback + software/SaaS revenue mix crossing 50%
+    'CHRW',                    # C.H. Robinson — largest freight broker in North America; asset-light model, high FCF; cyclical freight market at trough; extended at Fully Stacked; moved from universe; gate: freight cycle upturn visible in volume growth + OM expanding above 4%
     'ALGN',                    # Align Technology — Invisalign category creator; clear aligner technology commoditizing (dental labs making own, generic aligners proliferating); market leader but pricing power eroding as competition closes the gap; metrics still pass filters but ceiling forming — same pattern as DXCM; gate: market share stabilisation + gross margin holding above 70% as commoditisation pressure tests pricing power; auto-promoted 2026-07-13 [grade A, 4/4 MA]
     'ATEN',                    # A10 Networks — application delivery controllers (ADC) + DDoS protection for carriers and enterprises; deeply embedded infrastructure, not flashy; GrossM 79.3%, OM 17.3%, NM 14.9%, ROE 21.4%, FCF margin ~17% ($50M on $299M rev), RevG 13.4%, D/EV 0.091; ROA 5.2% only blocker (cash pile dragging denominator — operating asset returns cleaner than headline); growth angle: AI/5G traffic surge → carrier ADC capacity upgrades + DDoS threat surface expanding; not a dividend play (0.66% yield); gate: ROA crossing 10%+ as revenue scale compounds on the asset base; auto-promoted 2026-07-13 [grade A, 4/4 MA]
 ]
