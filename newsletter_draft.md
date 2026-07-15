@@ -4,7 +4,7 @@
 
 **POSTURE**
 
-US: 66.1% above MA20, 70.9% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 31 names Fully Stacked. India: 41.6% above MA20, 61.0% above MA100 — mixed, structure holding. 12 names Fully Stacked.
+US: 65.9% above MA20, 71.3% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 32 names Fully Stacked. India: 41.6% above MA20, 61.0% above MA100 — mixed, structure holding. 12 names Fully Stacked.
 
 
 **WHAT MOVED**
@@ -20,15 +20,15 @@ No exits from Fully Stacked.
 
 **ABBV** — ROE/ROA: ROA 10.0% (gate ≥ 10% / ≥ 15%)
   _Allergan amortization masking strong cash earnings_
-**ACAD** — Op Margin: -1.7% (gate ≥ 10%)
-  _CNS/rare disease_
+**AMG** — Debt/EV: 0.232 (gate ≤ 0.20)
+  _multi-boutique AM (AQR, Tweedy Browne etc.)_
 
 **ONE THOUGHT**
 
-The divergence between short and long-term positioning in US equities—66% above the 20-day moving average versus 71% above the 100-day—suggests the market is experiencing normal consolidation within an intact structure rather than deterioration. What's notable is that 31 names remain Fully Stacked despite this short-term pullback, indicating that quality setups are holding their ground rather than capitulating, which historically precedes either a fresh leg higher or at least a durable base. India presents the inverse problem: long-term structure is sound (61% above MA100) but near-term participation has stalled (42% above MA20), suggesting the market may be waiting for conviction rather than signaling trouble ahead.
+The divergence between short-term and long-term positioning in US equities suggests the market is consolidating strength rather than distributing it—pullbacks are testing intermediate support while the majority of names still sit above their 100-day lines. With 32 names Fully Stacked and no recent entries or exits in that cohort, conviction appears stable; the real work is happening in the tier just below, where ABBV and AMG sit one blocker away from joining the fully committed group, indicating the market is methodically raising its standards rather than desperately searching for new highs.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-07-15 11:03 UTC · Not financial advice_
+_Draft generated 2026-07-15 12:33 UTC · Not financial advice_
