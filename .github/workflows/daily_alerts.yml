@@ -1,0 +1,39 @@
+name: Daily Structure Alerts — Liquid Names
+
+on:
+  schedule:
+    - cron: '0 21 * * 1-5'  # Mon-Fri 9pm UTC = 4pm EST (market close)
+  workflow_dispatch:
+
+jobs:
+  daily-alert:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v7.0.0
+
+      - uses: actions/setup-python@v6.3.0
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install yfinance
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Daily alert check
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          SUBSCRIBERS: ${{ secrets.SUBSCRIBERS }}
+        run: python daily_alert.py
+
+      - name: Commit alert state
+        run: |
+          git add daily_alert_state.json || true
+          git diff --cached --quiet || git commit -m "daily_alert_state: $(date -u +'%b %d %Y')"
+          git push || true
