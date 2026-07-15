@@ -99,7 +99,7 @@ _No tier changes this week._
 | **COHR** | $310.77 | 2/4 | B | ROE/ROA ROE 4.7% / ROA 3.1% / FCF Yield -0.3% | Coherent Corp — optical components (800G/1.6T datacenter interconnect … |
 | **COPX** | $78.72 | 2/4 | ETF | — | Global X Copper Miners ETF — AUM $8.0B; copper = AI datacenter + grid … |
 | **DRI** | $195.74 | 2/4 | B | Debt/EV 0.265 | Darden Restaurants — Olive Garden + LongHorn + Fine Dining (Capital Gr… |
-| **DVN** | $43.40 | 2/4 | B | Debt/EV 0.257 / Op Margin 6.9% | Devon Energy — formed from CTRA+DVN merger; Permian + Appalachia nat g… |
+| **DVN** | $43.40 | 2/4 | B | Debt/EV 0.256 / Op Margin 6.9% | Devon Energy — formed from CTRA+DVN merger; Permian + Appalachia nat g… |
 | **ENPH** | $44.99 | 2/4 | B | Op Margin -9.1% | Enphase Energy — microinverter monopoly + battery storage (IQ8/Encharg… |
 | **FLUT** | $108.47 | 2/4 | B | Debt/EV 0.411 / Op Margin 2.3% / Net Margin -2.2% / ROE/ROA ROE -5.0% / ROA 1.2% / FCF Yield -4.7% | Flutter Entertainment — global online sports betting; FanDuel #1 US (~… |
 | **GFS** | $63.39 | 2/4 | B | ROE/ROA ROE 6.8% / ROA 3.1% | GlobalFoundries — specialty foundry (RF, automotive, IoT); 5/6 filters… |
@@ -135,12 +135,12 @@ _No tier changes this week._
 
 | Ticker | Price | Wkly Gate | vs MA20d | vs MA10w | MA10w | MA50d | Band | W.Slope |
 |:------:|------:|:---------:|---------:|---------:|------:|------:|:----:|--------:|
-| **NVDA** | $211.80 | ✗ | +4.9% | +1.6% | $208.53 | $208.96 | +EXT | -0.94 |
+| **NVDA** | $203.53 | ✗ | +0.8% | -2.4% | $208.53 | $209.07 | IN | -0.94 |
 | **META** | $661.04 | ✗ | +12.2% | +10.1% | $600.28 | $599.85 | +EXT | -16.81 |
-| **MSFT** | $384.93 | ✗ | +1.2% | -4.7% | $403.94 | $402.68 | IN | -11.06 |
-| **AAPL** | $314.86 | ✓ | +5.2% | +4.3% | $301.84 | $298.67 | IN | +8.71 |
-| **AMZN** | $247.49 | ✗ | +2.9% | -1.9% | $252.35 | $253.72 | IN | -6.21 |
-| **GOOGL** | $359.51 | ✗ | +0.5% | -3.1% | $371.05 | $372.68 | IN | -1.67 |
-| **AVGO** | $389.11 | ✗ | +1.7% | -3.1% | $401.61 | $405.56 | IN | -12.32 |
-| **MU** | $983.12 | ✓ | -6.4% | +6.2% | $925.90 | $907.30 | IN | +159.31 |
-| **NFLX** | $73.53 | ✗ | -2.3% | -9.7% | $81.39 | $82.04 | IN | -5.70 |
+| **MSFT** | $390.99 | ✗ | +2.8% | -3.2% | $403.94 | $403.33 | IN | -11.06 |
+| **AAPL** | $317.31 | ✓ | +6.4% | +5.1% | $301.84 | $297.73 | +EXT | +8.71 |
+| **AMZN** | $247.31 | ✗ | +3.0% | -2.0% | $252.35 | $254.03 | IN | -6.21 |
+| **GOOGL** | $352.51 | ✗ | -1.5% | -5.0% | $371.05 | $372.62 | IN | -1.67 |
+| **AVGO** | $384.05 | ✗ | +0.4% | -4.4% | $401.61 | $405.98 | IN | -12.32 |
+| **MU** | $937.00 | ✓ | -11.1% | +1.2% | $925.90 | $898.92 | -EXT | +159.31 |
+| **NFLX** | $73.83 | ✗ | -2.4% | -9.3% | $81.39 | $82.41 | IN | -5.70 |
