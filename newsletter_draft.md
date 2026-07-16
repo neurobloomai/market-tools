@@ -4,18 +4,18 @@
 
 **POSTURE**
 
-US: 61.9% above MA20, 71.4% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 29 names Fully Stacked. India: 42.3% above MA20, 61.5% above MA100 — mixed, structure holding. 12 names Fully Stacked.
+US: 62.5% above MA20, 71.4% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 28 names Fully Stacked. India: 42.3% above MA20, 61.5% above MA100 — mixed, structure holding. 12 names Fully Stacked.
 
 
 **WHAT MOVED**
 
-Entered Fully Stacked — Universe: UNH, MSCI, ODFL, JBHT
-Left Fully Stacked — Universe: ANET, ATEN
-Left Fully Stacked — Watchlist: FROG
+Entered Fully Stacked — Universe: TRV, ANET
+Left Fully Stacked — Universe: UNH, WSM, ASML
+Left Fully Stacked — Watchlist: TGTX
 
 **SETUPS WORTH WATCHING**
 
-**MU** [Universe] — weekly gate open, -EXT, -4.8% vs MA10w, W.slope +159.31
+**MU** [Universe] — weekly gate open, -EXT, -7.9% vs MA10w, W.slope +159.31
 
 **WATCHLIST WATCH**
 
@@ -26,10 +26,10 @@ Left Fully Stacked — Watchlist: FROG
 
 **ONE THOUGHT**
 
-The composition shift in Fully Stacked names—logistics and healthcare replacing semiconductors and networking—suggests the market is rotating toward structural demand rather than chasing cyclical strength. US breadth remains solid with more names holding long-term structure than short-term momentum, which historically precedes either sustained moves or genuine pullbacks rather than false breaks. India's mixed posture (42% above MA20 but 61% above MA100) mirrors a market where conviction exists in quality but hasn't yet broadened, a common pre-expansion setup. The proximity of ABBV and AMG to promotion signals that names with tested structure are waiting for confirmation, not capitulation—worth noting as a marker of market selectivity rather than desperation.
+The divergence between short-term and long-term positioning in US equities—62.5% above MA20 versus 71.4% above MA100—suggests the market is consolidating within an established uptrend rather than breaking down. This pattern typically precedes either a genuine pullback that respects longer-term support or a reacceleration, but rarely a sustained reversal; the fact that 28 names remain Fully Stacked indicates conviction is distributed across holdings, not concentrated in a narrow set of survivors. India's mixed short-term action against holding long-term structure mirrors this: when both regions show the same bifurcation, it often reflects natural rotation within strength rather than weakness disguised as health.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-07-16 13:38 UTC · Not financial advice_
+_Draft generated 2026-07-16 19:57 UTC · Not financial advice_
