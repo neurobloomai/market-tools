@@ -50,7 +50,7 @@
       ],
       [
         "P/E",
-        "100.7x",
+        "101.2x",
         "\u2264 100x"
       ]
     ],
@@ -61,7 +61,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.492",
+        "0.454",
         "\u2264 0.20"
       ],
       [
@@ -123,7 +123,7 @@
       ],
       [
         "P/E",
-        "175.1x",
+        "173.0x",
         "\u2264 100x"
       ]
     ],
@@ -176,7 +176,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.254",
+        "0.261",
         "\u2264 0.20"
       ]
     ],
@@ -187,7 +187,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.338",
+        "0.337",
         "\u2264 0.20"
       ]
     ],
@@ -198,7 +198,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.332",
+        "0.327",
         "\u2264 0.20"
       ]
     ],
@@ -273,7 +273,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.381",
+        "0.382",
         "\u2264 0.20"
       ],
       [
@@ -289,7 +289,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.347",
+        "0.348",
         "\u2264 0.20"
       ],
       [
@@ -305,12 +305,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.371",
+        "0.375",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-5.5%",
+        "-5.6%",
         "> 0%"
       ]
     ],
@@ -321,12 +321,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.377",
+        "0.382",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-6.1%",
+        "-6.2%",
         "> 0%"
       ]
     ],
@@ -337,29 +337,18 @@
     "fails": [
       [
         "Debt/EV",
-        "0.232",
+        "0.226",
         "\u2264 0.20"
       ]
     ],
     "note": "Affiliated Managers Group \u2014 multi-boutique AM (AQR, Tweedy Browne etc.); owns fee economics in independent boutiques, asset-light; OM 22.1%, NM 35.5%, ROE 21.8%, FCF 2.6%, fwd P/E 8.5x; D/EV 0.245 only blocker (structural debt to buy stakes, paying down with FCF); grade A",
     "grade": "A"
   },
-  "VCTR": {
-    "fails": [
-      [
-        "Passes all filters",
-        "\u2014",
-        "\u2014"
-      ]
-    ],
-    "note": "Victory Capital \u2014 multi-boutique active asset manager; A+ metrics (NM 25.8%, ROE 21.7%, GrossM 56.3%, zero debt); 76.7% RevG is Amundi US acquisition math not organic; active management = performance-dependent AUM, not a toll booth like MSCI/SPGI; gate: organic AUM growth positive + 2+ quarters post-acquisition showing revenue durability without acquisition tailwind",
-    "grade": "A+"
-  },
   "DVN": {
     "fails": [
       [
         "Debt/EV",
-        "0.256",
+        "0.259",
         "\u2264 0.20"
       ],
       [
@@ -401,7 +390,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.271",
+        "0.269",
         "\u2264 0.20"
       ],
       [
@@ -417,7 +406,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.32",
+        "0.327",
         "\u2264 0.20"
       ],
       [
@@ -470,7 +459,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.411",
+        "0.408",
         "\u2264 0.20"
       ],
       [
@@ -490,7 +479,7 @@
       ],
       [
         "FCF Yield",
-        "-4.5%",
+        "-4.6%",
         "> 0%"
       ]
     ],
@@ -517,7 +506,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.415",
+        "0.403",
         "\u2264 0.20"
       ]
     ],
@@ -539,7 +528,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.327",
+        "0.321",
         "\u2264 0.20"
       ]
     ],
@@ -582,7 +571,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.305",
+        "0.298",
         "\u2264 0.20"
       ]
     ],
@@ -593,7 +582,7 @@
     "fails": [
       [
         "FCF Yield",
-        "-0.4%",
+        "-0.3%",
         "> 0%"
       ]
     ],
@@ -615,7 +604,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.214",
+        "0.209",
         "\u2264 0.20"
       ],
       [
@@ -658,7 +647,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.333",
+        "0.33",
         "\u2264 0.20"
       ],
       [
@@ -716,12 +705,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.213",
+        "0.216",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-5.3%",
+        "-5.4%",
         "> 0%"
       ]
     ],
@@ -732,7 +721,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.265",
+        "0.228",
         "\u2264 0.20"
       ]
     ],
