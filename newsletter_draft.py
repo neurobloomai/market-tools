@@ -140,11 +140,11 @@ def build_setups():
         rows = []
         for row in liquid_rows:
             if row is None: continue
-            sym, price, w_gate, pct20d, pct10w, m10w, m50d, band, slope = row
+            sym, price, w_gate, pct20d, pct10w, m10w, m50d, band, slope, w_gap = row
             if band != 'DATA?':
                 rows.append(dict(ticker=sym, price=price, w_gate=bool(w_gate),
                                  pct10w=pct10w, band=band, slope=slope,
-                                 in_universe=sym in UNIVERSE))
+                                 w_gap=w_gap, in_universe=sym in UNIVERSE))
 
     setups = [r for r in rows if r.get('w_gate') and r.get('band') in ('IN', '-EXT') and r.get('slope') is not None]
     setups.sort(key=lambda x: (0 if x['band'] == '-EXT' else 1, -(x['slope'] or 0)))

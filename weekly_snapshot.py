@@ -261,7 +261,7 @@ if __name__ == '__main__':
     for row in liquid_rows:
         if row is None:
             continue
-        sym, price, w_gate, pct20d, pct10w, m10w, m50d, band, slope = row
+        sym, price, w_gate, pct20d, pct10w, m10w, m50d, band, slope, w_gap = row
         if band != 'DATA?':
             setups_snap.append(dict(
                 ticker=sym, price=price, w_gate=bool(w_gate),
@@ -269,6 +269,7 @@ if __name__ == '__main__':
                 pct10w=round(pct10w, 2) if pct10w is not None else None,
                 band=band,
                 slope=round(slope, 2) if slope is not None else None,
+                w_gap=round(w_gap, 1) if w_gap is not None else None,
                 in_universe=sym in UNIVERSE,
             ))
     Path(HISTORY_FILE.parent / 'setups_snapshot.json').write_text(json.dumps(setups_snap, indent=2))

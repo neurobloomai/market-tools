@@ -240,12 +240,13 @@ def liquid_status(ticker):
         live  = info.get('currentPrice') or info.get('regularMarketPrice')
         ref   = live or price
         if lo52 and hi52 and (ref < lo52 * 0.5 or ref > hi52 * 1.5):
-            return (ticker, ref, None, None, None, None, None, 'DATA?', None)
+            return (ticker, ref, None, None, None, None, None, 'DATA?', None, None)
 
         m10w     = float(wk.rolling(10).mean().iloc[-2])
         m20w     = float(wk.rolling(20).mean().iloc[-2])
         w_slope  = m10w - float(wk.rolling(10).mean().iloc[-2 - SLOPE_LOOKBACK_W])
         w_gate   = m10w > m20w and w_slope > 0
+        w_gap    = (m10w / m20w - 1) * 100 if m20w > 0 else 0.0
         m10d     = float(dy.rolling(10).mean().iloc[-2])
         m20d     = float(dy.rolling(20).mean().iloc[-2])
         m50d     = float(dy.rolling(50).mean().iloc[-2])
@@ -253,7 +254,7 @@ def liquid_status(ticker):
         pct20d   = (price / m20d - 1) * 100
         pct10w   = (price / m10w - 1) * 100
         band_str = 'IN' if BAND_LOW <= pct10d <= BAND_HIGH else ('+EXT' if pct10d > BAND_HIGH else '-EXT')
-        return (ticker, price, w_gate, pct20d, pct10w, m10w, m50d, band_str, w_slope)
+        return (ticker, price, w_gate, pct20d, pct10w, m10w, m50d, band_str, w_slope, w_gap)
     except Exception:
         return None
 
@@ -263,18 +264,18 @@ def liquid_panel_md() -> str:
         rows = list(ex.map(liquid_status, LIQUID_NAMES))
     lines = [
         '\n### Liquid Names — Status Panel\n',
-        '| Ticker | Price | Wkly Gate | vs MA20d | vs MA10w | MA10w | MA50d | Band | W.Slope |',
-        '|:------:|------:|:---------:|---------:|---------:|------:|------:|:----:|--------:|',
+        '| Ticker | Price | Wkly Gate | vs MA20d | vs MA10w | MA10w | MA50d | Band | W.Slope | MA Gap |',
+        '|:------:|------:|:---------:|---------:|---------:|------:|------:|:----:|--------:|-------:|',
     ]
     for row in rows:
         if row is None:
             continue
-        sym, price, wg, p20d, p10w, m10w, m50d, band, slope = row
+        sym, price, wg, p20d, p10w, m10w, m50d, band, slope, w_gap = row
         if band == 'DATA?':
-            lines.append(f"| **{sym}** | ${price:.2f} | — | — | — | — | — | ⚠ DATA? | — |")
+            lines.append(f"| **{sym}** | ${price:.2f} | — | — | — | — | — | ⚠ DATA? | — | — |")
         else:
             wg_s = '✓' if wg else '✗'
-            lines.append(f"| **{sym}** | ${price:.2f} | {wg_s} | {p20d:+.1f}% | {p10w:+.1f}% | ${m10w:.2f} | ${m50d:.2f} | {band} | {slope:+.2f} |")
+            lines.append(f"| **{sym}** | ${price:.2f} | {wg_s} | {p20d:+.1f}% | {p10w:+.1f}% | ${m10w:.2f} | ${m50d:.2f} | {band} | {slope:+.2f} | {w_gap:+.1f}% |")
     return '\n'.join(lines) + '\n'
 
 
@@ -285,17 +286,17 @@ def print_liquid_panel():
     print(f"\n{'─' * 74}")
     print(f"  LIQUID NAMES — STATUS PANEL")
     print(f"{'─' * 74}")
-    print(f"  {'Ticker':<7} {'Price':>8}  {'Wkly':>5}  {'vs MA20d':>9}  {'vs MA10w':>9}  {'MA10w':>8}  {'MA50d':>8}  {'Band':>5}  {'W.Slope':>8}")
-    print(f"  {'─'*7} {'─'*8}  {'─'*5}  {'─'*9}  {'─'*9}  {'─'*8}  {'─'*8}  {'─'*5}  {'─'*8}")
+    print(f"  {'Ticker':<7} {'Price':>8}  {'Wkly':>5}  {'vs MA20d':>9}  {'vs MA10w':>9}  {'MA10w':>8}  {'MA50d':>8}  {'Band':>5}  {'W.Slope':>8}  {'MA Gap':>7}")
+    print(f"  {'─'*7} {'─'*8}  {'─'*5}  {'─'*9}  {'─'*9}  {'─'*8}  {'─'*8}  {'─'*5}  {'─'*8}  {'─'*7}")
     for row in rows:
         if row is None:
             continue
-        sym, price, wg, p20d, p10w, m10w, m50d, band, slope = row
+        sym, price, wg, p20d, p10w, m10w, m50d, band, slope, w_gap = row
         if band == 'DATA?':
             print(f"  {sym:<7} ${price:>7.2f}  {'—':>5}  {'—':>9}  {'—':>9}  {'—':>8}  {'—':>8}  ⚠ DATA?")
         else:
             wg_s = '✓' if wg else '✗'
-            print(f"  {sym:<7} ${price:>7.2f}  {wg_s:>5}  {p20d:>+8.1f}%  {p10w:>+8.1f}%  ${m10w:>7.2f}  ${m50d:>7.2f}  {band:>5}  {slope:>+8.2f}")
+            print(f"  {sym:<7} ${price:>7.2f}  {wg_s:>5}  {p20d:>+8.1f}%  {p10w:>+8.1f}%  ${m10w:>7.2f}  ${m50d:>7.2f}  {band:>5}  {slope:>+8.2f}  {w_gap:>+6.1f}%")
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────

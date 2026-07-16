@@ -71,7 +71,7 @@ def fetch_current(name):
     daily  = daily_ma_check(name)
     if row is None:
         return name, None
-    sym, price, w_gate, pct20d, pct10w, m10w, m50d, band, slope = row
+    sym, price, w_gate, pct20d, pct10w, m10w, m50d, band, slope, w_gap = row
     return name, {
         'w_gate':      bool(w_gate),
         'band':        band,
