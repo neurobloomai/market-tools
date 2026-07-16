@@ -1,35 +1,34 @@
-**Subject:** Market Pulse — Week of Jul 13 2026 · Mixed / Aligned
+**Subject:** Market Pulse — Week of Jul 13 2026 · Mixed / Breadth Diverging
 
 ---
 
 **POSTURE**
 
-US: 62.0% above MA20, 68.1% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 25 names Fully Stacked. India: 41.6% above MA20, 61.0% above MA100 — mixed, structure holding. 12 names Fully Stacked.
+US: 57.7% above MA20, 67.3% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 27 names Fully Stacked. India: 41.6% above MA20, 61.0% above MA100 — mixed, structure holding. 12 names Fully Stacked.
 
 
 **WHAT MOVED**
 
-Entered Fully Stacked — Universe: AFL
-Left Fully Stacked — Universe: CDNS, CW
-Left Fully Stacked — Watchlist: AMD
+No new Fully Stacked entries this week.
+No exits from Fully Stacked.
 
 **SETUPS WORTH WATCHING**
 
-**MU** [Universe] — weekly gate open, -EXT, -1.1% vs MA10w, W.slope +159.31
+**MU** [Universe] — weekly gate open, -EXT, -2.3% vs MA10w, W.slope +159.31
 
 **WATCHLIST WATCH**
 
 **ABBV** — ROE/ROA: ROA 10.0% (gate ≥ 10% / ≥ 15%)
   _Allergan amortization masking strong cash earnings_
-**AMG** — Debt/EV: 0.232 (gate ≤ 0.20)
+**AMG** — Debt/EV: 0.226 (gate ≤ 0.20)
   _multi-boutique AM (AQR, Tweedy Browne etc.)_
 
 **ONE THOUGHT**
 
-The gap between long-term and short-term positioning in US equities (68.1% vs 62.0% above their moving averages) suggests the market is consolidating rather than rolling over—names are holding their structural integrity even as near-term momentum softens. With 25 Fully Stacked names still in place and only three exits this week, the foundation remains intact; what we're watching is whether the near-term weakness becomes a healthy shakeout or signals deeper hesitation. India's inverted picture (stronger long-term structure than short-term action) tells a different story altogether, one worth monitoring separately given the divergence.
+The divergence between short-term and long-term health in US equities—67% of names holding above their 100-day moving average versus 58% above the 20-day—suggests the market is consolidating rather than rolling over. What's notable isn't the pullback itself, but that the majority of your long-term structure remains intact; this is the pattern you see when higher lows are building, not when conviction is breaking. India's posture mirrors this relationship but at a lower amplitude, with structure holding despite mixed near-term positioning. When both markets show more durability at the 100-day than the 20-day, it's typically worth waiting for fresh breakouts rather than chasing bounces off support—the setup changes when promotion candidates clear their blockers or when new names enter Fully Stacked.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-07-15 14:53 UTC · Not financial advice_
+_Draft generated 2026-07-16 01:43 UTC · Not financial advice_
