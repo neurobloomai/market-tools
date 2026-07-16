@@ -106,6 +106,9 @@ UNIVERSE = [
     'TRI',   # Thomson Reuters — legal/news data platform; 30.3% OM, 3.1% yield, FCF 4.7%, D/EV 0.072, P/E 23.4; A
     'HD',    # Home Depot — home improvement duopoly; 11.9% OM, 2.8% yield, FCF 3.0%, D/EV 0.160, P/E 23.9; B
 
+    # REIT — Experiential / Net Lease
+    'VICI',  # VICI Properties — largest gaming/experiential REIT; Caesars (45%), MGM, Venetian, Hard Rock; 15-20yr triple-net leases with CPI escalators = built-in inflation hedge; ~5.5% yield, payout 61% AFFO (conservative for REIT), FCF $1.28B; zero tenant defaults since 2017 IPO; moat = gaming license tied to location (tenants can't relocate); SIP for yield compounding; ROE/D/E block standard filter — REIT-structure artifacts, judge by AFFO coverage and dividend growth
+
     # BDC — Business Development Company
     'MAIN',  # Main Street Capital — BDC lending to lower middle market; internally managed (removes fee conflict vs externally managed peers); ~8.4% yield paid monthly + semi-annual special dividends; trades at ~1.55x NAV (premium unusual for BDCs, reflects management quality); ROE 14.4%; BDC structure means OM/D/E filters don't apply cleanly — judge by: NAV growth + dividend coverage + management track record
 
