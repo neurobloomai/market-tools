@@ -85,7 +85,7 @@ _No tier changes this week._
 | **IOT** | $36.43 | 3/4 | A | Op Margin 1.5% / Net Margin 3.3% / ROE/ROA ROE 4.4% / ROA -0.3% | Samsara — fleet/IoT SaaS, GM 76%, zero debt, 30% RevG, FCF just turned… |
 | **LSCC** | $132.46 | 3/4 | A | Net Margin 3.5% / ROE/ROA ROE 2.7% / ROA 2.5% | Lattice Semiconductor — low-power FPGAs, 60%+ gross margin, zero debt;… |
 | **NEE** | $89.10 | 3/4 | A | Debt/EV 0.348 / FCF Yield -9.9% | NextEra — world's largest renewable platform (wind/solar/battery) + FP… |
-| **PYPL** | $55.52 | 3/4 | A+ | Debt/EV 0.228 | PayPal — OM 18%, NM 15%, ROE 25%, FCF 11%, P/E 7.8x; D/EV 0.30 only bl… |
+| **PYPL** | $55.52 | 3/4 | A+ | Debt/EV 0.227 | PayPal — OM 18%, NM 15%, ROE 25%, FCF 11%, P/E 7.8x; D/EV 0.30 only bl… |
 | **SITM** | $612.38 | 3/4 | B | Op Margin -4.2% / Net Margin -6.4% / ROE/ROA ROE -2.6% / ROA -2.3% | SiTime — MEMS precision timing chips; near-monopoly, 65% gross margin,… |
 | **BILL** | $44.63 | 2/4 | B | Debt/EV 0.454 / Op Margin 1.1% / Net Margin 0.0% / ROE/ROA ROE 0.0% / ROA -0.3% | — |
 | **CLS** | $334.77 | 2/4 | A | Op Margin 6.6% | Celestica — AI infra contract manufacturer (servers, networking), ROE … |
@@ -130,14 +130,14 @@ _No tier changes this week._
 
 ### Liquid Names — Status Panel
 
-| Ticker | Price | Wkly Gate | vs MA20d | vs MA10w | MA10w | MA50d | Band | W.Slope |
-|:------:|------:|:---------:|---------:|---------:|------:|------:|:----:|--------:|
-| **NVDA** | $212.50 | ✗ | +5.1% | +1.9% | $208.53 | $209.21 | +EXT | -0.94 |
-| **META** | $681.31 | ✗ | +14.8% | +13.5% | $600.28 | $600.84 | +EXT | -16.81 |
-| **MSFT** | $395.63 | ✗ | +4.0% | -2.1% | $403.94 | $402.24 | IN | -11.06 |
-| **AAPL** | $327.50 | ✓ | +9.0% | +8.5% | $301.84 | $299.55 | +EXT | +8.71 |
-| **AMZN** | $254.96 | ✗ | +5.8% | +1.0% | $252.35 | $253.37 | +EXT | -6.21 |
-| **GOOGL** | $370.92 | ✗ | +3.7% | -0.0% | $371.05 | $372.18 | IN | -1.67 |
-| **AVGO** | $394.28 | ✗ | +3.0% | -1.8% | $401.61 | $405.01 | +EXT | -12.32 |
-| **MU** | $904.28 | ✓ | -13.9% | -2.3% | $925.90 | $916.62 | -EXT | +159.31 |
-| **NFLX** | $73.68 | ✗ | -1.6% | -9.5% | $81.39 | $81.64 | IN | -5.70 |
+| Ticker | Price | Wkly Gate | vs MA20d | vs MA10w | MA10w | MA50d | Band | W.Slope | MA Gap |
+|:------:|------:|:---------:|---------:|---------:|------:|------:|:----:|--------:|-------:|
+| **NVDA** | $212.50 | ✗ | +5.1% | +1.9% | $208.53 | $209.21 | +EXT | -0.94 | +6.0% |
+| **META** | $681.31 | ✗ | +14.8% | +13.5% | $600.28 | $600.84 | +EXT | -16.81 | -1.6% |
+| **MSFT** | $395.63 | ✗ | +4.0% | -2.1% | $403.94 | $402.24 | IN | -11.06 | +1.3% |
+| **AAPL** | $327.50 | ✓ | +9.0% | +8.5% | $301.84 | $299.55 | +EXT | +8.71 | +7.4% |
+| **AMZN** | $254.96 | ✗ | +5.8% | +1.0% | $252.35 | $253.37 | +EXT | -6.21 | +5.4% |
+| **GOOGL** | $370.92 | ✗ | +3.7% | -0.0% | $371.05 | $372.18 | IN | -1.67 | +7.8% |
+| **AVGO** | $394.28 | ✗ | +3.0% | -1.8% | $401.61 | $405.01 | +EXT | -12.32 | +6.7% |
+| **MU** | $904.28 | ✓ | -13.9% | -2.3% | $925.90 | $916.62 | -EXT | +159.31 | +36.9% |
+| **NFLX** | $73.68 | ✗ | -1.6% | -9.5% | $81.39 | $81.64 | IN | -5.70 | -8.2% |
