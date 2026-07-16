@@ -54,9 +54,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 
 ### Tier Movements — Week over Week
 
-↑ **Improved:** **WST** (◇ Trend Intact → ✦ Fully Stacked), **ASML** (◇ Trend Intact → ✦ Fully Stacked), **FROG** (◇ Trend Intact → ✦ Fully Stacked), **TGTX** (◇ Trend Intact → ✦ Fully Stacked), **GOOGL** (MA20 only → ◇ Trend Intact), **GEV** (MA100+MA200 → ◇ Trend Intact)
-
-↓ **Dropped:** **MSCI** (✦ Fully Stacked → ◇ Trend Intact), **EW** (◇ Trend Intact → MA100+MA200), **DECK** (◇ Trend Intact → MA20 only), **FICO** (◈ Intermediate → Below all), **MDB** (◈ Intermediate → Below all), **VST** (◈ Intermediate → MA50+100), **EXPE** (◈ Intermediate → MA100+MA200), **NOW** (MA50+100 → MA20 only), **EFX** (MA50+100 → MA50), **ROP** (MA50+100 → Below all), **DOCS** (MA50+100 → MA50), **HUBS** (MA50+100 → MA50), **MKC** (MA50+100 → Below all), **IDXX** (MA50 → Below all), **PODD** (MA50 → Below all), **ICE** (MA50 → MA20 only), **XPO** (MA20 only → MA200 only), **SAIA** (MA20 only → MA100+MA200), **IT** (MA20 only → Below all), **LULU** (MA20 only → Below all), **KTOS** (MA20 only → Below all), **FISV** (MA20 only → Below all), **BRK-B** (MA100+MA200 → Below all), **PGR** (MA100+MA200 → Below all), **PEG** (MA100+MA200 → Below all), **WEC** (MA100+MA200 → MA200 only)
+_No tier changes this week._
 
 
 ### Watchlist Status
