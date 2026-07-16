@@ -47,6 +47,11 @@
         "ROE/ROA",
         "ROE -54.9% / ROA -9.7%",
         "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "P/E",
+        "100.2x",
+        "\u2264 100x"
       ]
     ],
     "note": "",
@@ -118,7 +123,7 @@
       ],
       [
         "P/E",
-        "170.0x",
+        "172.9x",
         "\u2264 100x"
       ]
     ],
@@ -296,6 +301,17 @@
     "note": "NextEra \u2014 world's largest renewable platform (wind/solar/battery) + FPL (best-run regulated utility in US); OM 30.2%, NM 29.4%, ROE 10.3%; D/EV 0.352 (Dominion acq debt, can resolve) + FCF -10.2% (renewable capex \u2192 contracted cash flows once online, not perpetual like DUK); grade A, 2 blockers both have resolution paths; at 40w MA support, 10% off highs 2026-07-01",
     "grade": "A"
   },
+  "VICI": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.387",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "VICI Properties \u2014 largest gaming/experiential REIT; triple-net leases with Caesars (45%), MGM, Venetian, Hard Rock at 15-20yr terms with CPI escalators; GrossM 99.1%, NM 76.8%, FCF $1.28B, ~5.5% yield, payout 61% AFFO (conservative for REIT); ROE 11.3% (gate \u226515%) + D/EV 0.62 (gate \u22640.50) both block \u2014 both REIT-structure artifacts: real estate at historical cost compresses ROE, leverage secured by experiential assets generating rent is not deteriorating debt; zero tenant defaults since 2017 IPO; moat = gaming license tied to location (tenants cannot relocate without VICI consent); grade B+; gate to universe: ROE inflecting toward 15% as FFO scales + D/EV delevering organically",
+    "grade": "A"
+  },
   "WEC": {
     "fails": [
       [
@@ -305,7 +321,7 @@
       ],
       [
         "FCF Yield",
-        "-5.5%",
+        "-5.6%",
         "> 0%"
       ]
     ],
@@ -321,7 +337,7 @@
       ],
       [
         "FCF Yield",
-        "-6.1%",
+        "-6.2%",
         "> 0%"
       ]
     ],
@@ -705,7 +721,7 @@
       ],
       [
         "FCF Yield",
-        "-5.4%",
+        "-5.3%",
         "> 0%"
       ]
     ],
@@ -961,7 +977,7 @@
       ],
       [
         "FCF Yield",
-        "-3.4%",
+        "-3.3%",
         "> 0%"
       ]
     ],
