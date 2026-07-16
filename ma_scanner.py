@@ -259,23 +259,36 @@ def liquid_status(ticker):
         return None
 
 
+def _zone(wg, band, w_gap):
+    if not wg:
+        return '—'
+    if band == '+EXT':
+        return 'EXTENDED'
+    if w_gap is not None and w_gap < 8:
+        return 'EARLY'
+    if w_gap is not None and w_gap >= 20:
+        return 'EXTENDED'
+    return 'PRIME'
+
+
 def liquid_panel_md() -> str:
     with ThreadPoolExecutor(max_workers=8) as ex:
         rows = list(ex.map(liquid_status, LIQUID_NAMES))
     lines = [
         '\n### Liquid Names — Status Panel\n',
-        '| Ticker | Price | Wkly Gate | vs MA20d | vs MA10w | MA10w | MA50d | Band | W.Slope | MA Gap |',
-        '|:------:|------:|:---------:|---------:|---------:|------:|------:|:----:|--------:|-------:|',
+        '| Ticker | Price | Wkly Gate | vs MA20d | vs MA10w | MA10w | MA50d | Band | W.Slope | MA Gap | Zone |',
+        '|:------:|------:|:---------:|---------:|---------:|------:|------:|:----:|--------:|-------:|:----:|',
     ]
     for row in rows:
         if row is None:
             continue
         sym, price, wg, p20d, p10w, m10w, m50d, band, slope, w_gap = row
         if band == 'DATA?':
-            lines.append(f"| **{sym}** | ${price:.2f} | — | — | — | — | — | ⚠ DATA? | — | — |")
+            lines.append(f"| **{sym}** | ${price:.2f} | — | — | — | — | — | ⚠ DATA? | — | — | — |")
         else:
             wg_s = '✓' if wg else '✗'
-            lines.append(f"| **{sym}** | ${price:.2f} | {wg_s} | {p20d:+.1f}% | {p10w:+.1f}% | ${m10w:.2f} | ${m50d:.2f} | {band} | {slope:+.2f} | {w_gap:+.1f}% |")
+            zone  = _zone(wg, band, w_gap)
+            lines.append(f"| **{sym}** | ${price:.2f} | {wg_s} | {p20d:+.1f}% | {p10w:+.1f}% | ${m10w:.2f} | ${m50d:.2f} | {band} | {slope:+.2f} | {w_gap:+.1f}% | {zone} |")
     return '\n'.join(lines) + '\n'
 
 
@@ -286,8 +299,8 @@ def print_liquid_panel():
     print(f"\n{'─' * 74}")
     print(f"  LIQUID NAMES — STATUS PANEL")
     print(f"{'─' * 74}")
-    print(f"  {'Ticker':<7} {'Price':>8}  {'Wkly':>5}  {'vs MA20d':>9}  {'vs MA10w':>9}  {'MA10w':>8}  {'MA50d':>8}  {'Band':>5}  {'W.Slope':>8}  {'MA Gap':>7}")
-    print(f"  {'─'*7} {'─'*8}  {'─'*5}  {'─'*9}  {'─'*9}  {'─'*8}  {'─'*8}  {'─'*5}  {'─'*8}  {'─'*7}")
+    print(f"  {'Ticker':<7} {'Price':>8}  {'Wkly':>5}  {'vs MA20d':>9}  {'vs MA10w':>9}  {'MA10w':>8}  {'MA50d':>8}  {'Band':>5}  {'W.Slope':>8}  {'MA Gap':>7}  {'Zone':<8}")
+    print(f"  {'─'*7} {'─'*8}  {'─'*5}  {'─'*9}  {'─'*9}  {'─'*8}  {'─'*8}  {'─'*5}  {'─'*8}  {'─'*7}  {'─'*8}")
     for row in rows:
         if row is None:
             continue
@@ -296,7 +309,8 @@ def print_liquid_panel():
             print(f"  {sym:<7} ${price:>7.2f}  {'—':>5}  {'—':>9}  {'—':>9}  {'—':>8}  {'—':>8}  ⚠ DATA?")
         else:
             wg_s = '✓' if wg else '✗'
-            print(f"  {sym:<7} ${price:>7.2f}  {wg_s:>5}  {p20d:>+8.1f}%  {p10w:>+8.1f}%  ${m10w:>7.2f}  ${m50d:>7.2f}  {band:>5}  {slope:>+8.2f}  {w_gap:>+6.1f}%")
+            zone  = _zone(wg, band, w_gap)
+            print(f"  {sym:<7} ${price:>7.2f}  {wg_s:>5}  {p20d:>+8.1f}%  {p10w:>+8.1f}%  ${m10w:>7.2f}  ${m50d:>7.2f}  {band:>5}  {slope:>+8.2f}  {w_gap:>+6.1f}%  {zone:<8}")
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
