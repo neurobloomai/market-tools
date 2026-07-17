@@ -396,6 +396,21 @@ def get_fundamentals(ticker):
         # Revenue growth
         rev_growth        = info.get('revenueGrowth', None)
 
+        # EPS trend — current FY vs prior FY, next FY vs current FY
+        fy0_growth = None
+        fy1_growth = None
+        try:
+            ae = t.get_earnings_estimate()
+            if ae is not None and '0y' in ae.index and '+1y' in ae.index:
+                g0 = ae.loc['0y', 'growth']
+                g1 = ae.loc['+1y', 'growth']
+                if g0 is not None and not (isinstance(g0, float) and math.isnan(g0)):
+                    fy0_growth = round(float(g0) * 100, 1)
+                if g1 is not None and not (isinstance(g1, float) and math.isnan(g1)):
+                    fy1_growth = round(float(g1) * 100, 1)
+        except Exception:
+            pass
+
         return dict(
             ticker          = ticker,
             name            = info.get('shortName', ticker),
@@ -414,6 +429,8 @@ def get_fundamentals(ticker):
             pb              = round(pb, 1) if pb is not None else None,
             fcf_yield       = round(fcf_yield, 1) if fcf_yield is not None else None,
             rev_growth      = round(rev_growth * 100, 1) if rev_growth is not None else None,
+            fy0_growth      = fy0_growth,
+            fy1_growth      = fy1_growth,
         )
     except Exception as e:
         print(f"  ⚠ {ticker}: {e}")
@@ -534,6 +551,19 @@ def pe_html(d):
         return f'{show:.0f}x<span style="font-size:9px;color:#8b949e">f</span>'
     return f'{pe:.1f}x'
 
+def eps_trend_html(d):
+    g0 = d.get('fy0_growth')
+    g1 = d.get('fy1_growth')
+    if g0 is None:
+        return '<span style="color:#484f58">—</span>'
+    c0 = '#3fb950' if g0 >= 5 else ('#e3b341' if g0 >= 0 else '#f85149')
+    prefix = '⚠ ' if g0 < 0 else ''
+    g0_str = f'{prefix}{g0:+.0f}%'
+    if g1 is not None:
+        c1 = '#3fb950' if g1 >= 5 else ('#e3b341' if g1 >= 0 else '#f85149')
+        return f'<span style="color:{c0};font-size:11px">{g0_str}</span> <span style="color:{c1};font-size:10px">/{g1:+.0f}%</span>'
+    return f'<span style="color:{c0};font-size:11px">{g0_str}</span>'
+
 def signal_html(sig):
     if sig is None: return '<span style="color:#484f58">—</span>'
     direction, source = sig
@@ -556,7 +586,7 @@ def build_watchlist_section(watchlist):
   <thead>
     <tr>
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th>
-      <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th>
+      <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>EPS FY</th>
       <th>Blocking Filters</th>
     </tr>
   </thead>
@@ -583,6 +613,7 @@ def build_watchlist_rows(watchlist):
           <td>{pct_color(d['fcf_yield'], 0)}</td>
           <td>{pct_color(d['rev_growth'], 10)}</td>
           <td style="color:#e6edf3">{pe_html(d)}</td>
+          <td>{eps_trend_html(d)}</td>
           <td style="font-size:11px">{blockers}</td>
         </tr>"""
     return rows
@@ -597,7 +628,7 @@ def build_universe_failing_section(failing):
   <thead>
     <tr>
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th>
-      <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th>
+      <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>EPS FY</th>
       <th>Blocking Filters</th>
     </tr>
   </thead>
@@ -627,6 +658,7 @@ def build_html(results, watchlist=None, universe_failing=None):
           <td>{pct_color(d['fcf_yield'], 2)}</td>
           <td>{pct_color(d['rev_growth'], 5)}</td>
           <td>{pe_html(d)}</td>
+          <td>{eps_trend_html(d)}</td>
           <td>{signal_html(d.get('signal'))}</td>
         </tr>"""
 
@@ -696,7 +728,7 @@ def build_html(results, watchlist=None, universe_failing=None):
     <tr>
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th><th>Mkt Cap</th>
       <th>Grade</th><th>Debt/EV</th><th>Gross%</th><th>Op%</th><th>Net%</th>
-      <th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>Signal (wk)</th>
+      <th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>EPS FY</th><th>Signal (wk)</th>
     </tr>
   </thead>
   <tbody>{rows}</tbody>
@@ -751,7 +783,11 @@ if __name__ == '__main__':
     failing = [d for d in raw if d is not None and not passes_quality_filter(d)]
     for d in passed:
         d['grade'] = quality_grade(d)
-    passed.sort(key=lambda x: (0 if x['grade']=='A+' else 1 if x['grade']=='A' else 2, -(x['market_cap_b'] or 0)))
+    passed.sort(key=lambda x: (
+        0 if x['grade']=='A+' else 1 if x['grade']=='A' else 2,
+        1 if (x.get('fy0_growth') is not None and x['fy0_growth'] < 0) else 0,
+        -(x['market_cap_b'] or 0)
+    ))
 
     print(f"  ✅  {len(passed)} companies passed filters  ({len(failing)} in universe not yet qualifying)")
 
