@@ -31,6 +31,7 @@ The rest of this README is the manual for how those two filters are built and ap
 | `ma_live.py` | 🇺🇸 US | **Live** MA Scanner — uses `currentPrice` + `iloc[-1]`; run during market hours for intraday read |
 | `india_ma_live.py` | 🇮🇳 India | **Live** MA Scanner — same as `ma_live.py` for NSE names; run during IST market hours |
 | `dividend_plays_for_longterm.py` | 🇺🇸 US | Curated long-term dividend universe — quality-filtered, thesis-annotated |
+| `daily_alert.py` | 🇺🇸 US | Mid-week alert for the 9 liquid names — fires email only when a crossing occurs **and** the weekly gate is open |
 | `run_aligned.sh` | — | Cron entry point — runs all four scripts (US + India), auto-pushes to GitHub |
 
 ## Live Outputs
@@ -41,27 +42,28 @@ Updated automatically every Monday via GitHub Actions — no server, no local ma
 
 | Page | Market | What it shows | Schedule |
 |---|---|---|---|
-| [market_briefing.html](https://neurobloomai.github.io/market-tools/market_briefing.html) | 🇺🇸 US | Sector ETF momentum dashboard — MA signals, day change, volume, yield | Monday 8am EST |
-| [quality_screener.html](https://neurobloomai.github.io/market-tools/quality_screener.html) | 🇺🇸 US | Quality growth screener — margins, ROE, FCF, debt filter | Monday 8am EST |
-| [aligned_screener.html](https://neurobloomai.github.io/market-tools/aligned_screener.html) | 🇺🇸 US | 4/4 MA alignment · FullCoil squeeze · MTF · CMF · RS vs SPY · A/D Line · OBV | Monday 8am EST |
-| [india_briefing.html](https://neurobloomai.github.io/market-tools/india_briefing.html) | 🇮🇳 India | NSE sector index dashboard — same MA framework, RS vs NIFTY | Monday 8am IST |
-| [india_screener.html](https://neurobloomai.github.io/market-tools/india_screener.html) | 🇮🇳 India | India quality screener — same filters, NSE universe | Monday 8am IST |
-| [india_aligned_screener.html](https://neurobloomai.github.io/market-tools/india_aligned_screener.html) | 🇮🇳 India | 4/4 MA alignment · FullCoil squeeze · MTF · CMF · RS vs NIFTY 50 · A/D Line · OBV | Monday 8am IST |
+| [market_briefing.html](https://neurobloomai.github.io/market-tools/market_briefing.html) | 🇺🇸 US | Sector ETF momentum dashboard — MA signals, day change, volume, yield | Monday 2:30am UTC |
+| [quality_screener.html](https://neurobloomai.github.io/market-tools/quality_screener.html) | 🇺🇸 US | Quality growth screener — margins, ROE, FCF, debt filter · EPS FY trend · Entry zone | Monday 2:30am UTC |
+| [aligned_screener.html](https://neurobloomai.github.io/market-tools/aligned_screener.html) | 🇺🇸 US | 4/4 MA alignment · FullCoil squeeze · MTF · CMF · RS vs SPY · A/D Line · OBV | Monday 2:30am UTC |
+| [india_briefing.html](https://neurobloomai.github.io/market-tools/india_briefing.html) | 🇮🇳 India | NSE sector index dashboard — same MA framework, RS vs NIFTY | Monday 2:30am UTC |
+| [india_screener.html](https://neurobloomai.github.io/market-tools/india_screener.html) | 🇮🇳 India | India quality screener — same filters, NSE universe | Monday 2:30am UTC |
+| [india_aligned_screener.html](https://neurobloomai.github.io/market-tools/india_aligned_screener.html) | 🇮🇳 India | 4/4 MA alignment · FullCoil squeeze · MTF · CMF · RS vs NIFTY 50 · A/D Line · OBV | Monday 2:30am UTC |
 
 Weekly snapshots: [`weekly_notes.md`](weekly_notes.md) · [`india_weekly_notes.md`](india_weekly_notes.md)
 
 ## Automation
 
-Runs entirely on GitHub's infrastructure via two scheduled workflows:
+Runs entirely on GitHub's infrastructure via a single scheduled workflow:
 
 | Workflow | Schedule | What runs |
 |---|---|---|
-| [Weekly Screener — US](.github/workflows/weekly_us.yml) | Monday 8am EST | `dashboard.py` → `weekly_snapshot.py` → `screener.py` → `aligned_screener.py` |
-| [Weekly Screener — India](.github/workflows/weekly_india.yml) | Monday 8am IST | `india_dashboard.py` → `india_weekly_snapshot.py` → `india_screener.py` → `india_aligned_screener.py` |
+| [Weekly Screener — US + India](.github/workflows/weekly_us.yml) | Monday 2:30am UTC (8am IST / Sunday 9:30pm EST) | US: `dashboard.py` → `weekly_snapshot.py` → `market_breadth.py` → `screener.py` → `aligned_screener.py` · India: `india_dashboard.py` → `india_weekly_snapshot.py` → `india_screener.py` → `india_aligned_screener.py` → `india_marketbreadth.py` · Then: `alert_check.py` → `newsletter_draft.py` |
 
-Each workflow checks out the repo, installs `yfinance`, runs the scripts, and commits the updated HTML and markdown files back — fully automated, zero manual steps.
+The schedule runs at 2:30am UTC Monday — after both the US Friday close and the India Friday close are confirmed, before either market opens for the new week. Clean data both ways, single run.
 
-You can also trigger either workflow manually anytime from the **Actions** tab on GitHub.
+The workflow checks out the repo, installs dependencies, runs all scripts in sequence, and commits updated HTML and markdown files back — fully automated, zero manual steps.
+
+You can also trigger the workflow manually anytime from the **Actions** tab on GitHub.
 
 `run_aligned.sh` is available as a local fallback if you want to run everything on your own machine:
 
@@ -161,12 +163,25 @@ NVDA · META · MSFT · AAPL · AMZN · GOOGL · AVGO · MU · NFLX
 | **vs MA10d** | How far price is from the daily MA10. IN band = within ±3%. +EXT = too extended above. -EXT = still in pullback |
 | **Band** | IN = actionable entry zone. +EXT = wait for pullback. -EXT = structure recovering |
 | **W.Slope** | Weekly MA10 slope — direction and momentum of the weekly trend |
+| **MA Gap** | `(MA10w / MA20w − 1) × 100` — how far the 10-week MA is above the 20-week MA as a percentage. Context field, not a signal: a wide gap (e.g. +30%) means the weekly gate closing would require a sustained decline before MA10w falls to MA20w. Useful for understanding why recovery from a correction could take longer in very extended names. |
+| **Zone** | Entry context label. **PRIME** = gate open, IN/−EXT band, gap 8–20% — the sweet spot. **EXTENDED** = gate open but price above +EXT band OR gap ≥ 20% — setup exists but overextension is real. **EARLY** = gate open but gap < 8% — trend just started, small cushion if gate tests. **—** = gate closed. |
 
 The panel solves a specific problem: liquid names go invisible in the main scan when they're extended beyond the ±3% band. Without the panel, a well-positioned NVDA at -2.8% from MA10d with weekly gate passing doesn't appear anywhere. The panel ensures the names you can actually trade are always visible — setup or not.
 
 The same panel is written into `weekly_notes.md` each week, so end-of-week status for all 9 names is preserved in git history.
 
 A built-in sanity check flags `⚠ DATA?` if a price falls outside 50%–150% of the 52-week range — catches genuinely broken yfinance data without false-positives on stock splits or large legitimate price moves.
+
+### Daily Alert — Mid-Week Structure Monitor
+
+`daily_alert.py` watches the same 9 liquid names between weekly runs. It fires an email when any of these crossings happen:
+
+- Weekly gate opens or closes (MA10w crosses MA20w)
+- Band changes: IN ↔ −EXT ↔ +EXT
+- Price breaks below or recovers above MA20d
+- Price breaks below or recovers above MA50d
+
+**Gate filter:** only crossings where the weekly gate is currently open generate an email. Gate-closed crossings are logged but not sent — a band change in a name with a broken weekly is informational, not actionable. This keeps the inbox quiet: if all detected crossings are on gate-closed names, no email is sent.
 
 ### What this scanner is — and is not
 
@@ -227,7 +242,9 @@ Names that look like good chart setups but fall below the line (VRTX, NEM, FTNT,
 
 Names removed from watchlist in first cleanup: SMR, OKLO, XE (pre-revenue nuclear), IONQ (quantum), CRSP/NTLA/BEAM (gene editing), RXRX/RARE (biopharma), MRNA/BNTX (revenue collapsed), ASTS/LUNR (space ventures). India: OLAELEC (deeply loss-making EV in structurally competitive market). These are interesting themes — not watchlist material.
 
-Names removed from watchlist in second cleanup: PCG (wildfire liability structural, not a metric), FCX (own note said "not a compounder" — cleaner expressions already in universe), SEDG (Chinese competitor share loss is structural, not cyclical), KLAR (credit cycle risk inherent to BNPL model), INOD (AI model efficiency reducing annotation demand is an existential business risk), AMKR (services margin ceiling structural, B-grade at best), CELH (energy drink competitive moat fragile vs Monster/Red Bull), MRAM (TAM too small, speculative angle). Moved to FUTURE_RADAR: CORZ (BTC miner pivot unproven), MOD (B grade, multiple blockers), UPST (credit cycle structural, gate is FCF + converts + through-cycle proof).
+Names removed from watchlist in second cleanup: PCG (wildfire liability structural, not a metric), FCX (own note said "not a compounder" — cleaner expressions already in universe), SEDG (Chinese competitor share loss is structural, not cyclical), KLAR (credit cycle risk inherent to BNPL model), INOD (AI model efficiency reducing annotation demand is an existential business risk), AMKR (services margin ceiling structural, B-grade at best), CELH (energy drink competitive moat fragile vs Monster/Red Bull), MRAM (TAM too small, speculative angle). Moved to FUTURE_RADAR: CORZ (BTC miner pivot unproven), MOD (B grade, multiple blockers), UPST (credit cycle structural, gate is FCF + converts + through-cycle proof), PGY (Pagaya — D/EV too high for WATCHLIST today, AI-powered credit network with real revenue but balance sheet needs work before it earns a watchlist spot).
+
+Recent watchlist additions: **VICI** (gaming REIT — Caesars/MGM landlord, triple-net leases, ~5% yield; standard OM/D/E filters don't apply cleanly to REIT structure — judge by lease coverage, tenant quality, and AFFO instead), **ABT** (Abbott Laboratories — diversified med-tech + diagnostics + nutrition; consistent dividend grower, strong FCF, A-grade quality), **TLN** (Talen Energy — nuclear power + data center PPAs; nuclear PPA contracts with hyperscalers are a durable revenue stream as AI infrastructure electricity demand grows), **PRGS** (Progress Software — enterprise DevOps/application platforms; value play with recurring revenue and improving margins).
 
 **Both markets** — US and India running the same framework. Same discipline, same filters, different universes. The logic doesn't change because the geography does.
 
@@ -310,6 +327,26 @@ Both dashboards output a CLI table and save an HTML file locally (`~/market_brie
 - ROE ≥ 10% · FCF yield ≥ 0% · P/E ≤ 100x (forward P/E used as fallback)
 - FCF gap relief: None allowed when rev growth ≥ 50% AND net margin ≥ 10%
 - Grading: A+ ≥ 6pts · A ≥ 4pts · OM weighted at 2pts (primary signal)
+
+### EPS FY Trend Column
+
+Shows each name's earnings growth trajectory using analyst estimates: **current FY growth %** (how much EPS is expected to grow this fiscal year vs last) and **next FY growth %** (the year after). Companies with declining EPS in their current fiscal year are deprioritized within each grade bucket — they still appear but sort below flat/growing peers.
+
+Color coding: green = ≥15% growth, orange = 0–15%, red = negative.
+
+This catches a real pattern: a company can grade A on historical quality metrics (margins, ROE, FCF) while analysts expect *declining* earnings this fiscal year. The screener doesn't disqualify them — historical quality matters — but it flags the headwind so you're not buying into a deteriorating earnings trend without knowing.
+
+### Entry Zone Column
+
+A quick read on whether the current price offers a margin of safety or demands premium payment.
+
+| Zone | Meaning |
+|------|---------|
+| **● GREEN ZONE** | Price near or below MA200d, strong earnings growth, high grade — favorable entry |
+| **● YELLOW FAIR** | Moderate position vs MA200d or mixed signals — fair value, proceed carefully |
+| **● RED RICH** | Extended above MA200d, weak earnings, or low grade + high PE — margin of safety thin |
+
+Scoring is additive: base points from price vs MA200d position, adjusted by EPS growth, grade modifier, and a PE penalty for high-multiple names with sub-20% earnings growth. Not a buy/sell signal — a reminder that entry price determines survivability when the trade goes against you.
 
 ### Weekly Signal Column — `Signal (wk)`
 
