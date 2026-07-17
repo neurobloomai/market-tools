@@ -185,13 +185,18 @@ if __name__ == '__main__':
     prev    = load_state()
     alerts  = detect_crossings(results, prev)
 
-    if alerts:
-        print(f'  Crossings: {len(alerts)}')
-        for t, msg, kind in alerts:
+    actionable = [(t, msg, kind) for t, msg, kind in alerts if results.get(t, {}) and results[t].get('w_gate')]
+    if actionable:
+        print(f'  Crossings: {len(alerts)} total, {len(actionable)} gate-open (sending)')
+        for t, msg, kind in actionable:
             print(f'    {t}: {msg}')
         subject = f'neurobloom alert — {datetime.utcnow().strftime("%b %d")}'
-        html    = build_html(alerts, results)
+        html    = build_html(actionable, results)
         send_alert(subject, html)
+    elif alerts:
+        print(f'  Crossings: {len(alerts)} but all gates closed — no alert sent')
+        for t, msg, kind in alerts:
+            print(f'    {t}: {msg} (gate closed)')
     else:
         print('  No new crossings — no alert sent')
 
