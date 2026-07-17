@@ -24,7 +24,7 @@
       ],
       [
         "FCF Yield",
-        "-4.4%",
+        "-4.5%",
         "> 0%"
       ]
     ],
@@ -47,11 +47,6 @@
         "ROE/ROA",
         "ROE -54.9% / ROA -9.7%",
         "\u2265 10% / \u2265 15%"
-      ],
-      [
-        "P/E",
-        "100.5x",
-        "\u2264 100x"
       ]
     ],
     "note": "",
@@ -123,7 +118,7 @@
       ],
       [
         "P/E",
-        "172.6x",
+        "175.5x",
         "\u2264 100x"
       ]
     ],
@@ -294,7 +289,7 @@
       ],
       [
         "FCF Yield",
-        "-9.9%",
+        "-9.8%",
         "> 0%"
       ]
     ],
@@ -397,6 +392,27 @@
     "note": "NRG Energy \u2014 de-lever play; LS Power acq doubled fleet+debt, targeting 3x net leverage, Fwd P/E 11x, yield-sensitive re-rate when 10yr < 4.0%",
     "grade": "B"
   },
+  "TLN": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.303",
+        "\u2264 0.20"
+      ],
+      [
+        "Net Margin",
+        "-0.6%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -1.9% / ROA 1.9%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Talen Energy \u2014 independent power producer; Susquehanna nuclear (2.5GW, Pennsylvania) + natural gas fleet; first direct nuclear-to-datacenter PPA in US (Amazon AWS, long-term contracted at premium rates for 24/7 carbon-free power); FCF 7.9% standout (real cash), fwdPE 12.3x cheap for a contracted nuclear asset; GrossM 40.1%, OM 17.2%, NM -0.6% (barely negative), ROE -1.9%, D/EV 0.303 \u2014 all blocking; RevG 97% is post-bankruptcy base comparison, not organic; emerged from Ch.11 May 2023, debt is manageable given FCF; \"not sure but getting better\" thesis \u2014 AWS deal is structural but NM still inflecting and debt elevated; grade B; gate: NM turning consistently positive + D/EV \u2264 0.25 as FCF deleverages + second major datacenter PPA validating Susquehanna as a platform asset",
+    "grade": "B"
+  },
   "VST": {
     "fails": [
       [
@@ -490,7 +506,7 @@
       ],
       [
         "FCF Yield",
-        "-4.7%",
+        "-4.9%",
         "> 0%"
       ]
     ],
@@ -534,6 +550,17 @@
     ],
     "note": "Celestica \u2014 AI infra contract manufacturer (servers, networking), ROE 52%, D/EV 0.02, gross margin 12% blocks universe",
     "grade": "A"
+  },
+  "PRGS": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.461",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "Progress Software \u2014 serial acquirer of mature enterprise software: OpenEdge (30-40yr installed base low-code apps, near-impossible to rip out), Telerik/Kendo UI (developer UI components), MOVEit (managed file transfer); GrossM 85.6%, FCF 18.6% (exceptional), fwdPE 6.5x = priced like broken, runs like cash cow; OM 18.5% + ROE 18.6% both 1-2% below gate; D/EV 0.461 serial acquisition debt = main blocker; RevG 6.8% \u2014 mature, not a growth story; MOVEit 2023 ransomware breach created liability overhang + reputational hit, but customers stayed (switching costs > breach risk); value play: FCF at 6.5x is the signal, not the headline metrics; grade B; gate: D/EV \u2264 0.25 as FCF deleverages + OM crossing 20% as acquired businesses optimize",
+    "grade": "B"
   },
   "SSNC": {
     "fails": [
@@ -882,7 +909,7 @@
       ],
       [
         "FCF Yield",
-        "-1.7%",
+        "-1.8%",
         "> 0%"
       ]
     ],
@@ -983,7 +1010,7 @@
       ],
       [
         "FCF Yield",
-        "-3.3%",
+        "-3.5%",
         "> 0%"
       ]
     ],
