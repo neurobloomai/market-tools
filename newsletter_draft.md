@@ -4,12 +4,12 @@
 
 **POSTURE**
 
-US: 63.7% above MA20, 71.4% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 28 names Fully Stacked. India: 42.3% above MA20, 61.5% above MA100 — mixed, structure holding. 12 names Fully Stacked.
+US: 63.7% above MA20, 71.4% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 28 names Fully Stacked. India: 49.3% above MA20, 65.3% above MA100 — mixed, structure holding. 12 names Fully Stacked.
 
 
 **WHAT MOVED**
 
-Entered Fully Stacked — Universe: MRK
+No new Fully Stacked entries this week.
 No exits from Fully Stacked.
 
 **SETUPS WORTH WATCHING**
@@ -25,10 +25,10 @@ No exits from Fully Stacked.
 
 **ONE THOUGHT**
 
-The divergence between US and India positioning—71.4% of names holding above the 100-day versus 61.5% in India—reflects different stages of the same cycle rather than a warning sign. US participation remains broad enough that short-term pullbacks aren't eroding the long-term structure, while India's steadier accumulation into the 100-day suggests patience is being rewarded before acceleration. The fact that we're adding to Fully Stacked (MRK) rather than cycling through promotions indicates quality names are extending rather than rotating, which tends to precede periods where late entries face real friction.
+The divergence between US and Indian markets reflects different stages of recovery: American equities are displaying structural resilience with more names sustaining longer-term trends despite near-term volatility, while India's mixed near-term setup against solid longer-term foundation suggests the rally there is still proving itself. For investors managing both geographies, this isn't a signal to rotate—it's a reminder that conviction in long-term positioning requires different patience thresholds depending on which market is doing the work of establishing its next leg. The consistency of 28 Fully Stacked names in the US versus 12 in India tells you where the foundation is thickest.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-07-17 11:37 UTC · Not financial advice_
+_Draft generated 2026-07-17 12:07 UTC · Not financial advice_
