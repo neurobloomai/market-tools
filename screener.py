@@ -394,6 +394,11 @@ def get_fundamentals(ticker):
         market_cap        = info.get('marketCap', 1) or 1
         fcf_yield         = (fcf / market_cap * 100) if fcf is not None and market_cap else None
 
+        # Price vs MA200d — margin of safety signal
+        ma200d            = info.get('twoHundredDayAverage', None)
+        _price_raw        = info.get('currentPrice') or info.get('regularMarketPrice')
+        price_vs_ma200    = round((_price_raw / ma200d - 1) * 100, 1) if ma200d and _price_raw else None
+
         # Revenue growth
         rev_growth        = info.get('revenueGrowth', None)
 
@@ -432,6 +437,7 @@ def get_fundamentals(ticker):
             rev_growth      = round(rev_growth * 100, 1) if rev_growth is not None else None,
             fy0_growth      = fy0_growth,
             fy1_growth      = fy1_growth,
+            price_vs_ma200  = price_vs_ma200,
         )
     except Exception as e:
         print(f"  ⚠ {ticker}: {e}")
@@ -552,6 +558,46 @@ def pe_html(d):
         return f'{show:.0f}x<span style="font-size:9px;color:#8b949e">f</span>'
     return f'{pe:.1f}x'
 
+def entry_zone(d):
+    """Composite margin-of-safety signal: GREEN / YELLOW / RED."""
+    pma200 = d.get('price_vs_ma200')
+    fy0    = d.get('fy0_growth')
+    grade  = d.get('grade', 'B')
+    fpe    = d.get('fwd_pe') or d.get('pe')
+
+    # Base score from technical position vs MA200d
+    if pma200 is None:
+        base = 1
+    elif pma200 <= 5:
+        base = 2   # at/below MA200 — base zone
+    elif pma200 <= 20:
+        base = 1   # moderate extension
+    else:
+        base = 0   # stretched (>20% above MA200d)
+
+    eps_mod   = (+1 if fy0 is not None and fy0 > 15
+                 else -1 if fy0 is not None and fy0 < 0
+                 else 0)
+    grade_mod = +1 if grade == 'A+' else (0 if grade == 'A' else -1)
+    # High PE without matching growth caps at yellow
+    pe_pen    = -1 if (fpe and fpe > 50 and (fy0 is None or fy0 < 20)) else 0
+
+    total = base + eps_mod + grade_mod + pe_pen
+    if total >= 3: return 'green'
+    if total >= 1: return 'yellow'
+    return 'red'
+
+
+def entry_html(d):
+    zone = entry_zone(d)
+    color = '#3fb950' if zone == 'green' else ('#e3b341' if zone == 'yellow' else '#f85149')
+    label = 'ZONE' if zone == 'green' else ('FAIR' if zone == 'yellow' else 'RICH')
+    pma   = d.get('price_vs_ma200')
+    tip   = f'{pma:+.0f}% vs MA200' if pma is not None else ''
+    return (f'<span style="color:{color};font-weight:700;font-size:11px">● {label}</span>'
+            f'<span style="color:#484f58;font-size:10px"> {tip}</span>')
+
+
 def eps_trend_html(d):
     g0 = d.get('fy0_growth')
     g1 = d.get('fy1_growth')
@@ -587,7 +633,7 @@ def build_watchlist_section(watchlist):
   <thead>
     <tr>
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th>
-      <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>EPS FY</th>
+      <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>EPS FY</th><th>Entry</th>
       <th>Blocking Filters</th>
     </tr>
   </thead>
@@ -615,6 +661,7 @@ def build_watchlist_rows(watchlist):
           <td>{pct_color(d['rev_growth'], 10)}</td>
           <td style="color:#e6edf3">{pe_html(d)}</td>
           <td>{eps_trend_html(d)}</td>
+          <td>{entry_html(d)}</td>
           <td style="font-size:11px">{blockers}</td>
         </tr>"""
     return rows
@@ -629,7 +676,7 @@ def build_universe_failing_section(failing):
   <thead>
     <tr>
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th>
-      <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>EPS FY</th>
+      <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>EPS FY</th><th>Entry</th>
       <th>Blocking Filters</th>
     </tr>
   </thead>
@@ -660,6 +707,7 @@ def build_html(results, watchlist=None, universe_failing=None):
           <td>{pct_color(d['rev_growth'], 5)}</td>
           <td>{pe_html(d)}</td>
           <td>{eps_trend_html(d)}</td>
+          <td>{entry_html(d)}</td>
           <td>{signal_html(d.get('signal'))}</td>
         </tr>"""
 
@@ -729,7 +777,7 @@ def build_html(results, watchlist=None, universe_failing=None):
     <tr>
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th><th>Mkt Cap</th>
       <th>Grade</th><th>Debt/EV</th><th>Gross%</th><th>Op%</th><th>Net%</th>
-      <th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>EPS FY</th><th>Signal (wk)</th>
+      <th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>EPS FY</th><th>Entry</th><th>Signal (wk)</th>
     </tr>
   </thead>
   <tbody>{rows}</tbody>
