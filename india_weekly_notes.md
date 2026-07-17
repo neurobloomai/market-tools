@@ -53,5 +53,5 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **MCX** | — | — | ETF | — | Multi Commodity Exchange — India's commodity derivatives toll booth (C… |
 | **NYKAA** | — | — | ETF | — | profitability still building |
 | **POLICYBZR** | — | — | ETF | — | high growth, early stage |
-| **SUPREMEIND** | — | — | ETF | — | Supreme Industries — largest plastic pipes/products company; zero debt… |
+| **SUPREMEIND** | ₹3433.70 | 0/4 | ETF | — | Supreme Industries — largest plastic pipes/products company; zero debt… |
 | **SWIGGY** | — | — | ETF | — | Swiggy — food delivery, profitability inflecting, duopoly with Zomato |
