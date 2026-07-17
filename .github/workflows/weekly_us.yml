@@ -1,4 +1,4 @@
-name: Weekly Screener — US
+name: Weekly Screener — US + India
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-us-screeners:
+  run-screeners:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -26,50 +26,107 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-      - name: Dashboard
+      # ── US ────────────────────────────────────────────────────────────────────
+
+      - name: US Dashboard
         run: python dashboard.py --refresh
 
-      - name: Sync after dashboard
+      - name: Sync after US dashboard
         run: |
           git stash --include-untracked || true
           git pull --rebase origin main || true
           git stash pop || true
 
-      - name: Weekly snapshot
+      - name: US Weekly snapshot
         run: python weekly_snapshot.py
 
-      - name: Market breadth
+      - name: US Market breadth
         run: python market_breadth.py
 
-      - name: Commit snapshots
+      - name: Commit US snapshots
         run: |
-          git add breadth_snapshot.json india_breadth_snapshot.json setups_snapshot.json watchlist_snapshot.json || true
-          git diff --cached --quiet || git commit -m "snapshots: $(date -u +'%b %d %Y')"
+          git add breadth_snapshot.json setups_snapshot.json watchlist_snapshot.json || true
+          git diff --cached --quiet || git commit -m "us_snapshots: $(date -u +'%b %d %Y')"
           git push || true
 
-      - name: Sync after breadth
+      - name: Sync after US breadth
         run: |
           git stash --include-untracked || true
           git pull --rebase origin main || true
           git stash pop || true
 
-      - name: Quality screener
+      - name: US Quality screener
         run: python screener.py
 
-      - name: Sync after screener
+      - name: Sync after US screener
         run: |
           git stash --include-untracked || true
           git pull --rebase origin main || true
           git stash pop || true
 
-      - name: Aligned screener
+      - name: US Aligned screener
         run: python aligned_screener.py
 
-      - name: Sync after aligned screener
+      - name: Sync after US aligned screener
         run: |
           git stash --include-untracked || true
           git pull --rebase origin main || true
           git stash pop || true
+
+      # ── India ─────────────────────────────────────────────────────────────────
+
+      - name: India Dashboard
+        run: python india_dashboard.py --refresh
+
+      - name: Sync after India dashboard
+        run: |
+          git stash --include-untracked || true
+          git pull --rebase origin main || true
+          git stash pop || true
+
+      - name: India Weekly snapshot
+        run: python india_weekly_snapshot.py
+
+      - name: Sync after India snapshot
+        run: |
+          git stash --include-untracked || true
+          git pull --rebase origin main || true
+          git stash pop || true
+
+      - name: India Quality screener
+        run: python india_screener.py
+
+      - name: Sync after India screener
+        run: |
+          git stash --include-untracked || true
+          git pull --rebase origin main || true
+          git stash pop || true
+
+      - name: India Aligned screener
+        run: python india_aligned_screener.py
+
+      - name: Sync after India aligned screener
+        run: |
+          git stash --include-untracked || true
+          git pull --rebase origin main || true
+          git stash pop || true
+
+      - name: India Market breadth
+        run: python india_marketbreadth.py
+
+      - name: Commit India snapshots
+        run: |
+          git add india_breadth_snapshot.json || true
+          git diff --cached --quiet || git commit -m "india_snapshots: $(date -u +'%b %d %Y')"
+          git push || true
+
+      - name: Sync after India breadth
+        run: |
+          git stash --include-untracked || true
+          git pull --rebase origin main || true
+          git stash pop || true
+
+      # ── Alerts + Newsletter ───────────────────────────────────────────────────
 
       - name: Alert check
         env:
