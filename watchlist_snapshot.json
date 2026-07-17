@@ -50,7 +50,7 @@
       ],
       [
         "P/E",
-        "100.2x",
+        "100.5x",
         "\u2264 100x"
       ]
     ],
@@ -61,7 +61,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.454",
+        "0.453",
         "\u2264 0.20"
       ],
       [
@@ -123,7 +123,7 @@
       ],
       [
         "P/E",
-        "172.9x",
+        "172.6x",
         "\u2264 100x"
       ]
     ],
@@ -176,7 +176,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.261",
+        "0.254",
         "\u2264 0.20"
       ]
     ],
@@ -187,7 +187,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.337",
+        "0.324",
         "\u2264 0.20"
       ]
     ],
@@ -198,7 +198,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.327",
+        "0.322",
         "\u2264 0.20"
       ]
     ],
@@ -209,7 +209,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.265",
+        "0.26",
         "\u2264 0.20"
       ]
     ],
@@ -273,7 +273,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.382",
+        "0.383",
         "\u2264 0.20"
       ],
       [
@@ -305,7 +305,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.387",
+        "0.379",
         "\u2264 0.20"
       ]
     ],
@@ -316,12 +316,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.375",
+        "0.372",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-5.6%",
+        "-5.5%",
         "> 0%"
       ]
     ],
@@ -332,12 +332,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.382",
+        "0.378",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-6.2%",
+        "-6.1%",
         "> 0%"
       ]
     ],
@@ -348,7 +348,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.226",
+        "0.227",
         "\u2264 0.20"
       ]
     ],
@@ -359,7 +359,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.259",
+        "0.258",
         "\u2264 0.20"
       ],
       [
@@ -375,7 +375,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.441",
+        "0.451",
         "\u2264 0.20"
       ],
       [
@@ -401,7 +401,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.269",
+        "0.279",
         "\u2264 0.20"
       ],
       [
@@ -417,7 +417,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.327",
+        "0.325",
         "\u2264 0.20"
       ],
       [
@@ -470,7 +470,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.408",
+        "0.412",
         "\u2264 0.20"
       ],
       [
@@ -517,7 +517,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.403",
+        "0.386",
         "\u2264 0.20"
       ]
     ],
@@ -539,7 +539,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.321",
+        "0.315",
         "\u2264 0.20"
       ]
     ],
@@ -582,7 +582,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.298",
+        "0.291",
         "\u2264 0.20"
       ]
     ],
@@ -611,13 +611,19 @@
     "note": "Veracyte \u2014 genomic diagnostics; moat = guideline inclusion (NCCN/medical society); Afirma (thyroid indeterminate biopsy, prevents unnecessary surgery) + Decipher Prostate (active surveillance vs treatment, growth engine) + Percepta/Envisia; OM 16.3%, NM 16.2%, GrossM 72.9%, D/E 0.029, FCF $105M, RevG 21.5%; ROE 6.9% only blocker (Decipher acq goodwill, resolves as earnings scale); 4/4 MA aligned, price at MA10d",
     "grade": "A"
   },
-  "BIIB": {
+  "ABT": {
     "fails": [
       [
-        "Debt/EV",
-        "0.209",
-        "\u2264 0.20"
-      ],
+        "Passes all filters",
+        "\u2014",
+        "\u2014"
+      ]
+    ],
+    "note": "Abbott Laboratories \u2014 diversified healthcare: MedTech (FreeStyle Libre CGM, Alinity diagnostics) + Nutrition (Ensure/Similac) + Established Pharma; 52yr dividend aristocrat, 2.8% yield; FreeStyle Libre diabetes CGM growing 20%+ and expanding from monitoring to closed-loop insulin delivery (Omnipod partnership); GrossM 56.5%, OM 13.5%, NM 13.9%, FCF 3.7%, D/EV 0.187, ROE 12.3%; OM/ROE/D/EV all blocking \u2014 COVID rapid test revenue cliff normalizing dragging blended margins and growth (RevG 7.8% = Libre growing ~20% masked by COVID base erosion); not structural deterioration; grade B; gate: OM crossing 20% + ROE crossing 20% as Libre scales to majority of device revenue + COVID comp fully absorbed (~2 quarters)",
+    "grade": "B"
+  },
+  "BIIB": {
+    "fails": [
       [
         "ROE/ROA",
         "ROE 7.7% / ROA 6.0%",
@@ -716,7 +722,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.216",
+        "0.214",
         "\u2264 0.20"
       ],
       [
@@ -732,7 +738,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.227",
+        "0.223",
         "\u2264 0.20"
       ]
     ],
