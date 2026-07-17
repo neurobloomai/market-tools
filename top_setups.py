@@ -143,16 +143,18 @@ def monthly_extension(ticker):
 
 
 def extension_label(pct):
-    """Traffic-light label for monthly MA distance."""
+    """Fixed 8-char label for monthly MA distance. sym(2) + num right-padded to 6."""
     if pct is None:
-        return '  —  '
+        return '       —'          # 7 spaces + em-dash = 8 chars
+    num = f'{pct:+.0f}%'          # e.g. "+70%" or "+102%"
+    num6 = f'{num:>6}'            # right-aligned to 6 chars: "  +70%" or " +102%"
     if pct > 50:
-        return f'⚠ {pct:+.0f}%'   # very extended — be wary
-    if pct > 25:
-        return f'↑ {pct:+.0f}%'   # extended
-    if pct > 0:
-        return f'  {pct:+.0f}%'   # above but reasonable
-    return f'  {pct:+.0f}%'       # below monthly MA — deep value zone
+        sym = '⚠ '                # ⚠ + space = 2 chars
+    elif pct > 25:
+        sym = '↑ '                # ↑ + space = 2 chars
+    else:
+        sym = '  '                # 2 spaces
+    return f'{sym}{num6}'         # always 2 + 6 = 8 code points
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -182,19 +184,20 @@ if __name__ == '__main__':
         ext_results = list(ex.map(monthly_extension, top_tickers))
     ext_map = dict(zip(top_tickers, ext_results))
 
-    print(f"\n{'─'*82}")
-    print(f"  TOP SETUPS — convergence across quality + alignment + volume")
-    print(f"  Excluding: {', '.join(sorted(EXCLUDE))}")
-    print(f"{'─'*82}")
-    print(f"  {'Ticker':<8} {'Sc':>3}  {'Gr':<3}  {'vsMA10m':>8}  {'vsMA20m':>8}  Signals")
-    print(f"  {'─'*7} {'─'*3}  {'─'*3}  {'─'*8}  {'─'*8}  {'─'*42}")
+    W = 84
+    print(f"\n{'─'*W}")
+    print(f"  TOP SETUPS — quality · alignment · volume convergence")
+    print(f"  Excl: {', '.join(sorted(EXCLUDE))}")
+    print(f"{'─'*W}")
+    print(f"  {'Ticker':<8}  {'Sc':>2}  {'Gr':<3}  {'MA10m (mo)':>10}  {'MA20m (mo)':>10}  Signals")
+    print(f"  {'─'*8}  {'─'*2}  {'─'*3}  {'─'*10}  {'─'*10}  {'─'*38}")
 
     for t, sc, g, reasons in top:
         p10m, p20m = ext_map.get(t, (None, None))
-        l10 = extension_label(p10m)
-        l20 = extension_label(p20m)
+        l10 = extension_label(p10m)   # 8 chars, fixed
+        l20 = extension_label(p20m)   # 8 chars, fixed
         sig_str = ' · '.join(reasons)
-        print(f"  {t:<8} {sc:>3}  {g:<3}  {l10:>8}  {l20:>8}  {sig_str}")
+        print(f"  {t:<8}  {sc:>2}  {g:<3}  {l10}    {l20}  {sig_str}")
 
-    print(f"{'─'*82}")
-    print(f"  ⚠ = >50% above monthly MA — wary zone  ·  {len(scored)} names scored  ·  not financial advice\n")
+    print(f"{'─'*W}")
+    print(f"  ⚠ >50% above monthly MA = wary  ·  ↑ 25–50%  ·  {len(scored)} names scored  ·  not financial advice\n")
