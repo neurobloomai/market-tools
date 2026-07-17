@@ -103,7 +103,7 @@ jobs:
           git stash pop || true
 
       - name: India Aligned screener
-        run: python india_aligned_screener.py
+        run: sleep 30 && python india_aligned_screener.py || true
 
       - name: Sync after India aligned screener
         run: |
