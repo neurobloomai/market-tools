@@ -31,6 +31,7 @@ UNIVERSE = [
     'PRU',   # Prudential Financial — US life insurance + retirement solutions + PGIM asset management ($1.3T+ AUM); PGIM fee income is the floor — stable capital-light earnings regardless of insurance cycle volatility; 4-5% yield, consistent multi-year dividend growth; D/EV reads elevated due to insurance policyholder liabilities (structural, not deteriorating debt — same sector-aware read as VZ on telecom spectrum); moat = scale in group insurance + PGIM distribution; watch payout ratio and FCF coverage each quarter as the qualifying gate
 
     # Healthcare / pharma
+    'ABT',   # Abbott Laboratories — 52yr dividend aristocrat; FreeStyle Libre CGM + Alinity diagnostics + Ensure/Similac nutrition; 2.8% yield, FCF 3.7% covers dividend; Libre growing 20%+ masking COVID test revenue cliff in blended numbers; quality franchise, dividend compounding for decades; SIP on pullbacks
     'JNJ',   # J&J — 62yr dividend king, MedTech + pharma
     'ABBV',  # AbbVie — Skyrizi/Rinvoq replacing Humira; 3.5%+ yield
     'MRK',   # Merck — Keytruda franchise, 2.5% yield
