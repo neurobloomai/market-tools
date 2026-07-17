@@ -54,9 +54,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 
 ### Tier Movements — Week over Week
 
-↑ **Improved:** **MRK** (◇ Trend Intact → ✦ Fully Stacked), **NVR** (Below all → MA50+100)
-
-↓ **Dropped:** **AVGO** (MA20 only → MA200 only)
+_No tier changes this week._
 
 
 ### Watchlist Status
