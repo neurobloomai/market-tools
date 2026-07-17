@@ -32,6 +32,7 @@ The rest of this README is the manual for how those two filters are built and ap
 | `india_ma_live.py` | 🇮🇳 India | **Live** MA Scanner — same as `ma_live.py` for NSE names; run during IST market hours |
 | `dividend_plays_for_longterm.py` | 🇺🇸 US | Curated long-term dividend universe — quality-filtered, thesis-annotated |
 | `daily_alert.py` | 🇺🇸 US | Mid-week alert for the 9 liquid names — fires email only when a crossing occurs **and** the weekly gate is open |
+| `top_setups.py` | 🇺🇸 US | Convergence drill — reads last-run HTML outputs, scores every name across quality + RS + CMF + A/D + OBV, fetches monthly MA distance for top 20, prints ranked table in seconds |
 | `run_aligned.sh` | — | Cron entry point — runs all four scripts (US + India), auto-pushes to GitHub |
 
 ## Live Outputs
@@ -148,6 +149,37 @@ python3 india_ma_live.py                # India live: liquid panel + watchlist +
 ```
 
 > **`ma_scanner.py` vs `ma_live.py`:** The weekly scanner uses `iloc[-2]` (last confirmed closed bar) — safe and stable for weekly notes. The live scanner uses `currentPrice` + `iloc[-1]` (latest bar, possibly incomplete intraday) — use it during market hours to catch moves before the close confirms.
+
+### Convergence Drill — `top_setups.py`
+
+After the weekly run, `top_setups.py` synthesizes everything into one ranked table. No re-fetch from Yahoo Finance — it reads the already-generated HTML files for scoring, then does a single parallel fetch of monthly bars only for the top 20 results.
+
+```bash
+python3 top_setups.py
+```
+
+Each name is scored across:
+
+| Signal | Points |
+|--------|--------|
+| Grade A+ / A | +2 / +1 |
+| 4/4 MA aligned | +2 |
+| FullCoil squeeze | +1 |
+| RS vs SPY ≥ 1.10x / ≥ 1.0x | +2 / +1 |
+| CMF ≥ 0.10 / > 0 | +2 / +1 |
+| A/D Line rising | +1 |
+| OBV rising | +1 |
+| ◆ Bull divergence | +1 |
+
+The two rightmost columns show **distance above MA10m and MA20m** (monthly MAs):
+
+| Label | Meaning |
+|-------|---------|
+| `⚠  +70%` | >50% above monthly MA — short-term signals real, long-term entry risk high |
+| `↑  +29%` | 25–50% above — extended but not detached |
+| `    +15%` | <25% above — reasonable monthly structure |
+
+A score-8 name with `+4%` above monthly MAs is a different proposition than a score-8 name at `⚠ +102%`. The column makes that visible at a glance — high short-term conviction on the left, monthly reality check on the right.
 
 ### Liquid Names Status Panel
 
