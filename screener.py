@@ -220,6 +220,7 @@ WATCHLIST = [
     'SOFI',  # SoFi — neobank scaling; ROE 6.6% and trending right
     'UPWK',  # Upwork — freelance marketplace; D/EV 0.44 (converts) only blocker, margins/FCF solid
     'CLS',   # Celestica — AI infra contract manufacturer (servers, networking), ROE 52%, D/EV 0.02, gross margin 12% blocks universe
+    'PRGS',  # Progress Software — serial acquirer of mature enterprise software: OpenEdge (30-40yr installed base low-code apps, near-impossible to rip out), Telerik/Kendo UI (developer UI components), MOVEit (managed file transfer); GrossM 85.6%, FCF 18.6% (exceptional), fwdPE 6.5x = priced like broken, runs like cash cow; OM 18.5% + ROE 18.6% both 1-2% below gate; D/EV 0.461 serial acquisition debt = main blocker; RevG 6.8% — mature, not a growth story; MOVEit 2023 ransomware breach created liability overhang + reputational hit, but customers stayed (switching costs > breach risk); value play: FCF at 6.5x is the signal, not the headline metrics; grade B; gate: D/EV ≤ 0.25 as FCF deleverages + OM crossing 20% as acquired businesses optimize
     'SSNC',  # SS&C Technologies — fund admin infra, $1.28B FCF, extreme switching costs, debt 0.32 only blocker
     'SYM',   # Symbotic — warehouse AI robotics, Walmart-backed; revenue scaling, margins early
     'AMSC',  # American Superconductor — power electronics, grid/defense; OpM 5.1%, one filter away
