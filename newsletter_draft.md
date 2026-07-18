@@ -4,7 +4,7 @@
 
 **POSTURE**
 
-US: 58.3% above MA20, 66.7% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 29 names Fully Stacked. India: 48.1% above MA20, 63.6% above MA100 — mixed, structure holding. 12 names Fully Stacked.
+US: 58.3% above MA20, 66.7% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 29 names Fully Stacked. India: 47.4% above MA20, 64.1% above MA100 — mixed, structure holding. 12 names Fully Stacked.
 
 
 **WHAT MOVED**
@@ -20,15 +20,15 @@ No exits from Fully Stacked.
 
 **ABBV** — ROE/ROA: ROA 10.0% (gate ≥ 10% / ≥ 15%)
   _Allergan amortization masking strong cash earnings_
-**AMG** — Debt/EV: 0.23 (gate ≤ 0.20)
-  _multi-boutique AM (AQR, Tweedy Browne etc.)_
+**AMSC** — Op Margin: 5.1% (gate ≥ 10%)
+  _power electronics, grid/defense_
 
 **ONE THOUGHT**
 
-The durability of long-term structure in US equities—with nearly two-thirds of names above their 100-day average despite only 58% above the 20-day—suggests the market is absorbing pullbacks rather than rejecting them, which is the hallmark of a market in expansion phase rather than distribution. India's mirrored pattern (63.6% above MA100 against 48.1% above MA20) hints at similar underlying resilience, though the wider gap there warrants closer watch. With no new Fully Stacked entries despite stable conditions, the market appears to be consolidating quality rather than hunting for breakouts—a posture worth respecting.
+The divergence between short and long-term positioning in US equities—58% above the 20-day versus 67% above the 100-day—suggests the market is consolidating within an established uptrend rather than breaking down. This pattern typically precedes either a genuine test of longer-term support or a renewed push higher, but either way, it means short-term noise shouldn't obscure that the majority of names still have their structural integrity intact. India's mirror reading (47% short-term, 64% long-term) reinforces that pullbacks in both markets are occurring inside healthy frameworks, not against them.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-07-18 22:01 UTC · Not financial advice_
+_Draft generated 2026-07-18 23:30 UTC · Not financial advice_
