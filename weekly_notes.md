@@ -54,9 +54,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 
 ### Tier Movements — Week over Week
 
-↑ **Improved:** **ANET** (◇ Trend Intact → ✦ Fully Stacked), **VCYT** (◇ Trend Intact → ✦ Fully Stacked), **FICO** (Below all → ◈ Intermediate), **EXPE** (MA100+MA200 → ◈ Intermediate), **META** (MA50+100 → All4 (unordered)), **BILL** (MA50+100 → All4 (unordered)), **CRM** (MA20 only → MA50), **PLTR** (MA20 only → MA50), **ADI** (MA200 only → MA100+MA200), **QCOM** (Below all → MA200 only), **CDNS** (Below all → MA200 only)
-
-↓ **Dropped:** **ODFL** (✦ Fully Stacked → ◇ Trend Intact), **CHD** (✦ Fully Stacked → ◇ Trend Intact), **CL** (✦ Fully Stacked → ◇ Trend Intact), **WSM** (✦ Fully Stacked → ◇ Trend Intact), **FAST** (◇ Trend Intact → MA200 only), **DECK** (◇ Trend Intact → MA20 only), **LIN** (◇ Trend Intact → MA100+MA200), **APD** (All4 (unordered) → MA100+MA200), **MKC** (MA50+100 → Below all), **HD** (MA100+MA200 → Below all), **DHI** (MA100+MA200 → Below all), **DRI** (MA100+MA200 → MA200 only), **PEG** (MA100+MA200 → Below all), **WEC** (MA100+MA200 → MA200 only)
+_No tier changes this week._
 
 
 ### Watchlist Status
