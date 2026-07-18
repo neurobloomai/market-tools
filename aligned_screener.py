@@ -32,6 +32,7 @@ SPECIAL_MENTION = {
     'MCO': 'Moody\'s — credit rating duopoly (with SPGI); every debt issuance globally needs a Moody\'s or S&P rating — structural toll collector on global capital markets; OM 45.7%, NM 31.7%, ROE 71.4%, D/EV 0.089, FCF 2.9%, RevG 8.1%; 2/4 MA, price below 10m ($470) and 20m ($473) — both monthly MAs clustered tight; watch $470 as the line to reclaim; great businesses deserve tracking even before alignment',
     'SPGI': 'S&P Global — credit rating + financial data duopoly (with MCO); S&P 500 index licensing, Platts commodity data, Market Intelligence platform; pricing power permanent, toll collector on every index fund globally; 0/4 MA — watch for structure recovery alongside MCO',
     'NOW': 'ServiceNow — enterprise workflow automation platform; grade A (OM borderline); but world-class business moat — deep IT workflow integration means switching cost is near-permanent; 0/4 MA, -58% from highs; every large enterprise runs on ServiceNow; watch for margin inflection to A+ and MA structure recovery',
+    'BRK-B': 'Berkshire Hathaway — Buffett\'s compounding machine; insurance float + diversified operating businesses + massive equity portfolio; A+ quality, no debt, permanent capital structure; 3/4 MA with MTF squeeze active (daily + weekly + monthly MAs all compressed simultaneously) — rarest structural signal; value + coil = deliberate move when it unwinds; watch for 4/4 reclaim as the trigger',
 }
 
 TICKERS = list(dict.fromkeys(UNIVERSE + WATCHLIST + EXTRA + list(SPECIAL_MENTION.keys())))
