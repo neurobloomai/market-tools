@@ -47,6 +47,11 @@
         "ROE/ROA",
         "ROE -54.9% / ROA -9.7%",
         "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "P/E",
+        "100.1x",
+        "\u2264 100x"
       ]
     ],
     "note": "",
@@ -118,7 +123,7 @@
       ],
       [
         "P/E",
-        "175.5x",
+        "175.9x",
         "\u2264 100x"
       ]
     ],
@@ -171,7 +176,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.254",
+        "0.259",
         "\u2264 0.20"
       ]
     ],
@@ -182,7 +187,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.324",
+        "0.329",
         "\u2264 0.20"
       ]
     ],
@@ -193,7 +198,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.322",
+        "0.326",
         "\u2264 0.20"
       ]
     ],
@@ -204,7 +209,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.26",
+        "0.263",
         "\u2264 0.20"
       ]
     ],
@@ -268,7 +273,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.383",
+        "0.386",
         "\u2264 0.20"
       ],
       [
@@ -284,12 +289,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.348",
+        "0.349",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-9.8%",
+        "-10.0%",
         "> 0%"
       ]
     ],
@@ -300,7 +305,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.379",
+        "0.382",
         "\u2264 0.20"
       ]
     ],
@@ -311,12 +316,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.372",
+        "0.374",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-5.5%",
+        "-5.6%",
         "> 0%"
       ]
     ],
@@ -327,12 +332,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.378",
+        "0.381",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-6.1%",
+        "-6.2%",
         "> 0%"
       ]
     ],
@@ -343,7 +348,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.227",
+        "0.23",
         "\u2264 0.20"
       ]
     ],
@@ -354,7 +359,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.258",
+        "0.254",
         "\u2264 0.20"
       ],
       [
@@ -370,7 +375,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.451",
+        "0.457",
         "\u2264 0.20"
       ],
       [
@@ -396,7 +401,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.303",
+        "0.3",
         "\u2264 0.20"
       ],
       [
@@ -417,7 +422,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.279",
+        "0.275",
         "\u2264 0.20"
       ],
       [
@@ -433,7 +438,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.325",
+        "0.322",
         "\u2264 0.20"
       ],
       [
@@ -486,7 +491,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.412",
+        "0.416",
         "\u2264 0.20"
       ],
       [
@@ -506,7 +511,7 @@
       ],
       [
         "FCF Yield",
-        "-4.9%",
+        "-4.7%",
         "> 0%"
       ]
     ],
@@ -533,7 +538,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.386",
+        "0.413",
         "\u2264 0.20"
       ]
     ],
@@ -555,7 +560,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.461",
+        "0.46",
         "\u2264 0.20"
       ]
     ],
@@ -566,7 +571,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.315",
+        "0.318",
         "\u2264 0.20"
       ]
     ],
@@ -609,7 +614,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.291",
+        "0.29",
         "\u2264 0.20"
       ]
     ],
@@ -641,16 +646,42 @@
   "ABT": {
     "fails": [
       [
-        "Passes all filters",
-        "\u2014",
-        "\u2014"
+        "ROE/ROA",
+        "ROE None% / ROA None%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "missing (no data relief)",
+        "> 0% or rev>50%+margin>10%"
       ]
     ],
     "note": "Abbott Laboratories \u2014 diversified healthcare: MedTech (FreeStyle Libre CGM, Alinity diagnostics) + Nutrition (Ensure/Similac) + Established Pharma; 52yr dividend aristocrat, 2.8% yield; FreeStyle Libre diabetes CGM growing 20%+ and expanding from monitoring to closed-loop insulin delivery (Omnipod partnership); GrossM 56.5%, OM 13.5%, NM 13.9%, FCF 3.7%, D/EV 0.187, ROE 12.3%; OM/ROE/D/EV all blocking \u2014 COVID rapid test revenue cliff normalizing dragging blended margins and growth (RevG 7.8% = Libre growing ~20% masked by COVID base erosion); not structural deterioration; grade B; gate: OM crossing 20% + ROE crossing 20% as Libre scales to majority of device revenue + COVID comp fully absorbed (~2 quarters)",
     "grade": "B"
   },
+  "MDT": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.229",
+        "\u2264 0.20"
+      ],
+      [
+        "ROE/ROA",
+        "ROE 9.8% / ROA 4.9%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Medtronic \u2014 largest pure-play medtech (cardiac rhythm mgmt, spine/neuro surgery, diabetes CGM, surgical robotics Hugo); OM 22.0%, NM 13.2%, FCF 4.3%, fwd P/E 13x, RevG 9.9%, ~3.5% dividend; ROE 9.8% (gate \u226510%) + D/EV 0.229 (gate \u22640.20) both blocking \u2014 both acquisition artifacts from Covidien ($50B, 2015) and subsequent M&A inflating goodwill and leverage, not structural deterioration; grade B; gate: ROE crossing 10% + D/EV \u2264 0.20 as FCF deleverages acquisition debt",
+    "grade": "A"
+  },
   "BIIB": {
     "fails": [
+      [
+        "Debt/EV",
+        "0.201",
+        "\u2264 0.20"
+      ],
       [
         "ROE/ROA",
         "ROE 7.7% / ROA 6.0%",
@@ -691,7 +722,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.33",
+        "0.333",
         "\u2264 0.20"
       ],
       [
@@ -749,7 +780,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.214",
+        "0.215",
         "\u2264 0.20"
       ],
       [
@@ -909,7 +940,7 @@
       ],
       [
         "FCF Yield",
-        "-1.8%",
+        "-1.7%",
         "> 0%"
       ]
     ],
@@ -950,6 +981,11 @@
   },
   "COIN": {
     "fails": [
+      [
+        "Debt/EV",
+        "0.205",
+        "\u2264 0.20"
+      ],
       [
         "Op Margin",
         "-7.1%",
