@@ -113,10 +113,12 @@ def compute_breadth(tickers):
                 {r['ticker'] for r in stacked_50})
     for key in buckets:
         buckets[key] = [r for r in buckets[key] if r['ticker'] not in excluded]
+    nh_names = sorted([r['ticker'] for r in rows if r['nh']])
+    nl_names = sorted([r['ticker'] for r in rows if r['nl']])
     return dict(total=total,
                 pct20=pct('a20'), pct50=pct('a50'), pct100=pct('a100'), pct200=pct('a200'),
                 rows=rows, buckets=buckets, stacked=stacked, stacked_100=stacked_100,
-                stacked_50=stacked_50)
+                stacked_50=stacked_50, nh_names=nh_names, nl_names=nl_names)
 
 # ── html ──────────────────────────────────────────────────────────────────────
 
@@ -171,6 +173,54 @@ def _chips(rows, color):
         for r in rows
     )
 
+def _nh_nl_card(b):
+    nh       = len(b.get('nh_names', []))
+    nl       = len(b.get('nl_names', []))
+    prev_nh  = b.get('prev_nh', nh)
+    ratio    = nh / max(nl, 1)
+    nh_trend = '↑' if nh > prev_nh else ('↓' if nh < prev_nh else '→')
+
+    if ratio >= 2.0 and nh_trend in ('↑', '→'):
+        color = '#3fb950'; status = f'Expanding — NH dominant ({ratio:.1f}×), setups have broad tailwind'
+    elif ratio <= 0.5 or (nh_trend == '↓' and ratio < 1.0):
+        color = '#f85149'; status = f'Deteriorating — NL overtaking ({ratio:.1f}×), raise selectivity'
+    else:
+        color = '#e3b341'; status = f'Mixed — NH/NL balanced ({ratio:.1f}×), confirm individual setups'
+
+    def chips(names, c):
+        if not names:
+            return '<span style="color:#484f58;font-size:10px">—</span>'
+        return ' '.join(
+            f'<span style="font-size:10px;font-weight:600;color:{c};background:{c}18;'
+            f'border:1px solid {c}40;border-radius:3px;padding:2px 6px">{t}</span>'
+            for t in names)
+
+    return f"""
+<div class="card" style="border-color:{color}40">
+  <div class="card-title" style="color:{color}">Elder NH/NL Breadth Index</div>
+  <div style="display:flex;gap:32px;margin-bottom:16px;align-items:baseline">
+    <div><span style="font-size:22px;font-weight:600;color:{color}">{nh}</span>
+         <span style="font-size:11px;color:#8b949e;margin-left:6px">New Highs (≤3% of 52w high)</span></div>
+    <div><span style="font-size:22px;font-weight:600;color:#f85149">{nl}</span>
+         <span style="font-size:11px;color:#8b949e;margin-left:6px">New Lows (≤3% of 52w low)</span></div>
+    <div><span style="font-size:18px;font-weight:600;color:{color}">{ratio:.1f}×</span>
+         <span style="font-size:11px;color:#8b949e;margin-left:6px">NH/NL ratio</span></div>
+    <div><span style="font-size:18px;font-weight:600;color:{color}">{nh_trend}</span>
+         <span style="font-size:11px;color:#8b949e;margin-left:6px">NH trend (wk/wk)</span></div>
+  </div>
+  <div style="font-size:11px;color:{color};margin-bottom:14px">{status}</div>
+  <div style="margin-bottom:10px">
+    <div style="font-size:10px;color:#8b949e;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Near 52w High ({nh})</div>
+    <div style="line-height:2">{chips(b.get('nh_names',[]), '#3fb950')}</div>
+  </div>
+  <div>
+    <div style="font-size:10px;color:#8b949e;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">Near 52w Low ({nl})</div>
+    <div style="line-height:2">{chips(b.get('nl_names',[]), '#f85149')}</div>
+  </div>
+  <div class="legend" style="margin-top:10px">NH = within 3% of 52-week high · NL = within 3% of 52-week low · trend vs prior week run</div>
+</div>"""
+
+
 def build_html(b):
     now = datetime.now().strftime('%B %d, %Y  %H:%M')
 
@@ -218,6 +268,8 @@ def build_html(b):
   {_bar(b['pct200'], 'Above MA200d (long-term trend)')}
   <div class="legend">Green ≥70% broad rally · Amber 50–70% mixed · Red &lt;50% narrow / correcting</div>
 </div>
+
+{_nh_nl_card(b)}
 
 <div class="card" style="border-color:#3fb95040">
   <div class="card-title" style="color:#3fb950">✦ Fully Stacked — Price &gt; MA20 &gt; MA50 &gt; MA100 &gt; MA200</div>
@@ -295,8 +347,10 @@ if __name__ == '__main__':
     except Exception:
         prev_nh = prev_nl = 0
 
-    nh_count = sum(1 for r in b['rows'] if r['nh'])
-    nl_count = sum(1 for r in b['rows'] if r['nl'])
+    nh_count = len(b['nh_names'])
+    nl_count = len(b['nl_names'])
+    b['prev_nh'] = prev_nh
+    b['prev_nl'] = prev_nl
     snap = {
         'pct20': b['pct20'], 'pct50': b['pct50'],
         'pct100': b['pct100'], 'pct200': b['pct200'],
