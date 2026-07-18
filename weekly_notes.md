@@ -62,7 +62,7 @@ _No tier changes this week._
 | Ticker | Price | MA | Grade | Blockers | Thesis |
 |:-------|------:|:--:|:-----:|:---------|:-------|
 | **ABBV** | $254.49 | 4/4 | A+ | ROE/ROA ROE None% / ROA 10.0% | AbbVie — Allergan amortization masking strong cash earnings; FCF/Debt … |
-| **AMG** | $369.83 | 4/4 | A | Debt/EV 0.23 | Affiliated Managers Group — multi-boutique AM (AQR, Tweedy Browne etc.… |
+| **AMG** | $369.83 | 4/4 | ETF | — | Affiliated Managers Group — multi-boutique AM (AQR, Tweedy Browne etc.… |
 | **APD** | $295.62 | 4/4 | B | Debt/EV 0.215 / FCF Yield -5.3% | Air Products — industrial gases, green/blue hydrogen megaproject bet (… |
 | **BIIB** | $205.99 | 4/4 | A | Debt/EV 0.201 / ROE/ROA ROE 7.7% / ROA 6.0% | Biogen — neuroscience pure-play; Leqembi (lecanemab, w/ Eisai) first a… |
 | **BMY** | $60.74 | 4/4 | A+ | Debt/EV 0.29 | Bristol-Myers Squibb — de-lever + profit growth play; Celgene debt pay… |
@@ -71,24 +71,24 @@ _No tier changes this week._
 | **EXPE** | $268.77 | 4/4 | A | Op Margin 7.1% | Expedia Group — online travel marketplace (Expedia.com, Hotels.com, Vr… |
 | **FROG** | $88.54 | 4/4 | B | Op Margin -7.4% / Net Margin -10.9% / ROE/ROA ROE -7.1% / ROA -3.7% | JFrog — universal artifact repository (Artifactory) + software supply … |
 | **GEV** | $1057.84 | 4/4 | A+ | Op Margin 5.5% | GE Vernova — picks-and-shovels for entire energy transition; supplies … |
-| **LNG** | $262.60 | 4/4 | B | Debt/EV 0.322 / Op Margin -53.7% | Cheniere Energy — largest US LNG export terminal operator (Sabine Pass… |
+| **LNG** | $262.60 | 4/4 | ETF | — | Cheniere Energy — largest US LNG export terminal operator (Sabine Pass… |
 | **LNT** | $74.82 | 4/4 | B | Debt/EV 0.381 / FCF Yield -6.2% | Alliant Energy — regulated Midwest utility (Iowa/Wisconsin); OM 21%, N… |
 | **NET** | $277.66 | 4/4 | B | Op Margin -9.7% / Net Margin -3.7% / ROE/ROA ROE -5.9% / ROA -2.7% / P/E 175.9x | — |
 | **S** | $19.57 | 4/4 | B | Op Margin -28.8% / Net Margin -30.4% / ROE/ROA ROE -21.4% / ROA -7.9% | SentinelOne — AI-native cybersecurity platform, direct CrowdStrike com… |
 | **SNOW** | $268.90 | 4/4 | B | Op Margin -22.2% / Net Margin -23.8% / ROE/ROA ROE -54.9% / ROA -9.7% / P/E 100.1x | — |
 | **TGTX** | $54.87 | 4/4 | A | FCF Yield -0.4% | TG Therapeutics — Briumvi (ublituximab, anti-CD20 MS); faster infusion… |
 | **VCYT** | $59.13 | 4/4 | A | ROE/ROA ROE 6.9% / ROA 3.8% | Veracyte — genomic diagnostics; moat = guideline inclusion (NCCN/medic… |
-| **AMD** | $495.76 | 3/4 | B | ROE/ROA ROE 8.1% / ROA 3.6% | AMD — AI accelerator (MI300X/MI350) + x86 CPU challenger; OM ~21%, NM … |
+| **AMD** | $495.76 | 3/4 | ETF | — | AMD — AI accelerator (MI300X/MI350) + x86 CPU challenger; OM ~21%, NM … |
 | **BILL** | $44.71 | 3/4 | B | Debt/EV 0.453 / Op Margin 1.1% / Net Margin 0.0% / ROE/ROA ROE 0.0% / ROA -0.3% | — |
 | **INTC** | $95.04 | 3/4 | B | Op Margin 6.9% / Net Margin -5.9% / ROE/ROA ROE -2.9% / ROA 0.6% / FCF Yield -1.7% | Intel — x86 architect in foundry transition (Intel 18A); OM/NM/ROE all… |
-| **IOT** | $38.32 | 3/4 | A | Op Margin 1.5% / Net Margin 3.3% / ROE/ROA ROE 4.4% / ROA -0.3% | Samsara — fleet/IoT SaaS, GM 76%, zero debt, 30% RevG, FCF just turned… |
+| **IOT** | $38.32 | 3/4 | ETF | — | Samsara — fleet/IoT SaaS, GM 76%, zero debt, 30% RevG, FCF just turned… |
 | **LSCC** | $125.23 | 3/4 | A | Net Margin 3.5% / ROE/ROA ROE 2.7% / ROA 2.5% | Lattice Semiconductor — low-power FPGAs, 60%+ gross margin, zero debt;… |
-| **NEE** | $88.80 | 3/4 | A | Debt/EV 0.349 / FCF Yield -10.0% | NextEra — world's largest renewable platform (wind/solar/battery) + FP… |
+| **NEE** | $88.80 | 3/4 | ETF | — | NextEra — world's largest renewable platform (wind/solar/battery) + FP… |
 | **ONTO** | $279.85 | 3/4 | B | ROE/ROA ROE 5.3% / ROA 5.4% | Onto Innovation — advanced packaging inspection/metrology; HBM + chipl… |
 | **PRGS** | $40.55 | 3/4 | B | Debt/EV 0.46 | Progress Software — serial acquirer of mature enterprise software: Ope… |
 | **PYPL** | $56.56 | 3/4 | A+ | Debt/EV 0.223 | PayPal — OM 18%, NM 15%, ROE 25%, FCF 11%, P/E 7.8x; D/EV 0.30 only bl… |
 | **TLN** | $372.37 | 3/4 | B | Debt/EV 0.3 / Net Margin -0.6% / ROE/ROA ROE -1.9% / ROA 1.9% | Talen Energy — independent power producer; Susquehanna nuclear (2.5GW,… |
-| **ABT** | $100.68 | 2/4 | B | ROE/ROA ROE None% / ROA None% / FCF Yield missing (no data relief) | Abbott Laboratories — diversified healthcare: MedTech (FreeStyle Libre… |
+| **ABT** | $100.68 | 2/4 | ETF | — | Abbott Laboratories — diversified healthcare: MedTech (FreeStyle Libre… |
 | **AXON** | $510.28 | 2/4 | B | Op Margin 3.7% / ROE/ROA ROE 6.8% / ROA 0.1% | — |
 | **COHR** | $277.60 | 2/4 | B | ROE/ROA ROE 4.7% / ROA 3.1% / FCF Yield -0.4% | Coherent Corp — optical components (800G/1.6T datacenter interconnect … |
 | **DRI** | $198.53 | 2/4 | B | Debt/EV 0.263 | Darden Restaurants — Olive Garden + LongHorn + Fine Dining (Capital Gr… |
@@ -122,7 +122,7 @@ _No tier changes this week._
 | **AVAV** | $142.20 | 0/4 | B | Op Margin 2.8% / Net Margin -13.4% / ROE/ROA ROE -10.0% / ROA -1.3% / FCF Yield -3.5% | AeroVironment — defense drones (Switchblade loitering munition, Puma I… |
 | **COIN** | $157.12 | 0/4 | B | Debt/EV 0.205 / Op Margin -7.1% / ROE/ROA ROE 6.7% / ROA 1.9% | Coinbase — digital asset exchange, crypto theme proxy; 85.5% gross mar… |
 | **COST** | $940.87 | 0/4 | A | Op Margin 3.7% / Net Margin 3.0% | Costco — membership moat, not a margin story; OM ~3% by design (mercha… |
-| **FIG** | — | — | B | Op Margin -41.2% / Net Margin -123.8% / ROE/ROA ROE -101.7% / ROA -43.6% | Figma — design collaboration SaaS; 79.8% gross margin, FCF 8.6%, 46.1%… |
+| **FIG** | — | — | ETF | — | Figma — design collaboration SaaS; 79.8% gross margin, FCF 8.6%, 46.1%… |
 | **FISV** | $50.63 | 0/4 | B | Debt/EV missing / Op Margin missing / Net Margin missing / ROE/ROA ROE None% / ROA None% / FCF Yield missing (no data relief) | Fiserv — payment processing + Clover POS + banking tech, extreme switc… |
 | **KTOS** | $46.03 | 0/4 | B | Op Margin 1.8% / Net Margin 2.1% / ROE/ROA ROE 1.2% / ROA 0.6% / FCF Yield -1.2% | Kratos — drone/defense tech; margins thin now, scaling with DoD contra… |
 | **NLR** | $104.20 | 0/4 | ETF | — | VanEck Uranium & Nuclear ETF — AUM $4.87B; AI datacenter baseload + ur… |
