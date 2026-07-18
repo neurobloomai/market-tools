@@ -25,10 +25,10 @@ No exits from Fully Stacked.
 
 **ONE THOUGHT**
 
-The divergence between long-term and short-term positioning tells us the market is absorbing volatility without breaking structure—exactly what healthy consolidation looks like. With 66.7% of US names holding above their 100-day moving average while only 58.3% sit above the 20-day, we're seeing a market that rewards patience over panic. The absence of any new Fully Stacked entries or exits, combined with multiple names just one condition away from promotion (ABBV, AMG), suggests the setup list is tightening rather than expanding—typically what precedes either a meaningful next leg or a test of current support. For context-driven investors, this is the environment where conviction in your process matters more than conviction in direction.
+The durability of long-term structure in US equities—with nearly two-thirds of names above their 100-day average despite only 58% above the 20-day—suggests the market is absorbing pullbacks rather than rejecting them, which is the hallmark of a market in expansion phase rather than distribution. India's mirrored pattern (63.6% above MA100 against 48.1% above MA20) hints at similar underlying resilience, though the wider gap there warrants closer watch. With no new Fully Stacked entries despite stable conditions, the market appears to be consolidating quality rather than hunting for breakouts—a posture worth respecting.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-07-18 21:33 UTC · Not financial advice_
+_Draft generated 2026-07-18 22:01 UTC · Not financial advice_
