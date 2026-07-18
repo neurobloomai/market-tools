@@ -18,6 +18,8 @@
 !watchlist_snapshot.json
 !alert_state.json
 !daily_alert_state.json
+!grades_cache.json
+!india_grades_cache.json
 subscribers.json
 __pycache__/
 *.pyc
