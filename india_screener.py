@@ -167,6 +167,26 @@ def get_fundamentals(ticker):
         fcf_yield        = (fcf / market_cap * 100) if fcf and market_cap else None
         rev_growth       = info.get('revenueGrowth', None)
 
+        # Price vs MA200d
+        ma200d           = info.get('twoHundredDayAverage', None)
+        _price_raw       = info.get('currentPrice') or info.get('regularMarketPrice')
+        price_vs_ma200   = round((_price_raw / ma200d - 1) * 100, 1) if ma200d and _price_raw else None
+
+        # EPS FY trend
+        fy0_growth = None
+        fy1_growth = None
+        try:
+            ae = t.get_earnings_estimate()
+            if ae is not None and '0y' in ae.index and '+1y' in ae.index:
+                g0 = ae.loc['0y', 'growth']
+                g1 = ae.loc['+1y', 'growth']
+                if g0 is not None and not (isinstance(g0, float) and math.isnan(g0)):
+                    fy0_growth = round(float(g0) * 100, 1)
+                if g1 is not None and not (isinstance(g1, float) and math.isnan(g1)):
+                    fy1_growth = round(float(g1) * 100, 1)
+        except Exception:
+            pass
+
         return dict(
             ticker          = ticker,
             name            = info.get('shortName', ticker).replace('.NS',''),
@@ -185,6 +205,9 @@ def get_fundamentals(ticker):
             pb              = round(pb, 1) if pb is not None else None,
             fcf_yield       = round(fcf_yield, 1) if fcf_yield is not None else None,
             rev_growth      = round(rev_growth * 100, 1) if rev_growth is not None else None,
+            fy0_growth      = fy0_growth,
+            fy1_growth      = fy1_growth,
+            price_vs_ma200  = price_vs_ma200,
         )
     except Exception as e:
         print(f'  ⚠ {ticker}: {e}')
@@ -302,6 +325,130 @@ def pct_color(val, good_above=0):
     c = '#3fb950' if val >= good_above else '#f85149'
     return f'<span style="color:{c}">{val}%</span>'
 
+def calc_rsi(closes, period=14):
+    delta    = closes.diff()
+    gain     = delta.clip(lower=0)
+    loss     = (-delta).clip(lower=0)
+    avg_gain = gain.ewm(alpha=1/period, min_periods=period, adjust=False).mean()
+    avg_loss = loss.ewm(alpha=1/period, min_periods=period, adjust=False).mean()
+    avg_loss = avg_loss.replace(0, 1e-10)
+    rs       = avg_gain / avg_loss
+    return 100 - (100 / (1 + rs))
+
+def get_tech_signal(ticker):
+    """Weekly dual confirmation: RSI-14 + MACD histogram divergence must agree."""
+    try:
+        hist = yf.Ticker(ticker).history(period='1y', interval='1wk')
+        if len(hist) < 35:
+            return None
+        closes = hist['Close'].dropna()
+        highs  = hist['High'].reindex(closes.index)
+        lows   = hist['Low'].reindex(closes.index)
+        RECENCY = 4
+
+        def _swings(arr, mode='high'):
+            if mode == 'high':
+                return [i for i in range(1, len(arr)-1) if arr[i] >= arr[i-1] and arr[i] >= arr[i+1]]
+            return [i for i in range(1, len(arr)-1) if arr[i] <= arr[i-1] and arr[i] <= arr[i+1]]
+
+        MIN_SWING = 0.0075
+        MAX_SWING = 0.15
+
+        def _divergence(indicator_vals, price_h, price_l, n):
+            sh = _swings(price_h, 'high')
+            if len(sh) >= 2:
+                i2, i1 = sh[-1], sh[-2]
+                if (n-1-i2) <= RECENCY and price_h[i2] > price_h[i1] and indicator_vals[i2] < indicator_vals[i1]:
+                    swing = (price_h[i2] - price_h[i1]) / price_h[i1]
+                    if MIN_SWING <= swing <= MAX_SWING:
+                        return 'bear'
+            sl = _swings(price_l, 'low')
+            if len(sl) >= 2:
+                i2, i1 = sl[-1], sl[-2]
+                if (n-1-i2) <= RECENCY and price_l[i2] < price_l[i1] and indicator_vals[i2] > indicator_vals[i1]:
+                    swing = (price_l[i1] - price_l[i2]) / price_l[i1]
+                    if MIN_SWING <= swing <= MAX_SWING:
+                        return 'bull'
+            return None
+
+        rsi     = calc_rsi(closes, 14).dropna()
+        rsi_sig = None
+        if len(rsi) >= 5:
+            idx     = rsi.index
+            rsi_sig = _divergence(rsi.values, highs.loc[idx].values, lows.loc[idx].values, len(rsi))
+
+        ema12         = closes.ewm(span=12, adjust=False).mean()
+        ema26         = closes.ewm(span=26, adjust=False).mean()
+        histo         = (ema12 - ema26 - (ema12 - ema26).ewm(span=9, adjust=False).mean()).dropna()
+        macd_sig      = None
+        if len(histo) >= 5:
+            idx      = histo.index
+            macd_sig = _divergence(histo.values, highs.loc[idx].values, lows.loc[idx].values, len(histo))
+
+        if rsi_sig and macd_sig and rsi_sig == macd_sig:
+            return (rsi_sig, 'RSI+MACD')
+        return None
+    except Exception:
+        return None
+
+def entry_zone(d):
+    """Composite margin-of-safety signal: GREEN / YELLOW / RED."""
+    pma200 = d.get('price_vs_ma200')
+    fy0    = d.get('fy0_growth')
+    grade  = d.get('grade', 'B')
+    fpe    = d.get('fwd_pe') or d.get('pe')
+
+    if pma200 is None:
+        base = 1
+    elif pma200 <= 5:
+        base = 2
+    elif pma200 <= 20:
+        base = 1
+    else:
+        base = 0
+
+    eps_mod   = (+1 if fy0 is not None and fy0 > 15
+                 else -1 if fy0 is not None and fy0 < 0
+                 else 0)
+    grade_mod = +1 if grade == 'A+' else (0 if grade == 'A' else -1)
+    pe_pen    = -1 if (fpe and fpe > 50 and (fy0 is None or fy0 < 20)) else 0
+
+    total = base + eps_mod + grade_mod + pe_pen
+    if total >= 3: return 'green'
+    if total >= 1: return 'yellow'
+    return 'red'
+
+def entry_html(d):
+    zone  = entry_zone(d)
+    color = '#3fb950' if zone == 'green' else ('#e3b341' if zone == 'yellow' else '#f85149')
+    label = 'ZONE' if zone == 'green' else ('FAIR' if zone == 'yellow' else 'RICH')
+    pma   = d.get('price_vs_ma200')
+    tip   = f'{pma:+.0f}% vs MA200' if pma is not None else ''
+    return (f'<span style="color:{color};font-weight:700;font-size:11px">● {label}</span>'
+            f'<span style="color:#484f58;font-size:10px"> {tip}</span>')
+
+def eps_trend_html(d):
+    g0 = d.get('fy0_growth')
+    g1 = d.get('fy1_growth')
+    if g0 is None:
+        return '<span style="color:#484f58">—</span>'
+    c0     = '#3fb950' if g0 >= 5 else ('#e3b341' if g0 >= 0 else '#f85149')
+    prefix = '⚠ ' if g0 < 0 else ''
+    g0_str = f'{prefix}{g0:+.0f}%'
+    if g1 is not None:
+        c1 = '#3fb950' if g1 >= 5 else ('#e3b341' if g1 >= 0 else '#f85149')
+        return (f'<span style="color:{c0};font-size:11px">{g0_str}</span>'
+                f' <span style="color:{c1};font-size:10px">/{g1:+.0f}%</span>')
+    return f'<span style="color:{c0};font-size:11px">{g0_str}</span>'
+
+def signal_html(sig):
+    if sig is None: return '<span style="color:#484f58">—</span>'
+    direction, source = sig
+    color = '#3fb950' if direction == 'bull' else '#f85149'
+    arrow = '⬆' if direction == 'bull' else '⬇'
+    return (f'<span style="color:{color};font-weight:700">{arrow} {direction}</span>'
+            f'<span style="color:#484f58;font-size:9px"> {source}</span>')
+
 def build_watchlist_section(watchlist):
     if not watchlist: return ''
     rows = ''
@@ -323,6 +470,8 @@ def build_watchlist_section(watchlist):
           <td>{pct_color(d['fcf_yield'], 0)}</td>
           <td>{pct_color(d['rev_growth'], 12)}</td>
           <td style="color:#e6edf3">{pe_html(d)}</td>
+          <td>{eps_trend_html(d)}</td>
+          <td>{entry_html(d)}</td>
           <td style="font-size:11px">{blockers}</td>
         </tr>"""
     return f"""
@@ -333,7 +482,7 @@ def build_watchlist_section(watchlist):
     <tr>
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th>
       <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th>
-      <th>Blocking Filters</th>
+      <th>EPS FY</th><th>Entry</th><th>Blocking Filters</th>
     </tr>
   </thead>
   <tbody>{rows}</tbody>
@@ -396,6 +545,9 @@ def build_html(results, watchlist=None, universe_failing=None):
           <td>{pct_color(d['fcf_yield'], 2)}</td>
           <td>{pct_color(d['rev_growth'], 12)}</td>
           <td>{pe_html(d)}</td>
+          <td>{eps_trend_html(d)}</td>
+          <td>{entry_html(d)}</td>
+          <td>{signal_html(d.get('tech_signal'))}</td>
         </tr>"""
 
     aplus = sum(1 for d in results if d['grade'] == 'A+')
@@ -464,6 +616,7 @@ def build_html(results, watchlist=None, universe_failing=None):
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th><th>Mkt Cap</th>
       <th>Grade</th><th>Debt/EV</th><th>Gross%</th><th>Op%</th><th>Net%</th>
       <th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th>
+      <th>EPS FY</th><th>Entry</th><th>Signal (wk)</th>
     </tr>
   </thead>
   <tbody>{rows}</tbody>
@@ -497,7 +650,23 @@ if __name__ == '__main__':
     failing = [d for d in fetched if not passes_quality_filter(d)]
     for d in passed:
         d['grade'] = quality_grade(d)
-    passed.sort(key=lambda x: (0 if x['grade']=='A+' else 1 if x['grade']=='A' else 2, x['debt_to_ev'] or 1))
+
+    # Weekly signal — A/A+ names only (fetch-heavy; skip B)
+    top_grade = [d for d in passed if d['grade'] in ('A+', 'A')]
+    if top_grade:
+        print(f'  Fetching weekly signals for {len(top_grade)} A/A+ names ...', flush=True)
+        with ThreadPoolExecutor(max_workers=8) as ex:
+            sigs = list(ex.map(get_tech_signal, [d['ticker'] for d in top_grade]))
+        for d, sig in zip(top_grade, sigs):
+            d['tech_signal'] = sig
+
+    # Sort: grade bucket → declining EPS last within bucket → debt_to_ev
+    def _sort_key(x):
+        grade_rank = 0 if x['grade'] == 'A+' else (1 if x['grade'] == 'A' else 2)
+        fy0        = x.get('fy0_growth')
+        eps_rank   = 1 if (fy0 is not None and fy0 < 0) else 0  # declining EPS last
+        return (grade_rank, eps_rank, x['debt_to_ev'] or 1)
+    passed.sort(key=_sort_key)
 
     print(f'  ✅  {len(passed)} companies passed filters  ({len(failing)} in universe not yet qualifying)')
     print(f'\n  Fetching {len(WATCHLIST)} watchlist contenders ...', flush=True)
@@ -525,8 +694,8 @@ if __name__ == '__main__':
 
     try:
         repo = _os.path.dirname(out_path)
-        subprocess.run(['git', 'checkout', '--', 'india_screener.html'], cwd=repo, capture_output=True)
-        subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'],    cwd=repo, check=True, capture_output=True)
+        subprocess.run(['git', 'stash', '--include-untracked'], cwd=repo, capture_output=True)
+        subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'], cwd=repo, check=True, capture_output=True)
         with open(out_path, 'w') as f:
             f.write(html)
         subprocess.run(['git', 'add',    'india_screener.html'], cwd=repo, check=True, capture_output=True)
@@ -534,4 +703,6 @@ if __name__ == '__main__':
         subprocess.run(['git', 'push'],                           cwd=repo, check=True, capture_output=True)
         print(f'  Pushed → GitHub  ({commit_msg})')
     except subprocess.CalledProcessError as e:
+        with open(out_path, 'w') as f:   # ensure disk always has good content
+            f.write(html)
         print(f'  Git push skipped: {e.stderr.decode() if e.stderr else e}')
