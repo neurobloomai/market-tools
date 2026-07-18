@@ -102,15 +102,6 @@ jobs:
           git pull --rebase origin main || true
           git stash pop || true
 
-      - name: India Aligned screener
-        run: sleep 30 && python india_aligned_screener.py || true
-
-      - name: Sync after India aligned screener
-        run: |
-          git stash --include-untracked || true
-          git pull --rebase origin main || true
-          git stash pop || true
-
       - name: India Market breadth
         run: python india_marketbreadth.py
 
@@ -121,6 +112,15 @@ jobs:
           git push || true
 
       - name: Sync after India breadth
+        run: |
+          git stash --include-untracked || true
+          git pull --rebase origin main || true
+          git stash pop || true
+
+      - name: India Aligned screener
+        run: sleep 30 && python india_aligned_screener.py || true
+
+      - name: Sync after India aligned screener
         run: |
           git stash --include-untracked || true
           git pull --rebase origin main || true
