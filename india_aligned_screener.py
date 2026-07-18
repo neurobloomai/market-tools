@@ -267,6 +267,45 @@ def _c_ad(arrow):
     return '#8b949e'
 
 
+def _nh_nl_banner(snap_path='india_breadth_snapshot.json'):
+    """Returns an HTML banner with Elder NH/NL breadth reading, or empty string on error."""
+    import json, os
+    try:
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), snap_path)
+        with open(path) as f:
+            snap = json.load(f)
+        nh       = snap.get('nh_count', 0)
+        nl       = snap.get('nl_count', 0)
+        prev_nh  = snap.get('prev_nh', nh)
+        ratio    = nh / max(nl, 1)
+        nh_trend = '↑' if nh > prev_nh else ('↓' if nh < prev_nh else '→')
+
+        if ratio >= 2.0 and nh_trend in ('↑', '→'):
+            border = '#3fb950'; icon = '✓'
+            msg    = 'Breadth expanding — NH&gt;2× NL, setups have NIFTY tailwind'
+        elif ratio <= 0.5 or (nh_trend == '↓' and ratio < 1.0):
+            border = '#f85149'; icon = '⚠'
+            msg    = 'Breadth deteriorating — even 4/4 setups face NIFTY headwind; size defensively'
+        else:
+            border = '#e3b341'; icon = '~'
+            msg    = 'Mixed breadth — confirm individual RS vs NIFTY and CMF before acting'
+
+        ratio_s = f'{ratio:.1f}×'
+        return (
+            f'<div style="background:#161b22;border:1px solid {border}40;border-left:3px solid {border};'
+            f'border-radius:6px;padding:10px 16px;margin-bottom:18px;font-size:11px;color:#e6edf3">'
+            f'<span style="color:{border};font-weight:700">{icon} Elder NH/NL Breadth (NIFTY Universe):</span>'
+            f'&nbsp; NH <strong>{nh}</strong> · NL <strong>{nl}</strong>'
+            f' · ratio <strong style="color:{border}">{ratio_s}</strong>'
+            f' · NH trend <strong style="color:{border}">{nh_trend}</strong>'
+            f' &nbsp;—&nbsp; <span style="color:{border}">{msg}</span>'
+            f'<span style="color:#484f58;font-size:10px;margin-left:12px">NH = within 3% of 52w high · NL = within 3% of 52w low · Quality Growth Universe (NSE)</span>'
+            f'</div>'
+        )
+    except Exception:
+        return ''
+
+
 def build_aligned_html(valid, aligned, grades, partial, promos,
                        squeezed, st_squeezed, rs_map, hi_map, cmf_map,
                        special_mention, now, UNIVERSE, WATCHLIST, m_cmf_map=None,
@@ -569,11 +608,14 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
       .guide-home{float:right;color:#58a6ff;font-size:10px;text-decoration:none}
     """
 
+    breadth_banner = _nh_nl_banner()
+
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8">
 <title>India Aligned — {now}</title><style>{css}{guide_css}</style></head><body>
 <h1>🇮🇳 India Aligned Screener <a class="guide-home" href="index.html">← Home</a></h1>
 <div class="meta">{now} · universe + watchlist · {len(valid)} fetched · RS vs NIFTY 50</div>
 
+{breadth_banner}
 <details class="guide">
   <summary>How to read this screen</summary>
   <div class="guide-body">

@@ -80,6 +80,11 @@ def compute_breadth(tickers):
         stacked_50 = (all([ma50, ma100, ma200]) and
                       price > ma50 > ma100 > ma200 and not stacked)
 
+        hi52 = float(s.max())
+        lo52 = float(s.min())
+        nh   = price >= hi52 * 0.97   # within 3% of 52-week high
+        nl   = price <= lo52 * 1.03   # within 3% of 52-week low
+
         rows.append(dict(
             ticker=col,
             price=round(price, 2),
@@ -92,6 +97,7 @@ def compute_breadth(tickers):
             stacked_100=stacked_100,
             stacked_50=stacked_50,
             bucket=_assign_bucket(a20, a50, a100, a200),
+            nh=nh, nl=nl,
         ))
 
     total = len(rows)
@@ -278,6 +284,19 @@ if __name__ == '__main__':
     print()
 
     import json as _json
+    snap_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'breadth_snapshot.json')
+
+    # Read previous snapshot for NH/NL trend comparison
+    try:
+        with open(snap_path) as f:
+            _prev = _json.load(f)
+        prev_nh = _prev.get('nh_count', 0)
+        prev_nl = _prev.get('nl_count', 0)
+    except Exception:
+        prev_nh = prev_nl = 0
+
+    nh_count = sum(1 for r in b['rows'] if r['nh'])
+    nl_count = sum(1 for r in b['rows'] if r['nl'])
     snap = {
         'pct20': b['pct20'], 'pct50': b['pct50'],
         'pct100': b['pct100'], 'pct200': b['pct200'],
@@ -285,10 +304,15 @@ if __name__ == '__main__':
         'stacked':     len(b['stacked']),
         'stacked_50':  len(b['stacked_50']),
         'stacked_100': len(b['stacked_100']),
+        'nh_count': nh_count,
+        'nl_count': nl_count,
+        'prev_nh':  prev_nh,
+        'prev_nl':  prev_nl,
     }
+    print(f"  NH (≥97% of 52w high): {nh_count}  ·  NL (≤103% of 52w low): {nl_count}  ·  ratio: {nh_count/max(nl_count,1):.1f}x")
     # Guard: only write if data is valid — don't overwrite good snapshot with rate-limit zeros
     if snap['total'] > 10 and snap['pct20'] > 0:
-        with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'breadth_snapshot.json'), 'w') as f:
+        with open(snap_path, 'w') as f:
             _json.dump(snap, f)
         print(f"  Saved → breadth_snapshot.json")
     else:
