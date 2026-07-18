@@ -45,7 +45,7 @@ jobs:
 
       - name: Commit US snapshots
         run: |
-          git add breadth_snapshot.json setups_snapshot.json watchlist_snapshot.json || true
+          git add breadth_snapshot.json setups_snapshot.json watchlist_snapshot.json grades_cache.json || true
           git diff --cached --quiet || git commit -m "us_snapshots: $(date -u +'%b %d %Y')"
           git push || true
 
@@ -107,7 +107,7 @@ jobs:
 
       - name: Commit India snapshots
         run: |
-          git add india_breadth_snapshot.json || true
+          git add india_breadth_snapshot.json india_grades_cache.json || true
           git diff --cached --quiet || git commit -m "india_snapshots: $(date -u +'%b %d %Y')"
           git push || true
 

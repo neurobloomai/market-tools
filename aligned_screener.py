@@ -831,6 +831,26 @@ if __name__ == '__main__':
     aligned_tickers = [r['t'] for r in aligned]
     with ThreadPoolExecutor(max_workers=10) as ex:
         grades = list(ex.map(grade_ticker, aligned_tickers))
+
+    # Grades cache — fall back to last known grade on rate-limit miss
+    import json as _json
+    _cache_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'grades_cache.json')
+    try:
+        with open(_cache_path) as f:
+            _gcache = _json.load(f)
+    except Exception:
+        _gcache = {}
+    _fresh = sum(1 for g in grades if g != '—')
+    if _fresh < len(grades) * 0.3:
+        print(f"  Grades rate-limited ({_fresh}/{len(grades)} fresh) — falling back to cache", flush=True)
+        grades = [g if g != '—' else _gcache.get(t, '—') for t, g in zip(aligned_tickers, grades)]
+    # Update cache with any fresh grades
+    for t, g in zip(aligned_tickers, grades):
+        if g != '—':
+            _gcache[t] = g
+    with open(_cache_path, 'w') as f:
+        _json.dump(_gcache, f)
+
     grade_map = dict(zip(aligned_tickers, grades))
 
     now     = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
