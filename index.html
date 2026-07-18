@@ -1,80 +1,225 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Market Tools</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Market Tools — Quality + Structure Framework</title>
 <style>
-  body{background:#0d1117;color:#e6edf3;font-family:'SF Mono','Fira Code',monospace;font-size:13px;padding:48px 40px;max-width:640px}
-  h1{font-size:18px;font-weight:600;margin-bottom:4px}
-  .meta{color:#8b949e;font-size:12px;margin-bottom:40px}
-  .section{margin-bottom:32px}
-  .section-title{font-size:11px;font-weight:600;color:#58a6ff;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
-  .card{background:#161b22;border:1px solid #21262d;border-radius:8px;padding:16px 20px;margin-bottom:8px;text-decoration:none;display:block;transition:border-color .15s}
-  .card:hover{border-color:#58a6ff}
-  .card-title{font-weight:600;color:#e6edf3;margin-bottom:3px}
-  .card-desc{color:#8b949e;font-size:11px}
-  .flag{font-size:10px;padding:2px 7px;border-radius:4px;margin-left:8px;vertical-align:middle;font-weight:600}
-  .us{background:#1f3a5c;color:#58a6ff}
-  .in{background:#2d3b1f;color:#3fb950}
-  .refresh{display:inline-flex;align-items:center;gap:6px;margin-top:2px;font-size:11px;color:#8b949e;text-decoration:none;border:1px solid #21262d;border-radius:6px;padding:5px 12px;transition:border-color .15s;transition:color .15s}
-  .refresh:hover{border-color:#58a6ff;color:#58a6ff}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'SF Mono','Fira Code',monospace; background: #0d1117; color: #e6edf3; padding: 32px 24px; font-size: 13px; max-width: 960px; margin: 0 auto; line-height: 1.7; }
+  h1 { font-size: 22px; font-weight: 700; color: #f0883e; margin-bottom: 6px; }
+  h2 { font-size: 13px; font-weight: 700; color: #f0883e; margin: 40px 0 12px; text-transform: uppercase; letter-spacing: .06em; }
+  h3 { font-size: 12px; font-weight: 700; color: #e6edf3; margin: 24px 0 8px; }
+  p  { color: #8b949e; margin-bottom: 12px; font-size: 12px; }
+  a  { color: #58a6ff; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .subtitle { color: #8b949e; font-size: 11px; margin-bottom: 32px; }
+  .two-filters { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 20px 24px; margin-bottom: 36px; }
+  .two-filters > p { color: #e6edf3; margin-bottom: 12px; font-size: 13px; }
+  .two-filters .note { color: #8b949e; font-size: 11px; margin-top: 12px; margin-bottom: 0; }
+  .filter-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .filter-box { flex: 1; min-width: 200px; background: #0d1117; border: 1px solid #21262d; border-radius: 6px; padding: 14px 16px; }
+  .filter-box .num { font-size: 18px; font-weight: 700; color: #f0883e; margin-bottom: 4px; }
+  .filter-box .name { font-size: 11px; font-weight: 700; color: #e6edf3; margin-bottom: 4px; }
+  .filter-box .desc { font-size: 11px; color: #8b949e; line-height: 1.6; }
+  .screens { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px; }
+  @media (max-width: 580px) { .screens { grid-template-columns: 1fr; } .filter-row { flex-direction: column; } }
+  .screen-card { background: #161b22; border: 1px solid #21262d; border-radius: 8px; padding: 14px 16px; }
+  .screen-card .flag { font-size: 15px; margin-bottom: 5px; }
+  .screen-card .title { font-size: 11px; font-weight: 700; color: #e6edf3; margin-bottom: 4px; }
+  .screen-card .desc { font-size: 11px; color: #8b949e; margin-bottom: 10px; line-height: 1.6; }
+  .screen-card a.btn { display: inline-block; font-size: 10px; font-weight: 700; color: #0d1117; background: #58a6ff; padding: 3px 11px; border-radius: 4px; }
+  .screen-card a.btn:hover { background: #79c0ff; text-decoration: none; }
+  .step { display: flex; gap: 14px; margin-bottom: 18px; align-items: flex-start; }
+  .step-num { min-width: 26px; height: 26px; border-radius: 50%; background: #f0883e; color: #0d1117; font-weight: 700; font-size: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .step-body .head { font-weight: 700; color: #e6edf3; margin-bottom: 4px; font-size: 12px; }
+  .step-body p { margin-bottom: 0; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 11px; }
+  th { text-align: left; padding: 6px 10px; color: #8b949e; font-weight: 500; border-bottom: 2px solid #21262d; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; }
+  td { padding: 7px 10px; border-bottom: 1px solid #161b22; color: #8b949e; vertical-align: top; }
+  td:first-child { color: #e6edf3; font-weight: 600; white-space: nowrap; }
+  .badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 3px; }
+  .aplus { background: #6e40c9; color: #fff; }
+  .a     { background: #1a4731; color: #3fb950; }
+  .b     { background: #1f2937; color: #9ca3af; }
+  .green { color: #3fb950; font-weight: 700; }
+  .yellow{ color: #e3b341; font-weight: 700; }
+  .red   { color: #f85149; font-weight: 700; }
+  hr { border: none; border-top: 1px solid #21262d; margin: 36px 0; }
+  .rule-box { background: #161b22; border-left: 3px solid #f0883e; padding: 14px 18px; border-radius: 0 6px 6px 0; margin: 16px 0 20px; }
+  .rule-box p { color: #e6edf3; font-size: 12px; margin-bottom: 6px; }
+  .rule-box p:last-child { margin-bottom: 0; color: #8b949e; font-size: 11px; }
+  .disclaimer { color: #484f58; font-size: 10px; margin-top: 32px; border-top: 1px solid #21262d; padding-top: 12px; line-height: 1.8; }
 </style>
 </head>
 <body>
-  <h1>Market Tools</h1>
-  <div class="meta" style="display:flex;align-items:center;gap:16px">
-    <span>neurobloom.ai — updated weekly via GitHub Actions</span>
-    <a class="refresh" href="https://github.com/neurobloomai/market-tools/actions" target="_blank">
-      ↻ Trigger refresh
-    </a>
-  </div>
 
-  <div class="section">
-    <div class="section-title">Dashboards — sector ETF momentum</div>
-    <a class="card" href="market_briefing.html">
-      <div class="card-title">US Market Dashboard <span class="flag us">US</span></div>
-      <div class="card-desc">Sector ETF momentum — 50D / 20W / 10M / 20M MA signals · day change · volume · yield</div>
-    </a>
-    <a class="card" href="india_briefing.html">
-      <div class="card-title">India Market Dashboard <span class="flag in">IN</span></div>
-      <div class="card-desc">NSE sector index briefing — same MA framework · RS vs NIFTY · momentum score</div>
-    </a>
-  </div>
+<h1>Market Tools</h1>
+<div class="subtitle">Free, open-source quality stock screeners · Updated every Monday · <a href="https://github.com/neurobloomai/market-tools">GitHub</a></div>
 
-  <div class="section">
-    <div class="section-title">Aligned Screeners — MA structure + squeeze</div>
-    <a class="card" href="aligned_screener.html">
-      <div class="card-title">US Aligned Screener <span class="flag us">US</span></div>
-      <div class="card-desc">4/4 MA alignment · FullCoil squeeze · Daily / Weekly / Monthly · MTF squeeze · CMF · RS vs SPY</div>
-    </a>
-    <a class="card" href="india_aligned_screener.html">
-      <div class="card-title">India Aligned Screener <span class="flag in">IN</span></div>
-      <div class="card-desc">4/4 MA alignment · FullCoil squeeze · Daily / Weekly / Monthly · MTF squeeze · CMF · RS vs NIFTY 50</div>
-    </a>
+<!-- Two filters -->
+<div class="two-filters">
+  <p>Two filters before touching anything.</p>
+  <div class="filter-row">
+    <div class="filter-box">
+      <div class="num">①</div>
+      <div class="name">Quality business</div>
+      <div class="desc">Profitable, cash-generating, not drowning in debt. Low Debt/EV · strong operating margins · ROE · positive FCF. If it can't survive a bad year, it doesn't qualify.</div>
+    </div>
+    <div class="filter-box">
+      <div class="num">②</div>
+      <div class="name">Confirmed price structure</div>
+      <div class="desc">Four moving averages — price above all four. Weekly trend intact. The market agrees with the fundamentals before you act on them.</div>
+    </div>
   </div>
+  <p class="note">Both have to say yes. If only one says yes, you wait. That's it.</p>
+</div>
 
-  <div class="section">
-    <div class="section-title">Market Breadth — MA distribution across universe</div>
-    <a class="card" href="us_marketbreadth.html">
-      <div class="card-title">US Market Breadth <span class="flag us">US</span></div>
-      <div class="card-desc">% names above MA20/50/100/200 · Fully Stacked · Trend Intact · Intermediate Stack · bucket breakdown</div>
-    </a>
-    <a class="card" href="india_marketbreadth.html">
-      <div class="card-title">India Market Breadth <span class="flag in">IN</span></div>
-      <div class="card-desc">% names above MA20/50/100/200 · Fully Stacked · Trend Intact · Intermediate Stack · bucket breakdown</div>
-    </a>
+<!-- Live screens -->
+<h2>Live Screens</h2>
+<div class="screens">
+  <div class="screen-card">
+    <div class="flag">🇺🇸</div>
+    <div class="title">US Quality Screener</div>
+    <div class="desc">S&P 500-quality names that passed all financial filters. Graded A+/A/B. Shows EPS growth estimates, entry zone vs MA200d, and weekly divergence signal.</div>
+    <a class="btn" href="quality_screener.html">Open →</a>
   </div>
+  <div class="screen-card">
+    <div class="flag">🇮🇳</div>
+    <div class="title">India Quality Screener</div>
+    <div class="desc">NSE universe across India growth themes — Capital Goods, Defense, Pharma, IT, Financials, Consumer. Same filters, India-calibrated thresholds.</div>
+    <a class="btn" href="india_screener.html">Open →</a>
+  </div>
+  <div class="screen-card">
+    <div class="flag">🇺🇸</div>
+    <div class="title">US Aligned Screener</div>
+    <div class="desc">Weekly MA alignment scan — 4/4 aligned names, FullCoil squeeze setups, CMF accumulation, RS vs SPY, A/D Line + OBV divergence signals.</div>
+    <a class="btn" href="aligned_screener.html">Open →</a>
+  </div>
+  <div class="screen-card">
+    <div class="flag">🇮🇳</div>
+    <div class="title">India Aligned Screener</div>
+    <div class="desc">Same alignment framework for NSE — 4/4 aligned, FullCoil squeeze, RS vs NIFTY 50, A/D Line + OBV divergence. Weekly cadence.</div>
+    <a class="btn" href="india_aligned_screener.html">Open →</a>
+  </div>
+  <div class="screen-card">
+    <div class="flag">🇺🇸</div>
+    <div class="title">US Market Dashboard</div>
+    <div class="desc">Sector ETF momentum — which sectors have confirmed structural uptrends. ALIGNED / PULLBACK / AVOID across 50D · 20W · 10M · 20M.</div>
+    <a class="btn" href="market_briefing.html">Open →</a>
+  </div>
+  <div class="screen-card">
+    <div class="flag">🇮🇳</div>
+    <div class="title">India Market Dashboard</div>
+    <div class="desc">NSE sector index briefing — same MA framework applied to Indian sector indices. Which themes are structurally in play vs on pause.</div>
+    <a class="btn" href="india_briefing.html">Open →</a>
+  </div>
+</div>
 
-  <div class="section">
-    <div class="section-title">Quality Screeners — fundamentals filter</div>
-    <a class="card" href="quality_screener.html">
-      <div class="card-title">US Quality Screener <span class="flag us">US</span></div>
-      <div class="card-desc">Operating margin · Net margin · Revenue growth · ROE · FCF · D/EV — universe + watchlist</div>
-    </a>
-    <a class="card" href="india_screener.html">
-      <div class="card-title">India Quality Screener <span class="flag in">IN</span></div>
-      <div class="card-desc">Operating margin · Net margin · Revenue growth · ROE · FCF · D/EV — universe + watchlist</div>
-    </a>
+<hr>
+
+<!-- Quick start -->
+<h2>Quick Start — 5 Minutes to First Setup</h2>
+
+<div class="step">
+  <div class="step-num">1</div>
+  <div class="step-body">
+    <div class="head">Open the Quality Screener for your market</div>
+    <p>Start with <a href="quality_screener.html">US Quality Screener</a> or <a href="india_screener.html">India Quality Screener</a>. Focus on the <span class="badge aplus">A+</span> and <span class="badge a">A</span> rows first — these passed all financial filters with the strongest scores.</p>
   </div>
+</div>
+
+<div class="step">
+  <div class="step-num">2</div>
+  <div class="step-body">
+    <div class="head">Check the Entry zone column</div>
+    <p>Shows where price sits vs its 200-day moving average. <span class="green">● ZONE</span> = near or below MA200, reasonable price. <span class="yellow">● FAIR</span> = moderately extended. <span class="red">● RICH</span> = well above MA200, thin margin of safety. Start with ZONE names.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">3</div>
+  <div class="step-body">
+    <div class="head">Check EPS FY — is earnings growth going the right way?</div>
+    <p>Analyst estimates for current FY / next FY EPS growth. <span class="green">+18%</span> = strong. <span class="red">⚠ -5%</span> = declining — the business is historically quality but the near-term wind is against you. Best combination: A+ · GREEN ZONE · growing EPS.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">4</div>
+  <div class="step-body">
+    <div class="head">Cross-check the Aligned Screener — is the price structure confirmed?</div>
+    <p>Open <a href="aligned_screener.html">US Aligned</a> or <a href="india_aligned_screener.html">India Aligned</a>. Find your shortlisted names in the <strong>4/4 Aligned</strong> section. A name that passes quality <em>and</em> is 4/4 with CMF &gt; 0 is the full signal: fundamentals confirmed by structure confirmed by accumulation.</p>
+  </div>
+</div>
+
+<div class="step">
+  <div class="step-num">5</div>
+  <div class="step-body">
+    <div class="head">Not in both screens? It goes on the watchlist, not in the trade.</div>
+    <p>A+ quality with a broken chart is a candidate, not a setup. 4/4 aligned with B-grade fundamentals is a chart without conviction. <strong>Both filters must say yes.</strong> Everything else waits.</p>
+  </div>
+</div>
+
+<hr>
+
+<!-- How to read each screen -->
+<h2>How to Read Each Screen</h2>
+
+<h3>Quality Screener columns</h3>
+<table>
+  <thead><tr><th>Column</th><th>What it means</th><th>How to use it</th></tr></thead>
+  <tbody>
+    <tr><td><span class="badge aplus">A+</span> <span class="badge a">A</span> <span class="badge b">B</span></td><td>Quality grade — scored on margins, ROE, FCF, debt, revenue growth</td><td>A+ = all boxes checked. Start here. B = passes filters but lower quality score.</td></tr>
+    <tr><td>Debt/EV</td><td>Debt as a fraction of enterprise value</td><td>≤ 0.05 = near-zero debt (A+ threshold). > 0.20 = fails the filter.</td></tr>
+    <tr><td>Op% / Net%</td><td>Operating and net profit margins</td><td>Higher = more durable. 25%+ operating margin absorbs a lot of bad years.</td></tr>
+    <tr><td>FCF Yld</td><td>Free cash flow as % of market cap</td><td>Positive = generates real cash. Negative = consumes it.</td></tr>
+    <tr><td>EPS FY</td><td>Analyst estimate: current FY growth / next FY</td><td><span class="green">+15%</span> = growing. <span class="red">⚠ -8%</span> = declining this year. — = sparse analyst coverage.</td></tr>
+    <tr><td>Entry</td><td>Price vs MA200d + grade + EPS modifier</td><td><span class="green">● ZONE</span> = favorable entry. <span class="yellow">● FAIR</span> = proceed carefully. <span class="red">● RICH</span> = stretched.</td></tr>
+    <tr><td>Signal (wk)</td><td>Weekly RSI-14 + MACD divergence — both must agree to fire</td><td><span class="green">⬆ bull</span> = momentum recovering. <span class="red">⬇ bear</span> = fading. — = no signal (most weeks).</td></tr>
+  </tbody>
+</table>
+
+<h3>Aligned Screener columns</h3>
+<table>
+  <thead><tr><th>Column</th><th>What it means</th><th>How to use it</th></tr></thead>
+  <tbody>
+    <tr><td>4/4 MA</td><td>Price above all four MAs: 10w, 20w, 10-month, 20-month</td><td>Full structural confirmation — trend intact across all timeframes.</td></tr>
+    <tr><td>RS vs SPY/NIFTY</td><td>13-week price return vs benchmark</td><td>&gt; 1.0x = outperforming. 1.15x = 15% stronger than index. Lagging in a bull = red flag.</td></tr>
+    <tr><td>CMF</td><td>Chaikin Money Flow — volume weighted to close position in daily range</td><td>&gt; +0.10 = clear accumulation. &lt; -0.10 = distribution. ~0 = no conviction.</td></tr>
+    <tr><td>AD OBV</td><td>A/D Line slope (↑/↓) + OBV slope (↑/↓)</td><td>↑↑ = both rising, institutions accumulating. ↓↓ = distribution. Mixed = unclear.</td></tr>
+    <tr><td>◆ bull div</td><td>A/D Line rising while price is weak</td><td>Smart money accumulating before price confirms. Strongest early signal.</td></tr>
+    <tr><td>◇ bear div</td><td>A/D Line falling while price rises</td><td>Distribution into strength — institutions selling while price still looks good.</td></tr>
+    <tr><td>FullCoil</td><td>Four MAs compressed close together — energy building</td><td>A coil breaking with CMF+ and RS &gt; 1.0x is the highest-conviction setup.</td></tr>
+  </tbody>
+</table>
+
+<h3>Dashboard signals</h3>
+<table>
+  <thead><tr><th>Signal</th><th>What it means</th><th>How to use it</th></tr></thead>
+  <tbody>
+    <tr><td><span class="green">ALIGNED</span></td><td>Price above all 4 MAs — 50D, 20W, 10M, 20M</td><td>Sector trend confirmed. Names in this sector have structural tailwind.</td></tr>
+    <tr><td><span class="yellow">PULLBACK</span></td><td>Long-term MAs (10M, 20M) intact, short-term (50D, 20W) broken</td><td>Sector dipped inside a longer uptrend. Potential re-entry zone.</td></tr>
+    <tr><td><span class="red">AVOID</span></td><td>Below long-term moving averages — structure broken</td><td>Wait for structure to rebuild. No actionable setups here.</td></tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- The rule -->
+<h2>The One Rule Worth Remembering</h2>
+<div class="rule-box">
+  <p>Either fully aligned or fully discounted. Nothing in between.</p>
+  <p>A 3/4 name with a good story is not a setup — it is a candidate. A name with a reasonable valuation and weak structure is not a value buy — it is a hope trade. If it is not fully aligned and not fully discounted, it lives on the watchlist and nowhere else.</p>
+</div>
+
+<p>These tools do not recommend. They organize questions about quality, structure, and momentum. What you do with the output is your own judgment, your own context, and your own responsibility.</p>
+
+<div class="disclaimer">
+  Data sourced from NSE / NYSE via Yahoo Finance · yfinance. Updated every Monday via GitHub Actions — no server, no manual steps needed.<br>
+  For informational purposes only — not financial advice. Always do your own research before making investment decisions.<br>
+  Source: <a href="https://github.com/neurobloomai/market-tools">github.com/neurobloomai/market-tools</a>
+</div>
+
 </body>
 </html>

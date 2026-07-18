@@ -532,10 +532,37 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
       .legend{color:#8b949e;font-size:11px;margin-top:8px}
     """
 
+    guide_css = """
+      details.guide{background:#161b22;border:1px solid #21262d;border-radius:6px;margin-bottom:18px;font-size:11px}
+      details.guide summary{padding:8px 14px;cursor:pointer;color:#8b949e;user-select:none;list-style:none}
+      details.guide summary::before{content:'▶ ';font-size:9px}
+      details[open].guide summary::before{content:'▼ ';font-size:9px}
+      details.guide .guide-body{padding:12px 16px 14px;border-top:1px solid #21262d;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:8px 24px}
+      .gi{display:flex;gap:8px;align-items:baseline}
+      .gi-key{color:#e6edf3;font-weight:700;min-width:80px;flex-shrink:0}
+      .gi-val{color:#8b949e;line-height:1.5}
+      .guide-home{float:right;color:#58a6ff;font-size:10px;text-decoration:none}
+    """
+
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8">
-<title>Aligned — {now}</title><style>{css}</style></head><body>
-<h1>Aligned Screener</h1>
+<title>Aligned — {now}</title><style>{css}{guide_css}</style></head><body>
+<h1>Aligned Screener <a class="guide-home" href="index.html">← Home</a></h1>
 <div class="meta">{now} · universe + watchlist · {len(valid)} fetched</div>
+
+<details class="guide">
+  <summary>How to read this screen</summary>
+  <div class="guide-body">
+    <div class="gi"><span class="gi-key">4/4 Aligned</span><span class="gi-val">Price above all four MAs — 10w, 20w, 10-month, 20-month. Full structural confirmation across all timeframes.</span></div>
+    <div class="gi"><span class="gi-key">RS vs SPY</span><span class="gi-val">13-week return vs S&amp;P 500. &gt;1.0x = outperforming. 1.15x = 15% stronger than index.</span></div>
+    <div class="gi"><span class="gi-key">CMF</span><span class="gi-val">Chaikin Money Flow. &gt;+0.10 = clear accumulation. &lt;-0.10 = distribution. ~0 = no conviction.</span></div>
+    <div class="gi"><span class="gi-key">AD OBV</span><span class="gi-val">↑↑ = A/D Line + OBV both rising — institutions accumulating. ↓↓ = distribution. Mixed = unclear.</span></div>
+    <div class="gi"><span class="gi-key">◆ bull div</span><span class="gi-val">A/D Line rising while price is weak — smart money accumulating before price confirms. Strongest early signal.</span></div>
+    <div class="gi"><span class="gi-key">◇ bear div</span><span class="gi-val">A/D Line falling while price rises — distribution into strength.</span></div>
+    <div class="gi"><span class="gi-key">FullCoil</span><span class="gi-val">Four MAs compressed together — energy building. Coil + CMF+ + RS &gt;1.0x = highest-conviction setup.</span></div>
+    <div class="gi"><span class="gi-key">Best setup</span><span class="gi-val">4/4 Aligned · CMF &gt;+0.10 · RS &gt;1.10x · ↑↑ AD OBV — then cross-check quality grade in <a href="quality_screener.html">Quality Screener</a>.</span></div>
+  </div>
+</details>
+
 
 <div class="summary">
   <div class="stat"><div class="stat-val" style="color:#3fb950">{len(aligned)}</div><div class="stat-lbl">4/4 Aligned</div></div>

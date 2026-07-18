@@ -588,11 +588,39 @@ def build_html(results, watchlist=None, universe_failing=None):
   .blocker-val {{ color: #ffa657; }}
   .blocker-threshold {{ color: #484f58; }}
   .disclaimer {{ color: #484f58; font-size: 10px; margin-top: 24px; border-top: 1px solid #21262d; padding-top: 8px; line-height: 1.8; }}
+  details.guide {{ background: #161b22; border: 1px solid #21262d; border-radius: 6px; margin-bottom: 20px; font-size: 11px; }}
+  details.guide summary {{ padding: 8px 14px; cursor: pointer; color: #8b949e; user-select: none; list-style: none; }}
+  details.guide summary::before {{ content: '▶ '; font-size: 9px; }}
+  details[open].guide summary::before {{ content: '▼ '; font-size: 9px; }}
+  details.guide .guide-body {{ padding: 12px 16px 14px; border-top: 1px solid #21262d; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px 24px; }}
+  .gi {{ display: flex; gap: 8px; align-items: baseline; }}
+  .gi-key {{ color: #e6edf3; font-weight: 700; min-width: 80px; flex-shrink: 0; }}
+  .gi-val {{ color: #8b949e; line-height: 1.5; }}
+  .gi-val .g {{ color: #3fb950; }}
+  .gi-val .y {{ color: #e3b341; }}
+  .gi-val .r {{ color: #f85149; }}
+  .guide-home {{ float: right; color: #58a6ff; font-size: 10px; text-decoration: none; }}
+  .guide-home:hover {{ text-decoration: underline; }}
 </style>
 </head>
 <body>
-<h1>🇮🇳 India Quality Growth Screener</h1>
+<h1>🇮🇳 India Quality Growth Screener <a class="guide-home" href="index.html">← Home</a></h1>
 <div class="subtitle">{now}</div>
+
+<details class="guide">
+  <summary>How to read this screen</summary>
+  <div class="guide-body">
+    <div class="gi"><span class="gi-key">Grade A+/A/B</span><span class="gi-val">Quality score — margins, ROE, FCF, debt. <b>A+</b> = all boxes checked. Start here.</span></div>
+    <div class="gi"><span class="gi-key">EPS FY</span><span class="gi-val">Analyst estimate: current FY / next FY EPS growth. <span class="g">+15%</span> = growing. <span class="r">⚠ -8%</span> = declining. — = sparse coverage.</span></div>
+    <div class="gi"><span class="gi-key">Entry</span><span class="gi-val"><span class="g">● ZONE</span> = near MA200, good price. <span class="y">● FAIR</span> = moderate. <span class="r">● RICH</span> = extended, thin margin of safety.</span></div>
+    <div class="gi"><span class="gi-key">Signal (wk)</span><span class="gi-val">Weekly RSI+MACD dual confirmation. <span class="g">⬆ bull</span> = momentum recovering. <span class="r">⬇ bear</span> = fading. Fires rarely by design.</span></div>
+    <div class="gi"><span class="gi-key">Thresholds</span><span class="gi-val">India-calibrated: P/E ≤ 80x (vs 100x US) · OM ≥ 8% · Financials judged on ROE ≥ 15% instead of FCF.</span></div>
+    <div class="gi"><span class="gi-key">Best setup</span><span class="gi-val"><b>A+ · ZONE · growing EPS</b> — quality confirmed, price reasonable, earnings trajectory positive.</span></div>
+    <div class="gi"><span class="gi-key">Cross-check</span><span class="gi-val">Find the same name in the <a href="india_aligned_screener.html">India Aligned Screener</a> → 4/4 section. Both must say yes.</span></div>
+    <div class="gi"><span class="gi-key">— in EPS FY</span><span class="gi-val">Missing = thin analyst coverage on NSE, not bad data. Large-caps (TCS, HDFC) are well covered; mid-caps less so.</span></div>
+  </div>
+</details>
+
 <div class="summary">
   Found <span>{len(results)}</span> companies passing all filters —
   <span>{aplus}</span> A+ &nbsp;·&nbsp; <span>{a}</span> A
