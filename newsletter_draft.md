@@ -4,7 +4,7 @@
 
 **POSTURE**
 
-US: 58.3% above MA20, 66.7% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 29 names Fully Stacked. India: 48.1% above MA20, 64.9% above MA100 — mixed, structure holding. 12 names Fully Stacked.
+US: 58.3% above MA20, 66.7% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 29 names Fully Stacked. India: 48.1% above MA20, 63.6% above MA100 — mixed, structure holding. 12 names Fully Stacked.
 
 
 **WHAT MOVED**
@@ -25,10 +25,10 @@ No exits from Fully Stacked.
 
 **ONE THOUGHT**
 
-The divergence between short-term and long-term positioning in US names—58% above the 20-day versus 67% above the 100-day—suggests the pullbacks we're seeing are cleanings within an intact structure rather than structural breaks; what's notable is that long-term integrity has held despite short-term churn, which is the opposite of what typically precedes reversals. India's similar pattern (48% vs 65%) indicates this isn't a US-specific phenomenon, pointing to a market environment where near-term volatility is serving its normal function rather than signaling deeper weakness. With 29 US names Fully Stacked and neither entries nor exits this week, the setup roster itself is quiet, which combined with the MA behavior tells us we're in a consolidation phase where new conviction is being measured, not rushed.
+The divergence between long-term and short-term positioning tells us the market is absorbing volatility without breaking structure—exactly what healthy consolidation looks like. With 66.7% of US names holding above their 100-day moving average while only 58.3% sit above the 20-day, we're seeing a market that rewards patience over panic. The absence of any new Fully Stacked entries or exits, combined with multiple names just one condition away from promotion (ABBV, AMG), suggests the setup list is tightening rather than expanding—typically what precedes either a meaningful next leg or a test of current support. For context-driven investors, this is the environment where conviction in your process matters more than conviction in direction.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-07-18 20:44 UTC · Not financial advice_
+_Draft generated 2026-07-18 21:33 UTC · Not financial advice_
