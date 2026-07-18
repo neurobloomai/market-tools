@@ -508,6 +508,8 @@ def build_universe_failing_section(failing):
           <td>{pct_color(d['fcf_yield'], 0)}</td>
           <td>{pct_color(d['rev_growth'], 12)}</td>
           <td style="color:#e6edf3">{pe_html(d)}</td>
+          <td>{eps_trend_html(d)}</td>
+          <td>{entry_html(d)}</td>
           <td style="font-size:11px">{blockers}</td>
         </tr>"""
     return f"""
@@ -518,7 +520,7 @@ def build_universe_failing_section(failing):
     <tr>
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th>
       <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th>
-      <th>Blocking Filters</th>
+      <th>EPS FY</th><th>Entry</th><th>Blocking Filters</th>
     </tr>
   </thead>
   <tbody>{rows}</tbody>
