@@ -784,7 +784,7 @@ def sm_signal(rs, mcmf_trend):
     """
     if mcmf_trend == '↑':
         return '◎'
-    if mcmf_trend == '↓' and (rs is None or rs < 1.0):
+    if mcmf_trend == '↓' and (rs is None or rs < 0.90):
         return '⚠'
     return '→'
 
