@@ -483,8 +483,18 @@ if __name__ == '__main__':
     with ThreadPoolExecutor(max_workers=10) as ex:
         raw = list(ex.map(get_fundamentals, UNIVERSE))
 
-    passed  = [d for d in raw if d is not None and passes_quality_filter(d)]
-    failing = [d for d in raw if d is not None and not passes_quality_filter(d)]
+    fetched = [d for d in raw if d is not None]
+    fetch_rate = len(fetched) / len(UNIVERSE) * 100
+    print(f'  Fetched {len(fetched)}/{len(UNIVERSE)} tickers ({fetch_rate:.0f}%)', flush=True)
+
+    # Guard: if fewer than 40% of tickers returned data, likely rate-limited — abort
+    # rather than overwrite last good output with a blank page
+    if fetch_rate < 40:
+        print(f'  ⛔ Fetch rate {fetch_rate:.0f}% < 40% — likely rate-limited. Keeping existing HTML.')
+        import sys; sys.exit(0)
+
+    passed  = [d for d in fetched if passes_quality_filter(d)]
+    failing = [d for d in fetched if not passes_quality_filter(d)]
     for d in passed:
         d['grade'] = quality_grade(d)
     passed.sort(key=lambda x: (0 if x['grade']=='A+' else 1 if x['grade']=='A' else 2, x['debt_to_ev'] or 1))

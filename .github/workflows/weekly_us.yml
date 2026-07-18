@@ -94,7 +94,7 @@ jobs:
           git stash pop || true
 
       - name: India Quality screener
-        run: python india_screener.py
+        run: sleep 30 && python india_screener.py
 
       - name: Sync after India screener
         run: |
