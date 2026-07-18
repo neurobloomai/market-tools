@@ -33,6 +33,7 @@ The rest of this README is the manual for how those two filters are built and ap
 | `dividend_plays_for_longterm.py` | 🇺🇸 US | Curated long-term dividend universe — quality-filtered, thesis-annotated |
 | `daily_alert.py` | 🇺🇸 US | Mid-week alert for the 9 liquid names — fires email only when a crossing occurs **and** the weekly gate is open |
 | `top_setups.py` | 🇺🇸 US | Convergence drill — reads last-run HTML outputs, scores every name across quality + RS + CMF + A/D + OBV, fetches monthly MA distance for top 20, prints ranked table in seconds |
+| `india_top_setups.py` | 🇮🇳 India | Same convergence drill for India �� reads `india_screener.html` + `india_aligned_screener.html`, adds sector column (India setups are sector-wave driven), RS vs NIFTY |
 | `run_aligned.sh` | — | Cron entry point — runs all four scripts (US + India), auto-pushes to GitHub |
 
 ## Live Outputs
@@ -180,6 +181,18 @@ The two rightmost columns show **distance above MA10m and MA20m** (monthly MAs):
 | `    +15%` | <25% above — reasonable monthly structure |
 
 A score-8 name with `+4%` above monthly MAs is a different proposition than a score-8 name at `⚠ +102%`. The column makes that visible at a glance — high short-term conviction on the left, monthly reality check on the right.
+
+### India Convergence Drill — `india_top_setups.py`
+
+Same scoring framework applied to the India universe. Reads `india_screener.html` + `india_aligned_screener.html` — no re-fetch for scoring, monthly MA fetch only for the top 15.
+
+```bash
+python3 india_top_setups.py
+```
+
+One addition over the US version: a **Sector** column. India setups tend to move in sector waves — Capital Goods, IT, Pharma, Financials each have their own cycle. Knowing that PIDILITIND + ASIANPAINT are both Materials, or BAJFINANCE + CHOLAFIN are both Financials, tells you whether you're seeing a name-specific setup or a sector rotation in progress. The US version doesn't need this because the quality universe is spread across enough names that sector clustering is less dominant.
+
+Names without a quality grade in `india_screener.html` (watchlist names or universe names failing filters this run) show `—` in the grade column — signals are still valid, but quality certification is absent.
 
 ### Liquid Names Status Panel
 
