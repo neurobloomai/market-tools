@@ -316,8 +316,8 @@ def _send_email(subject, md, label):
 
 if __name__ == '__main__':
     now    = datetime.utcnow()
-    monday = now - timedelta(days=now.weekday())
-    label  = monday.strftime('Week of %b %d %Y')
+    friday = now - timedelta(days=(now.weekday() - 4) % 7)
+    label  = friday.strftime('Week ending %b %d %Y')
 
     print(f"\n  Newsletter Draft — {label}")
 
