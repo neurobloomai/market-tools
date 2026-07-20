@@ -306,6 +306,72 @@ def _nh_nl_banner(snap_path='india_breadth_snapshot.json'):
         return ''
 
 
+def _build_swing_rows(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST):
+    """Weekly swing areas: 10wSMA > 20wSMA (uptrend) + pulled back -4% to -25% + near 10w/20w SMA."""
+    rows = []
+    for r in valid:
+        hi = r.get('pct_from_high', 0) or 0
+        ma10 = r.get('ma10w'); ma20 = r.get('ma20w')
+        if not (ma10 and ma20): continue
+        if ma10 <= ma20: continue
+        if not (-25 <= hi <= -4): continue
+        p10 = (r['p'] - ma10) / ma10 * 100
+        p20 = (r['p'] - ma20) / ma20 * 100
+        if abs(p10) > 5 and abs(p20) > 5: continue
+        tag = '~10wSMA' if abs(p10) <= abs(p20) else '~20wSMA'
+        rows.append((r, hi, p10, p20, tag))
+    rows.sort(key=lambda x: abs(x[2]))
+    return rows
+
+
+def _weekly_swing_html(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST):
+    swing = _build_swing_rows(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST)
+    if not swing:
+        return ''
+
+    def src_tag(t):
+        return 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+
+    body = ''
+    for r, hi, p10, p20, tag in swing:
+        t   = r['t']
+        rs  = rs_map.get(t)
+        cmf = cmf_map.get(t, 0.0)
+        rs_s  = f'{rs:.2f}×' if rs is not None else '—'
+        hi_s  = f'{hi:+.1f}%'
+        p10_s = f'{p10:+.1f}%'
+        p20_s = f'{p20:+.1f}%'
+        rs_c  = '#3fb950' if rs and rs >= 1.20 else ('#f85149' if rs and rs < 0.80 else '#e6edf3')
+        hi_c  = '#3fb950' if hi >= -3 else ('#d29922' if hi >= -10 else '#e6edf3')
+        cmf_c = '#3fb950' if cmf >= 0.10 else ('#f85149' if cmf <= -0.10 else '#8b949e')
+        tag_c = '#3fb950' if '10w' in tag else '#58a6ff'
+        s = r['s']; p = r['p']; ma_c = _c_ma(s)
+        body += (
+            f'<tr>'
+            f'<td style="color:#8b949e;font-size:11px">[{src_tag(t)}]</td>'
+            f'<td class="ticker">{t}</td>'
+            f'<td style="color:{ma_c}">{s}/4</td>'
+            f'<td>₹{p:,.2f}</td>'
+            f'<td style="color:{rs_c}">{rs_s}</td>'
+            f'<td style="color:{hi_c}">{hi_s}</td>'
+            f'<td style="color:{cmf_c}">{cmf:+.2f}</td>'
+            f'<td style="color:{tag_c};font-size:11px">{tag}</td>'
+            f'<td style="color:#8b949e;font-size:11px">{p10_s} / {p20_s}</td>'
+            f'</tr>'
+        )
+
+    return (
+        f'<div class="sh">↗ Weekly Swing Areas — {len(swing)} names</div>'
+        f'<div class="sub">Weekly uptrend (10wSMA &gt; 20wSMA) · pulled back −4% to −25% from 52w high · '
+        f'sitting near 10w or 20w SMA support. Swing entry zone — trend intact, price at structure. '
+        f'Sorted by closeness to 10wSMA. NIFTY universe.</div>'
+        f'<table><thead><tr>'
+        f'<th></th><th>Ticker</th><th>MA</th><th>Price</th>'
+        f'<th>RS vs NIFTY</th><th>offHi</th><th>CMF</th><th>Support</th><th>vs 10w / 20w</th>'
+        f'</tr></thead><tbody>{body}</tbody></table>'
+    )
+
+
 def build_aligned_html(valid, aligned, grades, partial, promos,
                        squeezed, st_squeezed, rs_map, hi_map, cmf_map,
                        special_mention, now, UNIVERSE, WATCHLIST, m_cmf_map=None,
@@ -493,6 +559,9 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
             f'padding:12px 16px;margin-bottom:20px;font-size:13px">{mtf_names}</div>'
         )
 
+    _swing_data   = _build_swing_rows(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST)
+    swing_section = _weekly_swing_html(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST)
+
     sm_rows = ''
     for t, note in special_mention.items():
         r = next((x for x in valid if x['t'] == t), None)
@@ -639,9 +708,11 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
   <div class="stat"><div class="stat-val">{len(promos)}</div><div class="stat-lbl">Promo Candidates</div></div>
   <div class="stat"><div class="stat-val" style="color:{mtf_color}">{"★ " if _mtf else ""}{len(_mtf)}</div><div class="stat-lbl">MTF Squeeze</div></div>
   <div class="stat"><div class="stat-val" style="color:{'#d29922' if _pw else '#484f58'}">{len(_pw)}</div><div class="stat-lbl">Pullback Watch</div></div>
+  <div class="stat"><div class="stat-val" style="color:{'#58a6ff' if _swing_data else '#484f58'}">{len(_swing_data)}</div><div class="stat-lbl">Swing Areas</div></div>
 </div>
 
 {mtf_section}
+{swing_section}
 <div class="sh">4/4 Aligned — {len(aligned)} names</div>
 <table><thead><tr>
   <th></th><th>Ticker</th><th>Grade</th><th>Price</th><th>RS vs NIFTY</th><th>% from 52wH</th><th>CMF</th><th>AD OBV</th>
@@ -917,6 +988,23 @@ if __name__ == '__main__':
         print(f"  [{src}]  {disp(t):12}  {g:<3}  ₹{r['p']:>10.2f}   {rs_s}   {hi_s}   CMF {cmf_val:+.2f}   AD:{ad_s} OBV:{obv_s}{div_s}   → 20w ₹{r['ma20w']:,.2f}")
     if not pullback_watch:
         print(f"  none — no A+/A names at 2/4 within pullback range (-10% to -28%)")
+
+    # ── Weekly Swing Areas ───────────────────────────────────────────────────
+    swing_rows = _build_swing_rows(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST)
+    print(f"\n  WEEKLY SWING AREAS — {len(swing_rows)} names")
+    print(f"  {'─'*72}")
+    print(f"  Weekly uptrend (10wSMA > 20wSMA) · at 10w/20w SMA support · pulled back -4% to -25%\n")
+    print(f"  {'Ticker':<14} {'MA':<4} {'Price':>12}  {'RS':>6}  {'offHi':>6}  {'CMF':>6}  {'Support':<8}  {'vs10w':>6} {'vs20w':>6}")
+    print(f"  {'─'*14} {'─'*4} {'─'*12}  {'─'*6}  {'─'*6}  {'─'*6}  {'─'*8}  {'─'*6} {'─'*6}")
+    for r, hi, p10, p20, tag in swing_rows:
+        t     = r['t']
+        src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+        rs_v  = rs_map.get(t)
+        cmf_v = cmf_map.get(t, 0.0)
+        rs_s  = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
+        print(f"  {disp(t):<14} {r['s']}/4  ₹{r['p']:>10.2f}  {rs_s:>6}  {hi:>+5.1f}%  {cmf_v:>+6.2f}  {tag:<8}  {p10:>+5.1f}% {p20:>+5.1f}%  [{src}]")
+    if not swing_rows:
+        print(f"  none")
 
     # Squeeze scanners — all three timeframes
     squeezed         = sorted(valid,         key=lambda r: abs(r['w_spread']))
