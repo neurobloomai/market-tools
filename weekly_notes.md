@@ -5,7 +5,7 @@ Run `python weekly_snapshot.py` each week to refresh. History is in git.
 
 ---
 
-## Week of Jul 13 2026
+## Week of Jul 20 2026
 
 ### 4/4 Aligned — 74 names
 
@@ -63,11 +63,11 @@ _No tier changes this week._
 |:-------|------:|:--:|:-----:|:---------|:-------|
 | **ABBV** | $254.49 | 4/4 | A+ | ROE/ROA ROE None% / ROA 10.0% | AbbVie — Allergan amortization masking strong cash earnings; FCF/Debt … |
 | **AMG** | $369.83 | 4/4 | ETF | — | Affiliated Managers Group — multi-boutique AM (AQR, Tweedy Browne etc.… |
-| **APD** | $295.62 | 4/4 | B | Debt/EV 0.215 / FCF Yield -5.3% | Air Products — industrial gases, green/blue hydrogen megaproject bet (… |
+| **APD** | $295.62 | 4/4 | ETF | — | Air Products — industrial gases, green/blue hydrogen megaproject bet (… |
 | **BIIB** | $205.99 | 4/4 | A | Debt/EV 0.201 / ROE/ROA ROE 7.7% / ROA 6.0% | Biogen — neuroscience pure-play; Leqembi (lecanemab, w/ Eisai) first a… |
 | **BMY** | $60.74 | 4/4 | A+ | Debt/EV 0.29 | Bristol-Myers Squibb — de-lever + profit growth play; Celgene debt pay… |
 | **CPAY** | $365.79 | 4/4 | A+ | Debt/EV 0.326 | Corpay (formerly FleetCor) — V/MA-like toll economics on corporate pay… |
-| **ESE** | $318.52 | 4/4 | A | ROE/ROA ROE 9.2% / ROA 5.8% | ESCO Technologies — niche industrials: RF/EMC test chambers (ETS-Lindg… |
+| **ESE** | $318.52 | 4/4 | ETF | — | ESCO Technologies — niche industrials: RF/EMC test chambers (ETS-Lindg… |
 | **EXPE** | $268.77 | 4/4 | A | Op Margin 7.1% | Expedia Group — online travel marketplace (Expedia.com, Hotels.com, Vr… |
 | **FROG** | $88.54 | 4/4 | B | Op Margin -7.4% / Net Margin -10.9% / ROE/ROA ROE -7.1% / ROA -3.7% | JFrog — universal artifact repository (Artifactory) + software supply … |
 | **GEV** | $1057.84 | 4/4 | A+ | Op Margin 5.5% | GE Vernova — picks-and-shovels for entire energy transition; supplies … |
@@ -75,7 +75,7 @@ _No tier changes this week._
 | **LNT** | $74.82 | 4/4 | B | Debt/EV 0.381 / FCF Yield -6.2% | Alliant Energy — regulated Midwest utility (Iowa/Wisconsin); OM 21%, N… |
 | **NET** | $277.66 | 4/4 | B | Op Margin -9.7% / Net Margin -3.7% / ROE/ROA ROE -5.9% / ROA -2.7% / P/E 175.9x | — |
 | **S** | $19.57 | 4/4 | B | Op Margin -28.8% / Net Margin -30.4% / ROE/ROA ROE -21.4% / ROA -7.9% | SentinelOne — AI-native cybersecurity platform, direct CrowdStrike com… |
-| **SNOW** | $268.90 | 4/4 | B | Op Margin -22.2% / Net Margin -23.8% / ROE/ROA ROE -54.9% / ROA -9.7% / P/E 100.1x | — |
+| **SNOW** | $268.90 | 4/4 | B | Op Margin -22.2% / Net Margin -23.8% / ROE/ROA ROE -54.9% / ROA -9.7% | — |
 | **TGTX** | $54.87 | 4/4 | A | FCF Yield -0.4% | TG Therapeutics — Briumvi (ublituximab, anti-CD20 MS); faster infusion… |
 | **VCYT** | $59.13 | 4/4 | A | ROE/ROA ROE 6.9% / ROA 3.8% | Veracyte — genomic diagnostics; moat = guideline inclusion (NCCN/medic… |
 | **AMD** | $495.76 | 3/4 | ETF | — | AMD — AI accelerator (MI300X/MI350) + x86 CPU challenger; OM ~21%, NM … |
@@ -92,13 +92,13 @@ _No tier changes this week._
 | **AXON** | $510.28 | 2/4 | B | Op Margin 3.7% / ROE/ROA ROE 6.8% / ROA 0.1% | — |
 | **COHR** | $277.60 | 2/4 | B | ROE/ROA ROE 4.7% / ROA 3.1% / FCF Yield -0.4% | Coherent Corp — optical components (800G/1.6T datacenter interconnect … |
 | **DRI** | $198.53 | 2/4 | B | Debt/EV 0.263 | Darden Restaurants — Olive Garden + LongHorn + Fine Dining (Capital Gr… |
-| **DVN** | $43.83 | 2/4 | B | Debt/EV 0.254 / Op Margin 6.9% | Devon Energy — formed from CTRA+DVN merger; Permian + Appalachia nat g… |
+| **DVN** | $43.83 | 2/4 | ETF | — | Devon Energy — formed from CTRA+DVN merger; Permian + Appalachia nat g… |
 | **FLUT** | $106.56 | 2/4 | B | Debt/EV 0.416 / Op Margin 2.3% / Net Margin -2.2% / ROE/ROA ROE -5.0% / ROA 1.2% / FCF Yield -4.7% | Flutter Entertainment — global online sports betting; FanDuel #1 US (~… |
 | **GFS** | $57.48 | 2/4 | B | ROE/ROA ROE 6.8% / ROA 3.1% | GlobalFoundries — specialty foundry (RF, automotive, IoT); 5/6 filters… |
 | **GTLB** | $32.72 | 2/4 | B | Op Margin -6.0% / Net Margin -2.5% / ROE/ROA ROE -3.0% / ROA -1.9% | GitLab — complete DevSecOps platform (source control + CI/CD + securit… |
 | **HUBS** | $224.26 | 2/4 | A | Op Margin 3.3% / Net Margin 3.0% / ROE/ROA ROE 5.0% / ROA 1.1% | — |
 | **MDB** | $312.33 | 2/4 | B | Op Margin -3.6% / Net Margin -1.1% / ROE/ROA ROE -1.0% / ROA -1.8% | — |
-| **MDT** | $83.20 | 2/4 | A | Debt/EV 0.229 / ROE/ROA ROE 9.8% / ROA 4.9% | Medtronic — largest pure-play medtech (cardiac rhythm mgmt, spine/neur… |
+| **MDT** | $83.20 | 2/4 | ETF | — | Medtronic — largest pure-play medtech (cardiac rhythm mgmt, spine/neur… |
 | **MELI** | $1813.91 | 2/4 | B | Op Margin 6.9% / FCF Yield -4.5% | — |
 | **MKC** | $51.70 | 2/4 | A | Debt/EV 0.259 | — |
 | **PWR** | $628.53 | 2/4 | B | Op Margin 4.2% / Net Margin 3.7% | Quanta Services — dominant grid/electrical infrastructure contractor; … |
@@ -108,11 +108,11 @@ _No tier changes this week._
 | **TEAM** | $93.29 | 2/4 | A | Op Margin 9.4% / Net Margin -3.5% / ROE/ROA ROE -19.3% / ROA 0.5% | — |
 | **TOST** | $30.08 | 2/4 | A | Op Margin 6.7% | Toast — restaurant POS/payments platform; ROE 22.5%, FCF 4%, rev growt… |
 | **VST** | $155.44 | 2/4 | A | Debt/EV 0.275 / FCF Yield -0.3% | Vistra — deregulated nuclear+gas (Energy Harbor acq), Texas/ERCOT expo… |
-| **WEC** | $113.35 | 2/4 | B | Debt/EV 0.374 / FCF Yield -5.6% | WEC Energy Group — regulated Midwest utility (Wisconsin/Illinois/Michi… |
+| **WEC** | $113.35 | 2/4 | ETF | — | WEC Energy Group — regulated Midwest utility (Wisconsin/Illinois/Michi… |
 | **ALB** | $120.78 | 1/4 | A | Net Margin -4.2% / ROE/ROA ROE -1.8% / ROA 1.6% | Albemarle — largest lithium producer (Chile/Australia mines); OM 24.8%… |
-| **CLS** | $301.34 | 1/4 | A | Op Margin 6.6% | Celestica — AI infra contract manufacturer (servers, networking), ROE … |
+| **CLS** | $301.34 | 1/4 | ETF | — | Celestica — AI infra contract manufacturer (servers, networking), ROE … |
 | **COPX** | $73.35 | 1/4 | ETF | — | Global X Copper Miners ETF — AUM $8.0B; copper = AI datacenter + grid … |
-| **DPZ** | $322.18 | 1/4 | B | Debt/EV 0.329 | — |
+| **DPZ** | $322.18 | 1/4 | ETF | — | — |
 | **ENPH** | $41.57 | 1/4 | B | Op Margin -9.1% | Enphase Energy — microinverter monopoly + battery storage (IQ8/Encharg… |
 | **FTAI** | $207.46 | 1/4 | A+ | FCF Yield -1.5% | FTAI Aviation — CFM56 engine platform (powers 737/A320, largest narrow… |
 | **GLD** | $368.41 | 1/4 | ETF | — | SPDR Gold ETF — AUM $150B, gold price proxy; 25% off 6mo highs ($496),… |
@@ -126,11 +126,11 @@ _No tier changes this week._
 | **FISV** | $50.63 | 0/4 | B | Debt/EV missing / Op Margin missing / Net Margin missing / ROE/ROA ROE None% / ROA None% / FCF Yield missing (no data relief) | Fiserv — payment processing + Clover POS + banking tech, extreme switc… |
 | **KTOS** | $46.03 | 0/4 | B | Op Margin 1.8% / Net Margin 2.1% / ROE/ROA ROE 1.2% / ROA 0.6% / FCF Yield -1.2% | Kratos — drone/defense tech; margins thin now, scaling with DoD contra… |
 | **NLR** | $104.20 | 0/4 | ETF | — | VanEck Uranium & Nuclear ETF — AUM $4.87B; AI datacenter baseload + ur… |
-| **NRG** | $129.11 | 0/4 | B | Debt/EV 0.457 / Op Margin 3.6% / Net Margin 0.7% / ROE/ROA ROE 6.2% / ROA 2.2% | NRG Energy — de-lever play; LS Power acq doubled fleet+debt, targeting… |
+| **NRG** | $129.11 | 0/4 | ETF | — | NRG Energy — de-lever play; LS Power acq doubled fleet+debt, targeting… |
 | **ORLY** | $86.05 | 0/4 | B | ROE/ROA ROE None% / ROA 13.8% | O'Reilly Auto Parts — Akre compounder; 18% OM, 14% NM, ROA 13.8% (ROE … |
 | **PEG** | $78.64 | 0/4 | A | Debt/EV 0.386 / FCF Yield -0.4% | PSEG — integrated NJ utility + nuclear operator (Salem 1&2 + Hope Cree… |
 | **SYM** | $41.25 | 0/4 | B | Op Margin 1.1% / Net Margin -0.3% / ROE/ROA ROE -5.7% / ROA -0.6% | Symbotic — warehouse AI robotics, Walmart-backed; revenue scaling, mar… |
-| **TDG** | $1214.43 | 0/4 | A | Debt/EV 0.333 / ROE/ROA ROE None% / ROA 11.8% | TransDigm — aerospace parts monopolist, 47% OM, 22% NM; D/EV 0.325 str… |
+| **TDG** | $1214.43 | 0/4 | ETF | — | TransDigm — aerospace parts monopolist, 47% OM, 22% NM; D/EV 0.325 str… |
 | **VICI** | $26.87 | 0/4 | A | Debt/EV 0.382 | VICI Properties — largest gaming/experiential REIT; triple-net leases … |
 
 ### Liquid Names — Status Panel
