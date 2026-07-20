@@ -1,4 +1,4 @@
-**Subject:** Market Pulse — Week of Jul 13 2026 · Mixed / Breadth Diverging
+**Subject:** Market Pulse — Week ending Jul 17 2026 · Mixed / Breadth Diverging
 
 ---
 
@@ -25,10 +25,10 @@ No exits from Fully Stacked.
 
 **ONE THOUGHT**
 
-The divergence between short and long-term positioning in US equities—58% above the 20-day versus 67% above the 100-day—suggests the market is consolidating within an established uptrend rather than breaking down. This pattern typically precedes either a genuine test of longer-term support or a renewed push higher, but either way, it means short-term noise shouldn't obscure that the majority of names still have their structural integrity intact. India's mirror reading (47% short-term, 64% long-term) reinforces that pullbacks in both markets are occurring inside healthy frameworks, not against them.
+The divergence between short-term and long-term structure in US names—58% above the 20-day versus 67% above the 100-day—suggests the market is consolidating strength rather than breaking it; pullbacks are occurring within positions that remain fundamentally intact on their longer timeframe. This is the posture of a market that hasn't exhausted conviction, which matters because it means downside pressure is likely selective rather than broad, keeping the probability high that breakouts from disciplined setups (like MU's weekly gate) tend to hold their gains.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-07-18 23:30 UTC · Not financial advice_
+_Draft generated 2026-07-20 05:56 UTC · Not financial advice_
