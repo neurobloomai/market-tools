@@ -47,11 +47,6 @@
         "ROE/ROA",
         "ROE -54.9% / ROA -9.7%",
         "\u2265 10% / \u2265 15%"
-      ],
-      [
-        "P/E",
-        "100.1x",
-        "\u2264 100x"
       ]
     ],
     "note": "",
@@ -183,17 +178,6 @@
     "note": "",
     "grade": "A"
   },
-  "DPZ": {
-    "fails": [
-      [
-        "Debt/EV",
-        "0.329",
-        "\u2264 0.20"
-      ]
-    ],
-    "note": "",
-    "grade": "B"
-  },
   "CPAY": {
     "fails": [
       [
@@ -296,22 +280,6 @@
     "note": "VICI Properties \u2014 largest gaming/experiential REIT; triple-net leases with Caesars (45%), MGM, Venetian, Hard Rock at 15-20yr terms with CPI escalators; GrossM 99.1%, NM 76.8%, FCF $1.28B, ~5.5% yield, payout 61% AFFO (conservative for REIT); ROE 11.3% (gate \u226515%) + D/EV 0.62 (gate \u22640.50) both block \u2014 both REIT-structure artifacts: real estate at historical cost compresses ROE, leverage secured by experiential assets generating rent is not deteriorating debt; zero tenant defaults since 2017 IPO; moat = gaming license tied to location (tenants cannot relocate without VICI consent); grade B+; gate to universe: ROE inflecting toward 15% as FFO scales + D/EV delevering organically",
     "grade": "A"
   },
-  "WEC": {
-    "fails": [
-      [
-        "Debt/EV",
-        "0.374",
-        "\u2264 0.20"
-      ],
-      [
-        "FCF Yield",
-        "-5.6%",
-        "> 0%"
-      ]
-    ],
-    "note": "WEC Energy Group \u2014 regulated Midwest utility (Wisconsin/Illinois/Michigan); OM 29%, NM 16.2%, ROE 11.7%, RevG 9%; D/E 1.53 (IOU rate-based capex, FERC/PUC approved \u2014 structural not deteriorating) + FCF -$2B (grid modernization + AI datacenter load buildout in Wisconsin corridor) + ROE PUC-capped at ~11%; B (4/7); 4/4 MA aligned, slope +0.12 \u2014 cleaner margins than LNT, AI datacenter demand angle (Microsoft/hyperscaler buildout in Wisconsin)",
-    "grade": "B"
-  },
   "LNT": {
     "fails": [
       [
@@ -326,48 +294,6 @@
       ]
     ],
     "note": "Alliant Energy \u2014 regulated Midwest utility (Iowa/Wisconsin); OM 21%, NM 18.6%, ROE 11.3%, RevG 5%; D/E 1.60 + FCF -$1.2B + ROE PUC-capped \u2014 same structural blockers as WEC; B (4/7); 4/4 MA aligned, slope +1.53; smaller ($20B) and less differentiated than WEC/NEE \u2014 watching for margin improvement",
-    "grade": "B"
-  },
-  "DVN": {
-    "fails": [
-      [
-        "Debt/EV",
-        "0.254",
-        "\u2264 0.20"
-      ],
-      [
-        "Op Margin",
-        "6.9%",
-        "\u2265 10%"
-      ]
-    ],
-    "note": "Devon Energy \u2014 formed from CTRA+DVN merger; Permian + Appalachia nat gas/oil; NM 14.2%, ROE 15.2%, FCF 3.2%, P/E 11.8x \u2014 solid underlying economics; D/EV 0.257 (merger leverage) + OM 6.9% both blocking; gate: D/EV \u2264 0.20 as merger debt amortizes + OM \u2265 10% on commodity price recovery",
-    "grade": "B"
-  },
-  "NRG": {
-    "fails": [
-      [
-        "Debt/EV",
-        "0.457",
-        "\u2264 0.20"
-      ],
-      [
-        "Op Margin",
-        "3.6%",
-        "\u2265 10%"
-      ],
-      [
-        "Net Margin",
-        "0.7%",
-        "\u2265 5%"
-      ],
-      [
-        "ROE/ROA",
-        "ROE 6.2% / ROA 2.2%",
-        "\u2265 10% / \u2265 15%"
-      ]
-    ],
-    "note": "NRG Energy \u2014 de-lever play; LS Power acq doubled fleet+debt, targeting 3x net leverage, Fwd P/E 11x, yield-sensitive re-rate when 10yr < 4.0%",
     "grade": "B"
   },
   "TLN": {
@@ -502,17 +428,6 @@
     "note": "Upwork \u2014 freelance marketplace; D/EV 0.44 (converts) only blocker, margins/FCF solid",
     "grade": "B"
   },
-  "CLS": {
-    "fails": [
-      [
-        "Op Margin",
-        "6.6%",
-        "\u2265 10%"
-      ]
-    ],
-    "note": "Celestica \u2014 AI infra contract manufacturer (servers, networking), ROE 52%, D/EV 0.02, gross margin 12% blocks universe",
-    "grade": "A"
-  },
   "PRGS": {
     "fails": [
       [
@@ -600,22 +515,6 @@
     "note": "Veracyte \u2014 genomic diagnostics; moat = guideline inclusion (NCCN/medical society); Afirma (thyroid indeterminate biopsy, prevents unnecessary surgery) + Decipher Prostate (active surveillance vs treatment, growth engine) + Percepta/Envisia; OM 16.3%, NM 16.2%, GrossM 72.9%, D/E 0.029, FCF $105M, RevG 21.5%; ROE 6.9% only blocker (Decipher acq goodwill, resolves as earnings scale); 4/4 MA aligned, price at MA10d",
     "grade": "A"
   },
-  "MDT": {
-    "fails": [
-      [
-        "Debt/EV",
-        "0.229",
-        "\u2264 0.20"
-      ],
-      [
-        "ROE/ROA",
-        "ROE 9.8% / ROA 4.9%",
-        "\u2265 10% / \u2265 15%"
-      ]
-    ],
-    "note": "Medtronic \u2014 largest pure-play medtech (cardiac rhythm mgmt, spine/neuro surgery, diabetes CGM, surgical robotics Hugo); OM 22.0%, NM 13.2%, FCF 4.3%, fwd P/E 13x, RevG 9.9%, ~3.5% dividend; ROE 9.8% (gate \u226510%) + D/EV 0.229 (gate \u22640.20) both blocking \u2014 both acquisition artifacts from Covidien ($50B, 2015) and subsequent M&A inflating goodwill and leverage, not structural deterioration; grade B; gate: ROE crossing 10% + D/EV \u2264 0.20 as FCF deleverages acquisition debt",
-    "grade": "A"
-  },
   "BIIB": {
     "fails": [
       [
@@ -659,33 +558,6 @@
     "note": "O'Reilly Auto Parts \u2014 Akre compounder; 18% OM, 14% NM, ROA 13.8% (ROE negative from 20yrs buybacks); ROA just below 15% threshold; D/EV 0.10, P/E 29x, exceptional execution",
     "grade": "B"
   },
-  "TDG": {
-    "fails": [
-      [
-        "Debt/EV",
-        "0.333",
-        "\u2264 0.20"
-      ],
-      [
-        "ROE/ROA",
-        "ROE None% / ROA 11.8%",
-        "\u2265 10% / \u2265 15%"
-      ]
-    ],
-    "note": "TransDigm \u2014 aerospace parts monopolist, 47% OM, 22% NM; D/EV 0.325 structural debt (leveraged rollup model, won't change); watch if debt pays down or FCF re-rates",
-    "grade": "A"
-  },
-  "ESE": {
-    "fails": [
-      [
-        "ROE/ROA",
-        "ROE 9.2% / ROA 5.8%",
-        "\u2265 10% / \u2265 15%"
-      ]
-    ],
-    "note": "ESCO Technologies \u2014 niche industrials: RF/EMC test chambers (ETS-Lindgren), utility grid modernization/power quality, aerospace filtration (VACCO); GrossM 41.9%, OM 15.5%, FCF $320M positive, RevG 33.5%, D/EV 0.024 (near zero debt); ROE 9.2% only blocker \u2014 same niche-industrial profile as HEICO but murkier moat (collection of niches vs HEICO's unambiguous FAA-PMA franchise); NM 24.7% > OM 15.5% anomaly \u2014 likely one-time tax benefit, watch normalize; fwd PE 36x (cheaper than HEI at 50x); B grade; gate: ROE crossing 12%+ as revenue scale compounds",
-    "grade": "A"
-  },
   "FISV": {
     "fails": [
       [
@@ -715,22 +587,6 @@
       ]
     ],
     "note": "Fiserv \u2014 payment processing + Clover POS + banking tech, extreme switching costs; ~33% OM, 15% NM; D/EV ~0.26 from First Data acquisition; ~$3-4B FCF/yr paydown, 1-2yr to threshold",
-    "grade": "B"
-  },
-  "APD": {
-    "fails": [
-      [
-        "Debt/EV",
-        "0.215",
-        "\u2264 0.20"
-      ],
-      [
-        "FCF Yield",
-        "-5.3%",
-        "> 0%"
-      ]
-    ],
-    "note": "Air Products \u2014 industrial gases, green/blue hydrogen megaproject bet ($15B+, NEOM/Louisiana); D/EV 0.224 + FCF -5.6% from capex cycle both blocking; new CEO reviewing strategy; watch for FCF inflection as projects come online",
     "grade": "B"
   },
   "PYPL": {
