@@ -283,6 +283,23 @@ def _nh_nl_banner(snap_path='breadth_snapshot.json'):
         return ''
 
 
+def _swing_score(s, rs, cmf, p10):
+    """Composite swing score (max 8): proximity(3) + MA(2) + RS(2) + CMF(1)."""
+    score = 0
+    ap10 = abs(p10)
+    if ap10 <= 1.0:   score += 3
+    elif ap10 <= 3.0: score += 2
+    elif ap10 <= 5.0: score += 1
+    if s == 4:   score += 2
+    elif s == 3: score += 1
+    if rs is not None:
+        if rs >= 1.20:  score += 2
+        elif rs >= 1.0: score += 1
+    if cmf >= 0.10:  score += 1
+    elif cmf < 0.0:  score -= 1
+    return score
+
+
 def _build_swing_rows(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST):
     """Weekly swing areas: 10wSMA > 20wSMA (uptrend) + pulled back -4% to -25% + near 10w/20w SMA."""
     rows = []
@@ -290,14 +307,17 @@ def _build_swing_rows(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST):
         hi = r.get('pct_from_high', 0) or 0
         ma10 = r.get('ma10w'); ma20 = r.get('ma20w')
         if not (ma10 and ma20): continue
-        if ma10 <= ma20: continue          # not weekly uptrend
+        if ma10 <= ma20: continue
         if not (-25 <= hi <= -4): continue
         p10 = (r['p'] - ma10) / ma10 * 100
         p20 = (r['p'] - ma20) / ma20 * 100
         if abs(p10) > 5 and abs(p20) > 5: continue
-        tag = '~10wSMA' if abs(p10) <= abs(p20) else '~20wSMA'
-        rows.append((r, hi, p10, p20, tag))
-    rows.sort(key=lambda x: abs(x[2]))    # tightest to 10w first
+        tag   = '~10wSMA' if abs(p10) <= abs(p20) else '~20wSMA'
+        rs    = rs_map.get(r['t'])
+        cmf   = cmf_map.get(r['t'], 0.0)
+        score = _swing_score(r['s'], rs, cmf, p10)
+        rows.append((r, hi, p10, p20, tag, score))
+    rows.sort(key=lambda x: -x[5])    # highest score first
     return rows
 
 
@@ -310,7 +330,7 @@ def _weekly_swing_html(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST):
         return 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
 
     body = ''
-    for r, hi, p10, p20, tag in swing:
+    for rank, (r, hi, p10, p20, tag, score) in enumerate(swing, 1):
         t   = r['t']
         rs  = rs_map.get(t)
         cmf = cmf_map.get(t, 0.0)
@@ -322,12 +342,15 @@ def _weekly_swing_html(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST):
         hi_c  = '#3fb950' if hi >= -3 else ('#d29922' if hi >= -10 else '#e6edf3')
         cmf_c = '#3fb950' if cmf >= 0.10 else ('#f85149' if cmf <= -0.10 else '#8b949e')
         tag_c = '#3fb950' if '10w' in tag else '#58a6ff'
-        s = r['s']; p = r['p']; ma_c = _c_ma(s)
+        sc    = r['s']; p = r['p']; ma_c = _c_ma(sc)
+        score_c = '#3fb950' if score >= 6 else ('#d29922' if score >= 4 else '#8b949e')
+        row_bg  = 'background:#1a2332;' if score >= 6 else ''
         body += (
-            f'<tr>'
+            f'<tr style="{row_bg}">'
+            f'<td style="color:{score_c};font-weight:600;font-size:11px">{score}/8</td>'
             f'<td style="color:#8b949e;font-size:11px">[{src_tag(t)}]</td>'
             f'<td class="ticker">{t}</td>'
-            f'<td style="color:{ma_c}">{s}/4</td>'
+            f'<td style="color:{ma_c}">{sc}/4</td>'
             f'<td>${p:,.2f}</td>'
             f'<td style="color:{rs_c}">{rs_s}</td>'
             f'<td style="color:{hi_c}">{hi_s}</td>'
@@ -339,11 +362,11 @@ def _weekly_swing_html(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST):
 
     return (
         f'<div class="sh">↗ Weekly Swing Areas — {len(swing)} names</div>'
-        f'<div class="sub">Weekly uptrend (10wSMA &gt; 20wSMA) · pulled back −4% to −25% from 52w high · '
-        f'sitting near 10w or 20w SMA support. Swing entry zone — trend intact, price at structure. '
-        f'Sorted by closeness to 10wSMA.</div>'
+        f'<div class="sub">Sorted by swing score (max 8) · proximity(3) + MA align(2) + RS(2) + CMF(1) · '
+        f'Weekly uptrend (10wSMA &gt; 20wSMA) · pulled back −4% to −25% · near SMA support. '
+        f'<span style="color:#3fb950">■</span> score ≥ 6 = highest conviction setup.</div>'
         f'<table><thead><tr>'
-        f'<th></th><th>Ticker</th><th>MA</th><th>Price</th>'
+        f'<th>Score</th><th></th><th>Ticker</th><th>MA</th><th>Price</th>'
         f'<th>RS vs SPY</th><th>offHi</th><th>CMF</th><th>Support</th><th>vs 10w / 20w</th>'
         f'</tr></thead><tbody>{body}</tbody></table>'
     )
@@ -1105,15 +1128,16 @@ if __name__ == '__main__':
     print(f"\n  WEEKLY SWING AREAS — {len(swing_rows)} names")
     print(f"  {'─'*72}")
     print(f"  Weekly uptrend (10wSMA > 20wSMA) · at 10w/20w SMA support · pulled back -4% to -25%\n")
-    print(f"  {'Ticker':<8} {'MA':<4} {'Price':>8}  {'RS':>6}  {'offHi':>6}  {'CMF':>6}  {'Support':<8}  {'vs10w':>6} {'vs20w':>6}")
-    print(f"  {'─'*8} {'─'*4} {'─'*8}  {'─'*6}  {'─'*6}  {'─'*6}  {'─'*8}  {'─'*6} {'─'*6}")
-    for r, hi, p10, p20, tag in swing_rows:
+    print(f"  {'Scr':<4} {'Ticker':<8} {'MA':<4} {'Price':>8}  {'RS':>6}  {'offHi':>6}  {'CMF':>6}  {'Support':<8}  {'vs10w':>6} {'vs20w':>6}")
+    print(f"  {'─'*4} {'─'*8} {'─'*4} {'─'*8}  {'─'*6}  {'─'*6}  {'─'*6}  {'─'*8}  {'─'*6} {'─'*6}")
+    for r, hi, p10, p20, tag, score in swing_rows:
         t     = r['t']
         src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
         rs_v  = rs_map.get(t)
         cmf_v = cmf_map.get(t, 0.0)
         rs_s  = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
-        print(f"  {t:<8} {r['s']}/4  ${r['p']:>7.2f}  {rs_s:>6}  {hi:>+5.1f}%  {cmf_v:>+6.2f}  {tag:<8}  {p10:>+5.1f}% {p20:>+5.1f}%  [{src}]")
+        flag  = '★' if score >= 6 else ' '
+        print(f"  {flag}{score}/8 {t:<8} {r['s']}/4  ${r['p']:>7.2f}  {rs_s:>6}  {hi:>+5.1f}%  {cmf_v:>+6.2f}  {tag:<8}  {p10:>+5.1f}% {p20:>+5.1f}%  [{src}]")
     if not swing_rows:
         print(f"  none")
 
