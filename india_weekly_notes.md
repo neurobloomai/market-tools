@@ -9,13 +9,16 @@ Run `python india_weekly_snapshot.py` each week to refresh. History is in git.
 
 ## Week of Jul 20 2026 (India)
 
-### 4/4 Aligned — 0 names
+### 4/4 Aligned — 1 names
+
+**Watchlist (1):** 360ONE
 
 
 ### Tightest Coils — FullCoil ≤ 5%
 
 | Ticker | | MA | FullCoil | ST Gap | Vol | Slope |
 |--------|--|-----|---------|--------|-----|-------|
+| **360ONE** | [W] | 4/4 | 3.3% | 3.3% | 2.1x | ↑ |
 
 ### Notes
 
@@ -29,7 +32,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 
 | Ticker | Price | MA | Grade | Blockers | Thesis |
 |:-------|------:|:--:|:-----:|:---------|:-------|
-| **360ONE** | — | — | ETF | — | 360 ONE WAM (formerly IIFL Wealth) — HNI/ultra-HNI wealth + asset mgmt… |
+| **360ONE** | ₹1119.70 | 4/4 | ETF | — | 360 ONE WAM (formerly IIFL Wealth) — HNI/ultra-HNI wealth + asset mgmt… |
 | **ADANIENT** | — | — | ETF | — | conglomerate, debt heavy |
 | **ADANIGREEN** | — | — | ETF | — | Adani Green — heavy capex, debt, P/E stretched but 57% op margin |
 | **ANANDRATHI** | — | — | ETF | — | Anand Rathi Wealth — wealth management, asset-light; OM 40%, NM 32%, R… |
