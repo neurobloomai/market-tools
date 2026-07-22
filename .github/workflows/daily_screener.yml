@@ -1,0 +1,45 @@
+name: Daily Screener — US (after close)
+
+on:
+  schedule:
+    - cron: '30 21 * * 2-6'  # Tue–Sat 9:30pm UTC = 5:30pm ET (Mon covered by weekly_us.yml)
+  workflow_dispatch:
+
+jobs:
+  run-screeners:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v7.0.0
+
+      - uses: actions/setup-python@v6.3.0
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install yfinance anthropic
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: US Market breadth
+        run: python market_breadth.py
+
+      - name: Sync after breadth
+        run: |
+          git stash --include-untracked || true
+          git pull --rebase origin main || true
+          git stash pop || true
+
+      - name: US Aligned screener
+        run: python aligned_screener.py
+
+      - name: Sync after aligned screener
+        run: |
+          git stash --include-untracked || true
+          git pull --rebase origin main || true
+          git stash pop || true
