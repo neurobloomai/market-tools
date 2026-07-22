@@ -3,99 +3,89 @@
     "w_gate": false,
     "band": "IN",
     "slope": -1.26,
-    "pct10w": -0.01,
+    "pct10w": 2.29,
     "above_ma20d": true,
-    "above_ma50d": false,
-    "pct_ma20d": 2.8,
-    "pct_ma50d": -1.1,
-    "price": 207.29
+    "above_ma50d": true,
+    "pct_ma20d": 4.8,
+    "pct_ma50d": 1.2,
+    "price": 212.06
   },
   "META": {
     "w_gate": false,
-    "band": "IN",
+    "band": "-EXT",
     "slope": 0.65,
-    "pct10w": 6.6,
+    "pct10w": 3.84,
     "above_ma20d": true,
     "above_ma50d": true,
-    "pct_ma20d": 5.1,
-    "pct_ma50d": 6.3,
-    "price": 643.81
+    "pct_ma20d": 1.8,
+    "pct_ma50d": 3.5,
+    "price": 627.17
   },
   "MSFT": {
     "w_gate": false,
     "band": "IN",
     "slope": -8.21,
-    "pct10w": -1.03,
+    "pct10w": -2.88,
     "above_ma20d": true,
     "above_ma50d": false,
-    "pct_ma20d": 3.6,
-    "pct_ma50d": -0.7,
-    "price": 397.75
+    "pct_ma20d": 1.5,
+    "pct_ma50d": -2.5,
+    "price": 390.34
   },
-  "AAPL": {
-    "w_gate": true,
-    "band": "IN",
-    "slope": 11.39,
-    "pct10w": 7.14,
-    "above_ma20d": true,
-    "above_ma50d": true,
-    "pct_ma20d": 6.2,
-    "pct_ma50d": 7.7,
-    "price": 327.74
-  },
+  "AAPL": null,
   "AMZN": {
     "w_gate": false,
     "band": "IN",
     "slope": -6.97,
-    "pct10w": -0.9,
+    "pct10w": -1.98,
     "above_ma20d": true,
     "above_ma50d": false,
-    "pct_ma20d": 1.8,
-    "pct_ma50d": -1.4,
-    "price": 247.55
+    "pct_ma20d": 0.5,
+    "pct_ma50d": -2.3,
+    "price": 244.85
   },
   "GOOGL": {
     "w_gate": false,
     "band": "-EXT",
     "slope": -6.64,
-    "pct10w": -5.06,
+    "pct10w": -6.45,
     "above_ma20d": false,
     "above_ma50d": false,
-    "pct_ma20d": -2.2,
-    "pct_ma50d": -5.8,
-    "price": 347.15
+    "pct_ma20d": -3.6,
+    "pct_ma50d": -6.9,
+    "price": 342.09
   },
   "AVGO": {
     "w_gate": false,
     "band": "IN",
     "slope": -14.08,
-    "pct10w": -2.34,
+    "pct10w": 0.26,
     "above_ma20d": true,
     "above_ma50d": false,
-    "pct_ma20d": 1.7,
-    "pct_ma50d": -3.6,
-    "price": 386.5
+    "pct_ma20d": 4.2,
+    "pct_ma50d": -0.9,
+    "price": 396.81
   },
   "MU": {
     "w_gate": true,
     "band": "+EXT",
     "slope": 101.82,
-    "pct10w": 3.71,
+    "pct10w": 2.49,
     "above_ma20d": false,
     "above_ma50d": true,
-    "pct_ma20d": -2.7,
-    "pct_ma50d": 2.8,
-    "price": 970.82
+    "pct_ma20d": -3.4,
+    "pct_ma50d": 1.2,
+    "price": 959.48
   },
   "NFLX": {
     "w_gate": false,
     "band": "-EXT",
     "slope": -5.2,
-    "pct10w": -13.66,
+    "pct10w": -13.83,
     "above_ma20d": false,
     "above_ma50d": false,
-    "pct_ma20d": -6.2,
-    "pct_ma50d": -13.9,
-    "price": 68.67
+    "pct_ma20d": -6.1,
+    "pct_ma50d": -13.7,
+    "price": 68.53
   }
 }
