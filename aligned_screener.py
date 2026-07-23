@@ -34,6 +34,7 @@ SPECIAL_MENTION = {
     'NOW': 'ServiceNow — enterprise workflow automation platform; grade A (OM borderline); but world-class business moat — deep IT workflow integration means switching cost is near-permanent; 0/4 MA, -58% from highs; every large enterprise runs on ServiceNow; watch for margin inflection to A+ and MA structure recovery',
     'BRK-B': 'Berkshire Hathaway — Buffett\'s compounding machine; insurance float + diversified operating businesses + massive equity portfolio; A+ quality, no debt, permanent capital structure; 3/4 MA with MTF squeeze active (daily + weekly + monthly MAs all compressed simultaneously) — rarest structural signal; value + coil = deliberate move when it unwinds; no 2026 earnings growth catalyst visible — watch for 4/4 reclaim as trigger, not before',
     'SCHW': 'Charles Schwab — brokerage + banking; 4/4 aligned, -2.7% from 52w high, weekly FullCoil ●2.1% (very tight), AD↑ OBV↑; weekly-only coil — daily spread 9.2% wide, not MTF; caution: CMF ~0 at highs, no volume conviction yet; watch for CMF to turn +0.05+ as confirmation weekly coil is loading for upside rather than fading',
+    'GOOGL': 'Alphabet — Search + YouTube + Cloud moat intact; earnings beat triggered positioning unwind, gapped below 10wSMA/20wSMA/10mSMA in a single week; 1/4 MA, -22% from highs; 10mSMA ($321) is the first recovery gate — price sitting $2 below it; 20mSMA ($252) is long-term floor; business did not change, price did; watch for 10mSMA reclaim to rebuild toward 2/4',
 }
 
 # Cyclical names — commodity / inventory / capex cycle drivers
