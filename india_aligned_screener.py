@@ -1117,11 +1117,12 @@ if __name__ == '__main__':
     try:
         repo       = os.path.dirname(out_path)
         commit_msg = f"india_aligned_screener: {now}"
-        subprocess.run(['git', 'checkout', '--', 'india_aligned_screener.html'], cwd=repo, capture_output=True)
+        subprocess.run(['git', 'stash', '--include-untracked'], cwd=repo, capture_output=True)
         subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'], cwd=repo, check=True, capture_output=True)
+        subprocess.run(['git', 'stash', 'pop'], cwd=repo, capture_output=True)
         with open(out_path, 'w') as f:
-            f.write(html)  # re-write after pull overwrites the file
-        subprocess.run(['git', 'add', 'india_aligned_screener.html'], cwd=repo, check=True, capture_output=True)
+            f.write(html)
+        subprocess.run(['git', 'add', 'india_aligned_screener.html', 'india_grades_cache.json'], cwd=repo, capture_output=True)
         subprocess.run(['git', 'commit', '-m', commit_msg],           cwd=repo, check=True, capture_output=True)
         subprocess.run(['git', 'push'],                                cwd=repo, check=True, capture_output=True)
         print(f"  Pushed → GitHub  ({commit_msg})")
