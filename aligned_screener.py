@@ -1360,15 +1360,15 @@ if __name__ == '__main__':
     try:
         repo = os.path.dirname(out_path)
         commit_msg = f"aligned_screener: {now}"
-        subprocess.run(['git', 'checkout', '--', 'aligned_screener.html'], cwd=repo, capture_output=True)
+        subprocess.run(['git', 'stash', '--include-untracked'], cwd=repo, capture_output=True)
         subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'], cwd=repo, check=True, capture_output=True)
+        subprocess.run(['git', 'stash', 'pop'], cwd=repo, capture_output=True)
         with open(out_path, 'w') as f:
-            f.write(html)  # re-write after pull overwrites the file
-        subprocess.run(['git', 'add', 'aligned_screener.html'], cwd=repo, check=True, capture_output=True)
+            f.write(html)
+        subprocess.run(['git', 'add', 'aligned_screener.html', 'grades_cache.json'], cwd=repo, capture_output=True)
         subprocess.run(['git', 'commit', '-m', commit_msg],     cwd=repo, check=True, capture_output=True)
         subprocess.run(['git', 'push'],                          cwd=repo, check=True, capture_output=True)
         print(f"  Pushed → GitHub  ({commit_msg})")
     except subprocess.CalledProcessError as e:
-        # Nothing new to commit or push failed — not fatal
         msg = e.stderr.decode().strip() if e.stderr else str(e)
         print(f"  Git push skipped: {msg or 'nothing new to commit'}")
