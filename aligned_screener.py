@@ -36,7 +36,25 @@ SPECIAL_MENTION = {
     'SCHW': 'Charles Schwab — brokerage + banking; 4/4 aligned, -2.7% from 52w high, weekly FullCoil ●2.1% (very tight), AD↑ OBV↑; weekly-only coil — daily spread 9.2% wide, not MTF; caution: CMF ~0 at highs, no volume conviction yet; watch for CMF to turn +0.05+ as confirmation weekly coil is loading for upside rather than fading',
 }
 
-TICKERS = list(dict.fromkeys(UNIVERSE + WATCHLIST + EXTRA + list(SPECIAL_MENTION.keys())))
+# Cyclical names — commodity / inventory / capex cycle drivers
+# At ≤2/4 MA alignment these go to Cycle Watch, not Special Mention
+# Entry logic: cycle-thesis based, not MA reclaim
+CYCLICALS = {
+    # Memory semis — inventory cycle
+    'MU', 'WDC', 'STX',
+    # Semi equipment — fab capex cycle
+    'AMAT', 'LRCX', 'KLAC', 'PLAB',
+    # Cyclical semis — end-market cycle
+    'INTC', 'ON', 'NXPI', 'TXN', 'QCOM', 'ADI', 'MCHP',
+    # Energy — commodity cycle
+    'XOM', 'CVX', 'COP', 'OXY', 'SLB', 'HAL', 'MPC', 'PSX', 'VLO',
+    # Materials / metals
+    'FCX', 'NUE', 'CLF', 'X', 'NEM', 'AEM', 'WPM', 'MOS', 'CF',
+    # Industrials — capex / construction cycle
+    'CAT', 'DE', 'CMI', 'EMR',
+}
+
+TICKERS = list(dict.fromkeys(UNIVERSE + WATCHLIST + EXTRA + list(SPECIAL_MENTION.keys()) + list(CYCLICALS)))
 
 def ma_score(ticker, spy_13w_ratio=1.0):
     import time
@@ -301,6 +319,70 @@ def _build_swing_rows(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST):
     return rows
 
 
+def _build_cycle_watch_rows(valid, rs_map, cmf_map, CYCLICALS, special_mention=None):
+    """Cyclicals at ≤2/4 MA — cycle-thesis entries, not structure entries."""
+    rows = []
+    for r in valid:
+        if r['t'] not in CYCLICALS: continue
+        if r['s'] > 2: continue
+        note = (special_mention or {}).get(r['t'], '')
+        if not note:
+            hi  = r.get('pct_from_high', 0) or 0
+            note = (f"{r['s']}/4 MA · {hi:+.1f}% from highs · "
+                    f"cycle-thesis entry — watch for inventory/demand turn, not MA reclaim")
+        rows.append((r, note))
+    rows.sort(key=lambda x: x[0].get('pct_from_high', 0))  # deepest cycle first
+    return rows
+
+
+def _cycle_watch_html(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST, CYCLICALS, special_mention=None):
+    rows = _build_cycle_watch_rows(valid, rs_map, cmf_map, CYCLICALS, special_mention)
+    if not rows:
+        return ''
+
+    def src_tag(t):
+        return 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+
+    body = ''
+    for r, note in rows:
+        t    = r['t']
+        rs   = rs_map.get(t)
+        hi   = r.get('pct_from_high', 0) or 0
+        cmf  = cmf_map.get(t, 0.0)
+        rs_s = f'{rs:.2f}x' if rs is not None else '—'
+        lag  = ' ↓' if (rs is not None and rs < 0.80) else ''
+        rs_c = _c_rs(rs)
+        hi_c = '#3fb950' if hi >= -3 else ('#d29922' if hi >= -10 else ('#e6edf3' if hi >= -25 else '#f85149'))
+        cmf_c = _c_cmf(cmf)
+        ma_c  = _c_ma(r['s'])
+        auto_badge = '<span style="color:#484f58;font-size:10px">[auto] </span>' if note.startswith('[auto]') else ''
+        note_text  = note[7:] if note.startswith('[auto]') else note
+        body += (
+            f'<tr>'
+            f'<td style="color:#8b949e;font-size:11px">[{src_tag(t)}]</td>'
+            f'<td class="ticker">{t}</td>'
+            f'<td style="color:{ma_c}">{r["s"]}/4</td>'
+            f'<td>${r["p"]:,.2f}</td>'
+            f'<td style="color:{rs_c}">{rs_s}{lag}</td>'
+            f'<td style="color:{hi_c}">{hi:+.1f}%</td>'
+            f'<td style="color:{cmf_c}">{cmf:+.2f}</td>'
+            f'<td style="color:#8b949e;font-size:11px">{auto_badge}{note_text}</td>'
+            f'</tr>'
+        )
+
+    return (
+        f'<div class="sh" style="color:#e3b341">⟳ Cycle Watch — {len(rows)} names</div>'
+        f'<div class="sub">Cyclical names (semis · energy · materials · industrials) at ≤2/4 MA alignment. '
+        f'MA structure is a <em>lagging</em> signal here — entry logic is cycle-thesis based '
+        f'(inventory trough · commodity repricing · capex restart), not MA reclaim. '
+        f'Sorted deepest from 52w high first.</div>'
+        f'<table><thead><tr>'
+        f'<th></th><th>Ticker</th><th>MA</th><th>Price</th>'
+        f'<th>RS vs SPY</th><th>offHi</th><th>CMF</th><th>Note</th>'
+        f'</tr></thead><tbody>{body}</tbody></table>'
+    )
+
+
 def _weekly_swing_html(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST):
     swing = _build_swing_rows(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST)
     if not swing:
@@ -352,7 +434,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                        squeezed, st_squeezed, rs_map, hi_map, cmf_map,
                        special_mention, now, UNIVERSE, WATCHLIST, m_cmf_map=None,
                        daily_squeezed=None, monthly_squeezed=None, mtf_set=None,
-                       pullback_watch=None):
+                       pullback_watch=None, cycle_watch=None, CYCLICALS=None):
 
     def src_tag(t):
         return 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
@@ -539,6 +621,10 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
     _swing_data   = _build_swing_rows(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST)
     swing_section = _weekly_swing_html(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST)
 
+    _cw_data      = cycle_watch or []
+    _CYCLICALS    = CYCLICALS or set()
+    cycle_section = _cycle_watch_html(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST, _CYCLICALS, special_mention)
+
     sm_rows = ''
     for t, note in special_mention.items():
         r = next((x for x in valid if x['t'] == t), None)
@@ -685,6 +771,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
   <div class="stat"><div class="stat-val" style="color:{'#d29922' if _pw else '#484f58'}">{len(_pw)}</div><div class="stat-lbl">Pullback Watch</div></div>
   <div class="stat"><div class="stat-val" style="color:{mtf_color}">{"★ " if _mtf else ""}{len(_mtf)}</div><div class="stat-lbl">MTF Squeeze</div></div>
   <div class="stat"><div class="stat-val" style="color:{'#58a6ff' if _swing_data else '#484f58'}">{len(_swing_data)}</div><div class="stat-lbl">Swing Areas</div></div>
+  <div class="stat"><div class="stat-val" style="color:{'#e3b341' if _cw_data else '#484f58'}">{len(_cw_data)}</div><div class="stat-lbl">Cycle Watch</div></div>
 </div>
 
 {mtf_section}
@@ -711,6 +798,8 @@ AD/OBV = A/D Line + On Balance Volume 13w slope &nbsp;·&nbsp; <span style="colo
 </tr></thead><tbody>{sm_rows}</tbody></table>
 
 {'<div class="sh" style="color:#d29922">↘ Pullback Watch — ' + str(len(_pw)) + ' names</div><div class="sub">A+/A quality at 2/4 MA — long-term structure intact (10m/20m holding), short-term MAs broken. Different from Special Mention: weeks away from reclaiming, not months. Watch 20w MA as first gate back to 3/4.</div><table><thead><tr><th></th><th>Ticker</th><th>Grade</th><th>Price</th><th>RS vs SPY</th><th>offHi</th><th>CMF</th><th>AD OBV</th><th>Reclaim</th></tr></thead><tbody>' + pw_rows + '</tbody></table>' if _pw else ''}
+
+{cycle_section}
 
 <div class="sh">Weekly Squeeze — FullCoil (top 25)</div>
 <div class="sub">● &lt;3% very tight &nbsp; ○ 3–5% building &nbsp; Slp = 10w MA slope &nbsp; CMF &gt;+0.10 accumulation / &lt;–0.10 distribution &nbsp; RS vs SPY 13w &nbsp; offHi = % from 52w high</div>
@@ -1016,6 +1105,7 @@ if __name__ == '__main__':
                        if ((r['s'] <= 1 and (r.get('pct_from_high') or 0) < -25)
                            or (r['s'] == 2 and (r.get('pct_from_high') or 0) < -45))
                        and r['t'] not in SPECIAL_MENTION
+                       and r['t'] not in CYCLICALS
                        and (r['t'] in UNIVERSE or r['t'] in WATCHLIST)]
     auto_sm = {}
     if auto_candidates:
@@ -1030,6 +1120,9 @@ if __name__ == '__main__':
 
     # Manual entries override auto — merge with manual taking precedence
     combined_sm = {**auto_sm, **SPECIAL_MENTION}
+    # Cyclicals get Cycle Watch instead of Special Mention — pre-filter here
+    _cw_tickers_pre  = {r['t'] for r in valid if r['t'] in CYCLICALS and r['s'] <= 2}
+    combined_sm_display = {t: note for t, note in combined_sm.items() if t not in _cw_tickers_pre}
 
     # ── Pullback Watch — A+/A quality at exactly 2/4, moderate pullback ──────
     # Long-term structure (10m/20m) intact — short-term (10w/20w) broken
@@ -1039,6 +1132,7 @@ if __name__ == '__main__':
                      if r['s'] == 2
                      and -28 <= (r.get('pct_from_high') or 0) <= -10
                      and r['t'] not in combined_sm
+                     and r['t'] not in CYCLICALS
                      and (r['t'] in UNIVERSE or r['t'] in WATCHLIST)]
     pullback_watch = []
     if pw_candidates:
@@ -1051,14 +1145,14 @@ if __name__ == '__main__':
     pullback_watch.sort(key=lambda x: (0 if x[1] == 'A+' else 1, x[0]['t']))
 
     # Monthly CMF trend for all Special Mention names (auto + manual)
-    print(f"  Fetching monthly CMF trend for {len(combined_sm)} Special Mention names ...", flush=True)
+    print(f"  Fetching monthly CMF trend for {len(combined_sm_display)} Special Mention names ...", flush=True)
     m_cmf_map = {}
-    for t in combined_sm:
+    for t in combined_sm_display:
         cur, prior, trend = monthly_cmf_trend(t)
         m_cmf_map[t] = (cur, prior, trend)
 
     # ── Special Mention ──────────────────────────────────────────────────────
-    sm_data = [(t, note) for t, note in combined_sm.items()]
+    sm_data = [(t, note) for t, note in combined_sm_display.items()]
     print(f"\n  SPECIAL MENTION — Teasing / Puzzling Setups")
     print(f"  {'─'*60}")
     print(f"  Structure building or price dislocated — not yet actionable, worth watching closely.\n")
@@ -1098,6 +1192,30 @@ if __name__ == '__main__':
         print(f"  [{src}]  {t:8}  {g:<3}  ${r['p']:>8.2f}   {rs_s}   {hi_s}   CMF {cmf_val:+.2f}   AD:{ad_s} OBV:{obv_s}{div_s}   → 20w ${r['ma20w']:,.2f}")
     if not pullback_watch:
         print(f"  none — no A+/A names at 2/4 within pullback range (-10% to -28%)")
+
+    # ── Cycle Watch ──────────────────────────────────────────────────────────
+    cycle_watch_data = _build_cycle_watch_rows(valid, rs_map, cmf_map, CYCLICALS, combined_sm)
+    # Remove cyclicals from combined_sm so they don't double-appear in Special Mention
+    cycle_watch_tickers = {r['t'] for r, _ in cycle_watch_data}
+    combined_sm_display = {t: note for t, note in combined_sm.items() if t not in cycle_watch_tickers}
+
+    print(f"\n  CYCLE WATCH — {len(cycle_watch_data)} cyclical names at ≤2/4 MA")
+    print(f"  {'─'*72}")
+    print(f"  Semis · Energy · Materials · Industrials — MA structure is lagging here; watch cycle thesis\n")
+    print(f"  {'Ticker':<8} {'MA':<4} {'Price':>8}  {'RS':>6}  {'offHi':>6}  {'CMF':>6}")
+    print(f"  {'─'*8} {'─'*4} {'─'*8}  {'─'*6}  {'─'*6}  {'─'*6}")
+    for r, note in cycle_watch_data:
+        t     = r['t']
+        src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+        rs_v  = rs_map.get(t)
+        hi_v  = r.get('pct_from_high', 0) or 0
+        cmf_v = cmf_map.get(t, 0.0)
+        rs_s  = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
+        print(f"  {t:<8} {r['s']}/4  ${r['p']:>7.2f}  {rs_s:>6}  {hi_v:>+5.1f}%  {cmf_v:>+6.2f}  [{src}]")
+        short_note = note[:80] + '…' if len(note) > 80 else note
+        print(f"           → {short_note}\n")
+    if not cycle_watch_data:
+        print(f"  none — all cyclicals in CYCLICALS list are ≥3/4 (structurally recovering)")
 
     # ── Weekly Swing Areas ───────────────────────────────────────────────────
     swing_rows = _build_swing_rows(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST)
@@ -1225,9 +1343,11 @@ if __name__ == '__main__':
     import subprocess
     html     = build_aligned_html(valid, aligned, grades, partial, promos,
                                   squeezed, st_squeezed, rs_map, hi_map, cmf_map,
-                                  combined_sm, now, UNIVERSE, WATCHLIST, m_cmf_map,
+                                  combined_sm_display, now, UNIVERSE, WATCHLIST, m_cmf_map,
                                   daily_squeezed, monthly_squeezed, mtf_set,
-                                  pullback_watch=pullback_watch)
+                                  pullback_watch=pullback_watch,
+                                  cycle_watch=cycle_watch_data,
+                                  CYCLICALS=CYCLICALS)
     out_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'aligned_screener.html')
     with open(out_path, 'w') as f:
         f.write(html)
