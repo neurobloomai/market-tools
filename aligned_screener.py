@@ -48,6 +48,8 @@ CYCLICALS = {
     'INTC', 'ON', 'NXPI', 'TXN', 'QCOM', 'ADI', 'MCHP',
     # Energy — commodity cycle
     'XOM', 'CVX', 'COP', 'OXY', 'SLB', 'HAL', 'MPC', 'PSX', 'VLO',
+    # Natural gas E&P — pure commodity price exposure
+    'EQT', 'AR', 'RRC',
     # Materials / metals
     'FCX', 'NUE', 'CLF', 'X', 'NEM', 'AEM', 'WPM', 'MOS', 'CF',
     # Industrials — capex / construction cycle
