@@ -49,11 +49,12 @@ def _fetch(ticker):
         vs10m  = (price - ma10m) / ma10m * 100
         vs20m  = (price - ma20m) / ma20m * 100
         best   = min(abs(vs10m), abs(vs20m))
+        span   = abs(vs10m) + abs(vs20m)   # sum of both distances — lower = more sandwiched
         closer = '10m' if abs(vs10m) <= abs(vs20m) else '20m'
         return dict(ticker=ticker, price=price,
                     ma10m=ma10m, ma20m=ma20m,
                     vs10m=vs10m, vs20m=vs20m,
-                    best=best, closer=closer)
+                    best=best, span=span, closer=closer)
     except Exception:
         return None
 
@@ -64,8 +65,8 @@ def _screen(tickers):
         for r in ex.map(_fetch, tickers):
             if r:
                 results.append(r)
-    tier1 = sorted([r for r in results if r['best'] <= 2.0], key=lambda r: r['best'])
-    tier2 = sorted([r for r in results if 2.0 < r['best'] <= 5.0], key=lambda r: r['best'])
+    tier1 = sorted([r for r in results if r['best'] <= 2.0], key=lambda r: r['span'])
+    tier2 = sorted([r for r in results if 2.0 < r['best'] <= 5.0], key=lambda r: r['span'])
     return tier1, tier2, len(results)
 
 
@@ -76,15 +77,17 @@ def _print_table(rows, header, currency):
     if not rows:
         print("  (none)")
         return
-    print(f"  {'Ticker':<14} {'Price':>10}   {'10mSMA':>10}   {'vs10m':>7}   {'20mSMA':>10}   {'vs20m':>7}   {'closest':>7}")
-    print(f"  {'-'*82}")
+    print(f"  {'Ticker':<14} {'Price':>10}   {'10mSMA':>10}   {'vs10m':>7}   {'20mSMA':>10}   {'vs20m':>7}   {'nearest':>7}   {'span':>6}")
+    print(f"  {'-'*92}")
     for r in rows:
-        sym = '◎' if r['closer'] == '10m' else '→'
+        sym   = '◎' if r['closer'] == '10m' else '→'
+        s_tag = '●' if r['span'] <= 3.0 else ('○' if r['span'] <= 7.0 else ' ')
         print(
             f"  {sym} {r['ticker']:<12} {currency}{r['price']:>10,.2f}"
             f"   {currency}{r['ma10m']:>10,.2f}  {r['vs10m']:>+7.1f}%"
             f"   {currency}{r['ma20m']:>10,.2f}  {r['vs20m']:>+7.1f}%"
             f"   {r['best']:>5.1f}%"
+            f"   {s_tag}{r['span']:>4.1f}%"
         )
 
 
@@ -141,6 +144,18 @@ def _c_vs(v):
     return '#f85149'
 
 
+def _c_span(span):
+    if span <= 2.0:  return '#3fb950'   # both MAs very tight — sandwiched
+    if span <= 4.0:  return '#e3b341'   # building toward sandwich
+    return '#8b949e'                    # only one side close
+
+
+def _span_dot(span):
+    if span <= 3.0:  return '● '
+    if span <= 7.0:  return '○ '
+    return ''
+
+
 def _html_table(rows, currency):
     if not rows:
         return '<div class="none">(none)</div>'
@@ -150,6 +165,8 @@ def _html_table(rows, currency):
         p10c  = _c_vs(r['vs10m'])
         p20c  = _c_vs(r['vs20m'])
         bestc = '#3fb950' if r['best'] <= 1.0 else ('#e3b341' if r['best'] <= 3.0 else '#8b949e')
+        spanc = _c_span(r['span'])
+        dot   = _span_dot(r['span'])
         body += (
             f'<tr>'
             f'<td style="color:#8b949e;font-size:11px">{sym}</td>'
@@ -159,7 +176,8 @@ def _html_table(rows, currency):
             f'<td style="color:{p10c}">{r["vs10m"]:+.1f}%</td>'
             f'<td>{currency}{r["ma20m"]:,.2f}</td>'
             f'<td style="color:{p20c}">{r["vs20m"]:+.1f}%</td>'
-            f'<td style="color:{bestc};font-weight:600">{r["best"]:.1f}%</td>'
+            f'<td style="color:{bestc}">{r["best"]:.1f}%</td>'
+            f'<td style="color:{spanc};font-weight:600">{dot}{r["span"]:.1f}%</td>'
             f'</tr>'
         )
     return (
@@ -167,7 +185,7 @@ def _html_table(rows, currency):
         '<th></th><th>Ticker</th><th>Price</th>'
         '<th>10mSMA</th><th>vs 10m</th>'
         '<th>20mSMA</th><th>vs 20m</th>'
-        '<th>Closest</th>'
+        '<th>Nearest</th><th>Span ↑</th>'
         '</tr></thead>'
         f'<tbody>{body}</tbody></table>'
     )
@@ -188,9 +206,9 @@ def _html_block(label, color_class, tier1, tier2, currency, n_total):
 </div>
 <div class="sub">Approaching the monthly gate — watch for price to drift into Tier 1</div>
 {t2_html}
-<div class="legend">◎ = closer to 10mSMA &nbsp;·&nbsp; → = closer to 20mSMA &nbsp;·&nbsp;
+<div class="legend">Sorted by Span (tightest coil first) &nbsp;·&nbsp; ◎ = closer to 10mSMA &nbsp;·&nbsp; → = closer to 20mSMA &nbsp;·&nbsp;
   green = price above SMA &nbsp;·&nbsp; red = price below SMA &nbsp;·&nbsp;
-  Closest = min distance to either SMA</div>
+  Nearest = closest single MA &nbsp;·&nbsp; Span = sum of both distances — ● &lt;3% sandwiched &nbsp;○ &lt;7% building</div>
 """
 
 
@@ -211,7 +229,8 @@ def build_html(us_t1, us_t2, us_n, ind_t1, ind_t2, ind_n, now):
     <div class="gi"><span class="gi-key">20mSMA</span><span class="gi-val">87-week simple moving average. Long-term floor. Strong support when price is below 10m. Can also act as ceiling on the way back up.</span></div>
     <div class="gi"><span class="gi-key">◎ vs →</span><span class="gi-val">◎ = price is closer to 10mSMA · → = price is closer to 20mSMA. Tells you which gate is the immediate test.</span></div>
     <div class="gi"><span class="gi-key">vs 10m / vs 20m</span><span class="gi-val">Green = price above that SMA. Red = price below. A name can be above one and below the other — that's the gate zone.</span></div>
-    <div class="gi"><span class="gi-key">When to use</span><span class="gi-val">Run this screen just before or early in a recovery. These names are at the inflection — the monthly MA is either about to act as a springboard or as a ceiling.</span></div>
+    <div class="gi"><span class="gi-key">Span (sort key)</span><span class="gi-val">Sum of distances to both MAs. Low span = price sandwiched between 10m and 20m — both acting as guardrails simultaneously. ● &lt;3% = tightest coil. Sorted ascending so best setups surface first.</span></div>
+    <div class="gi"><span class="gi-key">When to use</span><span class="gi-val">Run this screen just before or early in a recovery. Low-span names are the most compressed — energy building between two long-term moving averages waiting for a directional break.</span></div>
     <div class="gi"><span class="gi-key">No stack needed</span><span class="gi-val">10m and 20m don't need to be stacked. This screen is about proximity to the gate, not full alignment. Full alignment shows up in the aligned screener once price reclaims both.</span></div>
   </div>
 </details>
