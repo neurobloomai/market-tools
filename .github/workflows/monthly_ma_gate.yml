@@ -1,0 +1,37 @@
+name: Monthly MA Gate — On Demand
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-gate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v7.0.0
+
+      - uses: actions/setup-python@v6.3.0
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install yfinance
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Run Monthly MA Gate
+        run: python monthly_ma_gate.py
+
+      - name: Push HTML
+        run: |
+          git stash --include-untracked || true
+          git pull --rebase origin main || true
+          git stash pop || true
+          git add monthly_ma_gate.html
+          git diff --cached --quiet || git commit -m "monthly_ma_gate: $(date -u +'%b %d %Y  %H:%M UTC')"
+          git push || true
