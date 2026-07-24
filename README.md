@@ -34,6 +34,7 @@ The rest of this README is the manual for how those two filters are built and ap
 | `daily_alert.py` | 🇺🇸 US | Mid-week alert for the 9 liquid names — fires email only when a crossing occurs **and** the weekly gate is open |
 | `top_setups.py` | 🇺🇸 US | Convergence drill — reads last-run HTML outputs, scores every name across quality + RS + CMF + A/D + OBV, fetches monthly MA distance for top 20, prints ranked table in seconds |
 | `india_top_setups.py` | 🇮🇳 India | Same convergence drill for India �� reads `india_screener.html` + `india_aligned_screener.html`, adds sector column (India setups are sector-wave driven), RS vs NIFTY |
+| `monthly_ma_gate.py` | 🇺🇸🇮🇳 Both | Pre-recovery Monthly MA Gate — names within ±2% (Tier 1, on the gate) or ±5% (Tier 2, in the zone) of their 10-month or 20-month SMA · sorted by span (sum of both MA distances) so names sandwiched between both MAs surface first · on-demand only |
 | `run_aligned.sh` | — | Cron entry point — runs all four scripts (US + India), auto-pushes to GitHub |
 
 ## Live Outputs
@@ -50,6 +51,8 @@ Updated automatically every Monday via GitHub Actions — no server, no local ma
 | [india_briefing.html](https://neurobloomai.github.io/market-tools/india_briefing.html) | 🇮🇳 India | NSE sector index dashboard — same MA framework, RS vs NIFTY | Monday 2:30am UTC |
 | [india_screener.html](https://neurobloomai.github.io/market-tools/india_screener.html) | 🇮🇳 India | India quality screener — same filters, NSE universe | Monday 2:30am UTC |
 | [india_aligned_screener.html](https://neurobloomai.github.io/market-tools/india_aligned_screener.html) | 🇮🇳 India | 4/4 MA alignment · FullCoil squeeze · MTF · CMF · RS vs NIFTY 50 · A/D Line · OBV | Monday 2:30am UTC |
+| [us_marketbreadth.html](https://neurobloomai.github.io/market-tools/us_marketbreadth.html) | 🇺🇸 US | Market breadth — MA20/50/100/200 participation · NH/NL ratio · Elder breadth signal | Tue–Sat after close |
+| [monthly_ma_gate.html](https://neurobloomai.github.io/market-tools/monthly_ma_gate.html) | 🇺🇸🇮🇳 Both | Pre-recovery monthly MA gate — names within ±2%/±5% of 10m or 20m SMA, sorted by coil tightness | **On-demand** — trigger from GitHub Actions |
 
 Weekly snapshots: [`weekly_notes.md`](weekly_notes.md) · [`india_weekly_notes.md`](india_weekly_notes.md)
 
@@ -60,6 +63,8 @@ Runs entirely on GitHub's infrastructure via a single scheduled workflow:
 | Workflow | Schedule | What runs |
 |---|---|---|
 | [Weekly Screener — US + India](.github/workflows/weekly_us.yml) | Monday 2:30am UTC (8am IST / Sunday 9:30pm EST) | US: `dashboard.py` → `weekly_snapshot.py` → `market_breadth.py` → `screener.py` → `aligned_screener.py` · India: `india_dashboard.py` → `india_weekly_snapshot.py` → `india_screener.py` → `india_aligned_screener.py` → `india_marketbreadth.py` · Then: `alert_check.py` → `newsletter_draft.py` |
+| [Daily Screener — US](.github/workflows/daily_screener.yml) | Tue–Sat 9:30pm UTC (5:30pm ET, after market close) | `market_breadth.py` → `aligned_screener.py` — keeps breadth + alignment fresh through the week without the full weekly run |
+| [Monthly MA Gate — On Demand](.github/workflows/monthly_ma_gate.yml) | **workflow_dispatch only** — no schedule | `monthly_ma_gate.py` — trigger manually from the GitHub Actions UI when market conditions warrant a pre-recovery scan |
 
 The schedule runs at 2:30am UTC Monday — after both the US Friday close and the India Friday close are confirmed, before either market opens for the new week. Clean data both ways, single run.
 
@@ -444,6 +449,30 @@ No single tool closes the loop. RSI divergence catches momentum exhaustion. MACD
 
 These are filters for reducing confusion, not tools for eliminating uncertainty. A name that fails the weekly signal but sits above all four MAs isn't a contradiction — it's two different questions being asked on different timeframes. The weekly signal asks "is momentum turning?" The MA stack asks "where is price relative to its own history?"
 
+### Top-down or bottom-up — your choice
+
+The framework was designed with multiple entry points. Use whichever lens fits how you think.
+
+**Top-down** — start from the macro and drill in:
+1. **Market breadth** (`us_marketbreadth.html`) — is the rally broad or narrow? NH/NL ratio, participation across MA20/50/100/200. If breadth is thin, even strong individual names carry more risk.
+2. **Sector dashboard** (`market_briefing.html`) — which sectors are structurally aligned? ALIGNED → PULLBACK → AVOID across four timeframes. Ride the sector tailwind, not against it.
+3. **Aligned screener** (`aligned_screener.html`) — within the leading sectors, which names are 4/4 with accumulation? Cycle Watch and Pullback Watch for the ones not yet aligned but approaching.
+4. **Quality screener** (`quality_screener.html`) — confirm the shortlist has the fundamentals to survive. A+ quality + 4/4 structure is the full signal.
+
+**Bottom-up** — start from a name or thesis and verify the context:
+1. **Quality screener** — does the business pass the durability filters? Grade, margins, ROE, FCF, debt.
+2. **Aligned screener** — is the price structure confirmed? 4/4, or approaching through Pullback Watch / Cycle Watch?
+3. **Monthly MA gate** (`monthly_ma_gate.html`) — if it's not yet aligned, is it at least near the long-term MA floor? Names sandwiched between their 10-month and 20-month SMA with a tight span are the highest-conviction pre-recovery setups.
+4. **Sector dashboard** — does the sector support the individual thesis? Or is the sector headwind working against you?
+
+**Monthly MA Gate — the pre-recovery lens**
+
+The monthly MA gate screen exists for a specific moment: just before or early in a recovery cycle, when names are still below their 4/4 threshold but hovering at the long-term floor. Growth names need a confirmed MA reclaim before entry. Cyclicals can be entered on cycle thesis alone. But both benefit from knowing where the gate is.
+
+The screen sorts by **span** — the sum of distances to both the 10-month and 20-month SMA. A name with a tight span (● < 3%) is sandwiched between both MAs simultaneously — both acting as guardrails, energy building for a directional break. That is a different and more compressed setup than a name that is close to only one of the two MAs.
+
+Run it when you sense the market is finding a bottom. Close it when the recovery is underway and the aligned screener takes over.
+
 A signal that works on one timeframe can look like failure on another. That isn't failure — it's limitation. Good coverage means knowing what each lens sees and what it cannot. No framework is supposed to be complete.
 
 Completeness would be a bug, not a feature. If the framework said "buy this, definitely" it would be lying.
@@ -551,6 +580,14 @@ The vision: a personal risk profile layer that takes the screener's signal quali
 This is not a feature that can be added with a few lines of code. The reasoning layer is solvable — LLMs can already do this kind of contextual sizing analysis if inputs are structured correctly. What's hard is everything around it: regulatory (personalized sizing guidance in the US touches SEC/FINRA territory), accuracy (people systematically overestimate drawdown tolerance until they're actually in one), and trust (a sizing recommendation is only as good as what the user inputs honestly about their real situation).
 
 Whether this gets built here, somewhere else, or not at all — the gap it would close is real. The screener half works. The survivability half doesn't exist yet at the individual stock level, personalized to who you actually are financially. That combination is where the value is.
+
+**Auto-sensing on-demand triggers — the next automation layer**
+
+Today, on-demand tools like the monthly MA gate require a human to notice that conditions are right and click "Run workflow." That is one manual step too many at exactly the moment when timing matters most.
+
+The next layer: an AI reading the scheduled screener outputs and deciding when to fire the on-demand screens automatically. The signals already exist in the data — NH/NL ratio inverting, multiple quality names clustering near monthly MAs simultaneously, CMF turning negative across a broad swath, breadth dropping below threshold. These are the same signals a human would use to decide "it's time to run the gate screen." An LLM with access to the latest HTML outputs can detect that pattern and trigger the GitHub Actions `workflow_dispatch` endpoint programmatically.
+
+The Anthropic API + GitHub Actions API is the natural bridge. The `workflow_dispatch` design already makes every on-demand tool triggerable via a single API call. The sensing layer on top — reading structured screener data, detecting inflection conditions, firing the right tool at the right moment — is where AI earns its place in the loop. Not replacing judgment, but making sure the right question gets asked at the right time without a human having to remember to ask it.
 
 ## Disclaimer
 
