@@ -242,14 +242,14 @@ def liquid_status(ticker):
         if lo52 and hi52 and (ref < lo52 * 0.5 or ref > hi52 * 1.5):
             return (ticker, ref, None, None, None, None, None, 'DATA?', None, None)
 
-        m10w     = float(wk.rolling(10).mean().iloc[-2])
-        m20w     = float(wk.rolling(20).mean().iloc[-2])
-        w_slope  = m10w - float(wk.rolling(10).mean().iloc[-2 - SLOPE_LOOKBACK_W])
+        m10w     = float(wk.rolling(10).mean().iloc[-1])
+        m20w     = float(wk.rolling(20).mean().iloc[-1])
+        w_slope  = m10w - float(wk.rolling(10).mean().iloc[-1 - SLOPE_LOOKBACK_W])
         w_gate   = m10w > m20w and w_slope > 0
         w_gap    = (m10w / m20w - 1) * 100 if m20w > 0 else 0.0
-        m10d     = float(dy.rolling(10).mean().iloc[-2])
-        m20d     = float(dy.rolling(20).mean().iloc[-2])
-        m50d     = float(dy.rolling(50).mean().iloc[-2])
+        m10d     = float(dy.rolling(10).mean().iloc[-1])
+        m20d     = float(dy.rolling(20).mean().iloc[-1])
+        m50d     = float(dy.rolling(50).mean().iloc[-1])
         pct10d   = (price / m10d - 1) * 100
         pct20d   = (price / m20d - 1) * 100
         pct10w   = (price / m10w - 1) * 100
