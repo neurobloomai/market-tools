@@ -5,6 +5,7 @@ Run: python india_marketbreadth.py
 Output: india_marketbreadth.html
 """
 
+import _yf_cache  # noqa: F401 — install HTTP cache before yfinance fetches
 import yfinance as yf
 import warnings, os, webbrowser
 from datetime import datetime

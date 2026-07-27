@@ -8,6 +8,7 @@ Data: Yahoo Finance via yfinance
 Disclaimer: For informational purposes only. Not financial advice.
 """
 
+import _yf_cache  # noqa: F401 — install HTTP cache before yfinance fetches
 import yfinance as yf
 import warnings, os, webbrowser, requests
 from datetime import datetime, date

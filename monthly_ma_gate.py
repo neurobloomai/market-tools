@@ -22,6 +22,7 @@ Run:  python3 monthly_ma_gate.py
 Out:  monthly_ma_gate.html  (same directory)
 """
 
+import _yf_cache  # noqa: F401 — install HTTP cache before yfinance fetches
 import yfinance as yf, warnings, os, subprocess
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone

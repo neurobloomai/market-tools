@@ -6,6 +6,7 @@ Weekly squeeze: monitors 10w/20w/35w/50w MA compression across all names.
 Run: python aligned_screener.py
 """
 
+import _yf_cache  # noqa: F401 — install HTTP cache before yfinance fetches
 import yfinance as yf, warnings, os, functools
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime

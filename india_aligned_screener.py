@@ -5,6 +5,7 @@ Fetches quality grades for aligned names. RS computed vs NIFTY 50.
 Run: python india_aligned_screener.py
 """
 
+import _yf_cache  # noqa: F401 — install HTTP cache before yfinance fetches
 import yfinance as yf, warnings, os, functools
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
