@@ -135,6 +135,7 @@ UNIVERSE = [
     'MU','MPWR','MRVL','ITW','ROP','SYK','BSX','AMZN','APP',
     'MTD','MANH','FAST','POOL','NVR','DHI','LEN','TOL','DOCS','MKTX','ACGL',
     'CHD','CL','HSY','TJX','GIS','NFLX','LULU','WSM','KMB','DECK',
+    'COCO',                         # Vita Coco — coconut water category creator (60%+ US market share); asset-light distributor model; RevG 28.1%, GM 41%, OM 29.2% (rare for F&B), NM 15.5%, ROE 31.4%, D/EV 0.4%, FCF $105M — A+ all 7 filters; same playbook as MNST at earlier stage; 3/4 MA at add, sitting on MA20w ~$65.68 support after -21.5% pullback; gate to 4/4: MA10w reclaim above ~$74
     'HWM','FSLR','PLAB',           # promoted from watchlist — pass all quality filters
     'WPM',                        # Wheaton Precious Metals — streaming model, 85% gross/65% net margin, zero debt, A+
     'NEM',                        # Newmont — world's largest gold miner; 61.4% OM, 33.9% NM, ROE 25.8%, D/EV 0.049, FCF 8.7%, 45.8% rev growth (Newcrest acq); A+
@@ -194,6 +195,7 @@ UNIVERSE = [
 WATCHLIST = [
     'AXON','MELI','SNOW','BILL',   # ALAB promoted to universe; CRWD removed — already in universe; PLTR promoted to universe
     'MDB','NET','HUBS','TEAM','MKC','DPZ',
+    'CELH',  # Celsius Holdings — energy drink challenger (PepsiCo distribution deal = real national shelf presence); RevG 137%, GM 50.4%, OM 19.8%, NM 5.9%, FCF $178M — 6/7; ROE 8.1% only blocker (gate ≥ 10%); 0/4 MA, -58% from highs — structure badly broken post-PepsiCo inventory reset; gate: ROE ≥ 10% as scale drives equity returns + MA structure recovers from 0/4
     'CPAY',  # Corpay (formerly FleetCor) — V/MA-like toll economics on corporate payments: fleet cards, B2B payments, lodging, Brazil tolls; GrossM 79.7%, OpM 41.4%, FCF 9.1%, RevG 25.4%, P/E 21.2x — A+ quality on every metric except debt; D/EV 0.334 only blocker — serial acquirer model means debt is structural (buy payment vertical → extract margin → repeat), FCF strong enough to delever fast if acquisitions pause; gate: D/EV ≤ 0.20 sustained 2+ quarters without a new acquisition resetting it
     'DRI',   # Darden Restaurants — Olive Garden + LongHorn + Fine Dining (Capital Grille/Eddie V's); casual dining scale moat + loyalty data + franchise-like unit economics; ROE 53.7%, FCF 4.6%, OM 14.3%, RevG 13.7%, P/E 19.3x — strong across the board; D/EV 0.259 only blocker (restaurant operating leverage + lease obligations, not acquisition debt); grade B; gate: D/EV ≤ 0.20 as FCF compounds down the debt
     'FROG',  # JFrog — universal artifact repository (Artifactory) + software supply chain security (Xray); every build artifact, package, dependency stored and scanned here; deeply embedded in CI/CD pipelines = extreme switching costs once deployed enterprise-wide; GrossM 77.5%, FCF $170M positive (real cash despite negative GAAP OM), RevG 25.8%, near zero debt ($16M total); OM -7.4% only blocker (stock-comp heavy — FCF is the honest signal); software supply chain security tailwind (Log4j/SolarWinds made artifact scanning mandatory); gate: OM crossing 0% as scale drives leverage on R&D/S&M
