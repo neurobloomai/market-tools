@@ -467,9 +467,13 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
         spct_s = f'{short_pct:.1f}%' if short_pct is not None else '—'
         dtc_color = '#d29922' if (dtc or 0) >= 5 else ('#e3b341' if (dtc or 0) >= 3 else '#8b949e')
         dtc_s  = f'<span style="color:{dtc_color}">{dtc:.1f}d</span>' if dtc is not None else '<span style="color:#484f58">—</span>'
-        return (f'<tr>'
+        # Perfect setup: A+ quality + strong accumulation + outperforming + both vol indicators up
+        perfect = (g == 'A+' and cmf > 0.10 and (rs or 0) > 1.0 and ad == '↑' and obv == '↑')
+        row_cls = ' class="perfect"' if perfect else ''
+        dot = '<span style="color:#3fb950;font-size:10px" title="Clean setup: A+ · CMF>+0.10 · RS>1.0x · AD↑ OBV↑">●</span> ' if perfect else ''
+        return (f'<tr{row_cls}>'
                 f'<td style="color:#8b949e;font-size:11px">[{src_tag(t)}]</td>'
-                f'<td class="ticker">{t}</td>'
+                f'<td class="ticker">{dot}{t}</td>'
                 f'<td style="color:{_c_grade(g)};font-weight:600">{g}</td>'
                 f'<td>${r["p"]:,.2f}</td>'
                 f'<td style="color:{_c_rs(rs)}">{rs_s}{lag}</td>'
@@ -648,15 +652,19 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
     if _sqz_watch:
         sqz_rows = ''
         for t, p, g, spct, dtc, cmf_v, rs_v, hi_v in _sqz_watch:
-            flag  = '<span style="color:#f85149;font-weight:600" title="DTC ≥ 5 — high squeeze risk">⚡</span>' if (dtc or 0) >= 5 else ''
+            flag   = '<span style="color:#f85149;font-weight:600" title="DTC ≥ 5 — high squeeze risk">⚡</span>' if (dtc or 0) >= 5 else ''
             spct_s = f'{spct:.1f}%' if spct is not None else '—'
             dtc_s  = f'{dtc:.1f}d' if dtc is not None else '—'
             rs_s   = f'{rs_v:.2f}x' if rs_v is not None else '—'
             hi_s   = f'{hi_v:+.1f}%' if hi_v is not None else '—'
             src    = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
-            sqz_rows += (f'<tr>'
+            # Perfect squeeze: A+ + strong CMF + outperforming + high DTC
+            sqz_perfect = (g == 'A+' and cmf_v > 0.10 and (rs_v or 0) > 1.0 and (dtc or 0) >= 3)
+            row_cls = ' class="perfect"' if sqz_perfect else ''
+            dot = '<span style="color:#3fb950;font-size:10px" title="Clean setup: A+ · CMF>+0.10 · RS>1.0x · DTC≥3">●</span> ' if sqz_perfect else ''
+            sqz_rows += (f'<tr{row_cls}>'
                          f'<td style="color:#8b949e;font-size:11px">[{src}]</td>'
-                         f'<td class="ticker">{flag}{t}</td>'
+                         f'<td class="ticker">{dot}{flag}{t}</td>'
                          f'<td style="color:{_c_grade(g)};font-weight:600">{g}</td>'
                          f'<td>${p:,.2f}</td>'
                          f'<td style="color:#8b949e">{spct_s}</td>'
@@ -776,6 +784,8 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
       .ticker{font-weight:600;color:#e6edf3}
       tr.grp td{background:#161b22;color:#8b949e;font-size:11px;padding:6px 8px 4px;letter-spacing:.05em;text-transform:uppercase;border-bottom:none}
       .legend{color:#8b949e;font-size:11px;margin-top:8px}
+      tr.perfect td{background:rgba(63,185,80,0.06);border-bottom:1px solid rgba(63,185,80,0.12)}
+      tr.perfect:hover td{background:rgba(63,185,80,0.12)}
     """
 
     guide_css = """
@@ -832,7 +842,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
 <table><thead><tr>
   <th></th><th>Ticker</th><th>Grade</th><th>Price</th><th>RS vs SPY</th><th>% from 52wH</th><th>CMF</th><th>AD OBV</th><th>Short%</th><th>DTC</th>
 </tr></thead><tbody>{aligned_rows}</tbody></table>
-<div class="legend">RS = 13w price vs SPY &nbsp;·&nbsp; offHi = % below 52w high &nbsp;·&nbsp; CMF &gt;+0.10 accumulation / &lt;–0.10 distribution &nbsp;·&nbsp;
+<div class="legend"><span style="color:#3fb950">●</span> = clean setup (A+ · CMF&gt;+0.10 · RS&gt;1.0x · AD↑ OBV↑) &nbsp;·&nbsp; RS = 13w price vs SPY &nbsp;·&nbsp; offHi = % below 52w high &nbsp;·&nbsp; CMF &gt;+0.10 accumulation / &lt;–0.10 distribution &nbsp;·&nbsp;
 AD/OBV = A/D Line + On Balance Volume 13w slope &nbsp;·&nbsp; <span style="color:#d29922">◆</span> bullish divergence (A/D↑ price↓) &nbsp;·&nbsp;
 <span style="color:#f85149">↓ = RS &lt; 0.80 lagging</span> &nbsp;·&nbsp; Short% = % float shorted &nbsp;·&nbsp; <span style="color:#d29922">DTC ≥ 5d = high squeeze risk</span></div>
 
