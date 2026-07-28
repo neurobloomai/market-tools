@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Backtest — 4/4 MA Framework</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'SF Mono','Fira Code',monospace; background: #0d1117;
+       color: #e6edf3; padding: 32px 24px; font-size: 13px;
+       max-width: 1100px; margin: 0 auto; line-height: 1.7; }
+h1 { font-size: 20px; font-weight: 700; color: #f0883e; margin-bottom: 4px; }
+h2 { font-size: 12px; font-weight: 700; color: #f0883e; margin: 36px 0 12px;
+     text-transform: uppercase; letter-spacing: .06em; }
+p  { color: #8b949e; font-size: 12px; margin-bottom: 10px; }
+a  { color: #58a6ff; text-decoration: none; }
+.sub { color: #8b949e; font-size: 11px; margin-bottom: 28px; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 24px; font-size: 11px; }
+th { text-align: right; padding: 6px 10px; color: #8b949e; font-weight: 500;
+     border-bottom: 2px solid #21262d; font-size: 10px;
+     text-transform: uppercase; letter-spacing: .05em; }
+th:first-child { text-align: left; }
+td { padding: 7px 10px; border-bottom: 1px solid #161b22;
+     color: #8b949e; text-align: right; }
+td:first-child { color: #e6edf3; font-weight: 600; text-align: left; }
+.pos { color: #3fb950; font-weight: 700; }
+.neg { color: #f85149; font-weight: 700; }
+.neu { color: #e3b341; font-weight: 700; }
+.dim { color: #484f58; }
+.sep { border-top: 2px solid #30363d; }
+.warn { background: #161b22; border-left: 3px solid #e3b341;
+        padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 16px 0 24px; }
+.warn p { color: #e6edf3; font-size: 11px; margin-bottom: 4px; }
+.warn p:last-child { margin-bottom: 0; color: #8b949e; }
+.legend { display: flex; gap: 20px; flex-wrap: wrap; margin: 8px 0 24px; }
+.legend span { font-size: 10px; color: #8b949e; }
+</style>
+</head>
+<body>
+
+<h1>4/4 MA Alignment Backtest</h1>
+<div class="sub">
+  5-year weekly · 264 tickers · fresh-entry vs non-4/4 baseline · Jul 28 2026  23:56 UTC
+  · <a href="index.html">← Market Tools</a>
+</div>
+
+<div class="warn">
+  <p>⚠ Documented limitations — read before acting on these numbers</p>
+  <p>1. <strong>Survivorship bias</strong>: current universe only; delisted/failed names excluded → overstates returns</p>
+  <p>2. <strong>Quality look-ahead bias</strong>: current A+/A grades used as historical proxy → A+ filter result is approximate, not clean</p>
+  <p>3. <strong>No transaction costs</strong> included</p>
+  <p>Structural 4/4 MA signal is fully historical and bias-free. Quality comparison is directional evidence, not proof.</p>
+</div>
+
+<h2>Results — Fresh 4/4 Entry vs Baseline</h2>
+<p style="color:#8b949e;font-size:11px">
+  <strong style="color:#e6edf3">Fresh entry</strong>: first 4/4 week after ≥1 non-4/4 week.
+  <strong style="color:#e6edf3">Non-4/4 baseline</strong>: A+ names during non-aligned weeks (sampled every 13w).
+  Alpha = ticker return − SPY return over same window. Win% = % entries beating SPY.
+</p>
+
+<div style="overflow-x:auto">
+<table>
+<thead>
+<tr>
+  <th rowspan="2" style="text-align:left;vertical-align:bottom">Filter</th>
+  <th colspan="7" style="text-align:center;border-left:1px solid #30363d;color:#58a6ff">4w Forward</th><th colspan="7" style="text-align:center;border-left:1px solid #30363d;color:#58a6ff">13w Forward</th><th colspan="7" style="text-align:center;border-left:1px solid #30363d;color:#58a6ff">26w Forward</th><th colspan="7" style="text-align:center;border-left:1px solid #30363d;color:#58a6ff">52w Forward</th>
+</tr>
+<tr>
+  <th>n</th><th>Avg α</th><th>Med α</th><th>Win%</th><th>Ret</th><th>SPY</th><th>MaxDD</th><th>n</th><th>Avg α</th><th>Med α</th><th>Win%</th><th>Ret</th><th>SPY</th><th>MaxDD</th><th>n</th><th>Avg α</th><th>Med α</th><th>Win%</th><th>Ret</th><th>SPY</th><th>MaxDD</th><th>n</th><th>Avg α</th><th>Med α</th><th>Win%</th><th>Ret</th><th>SPY</th><th>MaxDD</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>A+ quality  +  4/4 fresh entry</td><td>583</td><td><span class="pos">+0.9%</span></td><td><span class="neu">+0.4%</span></td><td><span class="pos">+52%</span></td><td>2.4%</td><td>1.5%</td><td>-3.7%</td><td>545</td><td><span class="pos">+3.8%</span></td><td><span class="pos">+0.6%</span></td><td><span class="pos">+52%</span></td><td>8.9%</td><td>5.1%</td><td>-6.8%</td><td>500</td><td><span class="pos">+5.9%</span></td><td><span class="neu">-0.1%</span></td><td><span class="pos">+49%</span></td><td>15.7%</td><td>9.8%</td><td>-9.5%</td><td>419</td><td><span class="pos">+25.1%</span></td><td><span class="pos">+3.9%</span></td><td><span class="pos">+55%</span></td><td>47.3%</td><td>22.2%</td><td>-11.9%</td></tr>
+<tr><td>A quality   +  4/4 fresh entry</td><td>208</td><td><span class="neu">-0.3%</span></td><td><span class="neg">-1.0%</span></td><td><span class="pos">+44%</span></td><td>1.1%</td><td>1.4%</td><td>-3.2%</td><td>188</td><td><span class="neg">-0.7%</span></td><td><span class="neg">-3.0%</span></td><td><span class="pos">+43%</span></td><td>4.0%</td><td>4.7%</td><td>-6.5%</td><td>173</td><td><span class="neg">-1.3%</span></td><td><span class="neg">-4.2%</span></td><td><span class="pos">+38%</span></td><td>8.1%</td><td>9.4%</td><td>-8.9%</td><td>135</td><td><span class="pos">+3.0%</span></td><td><span class="neg">-11.2%</span></td><td><span class="pos">+34%</span></td><td>24.8%</td><td>21.9%</td><td>-11.5%</td></tr>
+<tr><td>B/— quality +  4/4 fresh entry</td><td>2145</td><td><span class="pos">+0.7%</span></td><td><span class="neu">-0.1%</span></td><td><span class="pos">+50%</span></td><td>2.4%</td><td>1.7%</td><td>-4.3%</td><td>2067</td><td><span class="pos">+1.3%</span></td><td><span class="neu">-0.4%</span></td><td><span class="pos">+49%</span></td><td>6.3%</td><td>4.9%</td><td>-8.5%</td><td>1938</td><td><span class="pos">+2.4%</span></td><td><span class="neg">-1.2%</span></td><td><span class="pos">+48%</span></td><td>12.2%</td><td>9.8%</td><td>-11.7%</td><td>1625</td><td><span class="pos">+5.3%</span></td><td><span class="neg">-4.4%</span></td><td><span class="pos">+44%</span></td><td>27.4%</td><td>22.2%</td><td>-15.2%</td></tr>
+<tr class="sep"><td>All tickers +  4/4 fresh entry</td><td>2936</td><td><span class="pos">+0.7%</span></td><td><span class="neu">-0.0%</span></td><td><span class="pos">+50%</span></td><td>2.3%</td><td>1.6%</td><td>-4.1%</td><td>2800</td><td><span class="pos">+1.7%</span></td><td><span class="neu">-0.2%</span></td><td><span class="pos">+49%</span></td><td>6.6%</td><td>5.0%</td><td>-8.0%</td><td>2611</td><td><span class="pos">+2.8%</span></td><td><span class="neg">-1.2%</span></td><td><span class="pos">+47%</span></td><td>12.6%</td><td>9.8%</td><td>-11.1%</td><td>2179</td><td><span class="pos">+8.9%</span></td><td><span class="neg">-3.3%</span></td><td><span class="pos">+46%</span></td><td>31.1%</td><td>22.2%</td><td>-14.4%</td></tr>
+<tr class="sep"><td>A+ quality  +  non-4/4 baseline</td><td>778</td><td><span class="pos">+1.3%</span></td><td><span class="neu">+0.5%</span></td><td><span class="pos">+52%</span></td><td>2.5%</td><td>1.2%</td><td>-3.7%</td><td>759</td><td><span class="pos">+4.2%</span></td><td><span class="pos">+0.6%</span></td><td><span class="pos">+52%</span></td><td>7.4%</td><td>3.2%</td><td>-7.8%</td><td>717</td><td><span class="pos">+8.5%</span></td><td><span class="pos">+2.0%</span></td><td><span class="pos">+55%</span></td><td>14.4%</td><td>5.9%</td><td>-11.0%</td><td>645</td><td><span class="pos">+25.7%</span></td><td><span class="pos">+5.5%</span></td><td><span class="pos">+59%</span></td><td>38.0%</td><td>12.3%</td><td>-14.3%</td></tr>
+
+</tbody>
+</table>
+</div>
+
+<div class="legend">
+  <span>α = alpha vs SPY over same window</span>
+  <span>Med α = median alpha (less skewed by outliers)</span>
+  <span>Win% = % of entries that beat SPY</span>
+  <span>MaxDD = avg max drawdown during hold</span>
+  <span><span class="pos">green</span> = positive alpha  <span class="neg">red</span> = negative  <span class="neu">yellow</span> = flat</span>
+</div>
+
+<h2>Quality Grade Breakdown</h2>
+<p><strong style="color:#e6edf3">A+</strong><span class="dim"> (47)</span>  AAPL  META  NVDA  V  MA  LLY  JNJ  AVGO  AMAT  FTNT  BRK-B  TRV  CINF  WST  MCO  CBOE  ODFL  RLI  CTAS  ADP  MU  ITW  FAST  ACGL  CL  HWM  VRSN  CRDO  SLDE  INCY  CF  ETN  HEI  ANET  IBKR  KRYS  NBIX  ASML  LITE  DXCM  MNST  FFIV  SEZL  VRTX  VCTR  STX  WDC</p><p><strong style="color:#e6edf3">A</strong><span class="dim"> (16)</span>  MRK  CB  AON  MSCI  NDAQ  EXPD  CASH  MTD  CHD  LIN  CW  HOOD  ALGN  ATEN  COP  EMR</p><p><strong style="color:#e6edf3">B</strong><span class="dim"> (8)</span>  TMO  AMZN  TOL  TJX  WSM  FCX  NUE  SLB</p><p><strong style="color:#e6edf3">—</strong><span class="dim"> (197)</span>  MSFT  GOOGL  UNH  JPM  PG  HD  ABBV  ACN  TXN  QCOM  DHR  LRCX  KLAC  MCHP  ADI  SNPS  CDNS  CRM  NOW  PANW  CRWD  ZS  DDOG  ORCL  VEEV  WDAY  TTD  PAYC  ZM  AFL  PGR  AJG  WTW  NVO  ISRG  EW  IDXX  PODD  SPGI  ICE  CME  FDS  BR  XPO  JBHT  SAIA  KNSL  FICO  ROL  CPRT  PAYX  EFX  TRI  IHS  VRSK  IT  MPWR  MRVL  ROP  SYK  BSX  APP  MANH  POOL  NVR  DHI  LEN  DOCS  MKTX  HSY  GIS  NFLX  LULU  KMB  DECK  COCO  FSLR  PLAB  WPM  NEM  CCJ  MTSI  UTHR  BMRN  EQT  RRC  TW  ALAB  UBER  ABNB  SCHW  PLTR  TSM  TER  BWXT  CIEN  CEG  BLK  BX  ADBE  INTU  ARM  DUOL  CHRW  AXON  MELI  SNOW  BILL  MDB  NET  HUBS  TEAM  MKC  DPZ  CELH  CPAY  DRI  FROG  GTLB  GEV  COPX  GLD  SLV  NLR  PEG  NEE  VICI  WEC  LNT  AMG  DVN  NRG  TLN  VST  LNG  KTOS  EXPE  FLUT  SOFI  UPWK  CLS  PRGS  SSNC  SYM  AMSC  BMY  TGTX  VCYT  ABT  MDT  BIIB  COST  ORLY  TDG  ESE  FISV  APD  PYPL  IOT  GFS  PWR  SITM  LSCC  ONTO  AMD  INTC  TOST  FIG  COIN  CRCL  FTAI  COHR  AVAV  ALB  ENPH  S  LYFT  OTLY  MRAM  ACLS  AEM  CMI  VLO  CVX  CAT  MOS  DE  AR  NXPI  XOM  CLF  HAL  ON  MPC  X  OXY  PSX</p>
+
+<h2>Methodology</h2>
+<p>
+  <strong style="color:#e6edf3">4/4 alignment</strong>: price &gt; SMA10w, SMA20w, SMA43w (10-month), SMA87w (20-month) —
+  identical to the live screener. Computed from raw weekly OHLCV history.
+</p>
+<p>
+  <strong style="color:#e6edf3">Fresh entry</strong>: first week a ticker crosses into 4/4 after being non-4/4.
+  This is the actionable signal — when structure first aligns. Multiple fresh entries per ticker
+  possible across 5 years if structure breaks and recovers.
+</p>
+<p>
+  <strong style="color:#e6edf3">Non-4/4 baseline</strong>: weeks when A+ tickers are NOT 4/4 aligned,
+  sampled every 13w to reduce autocorrelation. Tests: does the MA timing filter add value beyond
+  quality alone?
+</p>
+<p>
+  <strong style="color:#e6edf3">Data period</strong>: 5 years weekly (yfinance). Minimum 90 weeks required for SMA87 + buffer.
+  Tickers with insufficient history excluded.
+</p>
+<p style="color:#484f58;font-size:10px">Tickers with insufficient history (&lt;90 weekly bars) excluded: CRCL, FIG, SLDE, X</p>
+
+<p style="color:#484f58;font-size:10px;margin-top:32px;border-top:1px solid #21262d;padding-top:12px">
+  Educational framework validation only. Not financial advice. Past backtest results do not predict future performance.
+  All analysis subject to survivorship bias and data limitations noted above.
+</p>
+
+</body>
+</html>
