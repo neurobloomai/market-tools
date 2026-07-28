@@ -438,13 +438,16 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                        squeezed, st_squeezed, rs_map, hi_map, cmf_map,
                        special_mention, now, UNIVERSE, WATCHLIST, m_cmf_map=None,
                        daily_squeezed=None, monthly_squeezed=None, mtf_set=None,
-                       pullback_watch=None, cycle_watch=None, CYCLICALS=None):
+                       pullback_watch=None, cycle_watch=None, CYCLICALS=None,
+                       short_map=None, squeeze_watch=None):
 
     def src_tag(t):
         return 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
 
     score_map = {r['t']: r['s'] for r in valid}
     _mtf = mtf_set or set()
+
+    _short_map = short_map or {}
 
     def aligned_row(r, g):
         t    = r['t']
@@ -459,6 +462,11 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
         lag  = ' ↓' if (rs is not None and rs < 0.80) else ''
         div_s = (' <span style="color:#d29922;font-size:10px" title="A/D bullish divergence">◆</span>' if div == 'bull'
                  else (' <span style="color:#8b949e;font-size:10px" title="A/D bearish divergence">◇</span>' if div == 'bear' else ''))
+        sd = _short_map.get(t, (None, None))
+        short_pct, dtc = sd if sd else (None, None)
+        spct_s = f'{short_pct:.1f}%' if short_pct is not None else '—'
+        dtc_color = '#d29922' if (dtc or 0) >= 5 else ('#e3b341' if (dtc or 0) >= 3 else '#8b949e')
+        dtc_s  = f'<span style="color:{dtc_color}">{dtc:.1f}d</span>' if dtc is not None else '<span style="color:#484f58">—</span>'
         return (f'<tr>'
                 f'<td style="color:#8b949e;font-size:11px">[{src_tag(t)}]</td>'
                 f'<td class="ticker">{t}</td>'
@@ -468,6 +476,8 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                 f'<td style="color:{_c_hi(hi or 0)}">{hi_s}</td>'
                 f'<td style="color:{_c_cmf(cmf)}">{cmf:+.2f}</td>'
                 f'<td><span style="color:{_c_ad(ad)}">{ad}</span> <span style="color:{_c_ad(obv)}">{obv}</span>{div_s}</td>'
+                f'<td style="color:#8b949e;font-size:11px">{spct_s}</td>'
+                f'<td style="font-size:11px">{dtc_s}</td>'
                 f'</tr>')
 
     def partial_row(r):
@@ -629,6 +639,43 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
     _CYCLICALS    = CYCLICALS or set()
     cycle_section = _cycle_watch_html(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST, _CYCLICALS, special_mention)
 
+    _sqz_watch = squeeze_watch or []
+    def _c_dtc(dtc):
+        if dtc is None: return '#484f58'
+        return '#f85149' if dtc >= 5 else ('#d29922' if dtc >= 3 else '#8b949e')
+
+    squeeze_watch_section = ''
+    if _sqz_watch:
+        sqz_rows = ''
+        for t, p, g, spct, dtc, cmf_v, rs_v, hi_v in _sqz_watch:
+            flag  = '<span style="color:#f85149;font-weight:600" title="DTC ≥ 5 — high squeeze risk">⚡</span>' if (dtc or 0) >= 5 else ''
+            spct_s = f'{spct:.1f}%' if spct is not None else '—'
+            dtc_s  = f'{dtc:.1f}d' if dtc is not None else '—'
+            rs_s   = f'{rs_v:.2f}x' if rs_v is not None else '—'
+            hi_s   = f'{hi_v:+.1f}%' if hi_v is not None else '—'
+            src    = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+            sqz_rows += (f'<tr>'
+                         f'<td style="color:#8b949e;font-size:11px">[{src}]</td>'
+                         f'<td class="ticker">{flag}{t}</td>'
+                         f'<td style="color:{_c_grade(g)};font-weight:600">{g}</td>'
+                         f'<td>${p:,.2f}</td>'
+                         f'<td style="color:#8b949e">{spct_s}</td>'
+                         f'<td style="color:{_c_dtc(dtc)};font-weight:600">{dtc_s}</td>'
+                         f'<td style="color:{_c_cmf(cmf_v)}">{cmf_v:+.2f}</td>'
+                         f'<td style="color:{_c_rs(rs_v)}">{rs_s}</td>'
+                         f'<td style="color:{_c_hi(hi_v or 0)}">{hi_s}</td>'
+                         f'</tr>')
+        squeeze_watch_section = (
+            f'<div class="sh" style="color:#f85149">⚡ Short Squeeze Watch — {len(_sqz_watch)} names</div>'
+            f'<div class="sub">4/4 aligned · DTC ≥ 3 days · CMF &gt; 0 — high short interest + accumulation = squeeze setup. '
+            f'<span style="color:#f85149">⚡ DTC ≥ 5 = elevated risk</span> &nbsp;·&nbsp; '
+            f'Short% = % of float shorted &nbsp;·&nbsp; DTC = days to cover (short shares ÷ avg daily vol).</div>'
+            f'<table><thead><tr>'
+            f'<th></th><th>Ticker</th><th>Grade</th><th>Price</th>'
+            f'<th>Short%</th><th>DTC</th><th>CMF</th><th>RS vs SPY</th><th>offHi</th>'
+            f'</tr></thead><tbody>{sqz_rows}</tbody></table>'
+        )
+
     sm_rows = ''
     for t, note in special_mention.items():
         r = next((x for x in valid if x['t'] == t), None)
@@ -776,17 +823,18 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
   <div class="stat"><div class="stat-val" style="color:{mtf_color}">{"★ " if _mtf else ""}{len(_mtf)}</div><div class="stat-lbl">MTF Squeeze</div></div>
   <div class="stat"><div class="stat-val" style="color:{'#58a6ff' if _swing_data else '#484f58'}">{len(_swing_data)}</div><div class="stat-lbl">Swing Areas</div></div>
   <div class="stat"><div class="stat-val" style="color:{'#e3b341' if _cw_data else '#484f58'}">{len(_cw_data)}</div><div class="stat-lbl">Cycle Watch</div></div>
+  <div class="stat"><div class="stat-val" style="color:{'#f85149' if _sqz_watch else '#484f58'}">{"⚡ " if _sqz_watch else ""}{len(_sqz_watch)}</div><div class="stat-lbl">Short Squeeze</div></div>
 </div>
 
 {mtf_section}
 {swing_section}
 <div class="sh">4/4 Aligned — {len(aligned)} names</div>
 <table><thead><tr>
-  <th></th><th>Ticker</th><th>Grade</th><th>Price</th><th>RS vs SPY</th><th>% from 52wH</th><th>CMF</th><th>AD OBV</th>
+  <th></th><th>Ticker</th><th>Grade</th><th>Price</th><th>RS vs SPY</th><th>% from 52wH</th><th>CMF</th><th>AD OBV</th><th>Short%</th><th>DTC</th>
 </tr></thead><tbody>{aligned_rows}</tbody></table>
 <div class="legend">RS = 13w price vs SPY &nbsp;·&nbsp; offHi = % below 52w high &nbsp;·&nbsp; CMF &gt;+0.10 accumulation / &lt;–0.10 distribution &nbsp;·&nbsp;
 AD/OBV = A/D Line + On Balance Volume 13w slope &nbsp;·&nbsp; <span style="color:#d29922">◆</span> bullish divergence (A/D↑ price↓) &nbsp;·&nbsp;
-<span style="color:#f85149">↓ = RS &lt; 0.80 lagging</span></div>
+<span style="color:#f85149">↓ = RS &lt; 0.80 lagging</span> &nbsp;·&nbsp; Short% = % float shorted &nbsp;·&nbsp; <span style="color:#d29922">DTC ≥ 5d = high squeeze risk</span></div>
 
 <div class="sh">3/4 Near-Aligned — {len(partial)} names</div>
 <table><thead><tr>
@@ -802,6 +850,8 @@ AD/OBV = A/D Line + On Balance Volume 13w slope &nbsp;·&nbsp; <span style="colo
 </tr></thead><tbody>{sm_rows}</tbody></table>
 
 {'<div class="sh" style="color:#d29922">↘ Pullback Watch — ' + str(len(_pw)) + ' names</div><div class="sub">A+/A quality at 2/4 MA — long-term structure intact (10m/20m holding), short-term MAs broken. Different from Special Mention: weeks away from reclaiming, not months. Watch 20w MA as first gate back to 3/4.</div><table><thead><tr><th></th><th>Ticker</th><th>Grade</th><th>Price</th><th>RS vs SPY</th><th>offHi</th><th>CMF</th><th>AD OBV</th><th>Reclaim</th></tr></thead><tbody>' + pw_rows + '</tbody></table>' if _pw else ''}
+
+{squeeze_watch_section}
 
 {cycle_section}
 
@@ -886,6 +936,16 @@ def grade_ticker(ticker):
     if not passes_quality_filter(d):
         return '—'
     return quality_grade(d)
+
+def short_data_ticker(ticker):
+    """Return (short_pct_float, days_to_cover) or (None, None) on failure."""
+    try:
+        d = get_fundamentals(ticker)
+        if d is None:
+            return (None, None)
+        return (d.get('short_pct_float'), d.get('days_to_cover'))
+    except Exception:
+        return (None, None)
 
 def auto_promote_tickers(promos, repo_path):
     """
@@ -1017,6 +1077,12 @@ if __name__ == '__main__':
 
     grade_map = dict(zip(aligned_tickers, grades))
 
+    # Short interest data for all 4/4 aligned names (cache hit — no extra API calls)
+    print(f"  Fetching short interest for {len(aligned_tickers)} aligned names ...", flush=True)
+    with ThreadPoolExecutor(max_workers=10) as ex:
+        short_data = list(ex.map(short_data_ticker, aligned_tickers))
+    short_map = {t: sd for t, sd in zip(aligned_tickers, short_data)}
+
     now     = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
     aplus   = [(r['t'], r['p'], g) for r, g in zip(aligned, grades) if g == 'A+']
     a       = [(r['t'], r['p'], g) for r, g in zip(aligned, grades) if g == 'A']
@@ -1056,6 +1122,34 @@ if __name__ == '__main__':
         for t, p, g in sorted(watch):
             src = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
             print(f"  [{src}]  {t:8}  —   ${p:>8.2f}   {fmt_rs_hi(t)}")
+
+    # ── Short Squeeze Watch CLI ──────────────────────────────────────────────
+    squeeze_watch = []
+    for r, g in zip(aligned, grades):
+        t = r['t']
+        sd = short_map.get(t, (None, None))
+        short_pct, dtc = sd if sd else (None, None)
+        cmf_v = cmf_map.get(t, 0.0)
+        if dtc is not None and dtc >= 3 and cmf_v > 0:
+            squeeze_watch.append((t, r['p'], g, short_pct, dtc, cmf_v, rs_map.get(t), hi_map.get(t)))
+    squeeze_watch.sort(key=lambda x: -(x[4] or 0))
+
+    if squeeze_watch:
+        print(f"\n  SHORT SQUEEZE WATCH — {len(squeeze_watch)} names (DTC ≥ 3 · CMF > 0 · 4/4 aligned)")
+        print(f"  {'─'*72}")
+        print(f"  {'Ticker':<8} {'Grd':<4} {'Price':>8}  {'Short%':>7}  {'DTC':>5}  {'CMF':>6}  {'RS':>6}  {'offHi':>6}")
+        print(f"  {'─'*8} {'─'*4} {'─'*8}  {'─'*7}  {'─'*5}  {'─'*6}  {'─'*6}  {'─'*6}")
+        for t, p, g, spct, dtc, cmf_v, rs_v, hi_v in squeeze_watch:
+            src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+            flag  = '⚡' if (dtc or 0) >= 5 else ' '
+            spct_s = f'{spct:.1f}%' if spct is not None else '  —  '
+            dtc_s  = f'{dtc:.1f}d'  if dtc  is not None else '  —'
+            rs_s   = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
+            hi_s   = f'{hi_v:+.1f}%' if hi_v is not None else '  —'
+            print(f"  {flag}[{src}]  {t:8}  {g:<3}  ${p:>8.2f}  {spct_s:>7}  {dtc_s:>5}  {cmf_v:>+6.2f}  {rs_s:>6}  {hi_s:>6}")
+        print(f"  ⚡ DTC ≥ 5 = high squeeze risk &nbsp; Short% ≥ 10% meaningful &nbsp; CMF > 0 = accumulation confirmed")
+    else:
+        print(f"\n  SHORT SQUEEZE WATCH — 0 names (DTC ≥ 3 + CMF > 0 + 4/4 aligned — none this run)")
 
     print(f"\n  3/4 NEAR-ALIGNED — {len(partial)} names")
     print(f"  {'─'*60}")
@@ -1351,7 +1445,9 @@ if __name__ == '__main__':
                                   daily_squeezed, monthly_squeezed, mtf_set,
                                   pullback_watch=pullback_watch,
                                   cycle_watch=cycle_watch_data,
-                                  CYCLICALS=CYCLICALS)
+                                  CYCLICALS=CYCLICALS,
+                                  short_map=short_map,
+                                  squeeze_watch=squeeze_watch)
     out_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'aligned_screener.html')
     with open(out_path, 'w') as f:
         f.write(html)

@@ -407,6 +407,13 @@ def get_fundamentals(ticker):
         _price_raw        = info.get('currentPrice') or info.get('regularMarketPrice')
         price_vs_ma200    = round((_price_raw / ma200d - 1) * 100, 1) if ma200d and _price_raw else None
 
+        # Short interest
+        short_pct_float   = info.get('shortPercentOfFloat', None)
+        float_shares      = info.get('floatShares', None)
+        avg_volume        = info.get('averageVolume', None)
+        _short_shares     = (short_pct_float * float_shares) if short_pct_float and float_shares else None
+        days_to_cover     = round(_short_shares / avg_volume, 1) if _short_shares and avg_volume else None
+
         # Revenue growth
         rev_growth        = info.get('revenueGrowth', None)
 
@@ -446,6 +453,8 @@ def get_fundamentals(ticker):
             fy0_growth      = fy0_growth,
             fy1_growth      = fy1_growth,
             price_vs_ma200  = price_vs_ma200,
+            short_pct_float = round(short_pct_float * 100, 1) if short_pct_float is not None else None,
+            days_to_cover   = days_to_cover,
         )
     except Exception as e:
         print(f"  ⚠ {ticker}: {e}")
