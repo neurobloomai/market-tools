@@ -397,9 +397,12 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
         lag  = ' ↓' if (rs is not None and rs < 0.80) else ''
         div_s = (' <span style="color:#d29922;font-size:10px" title="A/D bullish divergence">◆</span>' if div == 'bull'
                  else (' <span style="color:#8b949e;font-size:10px" title="A/D bearish divergence">◇</span>' if div == 'bear' else ''))
-        return (f'<tr>'
+        perfect = (g == 'A+' and cmf > 0.10 and (rs or 0) > 1.0 and ad == '↑' and obv == '↑')
+        row_cls = ' class="perfect"' if perfect else ''
+        dot     = '<span style="color:#3fb950;font-size:10px" title="Clean setup: A+ · CMF>+0.10 · RS>1.0x · AD↑ OBV↑">●</span> ' if perfect else ''
+        return (f'<tr{row_cls}>'
                 f'<td style="color:#8b949e;font-size:11px">[{src_tag(t)}]</td>'
-                f'<td class="ticker">{disp(t)}</td>'
+                f'<td class="ticker">{dot}{disp(t)}</td>'
                 f'<td style="color:{_c_grade(g)};font-weight:600">{g}</td>'
                 f'<td>₹{r["p"]:,.2f}</td>'
                 f'<td style="color:{_c_rs(rs)}">{rs_s}{lag}</td>'
@@ -663,6 +666,8 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
       .ticker{font-weight:600;color:#e6edf3}
       tr.grp td{background:#161b22;color:#8b949e;font-size:11px;padding:6px 8px 4px;letter-spacing:.05em;text-transform:uppercase;border-bottom:none}
       .legend{color:#8b949e;font-size:11px;margin-top:8px}
+      tr.perfect td{background:rgba(63,185,80,0.06);border-bottom:1px solid rgba(63,185,80,0.12)}
+      tr.perfect:hover td{background:rgba(63,185,80,0.12)}
     """
 
     guide_css = """
@@ -695,6 +700,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
     <div class="gi"><span class="gi-key">◆ bull div</span><span class="gi-val">A/D Line rising while price is weak — smart money accumulating before price confirms. Strongest early signal.</span></div>
     <div class="gi"><span class="gi-key">FullCoil</span><span class="gi-val">Four MAs compressed together — energy building. Coil + CMF+ + RS &gt;1.0x = highest-conviction setup.</span></div>
     <div class="gi"><span class="gi-key">Sector waves</span><span class="gi-val">India moves in sector rotations — Capital Goods, IT, Pharma, Financials each on their own cycle. Watch for cluster patterns.</span></div>
+    <div class="gi"><span class="gi-key">● green row</span><span class="gi-val">All signals aligned: A+ quality · CMF &gt;+0.10 · RS &gt;1.0x · AD↑ OBV↑. Cleanest setup on the screen — no conflicting signals.</span></div>
     <div class="gi"><span class="gi-key">Best setup</span><span class="gi-val">4/4 Aligned · CMF &gt;+0.10 · RS &gt;1.10x · ↑↑ AD OBV — then cross-check in <a href="india_screener.html">India Quality Screener</a>.</span></div>
   </div>
 </details>
@@ -717,7 +723,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
 <table><thead><tr>
   <th></th><th>Ticker</th><th>Grade</th><th>Price</th><th>RS vs NIFTY</th><th>% from 52wH</th><th>CMF</th><th>AD OBV</th>
 </tr></thead><tbody>{aligned_rows}</tbody></table>
-<div class="legend">RS = 13w price vs NIFTY 50 &nbsp;·&nbsp; offHi = % below 52w high &nbsp;·&nbsp; CMF &gt;+0.10 accumulation / &lt;–0.10 distribution &nbsp;·&nbsp;
+<div class="legend"><span style="color:#3fb950">●</span> = clean setup (A+ · CMF&gt;+0.10 · RS&gt;1.0x · AD↑ OBV↑) &nbsp;·&nbsp; RS = 13w price vs NIFTY 50 &nbsp;·&nbsp; offHi = % below 52w high &nbsp;·&nbsp; CMF &gt;+0.10 accumulation / &lt;–0.10 distribution &nbsp;·&nbsp;
 AD/OBV = A/D Line + On Balance Volume 13w slope &nbsp;·&nbsp; <span style="color:#d29922">◆</span> bullish divergence (A/D↑ price↓) &nbsp;·&nbsp;
 <span style="color:#f85149">↓ = RS &lt; 0.80 lagging</span></div>
 
