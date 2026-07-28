@@ -818,6 +818,8 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
     <div class="gi"><span class="gi-key">◆ bull div</span><span class="gi-val">A/D Line rising while price is weak — smart money accumulating before price confirms. Strongest early signal.</span></div>
     <div class="gi"><span class="gi-key">◇ bear div</span><span class="gi-val">A/D Line falling while price rises — distribution into strength.</span></div>
     <div class="gi"><span class="gi-key">FullCoil</span><span class="gi-val">Four MAs compressed together — energy building. Coil + CMF+ + RS &gt;1.0x = highest-conviction setup.</span></div>
+    <div class="gi"><span class="gi-key">Short% / DTC</span><span class="gi-val">Short% = % of float currently sold short. DTC (Days to Cover) = short shares ÷ avg daily volume — how many days shorts need to buy back. DTC ≥ 3 = meaningful fuel. DTC ≥ 5 = elevated squeeze risk. High DTC + CMF &gt;0 = shorts caught wrong-footed while smart money accumulates.</span></div>
+    <div class="gi"><span class="gi-key">● green row</span><span class="gi-val">All signals aligned: A+ quality · CMF &gt;+0.10 · RS &gt;1.0x · AD↑ OBV↑. Cleanest setup on the screen — no conflicting signals.</span></div>
     <div class="gi"><span class="gi-key">Best setup</span><span class="gi-val">4/4 Aligned · CMF &gt;+0.10 · RS &gt;1.10x · ↑↑ AD OBV — then cross-check quality grade in <a href="quality_screener.html">Quality Screener</a>.</span></div>
   </div>
 </details>
