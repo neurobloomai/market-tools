@@ -36,6 +36,7 @@ SPECIAL_MENTION = {
     'BRK-B': 'Berkshire Hathaway — Buffett\'s compounding machine; insurance float + diversified operating businesses + massive equity portfolio; A+ quality, no debt, permanent capital structure; 3/4 MA with MTF squeeze active (daily + weekly + monthly MAs all compressed simultaneously) — rarest structural signal; value + coil = deliberate move when it unwinds; no 2026 earnings growth catalyst visible — watch for 4/4 reclaim as trigger, not before',
     'SCHW': 'Charles Schwab — brokerage + banking; 4/4 aligned, -2.7% from 52w high, weekly FullCoil ●2.1% (very tight), AD↑ OBV↑; weekly-only coil — daily spread 9.2% wide, not MTF; caution: CMF ~0 at highs, no volume conviction yet; watch for CMF to turn +0.05+ as confirmation weekly coil is loading for upside rather than fading',
     'GOOGL': 'Alphabet — Search + YouTube + Cloud moat intact; earnings beat triggered positioning unwind, gapped below 10wSMA/20wSMA/10mSMA in a single week; 1/4 MA, -22% from highs; 10mSMA ($321) is the first recovery gate — price sitting $2 below it; 20mSMA ($252) is long-term floor; business did not change, price did; watch for 10mSMA reclaim to rebuild toward 2/4',
+    'ACLS': 'Axcelis Technologies — pure-play ion implantation equipment; SiC (silicon carbide) strategic bet: SiC power devices need ~100x more implant steps than silicon — EV inverters, industrial power; switching costs real (fab qualification 6-18 months, yield risk); cycle-bottom OM 4% masks peak OM of 20%+; FY0 -21% on EV softness + China export restrictions; watch OM > 10% + ROE > 10% as the quality trigger, not MA reclaim',
 }
 
 # Cyclical names — commodity / inventory / capex cycle drivers
@@ -45,7 +46,7 @@ CYCLICALS = {
     # Memory semis — inventory cycle
     'MU', 'WDC', 'STX',
     # Semi equipment — fab capex cycle
-    'AMAT', 'LRCX', 'KLAC', 'PLAB',
+    'AMAT', 'LRCX', 'KLAC', 'PLAB', 'ACLS',
     # Cyclical semis — end-market cycle
     'INTC', 'ON', 'NXPI', 'TXN', 'QCOM', 'ADI', 'MCHP',
     # Energy — commodity cycle
