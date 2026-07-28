@@ -276,3 +276,17 @@ if __name__ == '__main__':
     with open(out_path, 'w') as f:
         f.write(html)
     print(f"\n  Saved → {out_path}")
+
+    # Push to GitHub so the live site updates immediately
+    try:
+        subprocess.run(['git', '-C', repo, 'add', 'monthly_ma_gate.html'], check=True)
+        result = subprocess.run(['git', '-C', repo, 'diff', '--cached', '--quiet'])
+        if result.returncode != 0:
+            subprocess.run(['git', '-C', repo, 'commit',
+                            '-m', f'monthly_ma_gate: {now}'], check=True)
+            subprocess.run(['git', '-C', repo, 'push'], check=True)
+            print(f"  Pushed → GitHub  (monthly_ma_gate: {now})")
+        else:
+            print("  GitHub — no changes to push")
+    except subprocess.CalledProcessError as e:
+        print(f"  Push failed: {e}")
