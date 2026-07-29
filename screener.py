@@ -735,7 +735,6 @@ def build_html(results, watchlist=None, universe_failing=None):
           <td>{pe_html(d)}</td>
           <td>{eps_trend_html(d)}</td>
           <td>{entry_html(d)}</td>
-          <td>{signal_html(d.get('signal'))}</td>
         </tr>"""
 
     aplus = sum(1 for d in results if d['grade'] == 'A+')
@@ -832,7 +831,7 @@ def build_html(results, watchlist=None, universe_failing=None):
     <tr>
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th><th>Mkt Cap</th>
       <th>Grade</th><th>Debt/EV</th><th>Gross%</th><th>Op%</th><th>Net%</th>
-      <th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>EPS FY</th><th>Entry</th><th>Signal (wk)</th>
+      <th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>EPS FY</th><th>Entry</th>
     </tr>
   </thead>
   <tbody>{rows}</tbody>
