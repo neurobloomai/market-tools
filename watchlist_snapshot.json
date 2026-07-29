@@ -24,7 +24,7 @@
       ],
       [
         "FCF Yield",
-        "-4.5%",
+        "-4.4%",
         "> 0%"
       ]
     ],
@@ -47,6 +47,11 @@
         "ROE/ROA",
         "ROE -54.9% / ROA -9.7%",
         "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "P/E",
+        "104.3x",
+        "\u2264 100x"
       ]
     ],
     "note": "",
@@ -56,7 +61,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.466",
+        "0.436",
         "\u2264 0.20"
       ],
       [
@@ -118,7 +123,7 @@
       ],
       [
         "P/E",
-        "165.7x",
+        "167.2x",
         "\u2264 100x"
       ]
     ],
@@ -171,7 +176,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.265",
+        "0.259",
         "\u2264 0.20"
       ]
     ],
@@ -182,18 +187,29 @@
     "fails": [
       [
         "Debt/EV",
-        "0.321",
+        "0.309",
         "\u2264 0.20"
       ]
     ],
     "note": "",
     "grade": "B"
   },
+  "CELH": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE 8.1% / ROA 11.5%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Celsius Holdings \u2014 energy drink challenger (PepsiCo distribution deal = real national shelf presence); RevG 137%, GM 50.4%, OM 19.8%, NM 5.9%, FCF $178M \u2014 6/7; ROE 8.1% only blocker (gate \u2265 10%); 0/4 MA, -58% from highs \u2014 structure badly broken post-PepsiCo inventory reset; gate: ROE \u2265 10% as scale drives equity returns + MA structure recovers from 0/4",
+    "grade": "B"
+  },
   "CPAY": {
     "fails": [
       [
         "Debt/EV",
-        "0.323",
+        "0.314",
         "\u2264 0.20"
       ]
     ],
@@ -204,7 +220,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.266",
+        "0.256",
         "\u2264 0.20"
       ]
     ],
@@ -268,7 +284,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.383",
+        "0.385",
         "\u2264 0.20"
       ],
       [
@@ -284,12 +300,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.361",
+        "0.362",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-9.5%",
+        "-9.6%",
         "> 0%"
       ]
     ],
@@ -300,7 +316,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.383",
+        "0.38",
         "\u2264 0.20"
       ]
     ],
@@ -311,12 +327,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.369",
+        "0.374",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-5.5%",
+        "-5.6%",
         "> 0%"
       ]
     ],
@@ -327,12 +343,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.381",
+        "0.385",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-6.2%",
+        "-6.4%",
         "> 0%"
       ]
     ],
@@ -343,7 +359,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.235",
+        "0.23",
         "\u2264 0.20"
       ]
     ],
@@ -354,7 +370,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.249",
+        "0.26",
         "\u2264 0.20"
       ],
       [
@@ -370,7 +386,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.436",
+        "0.46",
         "\u2264 0.20"
       ],
       [
@@ -396,7 +412,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.308",
+        "0.331",
         "\u2264 0.20"
       ],
       [
@@ -417,7 +433,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.265",
+        "0.284",
         "\u2264 0.20"
       ],
       [
@@ -433,7 +449,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.317",
+        "0.33",
         "\u2264 0.20"
       ],
       [
@@ -486,7 +502,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.429",
+        "0.41",
         "\u2264 0.20"
       ],
       [
@@ -506,7 +522,7 @@
       ],
       [
         "FCF Yield",
-        "-5.0%",
+        "-4.6%",
         "> 0%"
       ]
     ],
@@ -533,7 +549,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.426",
+        "0.375",
         "\u2264 0.20"
       ]
     ],
@@ -544,7 +560,7 @@
     "fails": [
       [
         "Op Margin",
-        "6.6%",
+        "9.8%",
         "\u2265 10%"
       ]
     ],
@@ -555,7 +571,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.478",
+        "0.461",
         "\u2264 0.20"
       ]
     ],
@@ -566,7 +582,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.311",
+        "0.3",
         "\u2264 0.20"
       ]
     ],
@@ -609,7 +625,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.285",
+        "0.28",
         "\u2264 0.20"
       ]
     ],
@@ -658,7 +674,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.229",
+        "0.221",
         "\u2264 0.20"
       ],
       [
@@ -674,7 +690,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.204",
+        "0.201",
         "\u2264 0.20"
       ],
       [
@@ -717,7 +733,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.329",
+        "0.316",
         "\u2264 0.20"
       ],
       [
@@ -775,12 +791,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.214",
+        "0.216",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-5.3%",
+        "-5.4%",
         "> 0%"
       ]
     ],
@@ -791,12 +807,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.225",
+        "0.256",
         "\u2264 0.20"
       ]
     ],
     "note": "PayPal \u2014 OM 18%, NM 15%, ROE 25%, FCF 11%, P/E 7.8x; D/EV 0.30 only blocker (customer float structural); Chriss margin recovery showing in numbers",
-    "grade": "A+"
+    "grade": "A"
   },
   "IOT": {
     "fails": [
@@ -967,11 +983,6 @@
   "COIN": {
     "fails": [
       [
-        "Debt/EV",
-        "0.203",
-        "\u2264 0.20"
-      ],
-      [
         "Op Margin",
         "-7.1%",
         "\u2265 10%"
@@ -985,11 +996,37 @@
     "note": "Coinbase \u2014 digital asset exchange, crypto theme proxy; 85.5% gross margin, FCF 5.4%; OM -7.1% + rev growth -30.8% (crypto volume cycle) blocking; grades B, 0/4 MA; cyclical \u2014 watch for volume recovery + OM turning positive",
     "grade": "B"
   },
+  "CRCL": {
+    "fails": [
+      [
+        "Op Margin",
+        "6.5%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-2.8%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -3.0% / ROA -0.1%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "-0.8%",
+        "> 0%"
+      ]
+    ],
+    "note": "Circle Internet Group \u2014 USDC stablecoin issuer; revenue model = interest on $50-60B Treasury reserves backing USDC; at 5% rates \u00d7 $50B = ~$2.5B revenue; NOT a trading platform (contrast with COIN) \u2014 pure infrastructure/toll-road; USDC is the institutional stablecoin (fully audited vs Tether's opacity), real switching costs in DeFi/payments rails; structural blocker: Coinbase revenue-share eats 50%+ of interest income \u2192 gross margin compresses to 8% despite near-100% theoretical spread; net margin -2.8% + FCF -$141M blocking now; rate sensitivity is the core risk (Fed cuts = revenue cuts, mechanically \u2014 every -100bps on $50B = -$500M revenue); bull case: GENIUS Act stablecoin regulation = compliance moat + higher entry barrier for banks/competitors; Arc blockchain (own L1) = toll on currency + rails if it scales; RevG 20%, fwd PE 33x, zero debt ($15M), $1.5B cash \u2014 balance sheet clean; gate: OM > 10% sustained (needs rate stability + Coinbase share renegotiation or USDC supply growth offsetting cuts) + FCF turning positive; IPO'd at ~$193 (Apr 2026), -66% to $65 \u2014 peak rate + peak hype unwind; watch at 0/4 MA for structure recovery alongside rate cycle clarity",
+    "grade": "B"
+  },
   "FTAI": {
     "fails": [
       [
         "FCF Yield",
-        "-1.4%",
+        "-1.6%",
         "> 0%"
       ]
     ],
@@ -1031,7 +1068,7 @@
       ],
       [
         "FCF Yield",
-        "-3.3%",
+        "-3.4%",
         "> 0%"
       ]
     ],
