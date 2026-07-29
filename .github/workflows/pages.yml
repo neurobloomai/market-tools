@@ -6,7 +6,7 @@ on:
     paths:
       - '**.html'
   workflow_run:
-    workflows: ["Weekly Screener — US + India"]
+    workflows: ["Weekly Screener — US + India", "Dividend Screener"]
     types: [completed]
   workflow_dispatch:
 
