@@ -24,7 +24,7 @@
       ],
       [
         "FCF Yield",
-        "-4.4%",
+        "-4.3%",
         "> 0%"
       ]
     ],
@@ -50,7 +50,7 @@
       ],
       [
         "P/E",
-        "104.3x",
+        "108.1x",
         "\u2264 100x"
       ]
     ],
@@ -123,7 +123,7 @@
       ],
       [
         "P/E",
-        "167.2x",
+        "175.0x",
         "\u2264 100x"
       ]
     ],
@@ -204,6 +204,17 @@
     ],
     "note": "Celsius Holdings \u2014 energy drink challenger (PepsiCo distribution deal = real national shelf presence); RevG 137%, GM 50.4%, OM 19.8%, NM 5.9%, FCF $178M \u2014 6/7; ROE 8.1% only blocker (gate \u2265 10%); 0/4 MA, -58% from highs \u2014 structure badly broken post-PepsiCo inventory reset; gate: ROE \u2265 10% as scale drives equity returns + MA structure recovers from 0/4",
     "grade": "B"
+  },
+  "STNE": {
+    "fails": [
+      [
+        "Debt/EV",
+        "1.835",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "StoneCo \u2014 Brazilian SMB payments + credit platform; V/MA-like toll on Brazil's merchant ecosystem (2M+ active merchants, stone-branded POS/software/banking); GrossM 73.6%, OM 44.3%, NM 25.9%, ROE 30.7%, FCF 86.6% \u2014 A+ on every quality metric; D/EV 1.835 only blocker \u2014 structural credit book artifact (StoneCo lends to merchants, funds loans through debt, same read as IBKR/SCHW where leverage is the business model not deterioration); RevG 4.3% slow (payment volume growth steady, credit portfolio being managed conservatively post-2021 credit loss episode); Nubank (NU) + MercadoPago (MELI) are real competitors \u2014 StoneCo differentiates on SMB software integration (vertical POS + ERP + banking in one platform); Brazil macro + BRL currency = structural risk layer; price $10.97 (-22.9% from 200MA) \u2014 dislocated from quality; gate: RevG reaccelerating above 10% as merchant base compounds + credit loss ratios holding stable (2021 episode was a stress test the model survived) + D/EV declining as credit book matures; added 2026-07-29",
+    "grade": "A+"
   },
   "CPAY": {
     "fails": [
@@ -332,7 +343,7 @@
       ],
       [
         "FCF Yield",
-        "-5.6%",
+        "-5.7%",
         "> 0%"
       ]
     ],
@@ -348,7 +359,7 @@
       ],
       [
         "FCF Yield",
-        "-6.4%",
+        "-6.5%",
         "> 0%"
       ]
     ],
@@ -522,7 +533,7 @@
       ],
       [
         "FCF Yield",
-        "-4.6%",
+        "-4.7%",
         "> 0%"
       ]
     ],
@@ -1026,7 +1037,7 @@
     "fails": [
       [
         "FCF Yield",
-        "-1.6%",
+        "-1.5%",
         "> 0%"
       ]
     ],
@@ -1121,6 +1132,87 @@
       ]
     ],
     "note": "SentinelOne \u2014 AI-native cybersecurity platform, direct CrowdStrike competitor; GrossM 73.2%, RevG 20.8%, FCF 5.0% (positive, unusual for loss-making SaaS); OM -28.8% + NM -30.4% hard blockers; ROE -21.4%; watch OM crossing 0% and trending toward 10%+ over 2-3 quarters as scale drives margin inflection",
+    "grade": "B"
+  },
+  "TPL": {
+    "fails": [
+      [
+        "FCF Yield",
+        "-0.2%",
+        "> 0%"
+      ]
+    ],
+    "note": "Texas Pacific Land \u2014 largest private landowner in Permian Basin (~880K acres); land royalty owner: leases surface + mineral acres to Permian operators (Pioneer, Occidental, Devon etc.) and collects a royalty % of every barrel/mcf produced on their land \u2014 no drilling, no capex, no operational risk; also runs water services (sourcing + disposal for Permian operators); GrossM 93.2%, OM 77.2%, NM 60.0%, ROE 36.5%, ROA 25.2%, D/EV 0.001 (zero debt), RevG 20.8% \u2014 A+ on every metric; FCF -0.2% only blocker (almost certainly yfinance artifact \u2014 a passive land royalty business with 60% NM doesn't structurally burn cash); gate: FCF confirmed positive next quarter data refresh; added WATCHLIST 2026-07-29",
+    "grade": "A+"
+  },
+  "RPRX": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.236",
+        "\u2264 0.20"
+      ],
+      [
+        "FCF Yield",
+        "-2.9%",
+        "> 0%"
+      ]
+    ],
+    "note": "Royalty Pharma \u2014 largest pharma royalty acquirer; owns royalty rights on ~35+ approved drugs (Vertex CF franchise/Trikafta, J&J Imbruvica, AZ Farxiga, Biogen Leqembi, Novartis Promacta, BMS Opdivo); same model as TPL but for drugs: funds late-stage trials or buys existing royalty streams from universities/biotechs, then collects % of drug sales for patent life \u2014 no clinical risk, no manufacturing, no sales force; NM 33.9%, ROE 13.8%, RevG 11.0%; D/EV 0.236 (deliberate leverage to fund royalty acquisitions, amortizes on incoming royalty cash \u2014 gate \u2264 0.20) + FCF -2.8% (royalty acquisition spend coded as investing outflow, same artifact as TPL \u2014 not structural cash burn) both blocking; grade A; added WATCHLIST 2026-07-29",
+    "grade": "A"
+  },
+  "MOD": {
+    "fails": [
+      [
+        "Net Margin",
+        "3.8%",
+        "\u2265 5%"
+      ],
+      [
+        "FCF Yield",
+        "-1.0%",
+        "> 0%"
+      ]
+    ],
+    "note": "Modine Manufacturing \u2014 AI datacenter thermal/cooling (heat exchangers); auto-promoted from FUTURE_RADAR 2026-07-29 [grade B, blocking: Net Margin 3.8%, FCF Yield -1.0%]",
+    "grade": "B"
+  },
+  "ACAD": {
+    "fails": [
+      [
+        "Op Margin",
+        "-1.7%",
+        "\u2265 10%"
+      ]
+    ],
+    "note": "Acadia Pharmaceuticals \u2014 CNS/rare disease; auto-promoted from FUTURE_RADAR 2026-07-29 [grade B, blocking: Op Margin -1.7%]",
+    "grade": "B"
+  },
+  "CBRS": {
+    "fails": [
+      [
+        "Op Margin",
+        "-7.8%",
+        "\u2265 10%"
+      ],
+      [
+        "P/E",
+        "188.0x",
+        "\u2264 100x"
+      ]
+    ],
+    "note": "Cerebras Systems \u2014 Wafer-Scale Engine (WSE-3): entire silicon wafer as single chip, 900K AI cores, 44GB on-chip SRAM; auto-promoted from FUTURE_RADAR 2026-07-29 [grade B, blocking: Op Margin -7.8%, P/E 183.3x]",
+    "grade": "B"
+  },
+  "PGY": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.81",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "Pagaya Technologies \u2014 AI-powered credit underwriting network; auto-promoted from FUTURE_RADAR 2026-07-29 [grade B, blocking: Debt/EV 0.81]",
     "grade": "B"
   }
 }
