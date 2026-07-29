@@ -638,13 +638,6 @@ def eps_trend_html(d):
         return f'<span style="color:{c0};font-size:11px">{g0_str}</span> <span style="color:{c1};font-size:10px">/{g1:+.0f}%</span>'
     return f'<span style="color:{c0};font-size:11px">{g0_str}</span>'
 
-def signal_html(sig):
-    if sig is None: return '<span style="color:#484f58">—</span>'
-    direction, source = sig
-    color = '#3fb950' if direction == 'bull' else '#f85149'
-    arrow = '⬆' if direction == 'bull' else '⬇'
-    return f'<span style="color:{color};font-weight:700">{arrow} {direction}</span><span style="color:#484f58;font-size:9px"> {source}</span>'
-
 def pct_color(val, good_above=0):
     if val is None: return '<span style="color:#484f58">—</span>'
     c = '#3fb950' if val >= good_above else '#f85149'
@@ -893,14 +886,6 @@ if __name__ == '__main__':
     ))
 
     print(f"  ✅  {len(passed)} companies passed filters  ({len(failing)} in universe not yet qualifying)")
-
-    sig_tickers = [d['ticker'] for d in passed if d['grade'] in ('A+', 'A')]
-    print(f"  Computing weekly signals for {len(sig_tickers)} A/A+ names ...", flush=True)
-    with ThreadPoolExecutor(max_workers=8) as ex:
-        sig_vals = list(ex.map(get_tech_signal, sig_tickers))
-    sig_map = dict(zip(sig_tickers, sig_vals))
-    for d in passed:
-        d['signal'] = sig_map.get(d['ticker'])
 
     print(f"\n  Fetching {len(WATCHLIST)} watchlist contenders ...", flush=True)
 
