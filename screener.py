@@ -10,10 +10,26 @@ Disclaimer: For informational purposes only. Not financial advice.
 
 import _yf_cache  # noqa: F401 — install HTTP cache before yfinance fetches
 import yfinance as yf
-import warnings, os, webbrowser, requests
+import warnings, os, json, webbrowser, requests
 from datetime import datetime, date
 from concurrent.futures import ThreadPoolExecutor
 warnings.filterwarnings('ignore')
+
+_SCREENER_CACHE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'screener_data_cache.json')
+
+def _load_screener_cache():
+    try:
+        with open(_SCREENER_CACHE_FILE) as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def _save_screener_cache(cache):
+    try:
+        with open(_SCREENER_CACHE_FILE, 'w') as f:
+            json.dump(cache, f, indent=2)
+    except Exception:
+        pass
 
 FMP_API_KEY = os.environ.get('FMP_API_KEY', '')
 
@@ -359,8 +375,7 @@ SPREAD_UNIVERSE = {
     'AVGO': 3,  # Broadcom — $1.7T, AI networking + custom silicon; options liquid enough; avoid earnings (10-15% moves)
 }
 
-def get_fundamentals(ticker):
-    try:
+def _get_fundamentals_inner(ticker):
         t    = yf.Ticker(ticker)
         info = t.info
         if not info or 'marketCap' not in info:
@@ -466,9 +481,19 @@ def get_fundamentals(ticker):
             short_pct_float = round(short_pct_float * 100, 1) if short_pct_float is not None else None,
             days_to_cover   = days_to_cover,
         )
-    except Exception as e:
-        print(f"  ⚠ {ticker}: {e}")
-        return None
+
+def get_fundamentals(ticker):
+    import time
+    for attempt in range(3):
+        try:
+            result = _get_fundamentals_inner(ticker)
+            if result is not None:
+                return result
+        except Exception as e:
+            print(f"  ⚠ {ticker}: {e}", flush=True)
+        if attempt < 2:
+            time.sleep(1.5 * (attempt + 1))
+    return None
 
 def passes_quality_filter(d):
     """Multi-factor quality filter — not just debt."""
@@ -872,11 +897,24 @@ if __name__ == '__main__':
     print(f"\n  Quality Screener — {now}", flush=True)
     print(f"  Screening {len(UNIVERSE)} companies ...", flush=True)
 
-    with ThreadPoolExecutor(max_workers=10) as ex:
-        raw = list(ex.map(get_fundamentals, UNIVERSE))
+    cache = _load_screener_cache()
 
-    passed  = [d for d in raw if d is not None and passes_quality_filter(d)]
-    failing = [d for d in raw if d is not None and not passes_quality_filter(d)]
+    with ThreadPoolExecutor(max_workers=10) as ex:
+        fresh = list(ex.map(get_fundamentals, UNIVERSE))
+
+    raw = []
+    for t, d in zip(UNIVERSE, fresh):
+        if d is not None:
+            cache[t] = d
+            raw.append(d)
+        elif t in cache:
+            print(f"  [{t}] yfinance miss — using cached data", flush=True)
+            raw.append(cache[t])
+
+    _save_screener_cache(cache)
+
+    passed  = [d for d in raw if passes_quality_filter(d)]
+    failing = [d for d in raw if not passes_quality_filter(d)]
     for d in passed:
         d['grade'] = quality_grade(d)
     passed.sort(key=lambda x: (
@@ -890,8 +928,16 @@ if __name__ == '__main__':
     print(f"\n  Fetching {len(WATCHLIST)} watchlist contenders ...", flush=True)
 
     with ThreadPoolExecutor(max_workers=10) as ex:
-        watch_raw = list(ex.map(get_fundamentals, WATCHLIST))
-    watch_raw = [d for d in watch_raw if d is not None]
+        watch_fresh = list(ex.map(get_fundamentals, WATCHLIST))
+
+    watch_raw = []
+    for t, d in zip(WATCHLIST, watch_fresh):
+        if d is not None:
+            cache[t] = d
+            watch_raw.append(d)
+        elif t in cache:
+            watch_raw.append(cache[t])
+    _save_screener_cache(cache)
     watch_raw.sort(key=lambda x: -(x['market_cap_b'] or 0))
 
     print(f"  👀  {len(watch_raw)} watchlist entries fetched\n")
@@ -922,7 +968,7 @@ if __name__ == '__main__':
         subprocess.run(['git', 'pull', '--rebase', '--autostash', 'origin', 'main'], cwd=repo, check=True, capture_output=True)
         with open(out_path, 'w') as f:
             f.write(html)
-        subprocess.run(['git', 'add',    'quality_screener.html'], cwd=repo, check=True, capture_output=True)
+        subprocess.run(['git', 'add',    'quality_screener.html', 'screener_data_cache.json'], cwd=repo, check=True, capture_output=True)
         subprocess.run(['git', 'commit', '-m', commit_msg],        cwd=repo, check=True, capture_output=True)
         subprocess.run(['git', 'push'],                             cwd=repo, check=True, capture_output=True)
         print(f"  Pushed → GitHub  ({commit_msg})")
