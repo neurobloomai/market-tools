@@ -614,7 +614,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                            ('A — structure + quality',  [(r,g) for r,g in zip(aligned,grades) if g=='A']),
                            ('Watchlist / not yet qualifying', [(r,g) for r,g in zip(aligned,grades) if g=='—'])]:
         if subset:
-            aligned_rows += f'<tr class="grp"><td colspan="8">{label}</td></tr>'
+            aligned_rows += f'<tr class="grp"><td colspan="10">{label}</td></tr>'
             for r, g in sorted(subset, key=lambda x: x[0]['t']):
                 aligned_rows += aligned_row(r, g)
 
