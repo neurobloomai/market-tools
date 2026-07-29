@@ -222,15 +222,19 @@ def dividend_grade(d):
         return '—'
     pts = 0
 
-    # Yield — meaningful income
+    # Yield — entry point, not the driver (1 pt only — high yield on falling price is a trap)
     if d['div_yield'] >= 2.0: pts += 1
-    if d['div_yield'] >= 3.5: pts += 1
 
-    # FCF coverage — sustainability
-    if d['fcf_yield'] > 0:              pts += 1
-    if d['fcf_yield'] >= d['div_yield']: pts += 1   # FCF covers dividend
+    # MOS — FCF buffer above dividend (2 pts — the real sustainability signal)
+    mos = d['fcf_yield'] - d['div_yield'] if d['div_yield'] > 0 else d['fcf_yield']
+    if mos >= 0:  pts += 1   # FCF covers dividend
+    if mos >= 3:  pts += 1   # strong buffer — dividend has room to grow
 
-    # Margin quality
+    # ROE — quality of the business (2 pts — can it sustainably generate returns?)
+    if d['roe'] >= 12 or d['roa'] >= 10: pts += 1
+    if d['roe'] >= 20:                   pts += 1   # compounder-grade returns
+
+    # Margin quality — earnings durability
     if d['om'] >= 15: pts += 1
     if d['om'] >= 25: pts += 1
 
@@ -239,9 +243,6 @@ def dividend_grade(d):
 
     # Value
     if d['pe'] and d['pe'] <= 15: pts += 1
-
-    # Return on capital
-    if d['roe'] >= 15 or d['roa'] >= 12: pts += 1
 
     if pts >= 7: return 'A+'
     if pts >= 5: return 'A'
