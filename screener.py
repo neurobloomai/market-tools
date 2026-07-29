@@ -704,7 +704,7 @@ def build_universe_failing_section(failing):
 </table>"""
 
 def build_html(results, watchlist=None, universe_failing=None):
-    now  = datetime.now().strftime('%B %d, %Y  %H:%M')
+    now  = datetime.utcnow().strftime('%B %d, %Y  %H:%M UTC')
     rows = ''
 
     for d in results:
@@ -868,7 +868,7 @@ if __name__ == '__main__':
         print()
         sys.exit(0)
 
-    now = datetime.now().strftime('%Y-%m-%d %H:%M')
+    now = datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')
     print(f"\n  Quality Screener — {now}", flush=True)
     print(f"  Screening {len(UNIVERSE)} companies ...", flush=True)
 
