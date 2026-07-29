@@ -7,11 +7,25 @@ Run: python internal_dividend.py
 
 import yfinance as yf
 import math
+import time
 import warnings
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 
 warnings.filterwarnings('ignore')
+
+
+def _fetch(ticker, fn, retries=3):
+    for attempt in range(retries):
+        try:
+            result = fn(ticker)
+            if result is not None:
+                return result
+        except Exception:
+            pass
+        if attempt < retries - 1:
+            time.sleep(1.5 * (attempt + 1))
+    return None
 
 # ─── Universe ────────────────────────────────────────────────────────────────
 
@@ -145,74 +159,74 @@ UNIVERSE = [
 
 # ─── MA Alignment ────────────────────────────────────────────────────────────
 
-def ma_score(ticker):
-    try:
-        hist  = yf.Ticker(ticker).history(period='2y', interval='1wk')
-        close = hist['Close']
-        if len(close) < 40:
-            return None
-        price = float(close.iloc[-1])
-        ma50d = float(close.tail(10).mean())
-        ma20w = float(close.tail(20).mean())
-        ma10m = float(close.tail(43).mean())
-        ma20m = float(close.tail(87).mean())
-        score = sum([price > ma50d, price > ma20w, price > ma10m, price > ma20m])
-        return (ticker, round(price, 2), score)
-    except:
+def _ma_score_inner(ticker):
+    hist  = yf.Ticker(ticker).history(period='2y', interval='1wk')
+    close = hist['Close']
+    if len(close) < 40:
         return None
+    price = float(close.iloc[-1])
+    ma50d = float(close.tail(10).mean())
+    ma20w = float(close.tail(20).mean())
+    ma10m = float(close.tail(43).mean())
+    ma20m = float(close.tail(87).mean())
+    score = sum([price > ma50d, price > ma20w, price > ma10m, price > ma20m])
+    return (ticker, round(price, 2), score)
+
+def ma_score(ticker):
+    return _fetch(ticker, _ma_score_inner)
 
 
 # ─── Fundamentals ────────────────────────────────────────────────────────────
 
-def get_data(ticker):
-    try:
-        info = yf.Ticker(ticker).info
-        if not info or 'marketCap' not in info:
-            return None
-
-        mc   = info.get('marketCap') or 0
-        ev   = info.get('enterpriseValue') or 0
-        debt = info.get('totalDebt') or 0
-        fcf  = info.get('freeCashflow') or 0
-        om   = (info.get('operatingMargins') or 0) * 100
-        nm   = (info.get('profitMargins') or 0) * 100
-        roe  = (info.get('returnOnEquity') or 0) * 100
-        roa  = (info.get('returnOnAssets') or 0) * 100
-        pe   = info.get('trailingPE') or 0
-        payout_raw = (info.get('payoutRatio') or 0) * 100
-        payout = payout_raw if payout_raw <= 200 else 0   # suppress garbled data
-
-        # yfinance dividendYield quirk: sometimes decimal (0.045), sometimes percent (4.5),
-        # sometimes garbled (37 for AAPL which should be 0.37%). Heuristic normalization:
-        raw = info.get('dividendYield') or info.get('trailingAnnualDividendYield') or 0
-        if raw > 20:
-            div_yield = raw / 100    # clearly percent*100 — divide back down
-        elif raw > 1:
-            div_yield = raw          # already in percent form (e.g. 4.7 = 4.7%)
-        else:
-            div_yield = raw * 100    # decimal form (e.g. 0.047 = 4.7%)
-        if div_yield > 15:
-            div_yield = 0            # still unreasonable — suppress
-
-        fcf_yield = fcf / mc * 100 if mc else 0
-        dev       = debt / ev if ev else 0
-
-        if pe and (math.isinf(pe) or pe <= 0):
-            pe = None
-
-        return {
-            'div_yield': round(div_yield, 2),
-            'payout':    round(payout, 1),
-            'fcf_yield': round(fcf_yield, 1),
-            'om':        round(om, 1),
-            'nm':        round(nm, 1),
-            'roe':       round(roe, 1),
-            'roa':       round(roa, 1),
-            'dev':       round(dev, 3),
-            'pe':        round(pe, 1) if pe else None,
-        }
-    except:
+def _get_data_inner(ticker):
+    info = yf.Ticker(ticker).info
+    if not info or 'marketCap' not in info:
         return None
+
+    mc   = info.get('marketCap') or 0
+    ev   = info.get('enterpriseValue') or 0
+    debt = info.get('totalDebt') or 0
+    fcf  = info.get('freeCashflow') or 0
+    om   = (info.get('operatingMargins') or 0) * 100
+    nm   = (info.get('profitMargins') or 0) * 100
+    roe  = (info.get('returnOnEquity') or 0) * 100
+    roa  = (info.get('returnOnAssets') or 0) * 100
+    pe   = info.get('trailingPE') or 0
+    payout_raw = (info.get('payoutRatio') or 0) * 100
+    payout = payout_raw if payout_raw <= 200 else 0   # suppress garbled data
+
+    # yfinance dividendYield quirk: sometimes decimal (0.045), sometimes percent (4.5),
+    # sometimes garbled (37 for AAPL which should be 0.37%). Heuristic normalization:
+    raw = info.get('dividendYield') or info.get('trailingAnnualDividendYield') or 0
+    if raw > 20:
+        div_yield = raw / 100    # clearly percent*100 — divide back down
+    elif raw > 1:
+        div_yield = raw          # already in percent form (e.g. 4.7 = 4.7%)
+    else:
+        div_yield = raw * 100    # decimal form (e.g. 0.047 = 4.7%)
+    if div_yield > 15:
+        div_yield = 0            # still unreasonable — suppress
+
+    fcf_yield = fcf / mc * 100 if mc else 0
+    dev       = debt / ev if ev else 0
+
+    if pe and (math.isinf(pe) or pe <= 0):
+        pe = None
+
+    return {
+        'div_yield': round(div_yield, 2),
+        'payout':    round(payout, 1),
+        'fcf_yield': round(fcf_yield, 1),
+        'om':        round(om, 1),
+        'nm':        round(nm, 1),
+        'roe':       round(roe, 1),
+        'roa':       round(roa, 1),
+        'dev':       round(dev, 3),
+        'pe':        round(pe, 1) if pe else None,
+    }
+
+def get_data(ticker):
+    return _fetch(ticker, _get_data_inner)
 
 
 # ─── Grading ─────────────────────────────────────────────────────────────────
@@ -465,13 +479,13 @@ if __name__ == '__main__':
     now = datetime.now().strftime('%b %d %Y  %H:%M')
 
     print(f'\n  Fetching MA alignment for {len(UNIVERSE)} tickers ...', flush=True)
-    with ThreadPoolExecutor(max_workers=20) as ex:
+    with ThreadPoolExecutor(max_workers=6) as ex:
         ma_results = list(ex.map(ma_score, UNIVERSE))
 
     price_map = {t: (p, s) for r in ma_results if r for t, p, s in [r]}
 
     print(f'  Fetching dividend data ...', flush=True)
-    with ThreadPoolExecutor(max_workers=10) as ex:
+    with ThreadPoolExecutor(max_workers=5) as ex:
         fund_results = {t: d for t, d in zip(UNIVERSE, ex.map(get_data, UNIVERSE))}
 
     # Build full result list
