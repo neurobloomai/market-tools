@@ -1,20 +1,21 @@
-**Subject:** Market Pulse — Week ending Jul 24 2026 · Mixed / Breadth Diverging
+**Subject:** Market Pulse — Week ending Jul 24 2026 · Mixed / Aligned
 
 ---
 
 **POSTURE**
 
-US: 57.2% above MA20, 65.3% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 26 names Fully Stacked. India: 57.7% above MA20, 62.8% above MA100 — mixed, structure holding. 15 names Fully Stacked.
+US: 56.6% above MA20, 64.2% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 26 names Fully Stacked. India: 57.7% above MA20, 62.8% above MA100 — mixed, structure holding. 15 names Fully Stacked.
 
 
 **WHAT MOVED**
 
-Entered Fully Stacked — Watchlist: NET, AMG, S
-Left Fully Stacked — Universe: CINF
+No new Fully Stacked entries this week.
+Left Fully Stacked — Universe: UNH, HWM
 
 **SETUPS WORTH WATCHING**
 
-**MU** [Universe] — weekly gate open, -EXT, -18.5% vs MA10w, W.slope +32.94
+**MU** [Universe] — weekly gate open, -EXT, -20.1% vs MA10w, W.slope +31.21
+**AAPL** [Universe] — weekly gate open, IN, +9.4% vs MA10w, W.slope +10.64
 
 **WATCHLIST WATCH**
 
@@ -25,10 +26,10 @@ Left Fully Stacked — Universe: CINF
 
 **ONE THOUGHT**
 
-The structure gap between short-term and long-term positioning in the US—57.2% above MA20 versus 65.3% above MA100—suggests recent weakness has been selective rather than broad. Three fresh Fully Stacked entries (NET, AMG, S) alongside the loss of only one (CINF) indicates quality names are holding their long-term trajectories through near-term noise, which is where pullbacks typically find their best buyers. With 26 names maintaining full structure and only two promotion candidates separated by single blockers, the market isn't signaling conviction that the pullback runs deeper.
+The market is preserving its long-term integrity even as short-term momentum softens—more names are above their 100-day than 20-day lines, which is the inverse of what typically precedes breakdowns. UNH and HWM exiting Fully Stacked while two candidates (ABBV, AMG) sit just one condition away from promotion suggests a measured rotation rather than deterioration, with MU and AAPL offering entry points that respect their structural support. This pattern—where the foundation holds tighter than the surface—usually indicates investors are rebalancing within conviction rather than fleeing conviction entirely.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-07-29 19:16 UTC · Not financial advice_
+_Draft generated 2026-07-29 19:29 UTC · Not financial advice_
