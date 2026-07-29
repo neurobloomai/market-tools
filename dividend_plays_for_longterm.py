@@ -113,7 +113,7 @@ UNIVERSE = [
     'BR',    # Broadridge Financial — investor comms infra; 18.4% OM, 2.7% yield, FCF 7.1%, D/EV 0.173, P/E 15.4; A
     'CF',    # CF Industries — nitrogen fertilizer; 33.6% OM, 1.9% yield, FCF 6.6%, D/EV 0.175, P/E 9.5; A
     'CME',   # CME Group — futures/derivatives exchange; 69.8% OM, 2.0% yield, FCF 3.2%, D/EV 0.039, P/E 22.7; A (price in downtrend, watch for base)
-    'CTRA',  # Coterra Energy — nat gas/oil E&P; 28.2% OM, 2.7% yield, FCF 5.1%, D/EV 0.132, P/E 15.0; A
+    # 'CTRA' removed — acquired by DVN (2026)
     'FDS',   # FactSet — financial data/analytics; 29.8% OM, 1.9% yield, FCF 6.8%, D/EV 0.157, P/E 15.3; A
     'HSY',   # Hershey — chocolate/snacks brand moat; 21.3% OM, 3.2% yield, FCF 4.1%, D/EV 0.136, P/E 34; A
     'KMB',   # Kimberly-Clark — tissue/personal care staple; 19.6% OM, 4.9% yield, FCF 3.0%, D/EV 0.172, P/E 20.2; A
@@ -297,8 +297,8 @@ def build_dividend_html(rows, aligned_4, aligned_3, below, now):
     th_center = th_style.replace('right', 'center')
 
     def table_header():
-        cols   = ['Ticker','Gr','Price','MA','Yield','FCF%','Payout','OM%','D/EV','P/E','Filter']
-        aligns = ['left','left'] + ['right']*8 + ['center']
+        cols   = ['Ticker','Gr','Price','MA','Yield','FCF%','Payout','OM%','D/EV','P/E','MOS','Filter']
+        aligns = ['left','left'] + ['right']*9 + ['center']
         ths = ''
         for c, a in zip(cols, aligns):
             sty = th_left if a == 'left' else (th_center if a == 'center' else th_style)
@@ -350,6 +350,13 @@ def build_dividend_html(rows, aligned_4, aligned_3, below, now):
         flag = '<span style="color:#3fb950">✓</span>' if ok else '<span style="color:#f85149">✗</span>'
         ps   = f'${p:.2f}'
 
+        mos_val = d['fcf_yield'] - d['div_yield']
+        if d['div_yield'] > 0:
+            mos_s  = ('+' if mos_val >= 0 else '') + f'{mos_val:.1f}%'
+            mos_c  = '#3fb950' if mos_val >= 3 else '#d29922' if mos_val >= 0 else '#f85149'
+        else:
+            mos_s, mos_c = '—', '#8b949e'
+
         return (
             hover
             + ticker_td
@@ -362,6 +369,7 @@ def build_dividend_html(rows, aligned_4, aligned_3, below, now):
             + _cell(oms, oc)
             + _cell(ds, dc)
             + _cell(pes)
+            + _cell(mos_s, mos_c, bold=True)
             + f'<td style="padding:7px 10px;text-align:center">{flag}</td>'
             + '</tr>'
         )
@@ -399,7 +407,11 @@ def build_dividend_html(rows, aligned_4, aligned_3, below, now):
         '<span style="color:#3fb950">✓</span> passes all filter gates &nbsp;·&nbsp; '
         '<span style="color:#f85149">✗</span> one or more gates failing &nbsp;·&nbsp; '
         '<span style="color:#f0883e">orange ticker</span> = recovery/watchlist (tracked, not yet qualifying) &nbsp;·&nbsp; '
-        'Filter gates: yield ≥1.5% · FCF>0 · OM≥8% · D/EV≤0.30 · ROE or ROA ≥10%'
+        'Filter gates: yield ≥1.5% · FCF>0 · OM≥8% · D/EV≤0.30 · ROE or ROA ≥10% &nbsp;·&nbsp; '
+        '<strong style="color:#e6edf3">MOS</strong> = FCF yield − Div yield (FCF buffer above dividend; '
+        '<span style="color:#3fb950">green ≥+3%</span> · '
+        '<span style="color:#d29922">yellow 0–3%</span> · '
+        '<span style="color:#f85149">red = dividend not FCF-covered</span>)'
         '</div>'
     )
 
@@ -464,8 +476,8 @@ if __name__ == '__main__':
     aligned_3 = sorted([r for r in rows if r[2] == 3], key=lambda x: x[0])
     below     = sorted([r for r in rows if r[2] < 3],  key=lambda x: x[0])
 
-    HDR = f'  {"Ticker":<7} {"Gr":<4} {"Price":>8}  {"Yield":>6} {"FCF%":>6} {"Payout":>7} {"OM%":>6} {"D/EV":>6} {"P/E":>7}'
-    DIV = f'  {"─"*7} {"─"*4} {"─"*8}  {"─"*6} {"─"*6} {"─"*7} {"─"*6} {"─"*6} {"─"*7}'
+    HDR = f'  {"Ticker":<7} {"Gr":<4} {"Price":>8}  {"Yield":>6} {"FCF%":>6} {"Payout":>7} {"OM%":>6} {"D/EV":>6} {"P/E":>7} {"MOS":>7}'
+    DIV = f'  {"─"*7} {"─"*4} {"─"*8}  {"─"*6} {"─"*6} {"─"*7} {"─"*6} {"─"*6} {"─"*7} {"─"*7}'
 
     def row_str(t, p, ma, d, g, ok):
         if d is None:
@@ -478,7 +490,9 @@ if __name__ == '__main__':
         ds    = f'{d["dev"]:.3f}'
         pes   = f'{d["pe"]:.1f}x'         if d["pe"] else '—'
         flag  = '' if ok else '  ✗'
-        return f'  {t:<7} {g:<4} {ps:>8}  {ys:>6} {fs:>6} {pays:>7} {oms:>6} {ds:>6} {pes:>7}{flag}'
+        mos   = d["fcf_yield"] - d["div_yield"]
+        moss  = ('+' if mos >= 0 else '') + f'{mos:.1f}%' if d["div_yield"] > 0 else '—'
+        return f'  {t:<7} {g:<4} {ps:>8}  {ys:>6} {fs:>6} {pays:>7} {oms:>6} {ds:>6} {pes:>7} {moss:>7}{flag}'
 
     print(f'\n  DIVIDEND & VALUE SCREENER — {now}')
     print(f'  Universe: {len(UNIVERSE)} names\n')
