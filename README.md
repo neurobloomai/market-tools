@@ -53,6 +53,7 @@ Updated automatically every Monday via GitHub Actions — no server, no local ma
 | [india_aligned_screener.html](https://neurobloomai.github.io/market-tools/india_aligned_screener.html) | 🇮🇳 India | 4/4 MA alignment · FullCoil squeeze · MTF · CMF · RS vs NIFTY 50 · A/D Line · OBV | Monday 2:30am UTC |
 | [us_marketbreadth.html](https://neurobloomai.github.io/market-tools/us_marketbreadth.html) | 🇺🇸 US | Market breadth — MA20/50/100/200 participation · NH/NL ratio · Elder breadth signal | Tue–Sat after close |
 | [monthly_ma_gate.html](https://neurobloomai.github.io/market-tools/monthly_ma_gate.html) | 🇺🇸🇮🇳 Both | Pre-recovery monthly MA gate — names within ±2%/±5% of 10m or 20m SMA, sorted by coil tightness | **On-demand** — trigger from GitHub Actions |
+| [backtest.html](https://neurobloomai.github.io/market-tools/backtest.html) | 🇺🇸 US | 5-year framework validation — forward returns, left-tail distribution, vol regime at entry | **On-demand** — `python3 backtest.py` |
 
 Weekly snapshots: [`weekly_notes.md`](weekly_notes.md) · [`india_weekly_notes.md`](india_weekly_notes.md)
 
@@ -313,6 +314,57 @@ Margin of safety isn't just a valuation concept — it applies at every level. I
 Charlie Munger's principles apply here more than any indicator: **common sense** — if the business can't explain how it makes money, neither can the screener. **Rationality** — separate what the price is doing from what the business is doing; they diverge constantly and converge eventually. **Inversion** — don't just ask what could go right; ask what has to *not* go wrong for this to work. **Circle of competence** — track themes you understand well enough to know when the thesis is breaking, not just when the price is.
 
 The screener surfaces the candidates. Common sense and rationality close the gap.
+
+## What the Backtest Says
+
+`backtest.py` validates the framework against 5 years of weekly price history across 264 tickers. Full results at [`backtest.html`](https://neurobloomai.github.io/market-tools/backtest.html).
+
+**Methodology:** Reconstructs historical 4/4 MA alignment (same SMA10w/20w/43w/87w definition as the live screener) at every weekly bar. Fresh entries = first 4/4 week after ≥1 non-4/4 week. Measures forward returns at 4w, 13w, 26w, 52w vs SPY over the same window. Documented limitations: survivorship bias (current universe only), quality look-ahead bias (current grades used as proxy). The structural 4/4 signal is fully historical and bias-free.
+
+### What holds up
+
+**Quality is the primary driver — not timing.**
+
+| Filter | n | Win% vs SPY | Avg alpha | Median alpha |
+|---|---|---|---|---|
+| A+ quality + 4/4 fresh entry | 545 | 52.3% | +3.8% | +0.6% |
+| B/— quality + 4/4 fresh entry | 2067 | 49.1% | +1.3% | -0.4% |
+| A+ quality + non-4/4 baseline | 759 | 52.0% | +4.2% | +0.6% |
+
+The quality filter — A+ grade — is doing the real work. A+ names generate similar alpha whether they're 4/4 aligned or not. B/— names with 4/4 structure alone trail by ~2.5pp. The MA timing signal is not the edge; quality is.
+
+**The honest number is median alpha, not average.** A+ 4/4 entries average +3.8% alpha but median +0.6%. A handful of strong breakouts pull the average up. The realistic expectation per trade is modest outperformance — what compounds is consistency across many entries at the quality threshold, not dramatic per-trade wins.
+
+**A-grade names underperform at 4/4 entry.** 43.1% win rate, -0.7% avg alpha at 13w. The quality threshold is not decorative — the gap between A+ and A matters precisely because A names typically have one structural blocker (debt, margins) that limits the upside when structure aligns. Borderline qualification is not the same as genuine quality.
+
+### What the timing signal actually does
+
+**4/4 alignment is a regime filter, not a return amplifier.**
+
+Vol regime at entry (SPY 13-week annualized realized vol):
+
+| | Low (<15%) | Medium (15-25%) | High (>25%) |
+|---|---|---|---|
+| A+ 4/4 fresh entries | **61%** | 31% | 8% |
+| A+ non-4/4 entries | **48%** | 31% | 15% |
+
+4/4 entries cluster significantly more in low-vol trending environments (+13pp) and are half as likely to occur during crisis-level volatility (8% vs 15%). The MA structure requirement is filtering for conditions where trending continues — not just any market state.
+
+This is the key insight: **similar average alpha between A+ 4/4 and A+ non-4/4 is not evidence that the timing signal is useless.** It's evidence that the timing signal is selecting for quieter, more favorable regime conditions and still generating the same alpha — meaning risk-adjusted performance is meaningfully better. You're getting the same return with fewer entries during volatility spikes.
+
+**4/4 does not materially cut the left tail.** At 13w, 19.8% of A+ 4/4 entries finish with alpha below -10%, vs 18.3% for A+ non-4/4. The left-tail protection comes from quality, not timing. What does improve with quality: B/— names at 4/4 produce 26.0% left-tail entries at <-10% alpha vs 19.8% for A+ 4/4 — a real 6pp reduction from quality alone.
+
+### What this means in practice
+
+1. **Don't wait for 4/4 on quality names if the thesis is sound.** A+ quality outside 4/4 has historically performed as well as A+ inside 4/4. The MA filter is a regime/discipline gate — it enforces patience and avoids catching falling knives — but it does not itself generate alpha once quality is established.
+
+2. **The quality grade threshold is load-bearing.** A+ vs A is not a cosmetic distinction — A-grade names with 4/4 structure consistently underperformed SPY in this window. The filter exists for a reason: that one blocking metric is usually correlated with actual business risk that shows up in forward returns.
+
+3. **The framework earns its value at the portfolio level, not the trade level.** Median alpha is +0.6% at 13w — unimpressive per trade. The value is a consistent quality filter that avoids the worst outcomes (left tail) and selects for trending regimes, compounded across many entries over many years.
+
+4. **Survivorship bias is real and acknowledged.** Current universe includes survivors by definition. The A+ filter itself selects for durable businesses — which reduces (but does not eliminate) this bias compared to a random stock selection.
+
+Full breakdown with all four forward windows and the distribution table: [`backtest.html`](https://neurobloomai.github.io/market-tools/backtest.html).
 
 ## Dividend Universe
 
