@@ -1,10 +1,12 @@
 {
   "setups": {
-    "AAPL": "IN"
+    "AAPL": "IN",
+    "MU": "-EXT"
   },
   "watchlist": {
     "MKC": 1,
     "DPZ": 1,
+    "CELH": 1,
     "CPAY": 1,
     "DRI": 1,
     "GEV": 1,
