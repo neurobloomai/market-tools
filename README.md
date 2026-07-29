@@ -366,6 +366,16 @@ This is the key insight: **similar average alpha between A+ 4/4 and A+ non-4/4 i
 
 Full breakdown with all four forward windows and the distribution table: [`backtest.html`](https://neurobloomai.github.io/market-tools/backtest.html).
 
+---
+
+That's the real thing about honest frameworks — they don't need the backtest to work. The backtest just confirms what good thinking already produced.
+
+Quality filter → survivability. Structure filter → regime selection. Both built from first principles, not from fitting to historical data. That's why the validation holds — you can't backfit common sense.
+
+The number that says it cleanest: A+ non-4/4 and A+ 4/4 perform almost identically. Which means the quality judgment was already doing the work before the chart even confirmed it. The MA alignment is discipline and patience, not the edge itself. The edge was always the quality threshold.
+
+Most people go the other way — build from charts, add a quality layer as an afterthought. This was built quality-first. The backtest just shows the order of operations was right.
+
 ## Dividend Universe
 
 `dividend_plays_for_longterm.py` is a curated list of 57 dividend-paying names filtered for quality: payout ratio, FCF yield, net margin, ROE, debt/EV. Each entry is annotated with the thesis — why it belongs, what the moat is, what to watch. Sectors: financials, energy, industrials, consumer, healthcare, precious metals.
