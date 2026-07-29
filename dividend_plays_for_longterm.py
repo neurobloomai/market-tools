@@ -61,6 +61,21 @@ UNIVERSE = [
     # Franchise / consumer
     'MCD',   # McDonald's — 44% OM franchise royalty, 49yr div growth
 
+    # Automotive — thin-margin cyclicals with dividend; D/EV inflated by captive finance arms (structural, not deteriorating)
+    'GM',    # General Motors — Chevrolet, GMC, Cadillac, Buick; ICE dominant + Ultium EV platform;
+             # OM 3.2% (auto assembly is structurally thin — compare to MCD franchise at 44%); NM 1.1%;
+             # D/EV 0.696 is captive finance artifact (GM Financial = ~$120B loan book to fund dealer/consumer credit,
+             # same structural read as PRU insurance liabilities or VZ spectrum debt — not acquisition debt);
+             # yield ~0.9% (low payout, conservative post-2009 lessons); FCF strong;
+             # GM Pro (commercial fleet) + Cadillac margin expansion = path to OM improvement
+    'F',     # Ford Motor — Ford Pro (Transit/Super Duty commercial trucks, highest-margin segment),
+             # Ford Blue (ICE legacy), Ford Model e (EV — currently loss-making, dragging NM negative);
+             # OM 5.7%, NM -3.2% (EV losses structural drag until scale); D/EV 0.808 = Ford Credit captive
+             # finance arm (~$130B AUM lending to dealers + retail buyers), same artifact as GM Financial;
+             # yield ~4% (higher payout than GM — F leans on dividend to attract income investors);
+             # Ford Pro is the crown jewel — fleet penetration in commercial trucks is a durable moat;
+             # gate: Model e losses narrow as EV volume scales + NM turns positive
+
     # Technology with growing dividend
     'TXN',   # Texas Instruments — analog semis, 20yr growth, FCF machine
     'MSFT',  # Microsoft — massive FCF, 20yr+ growth, low yield but compounding
@@ -256,10 +271,10 @@ RECOVERY_TICKERS = {'VFC', 'FMC', 'NWL', 'NKE'}
 def _grade_color(g):
     return {'A+': '#3fb950', 'A': '#58a6ff', 'B': '#d29922'}.get(g, '#8b949e')
 
-def _cell(val, color=None, bold=False):
+def _cell(val, color=None, bold=False, align='right'):
     s = f'color:{color};' if color else ''
     b = 'font-weight:600;' if bold else ''
-    return f'<td style="padding:7px 10px;{s}{b}">{val}</td>'
+    return f'<td style="padding:7px 10px;text-align:{align};{s}{b}">{val}</td>'
 
 def build_dividend_html(rows, aligned_4, aligned_3, below, now):
     n_total   = len(rows)
@@ -329,7 +344,7 @@ def build_dividend_html(rows, aligned_4, aligned_3, below, now):
         hover = f'<tr style="{row_bg}border-bottom:1px solid #21262d14">'
 
         if d is None:
-            return hover + f'<td style="padding:7px 10px">{t}</td>' + '<td colspan="10" style="padding:7px 10px;color:#8b949e">no data</td></tr>'
+            return hover + f'<td style="padding:7px 10px">{t}</td>' + '<td colspan="11" style="padding:7px 10px;color:#8b949e">no data</td></tr>'
 
         ticker_style = 'font-weight:600;'
         if is_recovery:
@@ -360,9 +375,9 @@ def build_dividend_html(rows, aligned_4, aligned_3, below, now):
         return (
             hover
             + ticker_td
-            + _cell(grade_badge(g))
+            + _cell(grade_badge(g), align='left')
             + _cell(ps, '#e6edf3', bold=True)
-            + _cell(ma_badge(ma))
+            + _cell(ma_badge(ma), align='right')
             + _cell(ys, yc)
             + _cell(fs, fc)
             + _cell(pays)
@@ -389,7 +404,7 @@ def build_dividend_html(rows, aligned_4, aligned_3, below, now):
                 if g != last_g:
                     label = g if g != '—' else 'Below threshold'
                     tbl += (
-                        f'<tr class="grp"><td colspan="11" style="padding:6px 10px 4px;'
+                        f'<tr class="grp"><td colspan="12" style="padding:6px 10px 4px;'
                         f'color:#8b949e;font-size:10px;letter-spacing:.06em;text-transform:uppercase;'
                         f'background:#161b22;border-bottom:1px solid #21262d">{label}</td></tr>'
                     )
