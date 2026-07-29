@@ -81,9 +81,22 @@ UNIVERSE = [
     'XYL',   # Xylem — water tech (pumps, treatment, smart metering); ~13% OM, ~1.3% yield, Evoqua acquisition adds scale; D/EV ~0.17, FCF covers dividend; grades A/B depending on yield gate
     'WEC',   # WEC Energy Group — regulated Midwest utility (Wisconsin/Illinois/Michigan); ~3.5% yield, 20yr+ consecutive dividend growth; OM 29%, NM 16%; D/E structural IOU capex (PUC-approved rate base) + FCF negative from grid/AI datacenter buildout; ROE PUC-capped ~11%; DCA name — buy regularly, hold long; AI datacenter load growth in Wisconsin corridor = rate base expansion = higher allowed earnings over time
 
-    # Recovery / future flywheel — watching, not yet qualifying
+    # Recovery / dividend watchlist — yield history exists, not yet qualifying; tracked for gate clearance
     'NKE',   # Nike — OM 6.9%/NM 4.8% abysmal now (DTC transition + China); brand moat intact,
              # SNKRS app + Nike ecosystem = potential network flywheel; watch for margin recovery
+    'VFC',   # VF Corporation — Wrangler, Lee, Timberland, Dickies; 50yr Dividend Aristocrat before cut 2023;
+             # sold Supreme (2024) for debt paydown; D/EV 0.439 now manageable, ROE 22% intact;
+             # OM 3.8% is the only structural gap — cost-out + brand mix stabilization the path;
+             # gate: OM >10% sustained + dividend above $0.50/yr
+    'FMC',   # FMC Corporation — ag-chem (Rynaxypyr insecticide patent = real pricing power globally);
+             # OM went negative (-0.5%) during 2023-24 destocking trough — NOT structural deterioration;
+             # NM -72.9% = goodwill impairments, not operations; D/EV 0.823 elevated, needs delevering;
+             # gate: OM recovery above 15% as destocking normalizes + D/EV below 0.5
+    'NWL',   # Newell Brands — Rubbermaid, Sharpie, Coleman, Yankee Candle, Ball jars;
+             # classic Jarden roll-up debt hangover (2016 merger ~$10B debt); OM 2.7%, D/EV 0.737;
+             # NM -3.9% = goodwill impairments; ~5.3% yield but thin FCF coverage;
+             # brands have real consumer recognition — balance sheet is the problem, not the products;
+             # gate: D/EV below 0.5 + OM above 10% + NM positive
 
     # Consumer internet with dividend
     'MTCH',  # Match Group — Tinder/Hinge/OkCupid portfolio; 27.4% OM, 18.8% NM, FCF yield 9.5% covers 2.14% div, ROA 15.2%, P/E 13.9x; D/EV 0.346 from M&A debt only blocker (structural); grades A+, 4/4 MA aligned

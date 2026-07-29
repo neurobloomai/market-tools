@@ -328,19 +328,6 @@ SIP_WATCHLIST = {
     # --- Packaging / Industrial Dividend ---
     'SW':   'Smurfit Westrock — world\'s largest paper-based packaging company (WestRock + Smurfit Kappa merger 2024); corrugated boxes are durable secular demand — every e-commerce shipment (Amazon, Shopify, retail) needs packaging; ~4% dividend yield, FCF $1.36B positive = dividend is FCF-supported not earnings-dependent (NM 1.2% is thin but payout off earnings is misleading); D/E 78.8 is merger debt overhang — same structural pattern as post-acq industrials, manageable given FCF; OM 6.8%, fwd PE 12.9x; ROE 2.1% and NM block quality screener — tracked here as a dividend/income name, not a compounder; SIP on dips for yield accumulation',
 }
-
-# Dividend watchlist — income names with yield history that don't yet meet SIP_WATCHLIST quality bar.
-# Common themes: dividend cut/suspension, high acquisition debt, margin trough.
-# Track for recovery — gate conditions noted per name. Not for SIP until gates clear.
-DIVIDEND_WATCHLIST = {
-    # --- Apparel / Consumer Brands ---
-    'VFC':  'VF Corporation — Wrangler, Lee, Timberland, Dickies, Vans; was 50yr Dividend Aristocrat before slashing dividend 2023 to fund restructuring; sold Supreme brand (2024) for debt paydown; GrossM 50.8%, OM 3.8% (improving), D/EV 0.439 (debt manageable post-disposals), ROE 22%, RevG +1%; OM is the key blocker — needs to recover toward 15%+ as cost-out program and brand mix stabilize; dividend reinstated at ~2% yield but payout not yet FCF-durable; gate: OM crossing 10%+ sustained + dividend above $0.50/yr; added DIVIDEND_WATCHLIST 2026-07-29',
-    # --- Agricultural Chemicals ---
-    'FMC':  'FMC Corporation — agricultural sciences (Rynaxypyr insecticide = patented active ingredient with global pricing power; Cyazofamid fungicide); secular demand: every acre of global cropland needs crop protection regardless of commodity prices; GrossM 32.1%, OM -0.5% (ag-chem destocking cycle 2023-24 crushed volumes — NOT structural deterioration), NM -72.9% = impairment charges not operations, D/EV 0.823 (elevated, needs to delever), RevG -4.1%; yield ~2.9% maintained through trough; gate: OM recovery above 15% as destocking normalizes + D/EV below 0.5; added DIVIDEND_WATCHLIST 2026-07-29',
-    # --- Consumer Goods / Brands ---
-    'NWL':  'Newell Brands — Rubbermaid, Sharpie, Coleman, Yankee Candle, Ball jars, Calphalon; classic Jarden roll-up debt hangover (2016 merger loaded ~$10B+ debt); GrossM 34.0%, OM 2.7%, NM -3.9% (goodwill impairments), ROE -11.2%, D/EV 0.737, RevG -1.1%; ~5.3% yield but thin FCF coverage — dividend sustainability contingent on margin recovery; brands have genuine consumer recognition and pricing power — the balance sheet is the problem, not the products; gate: D/EV below 0.5 + OM above 10% + NM turning positive; added DIVIDEND_WATCHLIST 2026-07-29',
-}
-
 # Spread universe — tiered by options liquidity
 # Rule: only spread where bid-ask is tight enough that slippage doesn't eat the edge
 # Tier 1 — indices: tightest spreads, no binary risk, no earnings gaps
