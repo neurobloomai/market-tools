@@ -1,0 +1,42 @@
+name: Dividend Screener
+
+on:
+  schedule:
+    - cron: '0 3 * * 1'  # Monday 3:00am UTC (30 min after weekly_us starts, staggered)
+  workflow_dispatch:
+
+jobs:
+  run-dividend-screener:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v7.0.0
+
+      - uses: actions/setup-python@v6.3.0
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install yfinance
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Sync before run
+        run: |
+          git stash --include-untracked || true
+          git pull --rebase origin main || true
+          git stash pop || true
+
+      - name: Run dividend screener
+        run: python dividend_plays_for_longterm.py
+
+      - name: Commit and push
+        run: |
+          git add dividend_screener.html || true
+          git diff --cached --quiet || git commit -m "dividend_screener: $(date -u +'%b %d %Y  %H:%M UTC')"
+          git push || true
