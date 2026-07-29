@@ -61,20 +61,6 @@ UNIVERSE = [
     # Franchise / consumer
     'MCD',   # McDonald's — 44% OM franchise royalty, 49yr div growth
 
-    # Automotive — thin-margin cyclicals with dividend; D/EV inflated by captive finance arms (structural, not deteriorating)
-    'GM',    # General Motors — Chevrolet, GMC, Cadillac, Buick; ICE dominant + Ultium EV platform;
-             # OM 3.2% (auto assembly is structurally thin — compare to MCD franchise at 44%); NM 1.1%;
-             # D/EV 0.696 is captive finance artifact (GM Financial = ~$120B loan book to fund dealer/consumer credit,
-             # same structural read as PRU insurance liabilities or VZ spectrum debt — not acquisition debt);
-             # yield ~0.9% (low payout, conservative post-2009 lessons); FCF strong;
-             # GM Pro (commercial fleet) + Cadillac margin expansion = path to OM improvement
-    'F',     # Ford Motor — Ford Pro (Transit/Super Duty commercial trucks, highest-margin segment),
-             # Ford Blue (ICE legacy), Ford Model e (EV — currently loss-making, dragging NM negative);
-             # OM 5.7%, NM -3.2% (EV losses structural drag until scale); D/EV 0.808 = Ford Credit captive
-             # finance arm (~$130B AUM lending to dealers + retail buyers), same artifact as GM Financial;
-             # yield ~4% (higher payout than GM — F leans on dividend to attract income investors);
-             # Ford Pro is the crown jewel — fleet penetration in commercial trucks is a durable moat;
-             # gate: Model e losses narrow as EV volume scales + NM turns positive
 
     # Technology with growing dividend
     'TXN',   # Texas Instruments — analog semis, 20yr growth, FCF machine
@@ -99,6 +85,16 @@ UNIVERSE = [
     # Recovery / dividend watchlist — yield history exists, not yet qualifying; tracked for gate clearance
     'NKE',   # Nike — OM 6.9%/NM 4.8% abysmal now (DTC transition + China); brand moat intact,
              # SNKRS app + Nike ecosystem = potential network flywheel; watch for margin recovery
+    'GM',    # General Motors — Chevrolet, GMC, Cadillac, Buick; ICE dominant + Ultium EV platform;
+             # OM 3.2% (auto assembly is structurally thin); NM 1.1%;
+             # D/EV 0.696 = GM Financial captive finance arm (~$120B loan book), same structural read as PRU;
+             # yield ~0.9% (low payout, conservative post-2009 lessons); FCF strong;
+             # gate: OM >8% as GM Pro fleet + Cadillac margin mix improve
+    'F',     # Ford Motor — Ford Pro (Transit/Super Duty commercial trucks, highest-margin segment),
+             # Ford Blue (ICE legacy), Ford Model e (EV — currently loss-making, dragging NM negative);
+             # OM 5.7%, NM -3.2% (EV losses); D/EV 0.808 = Ford Credit captive finance arm (~$130B AUM);
+             # yield ~4%; Ford Pro is the crown jewel — fleet penetration in commercial trucks is durable;
+             # gate: Model e losses narrow + NM turns positive
     'VFC',   # VF Corporation — Wrangler, Lee, Timberland, Dickies; 50yr Dividend Aristocrat before cut 2023;
              # sold Supreme (2024) for debt paydown; D/EV 0.439 now manageable, ROE 22% intact;
              # OM 3.8% is the only structural gap — cost-out + brand mix stabilization the path;
@@ -136,6 +132,7 @@ UNIVERSE = [
     'HD',    # Home Depot — home improvement duopoly; 11.9% OM, 2.8% yield, FCF 3.0%, D/EV 0.160, P/E 23.9; B
 
     # REIT — Experiential / Net Lease
+    'EPR',   # EPR Properties — experiential net-lease REIT; owns theaters, ski resorts, attractions, early childhood education (La Petite Academy); triple-net leases = tenants pay taxes/insurance/maintenance, EPR collects rent; OM 51.3%, NM 37.7%, ROE 11.7% (passes gate), FCF 7.1% covers 5.8% yield (MOS +1.3%); D/EV 0.392 only blocker — REIT structure debt secured against experiential properties, same read as VICI; judge by AFFO coverage not GAAP earnings; added 2026-07-29
     'VICI',  # VICI Properties — largest gaming/experiential REIT; Caesars (45%), MGM, Venetian, Hard Rock; 15-20yr triple-net leases with CPI escalators = built-in inflation hedge; ~5.5% yield, payout 61% AFFO (conservative for REIT), FCF $1.28B; zero tenant defaults since 2017 IPO; moat = gaming license tied to location (tenants can't relocate); SIP for yield compounding; ROE/D/E block standard filter — REIT-structure artifacts, judge by AFFO coverage and dividend growth
 
     # BDC — Business Development Company
@@ -266,7 +263,7 @@ def passes_filter(d):
 
 # ─── HTML Output ─────────────────────────────────────────────────────────────
 
-RECOVERY_TICKERS = {'VFC', 'FMC', 'NWL', 'NKE'}
+RECOVERY_TICKERS = {'VFC', 'FMC', 'NWL', 'NKE', 'GM', 'F'}
 
 def _grade_color(g):
     return {'A+': '#3fb950', 'A': '#58a6ff', 'B': '#d29922'}.get(g, '#8b949e')
