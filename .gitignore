@@ -34,3 +34,4 @@ schwab_client.py
 schwab_auth.py
 .schwab_token.json
 .yf_cache.sqlite
+!dividend_screener.html

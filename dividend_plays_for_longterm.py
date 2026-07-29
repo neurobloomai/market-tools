@@ -249,6 +249,191 @@ def passes_filter(d):
     return True
 
 
+# ─── HTML Output ─────────────────────────────────────────────────────────────
+
+RECOVERY_TICKERS = {'VFC', 'FMC', 'NWL', 'NKE'}
+
+def _grade_color(g):
+    return {'A+': '#3fb950', 'A': '#58a6ff', 'B': '#d29922'}.get(g, '#8b949e')
+
+def _cell(val, color=None, bold=False):
+    s = f'color:{color};' if color else ''
+    b = 'font-weight:600;' if bold else ''
+    return f'<td style="padding:7px 10px;{s}{b}">{val}</td>'
+
+def build_dividend_html(rows, aligned_4, aligned_3, below, now):
+    n_total   = len(rows)
+    n_4       = len(aligned_4)
+    n_aplus   = sum(1 for *_, g, ok in aligned_4 if g == 'A+')
+    n_a       = sum(1 for *_, g, ok in aligned_4 if g == 'A')
+    n_passing = sum(1 for *_, g, ok in aligned_4 if ok)
+
+    def stat(label, val, color='#e6edf3'):
+        return (
+            '<div style="background:#161b22;border:1px solid #21262d;border-radius:8px;'
+            'padding:12px 20px;text-align:center">'
+            f'<div style="font-size:22px;font-weight:700;color:{color}">{val}</div>'
+            f'<div style="font-size:11px;color:#8b949e;margin-top:3px">{label}</div>'
+            '</div>'
+        )
+
+    stats_html = (
+        '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px">'
+        + stat('Universe', n_total)
+        + stat('4/4 Aligned', n_4, '#58a6ff')
+        + stat('A+ (4/4)', n_aplus, '#3fb950')
+        + stat('A (4/4)', n_a, '#58a6ff')
+        + stat('Passes Filter', n_passing, '#3fb950')
+        + '</div>'
+    )
+
+    tbl_style = (
+        'width:100%;border-collapse:collapse;font-size:12px;'
+        'background:#0d1117;margin-bottom:32px'
+    )
+    th_style  = 'padding:8px 10px;text-align:right;color:#8b949e;font-weight:400;border-bottom:1px solid #21262d;font-size:11px'
+    th_left   = th_style.replace('right', 'left')
+
+    th_center = th_style.replace('right', 'center')
+
+    def table_header():
+        cols   = ['Ticker','Gr','Price','MA','Yield','FCF%','Payout','OM%','D/EV','P/E','Filter']
+        aligns = ['left','left'] + ['right']*8 + ['center']
+        ths = ''
+        for c, a in zip(cols, aligns):
+            sty = th_left if a == 'left' else (th_center if a == 'center' else th_style)
+            ths += '<th style="' + sty + '">' + c + '</th>'
+        return '<thead><tr>' + ths + '</tr></thead>'
+
+    def grade_badge(g):
+        c = _grade_color(g)
+        return (
+            f'<span style="background:{c}22;color:{c};border:1px solid {c}44;'
+            f'border-radius:4px;padding:1px 6px;font-size:11px;font-weight:600">{g}</span>'
+        )
+
+    def ma_badge(ma):
+        c = '#3fb950' if ma == 4 else '#d29922' if ma == 3 else '#8b949e'
+        return f'<span style="color:{c};font-weight:600">{ma}/4</span>'
+
+    def html_row(t, p, ma, d, g, ok):
+        is_recovery = t in RECOVERY_TICKERS
+        row_bg = ''
+        if g == 'A+' and ok:
+            row_bg = 'background:rgba(63,185,80,0.05);'
+        elif g == 'A' and ok:
+            row_bg = 'background:rgba(88,166,255,0.04);'
+        elif is_recovery:
+            row_bg = 'background:rgba(248,81,73,0.03);'
+
+        hover = f'<tr style="{row_bg}border-bottom:1px solid #21262d14">'
+
+        if d is None:
+            return hover + f'<td style="padding:7px 10px">{t}</td>' + '<td colspan="10" style="padding:7px 10px;color:#8b949e">no data</td></tr>'
+
+        ticker_style = 'font-weight:600;'
+        if is_recovery:
+            ticker_style += 'color:#f0883e;'
+        ticker_td = f'<td style="padding:7px 10px;{ticker_style}">{t}</td>'
+
+        yc = '#3fb950' if d['div_yield'] >= 3.5 else '#d29922' if d['div_yield'] >= 2.0 else '#8b949e'
+        fc = '#3fb950' if d['fcf_yield'] >= d['div_yield'] else '#f85149' if d['fcf_yield'] <= 0 else '#d29922'
+        oc = '#3fb950' if d['om'] >= 25 else '#58a6ff' if d['om'] >= 15 else '#d29922' if d['om'] >= 8 else '#f85149'
+        dc = '#3fb950' if d['dev'] <= 0.10 else '#d29922' if d['dev'] <= 0.30 else '#f85149'
+
+        ys   = f"{d['div_yield']:.1f}%" if d['div_yield'] > 0 else '—'
+        fs   = f"{d['fcf_yield']:.1f}%"
+        pays = f"{d['payout']:.0f}%"   if d['payout'] > 0 else '—'
+        oms  = f"{d['om']:.1f}%"
+        ds   = f"{d['dev']:.3f}"
+        pes  = f"{d['pe']:.1f}x"       if d['pe'] else '—'
+        flag = '<span style="color:#3fb950">✓</span>' if ok else '<span style="color:#f85149">✗</span>'
+        ps   = f'${p:.2f}'
+
+        return (
+            hover
+            + ticker_td
+            + _cell(grade_badge(g))
+            + _cell(ps, '#e6edf3', bold=True)
+            + _cell(ma_badge(ma))
+            + _cell(ys, yc)
+            + _cell(fs, fc)
+            + _cell(pays)
+            + _cell(oms, oc)
+            + _cell(ds, dc)
+            + _cell(pes)
+            + f'<td style="padding:7px 10px;text-align:center">{flag}</td>'
+            + '</tr>'
+        )
+
+    def section(title, section_rows, grade_groups=False):
+        if not section_rows:
+            return ''
+        hdr = (
+            f'<div style="font-size:13px;font-weight:600;color:#e6edf3;margin-bottom:10px">'
+            f'{title} <span style="color:#8b949e;font-weight:400">({len(section_rows)} names)</span></div>'
+        )
+        tbl = f'<table style="{tbl_style}">' + table_header() + '<tbody>'
+
+        if grade_groups:
+            last_g = None
+            for t, p, ma, d, g, ok in section_rows:
+                if g != last_g:
+                    label = g if g != '—' else 'Below threshold'
+                    tbl += (
+                        f'<tr class="grp"><td colspan="11" style="padding:6px 10px 4px;'
+                        f'color:#8b949e;font-size:10px;letter-spacing:.06em;text-transform:uppercase;'
+                        f'background:#161b22;border-bottom:1px solid #21262d">{label}</td></tr>'
+                    )
+                    last_g = g
+                tbl += html_row(t, p, ma, d, g, ok)
+        else:
+            for t, p, ma, d, g, ok in section_rows:
+                tbl += html_row(t, p, ma, d, g, ok)
+
+        tbl += '</tbody></table>'
+        return hdr + tbl
+
+    legend = (
+        '<div style="font-size:11px;color:#8b949e;margin-bottom:24px;line-height:1.8">'
+        '<span style="color:#3fb950">✓</span> passes all filter gates &nbsp;·&nbsp; '
+        '<span style="color:#f85149">✗</span> one or more gates failing &nbsp;·&nbsp; '
+        '<span style="color:#f0883e">orange ticker</span> = recovery/watchlist (tracked, not yet qualifying) &nbsp;·&nbsp; '
+        'Filter gates: yield ≥1.5% · FCF>0 · OM≥8% · D/EV≤0.30 · ROE or ROA ≥10%'
+        '</div>'
+    )
+
+    body = (
+        stats_html
+        + legend
+        + section('4/4 MA ALIGNED', aligned_4, grade_groups=True)
+        + section('3/4 NEAR-ALIGNED', aligned_3)
+        + section('BELOW STRUCTURE', below)
+    )
+
+    return f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dividend Screener — {now}</title>
+<style>
+  body{{background:#0d1117;color:#e6edf3;font-family:'SF Mono','Fira Code',monospace;font-size:13px;padding:28px 32px;margin:0}}
+  h1{{font-size:16px;font-weight:600;margin:0 0 4px}}
+  .sub{{color:#8b949e;font-size:12px;margin-bottom:20px}}
+  table td,table th{{border-bottom:1px solid #21262d22}}
+  tr:hover td{{background:#161b2288}}
+  a{{color:#58a6ff;text-decoration:none}}
+</style>
+</head>
+<body>
+<h1>Dividend &amp; Income Screener</h1>
+<div class="sub">{now} UTC &nbsp;·&nbsp; {n_total} names tracked</div>
+{body}
+</body>
+</html>'''
+
+
 # ─── Main ────────────────────────────────────────────────────────────────────
 
 if __name__ == '__main__':
@@ -334,3 +519,21 @@ if __name__ == '__main__':
     print(f'  A+ aligned: {sum(1 for t,p,ma,d,g,ok in aligned_4 if g=="A+")}'
           f'   A: {sum(1 for t,p,ma,d,g,ok in aligned_4 if g=="A")}')
     print()
+
+    # HTML output
+    import os, subprocess
+    html = build_dividend_html(rows, aligned_4, aligned_3, below, now)
+    out  = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dividend_screener.html')
+    with open(out, 'w') as f:
+        f.write(html)
+    print(f'  Saved → {out}')
+
+    # Git push
+    try:
+        repo = os.path.dirname(os.path.abspath(__file__))
+        subprocess.run(['git', 'add', 'dividend_screener.html'], cwd=repo, check=True)
+        subprocess.run(['git', 'commit', '-m', f'dividend_screener: {now} UTC'], cwd=repo, check=True)
+        subprocess.run(['git', 'push', 'origin', 'main'], cwd=repo, check=True)
+        print('  Pushed → GitHub')
+    except subprocess.CalledProcessError as e:
+        print(f'  Git push skipped: {e}')
