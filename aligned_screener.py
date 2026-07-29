@@ -55,6 +55,8 @@ CYCLICALS = {
     'EQT', 'AR', 'RRC',
     # Materials / metals
     'FCX', 'NUE', 'CLF', 'X', 'NEM', 'AEM', 'WPM', 'MOS', 'CF',
+    # Met coal — steel production input cycle
+    'AMR',
     # Industrials — capex / construction cycle
     'CAT', 'DE', 'CMI', 'EMR',
 }
@@ -440,7 +442,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
                        special_mention, now, UNIVERSE, WATCHLIST, m_cmf_map=None,
                        daily_squeezed=None, monthly_squeezed=None, mtf_set=None,
                        pullback_watch=None, cycle_watch=None, CYCLICALS=None,
-                       short_map=None, squeeze_watch=None):
+                       short_map=None, squeeze_watch=None, sector_map=None):
 
     def src_tag(t):
         return 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
@@ -767,6 +769,50 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
     n_aplus = sum(1 for _, g in zip(aligned, grades) if g == 'A+')
     n_a     = sum(1 for _, g in zip(aligned, grades) if g == 'A')
 
+    # Sector heatmap
+    _sm = sector_map or {}
+    _ABBREV = {
+        'Technology': 'Technology', 'Industrials': 'Industrials',
+        'Healthcare': 'Healthcare', 'Financial Services': 'Financials',
+        'Consumer Cyclical': 'Cons. Cyc.', 'Consumer Defensive': 'Cons. Def.',
+        'Basic Materials': 'Materials', 'Communication Services': 'Comms',
+        'Energy': 'Energy', 'Real Estate': 'Real Estate', 'Utilities': 'Utilities',
+    }
+    from collections import defaultdict
+    _sec_counts = defaultdict(lambda: {'n': 0, 'aplus': 0, 'a': 0})
+    for r, g in zip(aligned, grades):
+        sec = _sm.get(r['t'], '')
+        if sec:
+            _sec_counts[sec]['n'] += 1
+            if g == 'A+': _sec_counts[sec]['aplus'] += 1
+            elif g == 'A': _sec_counts[sec]['a'] += 1
+
+    def _heatmap_tile(sec, d):
+        label = _ABBREV.get(sec, sec)
+        n, ap, a = d['n'], d['aplus'], d['a']
+        bar_w = max(4, int(n / max(v['n'] for v in _sec_counts.values()) * 80))
+        a_span = ('<span style="color:#58a6ff">A:' + str(a) + '</span>') if a else ''
+        return (
+            '<div style="background:#161b22;border:1px solid #21262d;border-radius:8px;'
+            'padding:10px 14px;min-width:120px;flex:0 0 auto">'
+            '<div style="color:#8b949e;font-size:10px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px">' + label + '</div>'
+            '<div style="color:#3fb950;font-size:20px;font-weight:600">' + str(n) + '</div>'
+            '<div style="height:3px;background:#21262d;border-radius:2px;margin:4px 0">'
+            '<div style="width:' + str(bar_w) + '%;height:100%;background:#3fb950;border-radius:2px"></div></div>'
+            '<div style="font-size:10px;color:#8b949e">'
+            '<span style="color:#3fb950">A+:' + str(ap) + '</span>'
+            + ('&nbsp;&nbsp;' + a_span if a_span else '') +
+            '</div></div>'
+        )
+
+    _sorted_secs = sorted(_sec_counts.items(), key=lambda x: -x[1]['n'])
+    _heatmap_tiles = ''.join(_heatmap_tile(s, d) for s, d in _sorted_secs)
+    sector_heatmap_html = (
+        f'<div class="sh">Sector Heatmap — 4/4 Aligned Quality Universe</div>'
+        f'<div style="color:#8b949e;font-size:11px;margin-bottom:8px">Where structural strength is concentrating inside our quality universe right now — not a market-wide sector view</div>'
+        f'<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">{_heatmap_tiles}</div>'
+    ) if _sec_counts else ''
+
     css = """
       *{box-sizing:border-box;margin:0;padding:0}
       body{background:#0d1117;color:#e6edf3;font-family:'SF Mono','Fira Code',monospace;font-size:13px;padding:28px 32px}
@@ -839,6 +885,7 @@ def build_aligned_html(valid, aligned, grades, partial, promos,
   <div class="stat"><div class="stat-val" style="color:{'#f85149' if _sqz_watch else '#484f58'}">{"⚡ " if _sqz_watch else ""}{len(_sqz_watch)}</div><div class="stat-lbl">Short Squeeze</div></div>
 </div>
 
+{sector_heatmap_html}
 {mtf_section}
 {swing_section}
 <div class="sh">4/4 Aligned — {len(aligned)} names</div>
@@ -960,6 +1007,13 @@ def short_data_ticker(ticker):
     except Exception:
         return (None, None)
 
+def sector_ticker(ticker):
+    try:
+        d = get_fundamentals(ticker)
+        return d.get('sector', 'Unknown') if d else 'Unknown'
+    except Exception:
+        return 'Unknown'
+
 def auto_promote_tickers(promos, repo_path):
     """
     Auto-promote qualifying watchlist names to UNIVERSE in screener.py.
@@ -1011,6 +1065,104 @@ def auto_promote_tickers(promos, repo_path):
     status = 'committed' if result.returncode == 0 else f'commit failed: {result.stderr.strip()}'
     print(f"\n  AUTO-PROMOTED → UNIVERSE: {tickers_str}  ({status})")
 
+
+def auto_promote_from_radar(repo_path):
+    """
+    Check FUTURE_RADAR names each run. Promote to WATCHLIST if ≤ 2 filters blocking
+    (graduating from 'too early' to 'future contender'). Promote directly to UNIVERSE
+    if passes_quality_filter() fully. Edits screener.py in-place and commits.
+    """
+    from screener import get_fundamentals, passes_quality_filter, quality_grade, failing_filters, FUTURE_RADAR
+    import re, subprocess
+    from pathlib import Path
+    from datetime import date
+
+    if not FUTURE_RADAR:
+        return
+
+    radar_tickers = list(FUTURE_RADAR.keys())
+    print(f"  Checking {len(radar_tickers)} FUTURE_RADAR names for promotion/deterioration ...", flush=True)
+
+    to_universe, to_watchlist, deteriorating = [], [], []
+    for t in radar_tickers:
+        d = get_fundamentals(t)
+        if d is None:
+            continue
+        if passes_quality_filter(d):
+            to_universe.append((t, quality_grade(d)))
+        else:
+            fails = failing_filters(d)
+            if len(fails) <= 2:
+                to_watchlist.append((t, quality_grade(d), fails))
+            # Deterioration check — survival risk signals
+            reasons = []
+            dev  = d.get('debt_to_ev')
+            fcf  = d.get('fcf_yield')
+            revg = d.get('rev_growth')
+            om   = d.get('operating_margin')
+            if dev  is not None and dev  > 1.5:  reasons.append(f'D/EV {dev:.2f} (>1.5 — debt dominates EV)')
+            if fcf  is not None and fcf  < -10:  reasons.append(f'FCF {fcf:.1f}% (<-10% — burning cash fast)')
+            if revg is not None and revg < -20:  reasons.append(f'RevG {revg:.1f}% (<-20% — revenue collapsing)')
+            if om   is not None and om   < -50:  reasons.append(f'OM {om:.1f}% (<-50% — deeply loss-making)')
+            if reasons:
+                deteriorating.append((t, reasons))
+
+    if not to_universe and not to_watchlist:
+        print(f"  FUTURE_RADAR — no promotions this run")
+
+    if deteriorating:
+        print(f"\n  ⚠  FUTURE_RADAR DETERIORATION FLAG — {len(deteriorating)} name(s) showing survival risk:")
+        print(f"  {'─'*64}")
+        for t, reasons in deteriorating:
+            print(f"  ⚠  {t}: {' · '.join(reasons)}")
+            print(f"       → consider removing from FUTURE_RADAR if trend continues")
+        print()
+
+    if not to_universe and not to_watchlist:
+        return
+
+    screener_path = Path(repo_path) / 'screener.py'
+    src = screener_path.read_text()
+    today = date.today().strftime('%Y-%m-%d')
+    promoted = []
+
+    for t, g in to_universe:
+        note = FUTURE_RADAR.get(t, '')
+        short_note = note.split(';')[0].strip() if note else t
+        # Remove from FUTURE_RADAR dict
+        src = re.sub(rf"^\s+'{re.escape(t)}':[^\n]+\n", '', src, flags=re.MULTILINE)
+        # Add to UNIVERSE before closing ]
+        pad  = ' ' * max(1, 24 - len(t))
+        entry = f"    '{t}',{pad}# {short_note}; auto-promoted from FUTURE_RADAR {today} [grade {g}]\n"
+        src = re.sub(r'(\])\n(\n# Future contenders)', rf'{entry}]\n\2', src, count=1)
+        if t not in UNIVERSE:
+            UNIVERSE.append(t)
+        promoted.append(f'{t}→UNIVERSE')
+        print(f"  AUTO-PROMOTED → UNIVERSE: {t} (grade {g}) — passes all quality filters")
+
+    for t, g, fails in to_watchlist:
+        note = FUTURE_RADAR.get(t, '')
+        short_note = note.split(';')[0].strip() if note else t
+        blocker_str = ', '.join(f"{n} {v}" for n, v, _ in fails)
+        # Remove from FUTURE_RADAR dict
+        src = re.sub(rf"^\s+'{re.escape(t)}':[^\n]+\n", '', src, flags=re.MULTILINE)
+        # Add to WATCHLIST before its closing ]
+        pad  = ' ' * max(1, 8 - len(t))
+        entry = f"    '{t}',{pad}# {short_note}; auto-promoted from FUTURE_RADAR {today} [grade {g}, blocking: {blocker_str}]\n"
+        src = re.sub(r'(\])\n(\n# Future radar)', rf'{entry}]\n\2', src, count=1)
+        if t not in WATCHLIST:
+            WATCHLIST.append(t)
+        promoted.append(f'{t}→WATCHLIST')
+        print(f"  AUTO-PROMOTED → WATCHLIST: {t} (grade {g}) — {len(fails)} blocker(s): {blocker_str}")
+
+    screener_path.write_text(src)
+    tickers_str = ', '.join(promoted)
+    commit_msg = (f"screener: auto-promote from FUTURE_RADAR: {tickers_str}\n\n"
+                  f"Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>")
+    subprocess.run(['git', 'add', 'screener.py'], cwd=repo_path, capture_output=True)
+    result = subprocess.run(['git', 'commit', '-m', commit_msg], cwd=repo_path, capture_output=True, text=True)
+    status = 'committed' if result.returncode == 0 else f'commit failed: {result.stderr.strip()}'
+    print(f"  FUTURE_RADAR promotions: {tickers_str}  ({status})")
 
 
 def sm_signal(rs, mcmf_trend):
@@ -1095,6 +1247,11 @@ if __name__ == '__main__':
     with ThreadPoolExecutor(max_workers=10) as ex:
         short_data = list(ex.map(short_data_ticker, aligned_tickers))
     short_map = {t: sd for t, sd in zip(aligned_tickers, short_data)}
+
+    # Sector heatmap — cache hits, get_fundamentals already called above
+    with ThreadPoolExecutor(max_workers=10) as ex:
+        sector_data = list(ex.map(sector_ticker, aligned_tickers))
+    sector_map = dict(zip(aligned_tickers, sector_data))
 
     now     = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
     aplus   = [(r['t'], r['p'], g) for r, g in zip(aligned, grades) if g == 'A+']
@@ -1192,6 +1349,7 @@ if __name__ == '__main__':
 
     repo_path = os.path.dirname(os.path.abspath(__file__))
     auto_promote_tickers(promos, repo_path)
+    auto_promote_from_radar(repo_path)
 
     print(f"\n  WATCHLIST PROMOTION CANDIDATES — {len(promos)} qualifying")
     print(f"  {'─'*48}")
@@ -1460,7 +1618,8 @@ if __name__ == '__main__':
                                   cycle_watch=cycle_watch_data,
                                   CYCLICALS=CYCLICALS,
                                   short_map=short_map,
-                                  squeeze_watch=squeeze_watch)
+                                  squeeze_watch=squeeze_watch,
+                                  sector_map=sector_map)
     out_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'aligned_screener.html')
     with open(out_path, 'w') as f:
         f.write(html)
