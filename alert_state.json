@@ -1,12 +1,12 @@
 {
   "setups": {
-    "AAPL": "IN",
     "MU": "-EXT"
   },
   "watchlist": {
     "MKC": 1,
     "DPZ": 1,
     "CELH": 1,
+    "STNE": 1,
     "CPAY": 1,
     "DRI": 1,
     "GEV": 1,
@@ -30,6 +30,9 @@
     "AMD": 1,
     "TOST": 1,
     "FTAI": 1,
-    "ENPH": 1
+    "ENPH": 1,
+    "TPL": 1,
+    "ACAD": 1,
+    "PGY": 1
   }
 }
