@@ -8,11 +8,29 @@ Run: python internal_dividend.py
 import yfinance as yf
 import math
 import time
+import json
+import os
 import warnings
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 
 warnings.filterwarnings('ignore')
+
+_CACHE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dividend_data_cache.json')
+
+def _load_cache():
+    try:
+        with open(_CACHE_FILE) as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def _save_cache(cache):
+    try:
+        with open(_CACHE_FILE, 'w') as f:
+            json.dump(cache, f, indent=2)
+    except Exception:
+        pass
 
 
 def _fetch(ticker, fn, retries=3):
@@ -482,9 +500,25 @@ if __name__ == '__main__':
 
     price_map = {t: (p, s) for r in ma_results if r for t, p, s in [r]}
 
+    cache = _load_cache()
+
     print(f'  Fetching dividend data ...', flush=True)
     with ThreadPoolExecutor(max_workers=5) as ex:
-        fund_results = {t: d for t, d in zip(UNIVERSE, ex.map(get_data, UNIVERSE))}
+        fresh = {t: d for t, d in zip(UNIVERSE, ex.map(get_data, UNIVERSE))}
+
+    fund_results = {}
+    for t in UNIVERSE:
+        d = fresh.get(t)
+        if d is not None:
+            cache[t] = d          # update cache with fresh data
+            fund_results[t] = d
+        elif t in cache:
+            fund_results[t] = cache[t]   # rate-limited — use last good data
+            print(f'  [{t}] yfinance miss — using cached data', flush=True)
+        else:
+            fund_results[t] = None
+
+    _save_cache(cache)
 
     # Build full result list
     rows = []
@@ -570,7 +604,7 @@ if __name__ == '__main__':
     # Git push
     try:
         repo = os.path.dirname(os.path.abspath(__file__))
-        subprocess.run(['git', 'add', 'dividend_screener.html'], cwd=repo, check=True)
+        subprocess.run(['git', 'add', 'dividend_screener.html', 'dividend_data_cache.json'], cwd=repo, check=True)
         subprocess.run(['git', 'commit', '-m', f'dividend_screener: {now} UTC'], cwd=repo, check=True)
         subprocess.run(['git', 'push', 'origin', 'main'], cwd=repo, check=True)
         print('  Pushed → GitHub')
