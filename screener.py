@@ -152,7 +152,7 @@ UNIVERSE = [
     'ROL','CTAS','CPRT','ADP','PAYX','EFX','TRI','IHS','VRSK','IT',
     'MU','MPWR','MRVL','ITW','ROP','SYK','BSX','AMZN','APP',
     'MTD','MANH','FAST','POOL','NVR','DHI','LEN','TOL','DOCS','MKTX','ACGL',
-    'CHD','CL','HSY','TJX','GIS','NFLX','LULU','WSM','KMB','DECK',
+    'CHD','CL','HSY','TJX','GIS','NFLX','LULU','WSM','KMB','DECK','RL',
     'COCO',                         # Vita Coco — coconut water category creator (60%+ US market share); asset-light distributor model; RevG 28.1%, GM 41%, OM 29.2% (rare for F&B), NM 15.5%, ROE 31.4%, D/EV 0.4%, FCF $105M — A+ all 7 filters; same playbook as MNST at earlier stage; 3/4 MA at add, sitting on MA20w ~$65.68 support after -21.5% pullback; gate to 4/4: MA10w reclaim above ~$74
     'HWM','FSLR','PLAB',           # promoted from watchlist — pass all quality filters
     'WPM',                        # Wheaton Precious Metals — streaming model, 85% gross/65% net margin, zero debt, A+
