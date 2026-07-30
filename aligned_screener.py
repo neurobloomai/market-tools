@@ -54,7 +54,7 @@ CYCLICALS = {
     # Natural gas E&P — pure commodity price exposure
     'EQT', 'AR', 'RRC',
     # Materials / metals
-    'FCX', 'NUE', 'CLF', 'X', 'NEM', 'AEM', 'WPM', 'MOS', 'CF',
+    'FCX', 'NUE', 'CLF', 'NEM', 'AEM', 'WPM', 'MOS', 'CF',  # X removed — acquired by Nippon Steel, delisted
     # Met coal — steel production input cycle
     'AMR',
     # Industrials — capex / construction cycle
