@@ -5011,7 +5011,8 @@
     "fy1_growth": 124.7,
     "price_vs_ma200": -10.3,
     "short_pct_float": 10.6,
-    "days_to_cover": 8.2
+    "days_to_cover": 8.2,
+    "grade": "A+"
   },
   "COHR": {
     "ticker": "COHR",
