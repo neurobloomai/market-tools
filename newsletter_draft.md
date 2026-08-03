@@ -1,36 +1,37 @@
-**Subject:** Market Pulse — Week ending Jul 24 2026 · Mixed / Breadth Diverging
+**Subject:** Market Pulse — Week ending Jul 31 2026 · Mixed / Breadth Diverging
 
 ---
 
 **POSTURE**
 
-US: 47.8% above MA20, 63.9% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 20 names Fully Stacked. India: 48.7% above MA20, 60.3% above MA100 — mixed, structure holding. 13 names Fully Stacked.
+US: 45.9% above MA20, 65.7% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 17 names Fully Stacked. India: 48.7% above MA20, 60.3% above MA100 — mixed, structure holding. 13 names Fully Stacked.
 
 
 **WHAT MOVED**
 
-Entered Fully Stacked — Universe: UNH
-Entered Fully Stacked — Watchlist: AMG, VCYT
-Left Fully Stacked — Universe: LLY, JNJ, CB, CINF, FAST, ACGL, CL, KMB, DXCM
+Entered Fully Stacked — Universe: FTNT, AMZN, FAST, HWM, ETN, ANET, DXCM
+Entered Fully Stacked — Watchlist: S
+Left Fully Stacked — Universe: AAPL, UNH, ABBV, TOL, KRYS, NBIX
+Left Fully Stacked — Watchlist: VCYT, BIIB
 
 **SETUPS WORTH WATCHING**
 
-**MU** [Universe] — weekly gate open, IN, -9.8% vs MA10w, W.slope +42.10
-**AAPL** [Universe] — weekly gate open, IN, +6.8% vs MA10w, W.slope +9.74
+**MU** [Universe] — weekly gate open, -EXT, -14.5% vs MA10w, W.slope +37.08
+**AAPL** [Universe] — weekly gate open, -EXT, -0.1% vs MA10w, W.slope +7.36
 
 **WATCHLIST WATCH**
 
-**ABBV** — ROE/ROA: ROA 10.0% (gate ≥ 10% / ≥ 15%)
-  _Allergan amortization masking strong cash earnings_
-**AMG** — Debt/EV: 0.234 (gate ≤ 0.20)
-  _multi-boutique AM (AQR, Tweedy Browne etc.)_
+**AMSC** — Op Margin: 5.1% (gate ≥ 10%)
+  _power electronics, grid/defense_
+**BMY** — Debt/EV: 0.269 (gate ≤ 0.20)
+  _de-lever + profit growth play_
 
 **ONE THOUGHT**
 
-The breadth picture reveals a market where long-term structure remains more durable than short-term momentum—nearly 64% of names hold their 100-day averages while only 48% clear their 20-day—which typically signals consolidation rather than deterioration. The nine names that exited Fully Stacked status this week were all quality compounders (LLY, JNJ, UNH peers), suggesting profit-taking in leadership rather than fundamental breakdown. What's notable is the fresh additions (UNH, AMG, VCYT) alongside two near-term promotions waiting on single blockers; the market is rotating within quality rather than rotating away from it. For investors holding names that have pulled back to their moving averages, the data supports that these are structural holds masking tactical weakness, not signals of deteriorating merit.
+The composition shift in Fully Stacked is worth noting: eight names exited while eight entered, but the exits included defensive mega-caps (AAPL, UNH) and biotech plays (BIIB, NBIX, VCYT) while entries skewed toward infrastructure, cybersecurity, and logistics (FTNT, FAST, ANET, ETN). The long-term structure remains intact across both markets, yet the market is rotating away from names that had anchored confidence, suggesting conviction is narrowing rather than broadening—a posture that typically demands higher selectivity before committing fresh capital.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-07-30 17:26 UTC · Not financial advice_
+_Draft generated 2026-08-03 06:05 UTC · Not financial advice_
