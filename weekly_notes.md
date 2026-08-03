@@ -7,16 +7,16 @@ Run `python weekly_snapshot.py` each week to refresh. History is in git.
 
 ## Week of Aug 03 2026
 
-### 4/4 Aligned — 75 names
+### 4/4 Aligned — 77 names
 
-**Universe (61):** ABBV, ABNB, ACGL, ADP, AFL, ALL, AMZN, ANET, AON, AVGO, BLK, BMRN, BRK-B, CASH, CB, CBOE, CF, CHD, CINF, CL, CRWD, CTAS, DDOG, DXCM, ETN, EXPD, FAST, FFIV, FTNT, GOOGL, HEI, HIG, HWM, INCY, ITW, JNJ, JPM, LGND, MA, MANH, MCO, MNST, MPWR, MRK, MSFT, MTD, NDAQ, PANW, SCHW, SEZL, TMO, TRV, UNH, V, VCTR, VRSN, VRTX, WSM, WST, WTW, ZM
+**Universe (62):** ABBV, ABNB, ACGL, ADP, AFL, ALL, AMZN, ANET, AON, AVGO, BLK, BMRN, BRK-B, CASH, CB, CBOE, CF, CHD, CINF, CL, CRWD, CTAS, DDOG, DXCM, ETN, EXPD, FAST, FFIV, FTNT, GOOGL, HEI, HIG, HWM, INCY, ITW, JNJ, JPM, LGND, MA, MANH, MCO, MNST, MPWR, MRK, MSFT, MTD, NDAQ, PANW, SCHW, SEZL, TMO, TRV, UNH, V, VCTR, VIRT, VRSN, VRTX, WSM, WST, WTW, ZM
 
-**Watchlist (14):** ACAD, AMG, APD, BMY, CPAY, EXPE, LNG, MDB, NET, PGY, RPRX, S, SNOW, TGTX
+**Watchlist (15):** ACAD, AMG, APD, BMY, CPAY, EXPE, LNG, MDB, NET, PGY, RJF, RPRX, S, SNOW, TGTX
 
 
-### 3/4 Near-Aligned — 49 names
+### 3/4 Near-Aligned — 51 names
 
-AAPL, AJG, ALAB, AMAT, AMD, ASML, AXON, BIIB, BILL, CRDO, DRI, DVN, ESE, EW, FCX, FDS, FROG, GTLB, IBKR, IOT, JBHT, KMB, KRYS, LLY, MKTX, MU, NBIX, NVDA, NVO, NVT, PAYC, PAYX, PRGS, PWR, PYPL, RL, RLI, ROP, RRC, SSNC, STNE, TER, TJX, TOL, TOST, TPL, TSM, TXN, VCYT
+AAPL, AJG, ALAB, AMAT, AMD, ASML, AXON, BIIB, BILL, CRDO, DRI, DVN, ESE, EW, FCX, FDS, FROG, GTLB, IBKR, IOT, JBHT, KMB, KRYS, LLY, MKTX, MU, NBIX, NVDA, NVO, NVT, PAYC, PAYX, PRGS, PWR, PYPL, QRVO, RL, RLI, ROP, RRC, SLAB, SSNC, STNE, TER, TJX, TOL, TOST, TPL, TSM, TXN, VCYT
 
 
 ### Tightest Coils — FullCoil ≤ 5%
@@ -35,6 +35,7 @@ AAPL, AJG, ALAB, AMAT, AMD, ASML, AXON, BIIB, BILL, CRDO, DRI, DVN, ESE, EW, FCX
 | **ITW** | [U] | 4/4 | 2.8% | 1.6% | 1.1x | ↑ |
 | **COST** | [W] | 1/4 | 2.9% | 2.9% | 0.7x | ↓ |
 | **WEC** | [W] | 1/4 | 3.0% | 0.2% | 0.9x | ↑ |
+| **RJF** | [W] | 4/4 | 3.1% | 3.1% | 1.1x | ↑ |
 | **PGR** | [U] | 2/4 | 3.2% | 3.2% | 0.8x | ↑ |
 | **AON** | [U] | 4/4 | 3.3% | 3.3% | 0.8x | ↑ |
 | **BMRN** | [U] | 4/4 | 3.4% | 3.4% | 0.9x | ↑ |
@@ -42,7 +43,6 @@ AAPL, AJG, ALAB, AMAT, AMD, ASML, AXON, BIIB, BILL, CRDO, DRI, DVN, ESE, EW, FCX
 | **TJX** | [U] | 3/4 | 3.7% | 0.4% | 0.8x | ↑ |
 | **MCO** | [U] | 4/4 | 3.9% | 2.9% | 1.1x | ↑ |
 | **EXPE** | [W] | 4/4 | 4.0% | 3.5% | 0.9x | ↑ |
-| **V** | [U] | 4/4 | 4.1% | 4.1% | 0.7x | ↑ |
 
 ### Notes
 
@@ -54,9 +54,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 
 ### Tier Movements — Week over Week
 
-↑ **Improved:** **FTNT** (◇ Trend Intact → ✦ Fully Stacked), **AMZN** (MA200 only → ✦ Fully Stacked), **FAST** (◇ Trend Intact → ✦ Fully Stacked), **HWM** (◇ Trend Intact → ✦ Fully Stacked), **ETN** (MA200 only → ✦ Fully Stacked), **ANET** (◇ Trend Intact → ✦ Fully Stacked), **DXCM** (◇ Trend Intact → ✦ Fully Stacked), **S** (◇ Trend Intact → ✦ Fully Stacked), **GOOGL** (MA200 only → ◇ Trend Intact), **AVGO** (MA20 only → ◇ Trend Intact), **CINF** (MA100+MA200 → ◇ Trend Intact), **WST** (MA100+MA200 → ◇ Trend Intact), **EXPD** (MA100+MA200 → ◇ Trend Intact), **MPWR** (MA200 only → ◇ Trend Intact), **FFIV** (MA100+MA200 → ◇ Trend Intact), **SEZL** (MA100+MA200 → ◇ Trend Intact), **AXON** (MA100+MA200 → ◈ Intermediate), **IOT** (MA100+MA200 → ◈ Intermediate), **PGY** (Below all → ◈ Intermediate), **MDB** (MA20 only → All4 (unordered)), **DLB** (MA20 only → MA50+100), **BSX** (MA20 only → MA50), **LULU** (MA20 only → MA50), **EQT** (MA20 only → MA50), **TW** (Below all → MA50), **ORLY** (MA20 only → MA50), **ORCL** (Below all → MA20 only), **IDXX** (Below all → MA20 only), **FIX** (MA200 only → MA20 only), **TDG** (Below all → MA20 only), **AVAV** (Below all → MA20 only), **NVDA** (MA200 only → MA100+MA200), **NVT** (MA200 only → MA100+MA200), **ESE** (MA200 only → MA100+MA200), **COHR** (Below all → MA200 only), **TPL** (Below all → MA200 only)
-
-↓ **Dropped:** **AAPL** (✦ Fully Stacked → MA100+MA200), **UNH** (✦ Fully Stacked → ◇ Trend Intact), **ABBV** (✦ Fully Stacked → ◇ Trend Intact), **TOL** (✦ Fully Stacked → MA100+MA200), **KRYS** (✦ Fully Stacked → MA100+MA200), **NBIX** (✦ Fully Stacked → MA100+MA200), **VCYT** (✦ Fully Stacked → MA100+MA200), **BIIB** (✦ Fully Stacked → MA20 only), **TJX** (◇ Trend Intact → MA20 only), **DRI** (◇ Trend Intact → MA20 only), **AJG** (◈ Intermediate → MA100+MA200), **NVO** (◈ Intermediate → MA100+MA200), **VRSK** (◈ Intermediate → Below all), **SYK** (◈ Intermediate → Below all), **ICE** (All4 (unordered) → MA50+100), **APD** (All4 (unordered) → MA100+MA200), **TYL** (MA50+100 → MA50), **HSY** (MA50 → MA20 only), **COIN** (MA50 → Below all), **ALGN** (MA20 only → MA200 only), **GLD** (MA20 only → Below all), **SLV** (MA20 only → Below all), **LRCX** (MA100+MA200 → MA200 only), **COCO** (MA100+MA200 → MA200 only), **RDDT** (MA100+MA200 → Below all), **ATEN** (MA100+MA200 → MA200 only), **MCHP** (MA200 only → Below all), **NEE** (MA200 only → Below all)
+_No tier changes this week._
 
 
 ### Watchlist Status
@@ -74,6 +72,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **MDB** | $337.48 | 4/4 | B | Op Margin -3.6% / Net Margin -1.1% / ROE/ROA ROE -1.0% / ROA -1.8% | — |
 | **NET** | $278.98 | 4/4 | B | Op Margin -9.7% / Net Margin -3.7% / ROE/ROA ROE -5.9% / ROA -2.7% / P/E 176.5x | Cloudflare — global network infrastructure platform; CDN + DDoS protec… |
 | **PGY** | $19.27 | 4/4 | A | Debt/EV 0.692 | Pagaya Technologies — AI-powered credit underwriting network; auto-pro… |
+| **RJF** | $175.98 | 4/4 | A | Debt/EV 0.267 / ROE/ROA ROE None% / ROA None% / FCF Yield missing (no data relief) | Raymond James Financial — independent full-service wealth management +… |
 | **RPRX** | $58.43 | 4/4 | A | Debt/EV 0.241 / FCF Yield -2.9% | Royalty Pharma — largest pharma royalty acquirer; owns royalty rights … |
 | **S** | $19.06 | 4/4 | B | Op Margin -28.8% / Net Margin -30.4% / ROE/ROA ROE -21.4% / ROA -7.9% | SentinelOne — AI-native cybersecurity platform, direct CrowdStrike com… |
 | **SNOW** | $293.28 | 4/4 | B | Op Margin -22.2% / Net Margin -23.8% / ROE/ROA ROE -54.9% / ROA -9.7% / P/E 108.7x | — |
@@ -91,6 +90,8 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **PRGS** | $40.59 | 3/4 | B | Debt/EV 0.459 | Progress Software — serial acquirer of mature enterprise software: Ope… |
 | **PWR** | $667.36 | 3/4 | B | Op Margin 7.2% / Net Margin 4.0% | Quanta Services — dominant grid/electrical infrastructure contractor; … |
 | **PYPL** | $57.21 | 3/4 | A | Debt/EV 0.274 | PayPal — OM 18%, NM 15%, ROE 25%, FCF 11%, P/E 7.8x; D/EV 0.30 only bl… |
+| **QRVO** | $90.57 | 3/4 | B | Passes all filters — | Qorvo — RF front-end duopoly partner to SWKS (TriQuint + RF Micro Devi… |
+| **SLAB** | $217.50 | 3/4 | B | Op Margin -8.0% / Net Margin -6.1% / ROE/ROA ROE -4.6% / ROA -2.8% | Silicon Laboratories — pure-play IoT wireless MCU maker; divested infr… |
 | **SSNC** | $77.05 | 3/4 | A | Debt/EV 0.302 | SS&C Technologies — fund admin infra, $1.28B FCF, extreme switching co… |
 | **STNE** | $11.38 | 3/4 | A+ | Debt/EV 1.825 | StoneCo — Brazilian SMB payments + credit platform; V/MA-like toll on … |
 | **TOST** | $32.27 | 3/4 | A | Op Margin 6.7% | Toast — restaurant POS/payments platform; ROE 22.5%, FCF 4%, rev growt… |
@@ -139,6 +140,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **NRG** | $134.29 | 0/4 | ETF | — | NRG Energy — de-lever play; LS Power acq doubled fleet+debt, targeting… |
 | **PEG** | $76.68 | 0/4 | A | Debt/EV 0.392 / FCF Yield -0.4% | PSEG — integrated NJ utility + nuclear operator (Salem 1&2 + Hope Cree… |
 | **SOFI** | $16.31 | 0/4 | B | ROE/ROA ROE 7.1% / ROA 1.2% / FCF Yield missing (no data relief) | SoFi — neobank scaling; ROE 6.6% and trending right |
+| **TREE** | $31.86 | 0/4 | A | Debt/EV 0.564 / Op Margin 7.8% | LendingTree — online financial marketplace connecting consumers with l… |
 | **VICI** | $26.35 | 0/4 | A | Debt/EV 0.38 / ROE/ROA ROE 9.8% / ROA 4.8% | VICI Properties — largest gaming/experiential REIT; triple-net leases … |
 | **VST** | $148.19 | 0/4 | A | Debt/EV 0.284 / FCF Yield -0.3% | Vistra — deregulated nuclear+gas (Energy Harbor acq), Texas/ERCOT expo… |
 
