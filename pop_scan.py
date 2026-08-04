@@ -85,6 +85,7 @@ def get_daily_ma_pos(ticker):
         ma20  = close.iloc[-20:].mean()
         ma50  = close.iloc[-50:].mean()
         count = sum([price > ma10, price > ma20, price > ma50])
+        near  = sum([price >= ma10*0.95, price >= ma20*0.95, price >= ma50*0.95])
         return {
             'ticker': ticker,
             'price':  round(price, 2),
@@ -93,6 +94,7 @@ def get_daily_ma_pos(ticker):
             'pct50':  round((price / ma50 - 1) * 100, 1),
             'above':  count,
             'all3':   count == 3,
+            'near':   near,
         }
     except Exception:
         return None
@@ -117,15 +119,18 @@ def _pct_cell(pct):
     sign  = '+' if pct > 0 else ''
     return f'<td style="color:{color};font-weight:600">{sign}{pct}%</td>'
 
-def build_html(all3, two, misses, no_data, now, label, grades, hourly):
-    def rows_for(group, badge_color, badge_label):
+def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly):
+    def rows_for(group, badge_color, badge_label, is_tight=False):
         out = ''
         for r in group:
             score, grade   = _setup_score(r, grades)
-            _, _, bg, border = _range_band(r['pct50'])
-            row_style      = f'background:{bg};border-left:3px solid {border};' if bg else ''
-            grade_str      = f'<span style="color:#8b949e;font-size:10px">{grade}</span>' if grade else ''
-            hourly_flag    = '<span title="Hourly: price above 10hMA, 20hMA, 50hMA (not necessarily stacked)" style="color:#58a6ff;font-size:10px;margin-left:4px">⚡H</span>' if hourly.get(r['ticker']) else ''
+            if is_tight:
+                row_style = 'border-left:3px solid #1a6b7a;'
+            else:
+                _, _, bg, border = _range_band(r['pct50'])
+                row_style = f'background:{bg};border-left:3px solid {border};' if bg else ''
+            grade_str   = f'<span style="color:#8b949e;font-size:10px">{grade}</span>' if grade else ''
+            hourly_flag = '<span title="Hourly: price above 10hMA, 20hMA, 50hMA (not necessarily stacked)" style="color:#58a6ff;font-size:10px;margin-left:4px">⚡H</span>' if hourly.get(r['ticker']) else ''
             out += f"""<tr style="{row_style}">
               <td class="ticker">{r['ticker']} {grade_str}{hourly_flag}</td>
               <td><span class="badge" style="background:{badge_color}">{badge_label}</span></td>
@@ -136,8 +141,9 @@ def build_html(all3, two, misses, no_data, now, label, grades, hourly):
             </tr>"""
         return out
 
-    rows  = rows_for(all3, '#6e40c9', '● 3/3')
-    rows += rows_for(two,  '#1a4731', '◐ 2/3')
+    rows  = rows_for(all3,  '#6e40c9', '● 3/3')
+    rows += rows_for(two,   '#1a4731', '◐ 2/3')
+    rows += rows_for(tight, '#1a4a4a', '◎ tight', is_tight=True)
 
     miss_tickers = '  ·  '.join(r['ticker'] for r in misses) if misses else '—'
     nd_tickers   = '  ·  '.join(no_data) if no_data else '—'
@@ -167,11 +173,12 @@ def build_html(all3, two, misses, no_data, now, label, grades, hourly):
 </head>
 <body>
 <h1>📈 Daily Pop Scanner <span style="font-size:13px;color:#8b949e;font-weight:400">— {label}</span></h1>
-<div class="subtitle">{now} &nbsp;·&nbsp; price vs 10d / 20d / 50d daily MAs &nbsp;·&nbsp; not necessarily stacked &nbsp;·&nbsp; gold 1-6% · green 7-15% · amber 16-30% vs 50dMA</div>
+<div class="subtitle">{now} &nbsp;·&nbsp; price vs 10d / 20d / 50d daily MAs &nbsp;·&nbsp; not necessarily stacked &nbsp;·&nbsp; gold 1-6% · green 7-15% · amber 16-30% vs 50dMA &nbsp;·&nbsp; ◎ tight = within -5% of 2+ MAs</div>
 
 <div class="summary">
-  <span>{len(all3)}</span> above all 3 daily MAs &nbsp;·&nbsp;
+  <span>{len(all3)}</span> above all 3 &nbsp;·&nbsp;
   <span>{len(two)}</span> above 2 of 3 &nbsp;·&nbsp;
+  <span>{len(tight)}</span> tight (within -5%) &nbsp;·&nbsp;
   <span>{len(misses)}</span> below &nbsp;·&nbsp;
   <span>{len(no_data)}</span> no data
 </div>
@@ -186,7 +193,7 @@ def build_html(all3, two, misses, no_data, now, label, grades, hourly):
   <tbody>{rows}</tbody>
 </table>
 
-<div class="section">Below all / 1 of 3 — {miss_tickers}</div>
+<div class="section">Below — {miss_tickers}</div>
 <div class="section">No data — {nd_tickers}</div>
 <div class="disclaimer">On-demand internal scan. Not financial advice.</div>
 </body>
@@ -200,20 +207,23 @@ def run(tickers, label):
         h_stacks = list(ex.map(get_hourly_stack, tickers))
 
     hourly  = {t: s for t, s in zip(tickers, h_stacks)}
-    hits    = sorted([r for r in results if r and r['above'] >= 2], key=lambda x: (-x['above'], -x['pct50']))
-    misses  = sorted([r for r in results if r and r['above'] < 2],  key=lambda x: -x['above'])
+    valid   = [r for r in results if r is not None]
+    hits    = sorted([r for r in valid if r['above'] >= 2], key=lambda x: (-x['above'], -x['pct50']))
+    below   = [r for r in valid if r['above'] < 2]
+    tight   = sorted([r for r in below if r.get('near', 0) >= 2], key=lambda x: -x['pct50'])
+    misses  = sorted([r for r in below if r.get('near', 0) < 2],  key=lambda x: -x['above'])
     no_data = [t for t, r in zip(tickers, results) if r is None]
     all3    = [h for h in hits if h['all3']]
     two     = [h for h in hits if h['above'] == 2]
 
     now  = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
-    html = build_html(all3, two, misses, no_data, now, label, grades, hourly)
+    html = build_html(all3, two, tight, misses, no_data, now, label, grades, hourly)
 
     out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pop_scan.html')
     with open(out, 'w') as f:
         f.write(html)
 
-    print(f'  ● {len(all3)} above all 3  ·  ◐ {len(two)} above 2  ·  {len(misses)} below  ·  {len(no_data)} no data')
+    print(f'  ● {len(all3)} above all 3  ·  ◐ {len(two)} above 2  ·  ◎ {len(tight)} tight  ·  {len(misses)} below  ·  {len(no_data)} no data')
     print(f'  Opened → {out}\n')
     webbrowser.open(f'file://{out}')
 

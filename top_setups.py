@@ -8,6 +8,7 @@ MA10m and MA20m — so overextended names are immediately visible.
 Usage: python3 top_setups.py
 """
 
+import re
 import yfinance as yf
 from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor
@@ -50,8 +51,9 @@ def load_aligned(path='aligned_screener.html'):
             continue
 
         # cols: [list_tag, ticker, grade, price, rs, pct52wH, cmf, adObv]
-        ticker = cols[1].strip()
-        if not ticker or ticker == 'Ticker':
+        # strip badge chars (●, ○, ★ etc.) that aligned_screener injects into ticker cells
+        ticker = re.sub(r'[^A-Z0-9\-]', '', cols[1].strip().upper())
+        if not ticker or ticker == 'TICKER':
             continue
 
         rs_raw  = cols[4]   # e.g. "1.16x"

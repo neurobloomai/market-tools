@@ -1,0 +1,293 @@
+"""
+extension_scan.py — Weekly MA extension + projection scanner.
+
+For each ticker above its 10w MA, computes how extended it is vs its own
+historical ceiling and how much runway remains before reaching that ceiling.
+
+Key metrics:
+  ext_now   — current % above 10w MA
+  ext_90p   — 90th percentile historical extension (typical ceiling)
+  runway    — % of ceiling still unused  (100% = just broke out, 0% = at ceiling)
+  ceiling   — implied price at 90th pct ceiling (given current 10w MA)
+  RSI       — weekly RSI-14
+
+Usage:
+  python3 extension_scan.py               # full universe + watchlist
+  python3 extension_scan.py NVDA CIBR     # specific tickers
+  python3 extension_scan.py --watchlist   # watchlist only
+"""
+
+import os
+import sys
+import types
+import warnings
+import webbrowser
+import yfinance as yf
+from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor
+
+warnings.filterwarnings('ignore')
+sys.modules.setdefault('_yf_cache', types.ModuleType('_yf_cache'))
+from screener import UNIVERSE, WATCHLIST
+
+
+# ── Data fetch ────────────────────────────────────────────────────────────────
+
+def get_extension_data(ticker):
+    try:
+        hist  = yf.Ticker(ticker).history(period='3y', interval='1wk')
+        if hist is None or len(hist) < 55:
+            return None
+        close = hist['Close'].dropna()
+        if len(close) < 55:
+            return None
+        price = float(close.iloc[-1])
+
+        ma10w = float(close.rolling(10).mean().iloc[-1])
+        ma20w = float(close.rolling(20).mean().iloc[-1])
+        ma43w = float(close.rolling(43).mean().iloc[-1])
+
+        # Historical extension distribution vs 10w MA
+        ext_series  = ((close / close.rolling(10).mean()) - 1) * 100
+        ext_valid   = ext_series.dropna()
+        ext_90p     = float(ext_valid.quantile(0.90))   # typical upside ceiling
+        ext_max     = float(ext_valid.max())            # absolute historical max
+        ext_now     = (price / ma10w - 1) * 100
+
+        # Runway: how much of the 90th pct ceiling is still unused
+        if ext_90p > 0 and ext_now > 0:
+            runway = max(0.0, (ext_90p - ext_now) / ext_90p * 100)
+        elif ext_now <= 0:
+            runway = 100.0   # below MA — full runway theoretically
+        else:
+            runway = 0.0
+
+        ceiling_90  = ma10w * (1 + ext_90p  / 100)
+        ceiling_max = ma10w * (1 + ext_max  / 100)
+
+        # % from 52w high
+        hi52        = float(close.iloc[-52:].max()) if len(close) >= 52 else float(close.max())
+        pct_from_hi = (price / hi52 - 1) * 100
+
+        # 10w MA slope (vs 4 weeks ago)
+        ma10w_4wk   = float(close.rolling(10).mean().iloc[-5])
+        slope       = (ma10w / ma10w_4wk - 1) * 100
+
+        # Weekly RSI-14
+        delta = close.diff()
+        gain  = delta.clip(lower=0).rolling(14).mean()
+        loss  = (-delta.clip(upper=0)).rolling(14).mean()
+        rsi   = float((100 - 100 / (1 + gain / loss)).iloc[-1])
+
+        return {
+            'ticker':      ticker,
+            'price':       round(price, 2),
+            'ma10w':       round(ma10w, 2),
+            'ma20w':       round(ma20w, 2),
+            'ma43w':       round(ma43w, 2),
+            'ext_now':     round(ext_now, 1),
+            'ext_90p':     round(ext_90p, 1),
+            'ext_max':     round(ext_max, 1),
+            'runway':      round(runway, 1),
+            'ceiling_90':  round(ceiling_90, 2),
+            'ceiling_max': round(ceiling_max, 2),
+            'pct_from_hi': round(pct_from_hi, 1),
+            'slope':       round(slope, 1),
+            'rsi':         round(rsi, 1),
+            'above_10w':   ext_now > 0,
+        }
+    except Exception:
+        return None
+
+
+# ── Category ──────────────────────────────────────────────────────────────────
+
+def _category(r):
+    """Returns (label, bg, border) based on runway consumed and RSI."""
+    ext_now  = r['ext_now']
+    ext_90p  = r['ext_90p']
+    runway   = r['runway']
+    rsi      = r['rsi']
+
+    if not r['above_10w']:
+        return 'below',    '',        ''
+
+    # RSI overbought or runway nearly gone → near ceiling
+    if rsi >= 75 or (ext_90p > 0 and runway < 10):
+        return 'ceiling',  '#1a0000', '#f85149'   # red
+
+    if runway >= 67:
+        return 'fresh',    '#0d1a0d', '#3fb950'   # green — lots of room
+    elif runway >= 34:
+        return 'midway',   '#1c1700', '#d4a017'   # gold — moderate
+    else:
+        return 'extended', '#1a1000', '#f0883e'   # amber — stretched
+
+
+def _runway_bar(runway, width=12):
+    """ASCII progress bar showing runway consumed."""
+    if runway is None:
+        return '─' * width
+    filled = max(0, min(width, round(runway / 100 * width)))
+    empty  = width - filled
+    return '█' * filled + '░' * empty
+
+
+# ── HTML builder ──────────────────────────────────────────────────────────────
+
+def _pct_cell(pct, neutral=False):
+    if neutral or pct is None:
+        return f'<td style="color:#8b949e">{pct:+.1f}%</td>' if pct is not None else '<td style="color:#484f58">—</td>'
+    color = '#3fb950' if pct >= 0 else '#f85149'
+    return f'<td style="color:{color};font-weight:600">{pct:+.1f}%</td>'
+
+
+def _rsi_cell(rsi):
+    if rsi is None:
+        return '<td style="color:#484f58">—</td>'
+    if rsi >= 75:
+        color = '#f85149'
+    elif rsi >= 60:
+        color = '#d4a017'
+    else:
+        color = '#3fb950'
+    return f'<td style="color:{color};font-weight:600">{rsi:.0f}</td>'
+
+
+def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
+    def rows_for(group, badge_color, badge_label):
+        out = ''
+        for r in group:
+            cat, bg, border = _category(r)
+            row_style = f'background:{bg};border-left:3px solid {border};' if bg else ''
+            bar   = _runway_bar(r['runway'])
+            slope_str = f"{r['slope']:+.1f}%"
+            slope_col = '#3fb950' if r['slope'] > 0 else '#f85149'
+            out += f"""<tr style="{row_style}">
+              <td class="ticker">{r['ticker']}</td>
+              <td><span class="badge" style="background:{badge_color}">{badge_label}</span></td>
+              <td>${r['price']}</td>
+              {_pct_cell(r['ext_now'], neutral=False)}
+              <td style="color:#8b949e">{r['ext_90p']:+.1f}%</td>
+              <td style="font-family:monospace;color:#58a6ff;letter-spacing:-1px">{bar}</td>
+              <td style="color:#e6edf3;font-weight:600">${r['ceiling_90']:.2f}</td>
+              {_pct_cell(r['pct_from_hi'])}
+              <td style="color:{slope_col};font-size:11px">{slope_str}</td>
+              {_rsi_cell(r['rsi'])}
+            </tr>"""
+        return out
+
+    rows  = rows_for(fresh,    '#1a4731', '▓ fresh')
+    rows += rows_for(midway,   '#4a3800', '▒ midway')
+    rows += rows_for(extended, '#4a2800', '░ extended')
+    rows += rows_for(ceiling,  '#4a0000', '✕ ceiling')
+
+    below_tickers  = '  ·  '.join(r['ticker'] for r in below)  if below   else '—'
+    nd_tickers     = '  ·  '.join(no_data)                      if no_data else '—'
+
+    total_above = len(fresh) + len(midway) + len(extended) + len(ceiling)
+
+    return f"""<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Extension Scan — {now}</title>
+<style>
+  * {{ box-sizing: border-box; margin: 0; padding: 0; }}
+  body {{ font-family: 'SF Mono','Fira Code',monospace; background: #0d1117; color: #e6edf3; padding: 28px; font-size: 12px; }}
+  h1 {{ font-size: 18px; font-weight: 700; color: #58a6ff; margin-bottom: 4px; }}
+  .subtitle {{ color: #8b949e; font-size: 11px; margin-bottom: 20px; }}
+  .summary {{ color: #8b949e; font-size: 12px; margin-bottom: 20px; }}
+  .summary span {{ color: #e6edf3; font-weight: 700; }}
+  table {{ width: 100%; border-collapse: collapse; margin-bottom: 32px; }}
+  th {{ text-align: left; padding: 8px 10px; color: #8b949e; font-weight: 500;
+        border-bottom: 2px solid #21262d; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; }}
+  td {{ padding: 8px 10px; border-bottom: 1px solid #161b22; }}
+  tr:hover td {{ background: rgba(255,255,255,0.03); }}
+  .ticker {{ font-weight: 700; color: #e6edf3; font-size: 13px; }}
+  .badge {{ font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; color: #fff; }}
+  .section {{ font-size: 11px; color: #8b949e; margin: 16px 0 6px; border-top: 1px solid #21262d; padding-top: 10px; }}
+  .disclaimer {{ color: #484f58; font-size: 10px; margin-top: 24px; border-top: 1px solid #21262d; padding-top: 8px; }}
+</style>
+</head>
+<body>
+<h1>📡 Extension Scan <span style="font-size:13px;color:#8b949e;font-weight:400">— {label}</span></h1>
+<div class="subtitle">{now} &nbsp;·&nbsp; weekly bars · 3yr history &nbsp;·&nbsp; runway = % of 90th-pct ceiling still unused &nbsp;·&nbsp; ceiling = implied price at historical ceiling</div>
+
+<div class="summary">
+  <span>{len(fresh)}</span> fresh (runway ≥ 67%) &nbsp;·&nbsp;
+  <span>{len(midway)}</span> midway (34–66%) &nbsp;·&nbsp;
+  <span>{len(extended)}</span> extended (10–33%) &nbsp;·&nbsp;
+  <span>{len(ceiling)}</span> near ceiling / RSI ≥ 75 &nbsp;·&nbsp;
+  <span>{len(below)}</span> below 10w MA
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ticker</th><th>Zone</th><th>Price</th>
+      <th>vs 10wMA</th><th>Ceiling%</th><th>Runway</th>
+      <th>Ceiling $</th><th>vs 52wHi</th><th>Slope</th><th>RSI</th>
+    </tr>
+  </thead>
+  <tbody>{rows}</tbody>
+</table>
+
+<div class="section">Below 10w MA ({len(below)}) — {below_tickers}</div>
+<div class="section">No data — {nd_tickers}</div>
+<div class="disclaimer">On-demand internal scan. Ceiling = 10wMA × (1 + 90th-pct historical extension). Not financial advice.</div>
+</body>
+</html>"""
+
+
+# ── Main ──────────────────────────────────────────────────────────────────────
+
+def run(tickers, label):
+    print(f'\n  Extension Scan — {len(tickers)} tickers ...', flush=True)
+    with ThreadPoolExecutor(max_workers=12) as ex:
+        results = list(ex.map(get_extension_data, tickers))
+
+    valid   = [r for r in results if r is not None]
+    above   = [r for r in valid if r['above_10w']]
+    below   = sorted([r for r in valid if not r['above_10w']], key=lambda x: -x['ext_now'])
+    no_data = [t for t, r in zip(tickers, results) if r is None]
+
+    # Sort above-10w by runway descending (most room first)
+    above.sort(key=lambda x: -x['runway'])
+
+    fresh    = [r for r in above if _category(r)[0] == 'fresh']
+    midway   = [r for r in above if _category(r)[0] == 'midway']
+    extended = [r for r in above if _category(r)[0] == 'extended']
+    ceiling  = [r for r in above if _category(r)[0] == 'ceiling']
+
+    now  = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
+    html = build_html(fresh, midway, extended, ceiling, below, no_data, now, label)
+
+    out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'extension_scan.html')
+    with open(out, 'w') as f:
+        f.write(html)
+
+    total_above = len(fresh) + len(midway) + len(extended) + len(ceiling)
+    print(f'  ▓ {len(fresh)} fresh  ·  ▒ {len(midway)} midway  ·  ░ {len(extended)} extended  ·  ✕ {len(ceiling)} ceiling  ·  {len(below)} below  ·  {len(no_data)} no data')
+    print(f'  Opened → {out}\n')
+    webbrowser.open(f'file://{out}')
+
+
+if __name__ == '__main__':
+    args = sys.argv[1:]
+
+    if not args:
+        tickers = list(dict.fromkeys(UNIVERSE))
+        tickers += [t for t in WATCHLIST if t not in tickers]
+        label = 'Universe + Watchlist'
+    elif args == ['--universe']:
+        tickers = list(dict.fromkeys(UNIVERSE))
+        label = 'Universe'
+    elif args == ['--watchlist']:
+        tickers = list(dict.fromkeys(WATCHLIST))
+        label = 'Watchlist'
+    else:
+        tickers = [t.upper() for t in args if not t.startswith('--')]
+        label = ', '.join(tickers)
+
+    run(tickers, label)
