@@ -655,4 +655,4 @@ The Anthropic API + GitHub Actions API is the natural bridge. The `workflow_disp
 
 ## Disclaimer
 
-For informational purposes only. Not financial advice.
+For informational purposes only. Market dynamics change constantly — these outputs are auto-generated from Yahoo Finance data and may not reflect current conditions. Not tailored financial advice. Not a recommendation to buy, sell, or hold any security. Always do your own research.
