@@ -35,6 +35,7 @@ The rest of this README is the manual for how those two filters are built and ap
 | `top_setups.py` | 🇺🇸 US | Convergence drill — reads last-run HTML outputs, scores every name across quality + RS + CMF + A/D + OBV, fetches monthly MA distance for top 20, prints ranked table in seconds |
 | `india_top_setups.py` | 🇮🇳 India | Same convergence drill for India �� reads `india_screener.html` + `india_aligned_screener.html`, adds sector column (India setups are sector-wave driven), RS vs NIFTY |
 | `monthly_ma_gate.py` | 🇺🇸🇮🇳 Both | Pre-recovery Monthly MA Gate — names within ±2% (Tier 1, on the gate) or ±5% (Tier 2, in the zone) of their 10-month or 20-month SMA · sorted by span (sum of both MA distances) so names sandwiched between both MAs surface first · on-demand only |
+| `extension_scan.py` | 🇺🇸 US | Weekly MA Extension + Projection Scanner — for each ticker above its 10w MA, shows current extension vs historical 90th-pct ceiling, runway remaining before ceiling, implied ceiling price, weekly RSI and 10w slope · answers "how much further can this go?" · on-demand |
 | `run_aligned.sh` | — | Cron entry point — runs all four scripts (US + India), auto-pushes to GitHub |
 
 ## Live Outputs
