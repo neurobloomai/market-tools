@@ -398,7 +398,7 @@ SPREAD_UNIVERSE = {
 def _get_fundamentals_inner(ticker):
         t    = yf.Ticker(ticker)
         info = t.info
-        if not info or 'marketCap' not in info:
+        if not info or ('marketCap' not in info and 'enterpriseValue' not in info):
             return None
 
         # Debt metrics
@@ -444,7 +444,7 @@ def _get_fundamentals_inner(ticker):
 
         # FCF
         fcf               = info.get('freeCashflow', None)
-        market_cap        = info.get('marketCap', 1) or 1
+        market_cap        = info.get('marketCap') or info.get('enterpriseValue') or 1
         fcf_yield         = (fcf / market_cap * 100) if fcf is not None and market_cap else None
 
         # Price vs MA200d — margin of safety signal
