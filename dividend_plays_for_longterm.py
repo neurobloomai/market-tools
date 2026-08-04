@@ -116,6 +116,8 @@ UNIVERSE = [
 
     'ET',    # Energy Transfer LP — MLP peer to EPD; massive midstream network (natural gas, crude, NGL, refined products, LNG export); yield 6.73% (higher than EPD), FCF $1.72B real, RevG 32.1%; more aggressive than EPD: higher leverage (D/EV elevated), Kelcy Warren (founder/CEO) has run acquisitive playbook (Enable Midstream, Crestwood); KEY CAVEAT: ET cut its distribution 50% in 2020 COVID (EPD never has in 25+ years) — that's the trust differential; distribution rebuilt and growing again but the cut happened; same K-1/UBTI caution as EPD (MLP structure); size smaller than EPD given the cut history
 
+    'CQP',   # Cheniere Energy Partners — Sabine Pass LNG terminal MLP; owns/operates the largest LNG export facility in the US (6 liquefaction trains + deepwater marine terminal + cryogenic storage); revenue model = fixed-fee tolling contracts (Cheniere parent + long-term SPAs with global counterparties) — cash flows are volume-based and contracted, not commodity-price exposed; unsexy asset (marine terminal + cryogenic tanks + compressors), sexy numbers: 20-25yr contracted revenue streams + distributions growing consistently; ~5-7% yield; D/EV elevated from infrastructure build-out (same structural read as EPD — investment-grade rated, not deteriorating); same K-1/UBTI caution as EPD/ET (MLP structure — avoid in IRA unless comfortable with complexity); size similar to EPD; added 2026-08-04
+
     # Telecom — high yield, FCF-covered, structural debt
     'VZ',    # Verizon — 6.1% yield, FCF 10.3% (1.7x dividend coverage), 25% OM, ROE 17%; D/EV 0.517 from 5G spectrum (structural, not deteriorating); income play not a compounder, no rev growth
 
