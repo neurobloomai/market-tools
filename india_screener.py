@@ -655,7 +655,7 @@ def build_html(results, watchlist=None, universe_failing=None):
 {build_watchlist_section(watchlist)}
 <div class="disclaimer">
   Data sourced from NSE via Yahoo Finance / yfinance. Prices and fundamentals may be delayed or incomplete.<br>
-  For informational purposes only — not financial advice. Always do your own research before making investment decisions.
+  For informational purposes only. Market dynamics change constantly — these outputs are auto-generated from Yahoo Finance data and may not reflect current conditions. Not tailored financial advice. Not a recommendation to buy, sell, or hold any security. Always do your own research.
 </div>
 </body>
 </html>"""

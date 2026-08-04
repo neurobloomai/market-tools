@@ -479,7 +479,7 @@ def build_html(results, monitor):
 <div class="disclaimer">
   FCF/Debt = annual free cash flow as % of total debt — higher means faster paydown.<br>
   Int Cov = EBIT ÷ Interest Expense · ↑ = improving YoY · NI Grw = net income growth YoY from annual financials.<br>
-  Data sourced from Yahoo Finance via yfinance. For informational purposes only — not financial advice.
+  For informational purposes only. Market dynamics change constantly — these outputs are auto-generated from Yahoo Finance data and may not reflect current conditions. Not tailored financial advice. Not a recommendation to buy, sell, or hold any security. Always do your own research.
 </div>
 </body>
 </html>"""

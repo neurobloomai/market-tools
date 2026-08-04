@@ -411,7 +411,7 @@ def build_html(results):
   FCF/NI = free cash flow ÷ net income — values >1.5× suggest GAAP significantly understates real earnings.<br>
   vs 52wH = current price as % of 52-week high — lower values indicate fear/overhang priced in.<br>
   Int Svgs = estimated annual interest expense savings (50% of FCF → debt paydown) as % of current NI.<br>
-  Data sourced from Yahoo Finance via yfinance. For informational purposes only — not financial advice.
+  For informational purposes only. Market dynamics change constantly — these outputs are auto-generated from Yahoo Finance data and may not reflect current conditions. Not tailored financial advice. Not a recommendation to buy, sell, or hold any security. Always do your own research.
 </div>
 </body>
 </html>"""

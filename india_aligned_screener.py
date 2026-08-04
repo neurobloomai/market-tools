@@ -784,7 +784,7 @@ AD/OBV = A/D Line + On Balance Volume 13w slope &nbsp;·&nbsp; <span style="colo
   ○ unfilled = building squeeze (FullCoil 3–5%, ST Gap 2–4%) — compressing but not fully wound &nbsp;·&nbsp;
   blank = spread still wide, no squeeze
 </div>
-<div class="legend" style="margin-top:6px">For informational purposes only. Not financial advice.</div>
+<div class="legend" style="margin-top:6px">For informational purposes only. Market dynamics change constantly — these outputs are auto-generated from Yahoo Finance data and may not reflect current conditions. Not tailored financial advice. Not a recommendation to buy, sell, or hold any security. Always do your own research.</div>
 </body></html>"""
 
 

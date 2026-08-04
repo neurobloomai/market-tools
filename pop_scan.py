@@ -195,7 +195,7 @@ def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly):
 
 <div class="section">Below — {miss_tickers}</div>
 <div class="section">No data — {nd_tickers}</div>
-<div class="disclaimer">On-demand internal scan. Not financial advice.</div>
+<div class="disclaimer">For informational purposes only. Market dynamics change constantly — these outputs are auto-generated from Yahoo Finance data and may not reflect current conditions. Not tailored financial advice. Not a recommendation to buy, sell, or hold any security. Always do your own research.</div>
 </body>
 </html>"""
 

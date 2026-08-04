@@ -292,7 +292,7 @@ def build_html(data, is_open=True, status_msg='', yld=None):
 </div>
 <div class="disclaimer">
   Data sourced from Yahoo Finance via yfinance. Prices may be delayed. &nbsp;|&nbsp;
-  For informational purposes only — not financial advice. Always do your own research.
+  For informational purposes only. Market dynamics change constantly — these outputs are auto-generated from Yahoo Finance data and may not reflect current conditions. Not tailored financial advice. Not a recommendation to buy, sell, or hold any security. Always do your own research.
 </div>
 </body>
 </html>"""

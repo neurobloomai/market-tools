@@ -486,7 +486,7 @@ def build_html(stats, dist_data, vol_data, now, tickers_by_grade, universe_n, wa
 {warned_html}
 
 <p style="color:#484f58;font-size:10px;margin-top:32px;border-top:1px solid #21262d;padding-top:12px">
-  Educational framework validation only. Not financial advice.
+  For informational purposes only. Market dynamics change constantly — these outputs are auto-generated from Yahoo Finance data and may not reflect current conditions. Not tailored financial advice. Not a recommendation to buy, sell, or hold any security. Always do your own research.
   Past backtest results do not predict future performance.
 </p>
 </body>

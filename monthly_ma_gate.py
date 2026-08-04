@@ -247,6 +247,7 @@ def build_html(us_t1, us_t2, us_n, ind_t1, ind_t2, ind_n, now):
 <hr class="section-break">
 {india_block}
 
+<p style="color:#484f58;font-size:10px;margin-top:24px;border-top:1px solid #21262d;padding-top:8px">For informational purposes only. Market dynamics change constantly — these outputs are auto-generated from Yahoo Finance data and may not reflect current conditions. Not tailored financial advice. Not a recommendation to buy, sell, or hold any security. Always do your own research.</p>
 </body></html>"""
 
 
