@@ -51,7 +51,6 @@ UNIVERSE = [
     # Asset managers — fee income, capital-light, buyback compounders
     'TROW',  # T. Rowe Price — 37yr div growth, 37% OM, FCF 8%, P/E 12
     'AMP',   # Ameriprise — TROW twin; 37% OM, FCF 8%, P/E 12, aggressive buybacks
-    'BEN',   # Franklin Templeton — higher yield, AUM flow challenged
 
     'AB',    # AllianceBernstein Holding L.P. — asset manager structured as a limited partnership; Equitable Holdings (EQH) owns ~65%, unitholders get the rest; LP pass-through = distributes ~100% of earnings each quarter (variable, not fixed); ~9% distribution yield at current price; AUM ~$700B+ across equity, fixed income, alternatives, multi-asset; fwdPE 9.5x cheap; yfinance metrics mostly blank for LP structure — judge by distribution per unit history + AUM trend + EQH parent health; distribution variability is the structural caveat (falls in bad market years); income vehicle, not a compounder — size accordingly
 
@@ -151,14 +150,7 @@ UNIVERSE = [
              # OM went negative (-0.5%) during 2023-24 destocking trough — NOT structural deterioration;
              # NM -72.9% = goodwill impairments, not operations; D/EV 0.823 elevated, needs delevering;
              # gate: OM recovery above 15% as destocking normalizes + D/EV below 0.5
-    'NWL',   # Newell Brands — Rubbermaid, Sharpie, Coleman, Yankee Candle, Ball jars;
-             # classic Jarden roll-up debt hangover (2016 merger ~$10B debt); OM 2.7%, D/EV 0.737;
-             # NM -3.9% = goodwill impairments; ~5.3% yield but thin FCF coverage;
-             # brands have real consumer recognition — balance sheet is the problem, not the products;
-             # gate: D/EV below 0.5 + OM above 10% + NM positive
 
-    # Consumer internet with dividend
-    'MTCH',  # Match Group — Tinder/Hinge/OkCupid portfolio; 27.4% OM, 18.8% NM, FCF yield 9.5% covers 2.14% div, ROA 15.2%, P/E 13.9x; D/EV 0.346 from M&A debt only blocker (structural); grades A+, 4/4 MA aligned
 
     # Precious Metals — high-margin royalty and mining compounders
     'GFI',   # Gold Fields — South African gold miner (NYSE ADR); mines in Ghana/Australia/Chile/SA; OM 51.8%, NM 40.8%, ROE 51.9%, D/EV 0.046, FCF 8.2%, yield 6%, PE 8.8x; Salares Norte (Chile) online + gold ATH = beast numbers; A+
