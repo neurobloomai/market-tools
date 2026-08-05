@@ -283,7 +283,11 @@ def _cli_row(r):
     zone_s    = _ljust(col + _ZONE_LABEL.get(cat, cat) + _RESET, _W['zone'])
     price_s   = _rjust(f"${r['price']:.2f}", _W['price'])
     ext_s     = _rjust(col + f"{r['ext_now']:+.1f}%" + _RESET, _W['ext'])
-    ceil_s    = _rjust(f"${r['ceiling_90']:.2f} ({r['ext_90p']:+.1f}%)", _W['ceil'])
+    if r['ext_now'] > r['ext_90p']:
+        overshoot = r['ext_now'] - r['ext_90p']
+        ceil_s = _rjust('\033[31m' + f"↑ blown +{overshoot:.1f}% past ceil" + _RESET, _W['ceil'])
+    else:
+        ceil_s = _rjust(f"${r['ceiling_90']:.2f} ({r['ext_90p']:+.1f}%)", _W['ceil'])
     if cat == 'below':
         runway_s = _ljust('\033[90m' + '─' * 14 + '  n/a' + _RESET, _W['runway'])
     else:
@@ -298,7 +302,7 @@ def _cli_row(r):
 def _cli_header():
     W = _W
     print(f"\n  {'TICKER':<{W['ticker']}}  {'ZONE':<{W['zone']}}  {'PRICE':>{W['price']}}  "
-          f"{'10wMA%':>{W['ext']}}  {'CEIL $ (to ceiling)':>{W['ceil']}}  "
+          f"{'10wMA%':>{W['ext']}}  {'CEIL $ / OVERSHOOT':>{W['ceil']}}  "
           f"{'RUNWAY':<{W['runway']}}  {'RSI':>{W['rsi']}}  {'SLOPE':>{W['slope']}}  {'52wHi':>{W['hi']}}")
     print(f"  {'─'*W['ticker']}  {'─'*W['zone']}  {'─'*W['price']}  "
           f"{'─'*W['ext']}  {'─'*W['ceil']}  {'─'*W['runway']}  "
