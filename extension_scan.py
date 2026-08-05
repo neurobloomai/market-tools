@@ -285,7 +285,7 @@ def _cli_row(r):
     ext_s     = _rjust(col + f"{r['ext_now']:+.1f}%" + _RESET, _W['ext'])
     if r['ext_now'] > r['ext_90p']:
         overshoot = r['ext_now'] - r['ext_90p']
-        ceil_s = _rjust('\033[31m' + f"↑ blown +{overshoot:.1f}% past ceil" + _RESET, _W['ceil'])
+        ceil_s = _rjust('\033[31m' + f"↑ blown +{overshoot:.1f}%" + _RESET, _W['ceil'])
     else:
         ceil_s = _rjust(f"${r['ceiling_90']:.2f} ({r['ext_90p']:+.1f}%)", _W['ceil'])
     if cat == 'below':
