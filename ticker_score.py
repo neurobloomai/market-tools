@@ -276,7 +276,7 @@ def run(ticker):
                 print(f'  —  {label} MA   insufficient history')
         slope_sign = '+' if wt['slope_pct'] >= 0 else ''
         print(f'\n  10w MA slope : {wt["slope_lbl"]}  ({slope_sign}{wt["slope_pct"]}% over 4 weeks)')
-        print(f'  Alignment    : {w_score}/4 MAs above price')
+        print(f'  Alignment    : price above {w_score}/4 MAs')
 
     # weekly momentum
     print(f'\n  WEEKLY MOMENTUM  (RSI-14 + MACD 12/26/9)')
