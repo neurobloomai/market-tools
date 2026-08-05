@@ -240,9 +240,57 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
 </html>"""
 
 
+# ── CLI table (used when explicit tickers passed) ─────────────────────────────
+
+_ZONE_LABEL = {'fresh': '▓ fresh', 'midway': '▒ midway', 'extended': '░ extnd', 'ceiling': '✕ ceil', 'below': '  below'}
+_ZONE_COLOR = {
+    'fresh':    '\033[32m',   # green
+    'midway':   '\033[33m',   # yellow
+    'extended': '\033[38;5;208m',  # amber
+    'ceiling':  '\033[31m',   # red
+    'below':    '\033[90m',   # grey
+}
+_RESET = '\033[0m'
+_BOLD  = '\033[1m'
+_DIM   = '\033[2m'
+
+
+def _cli_row(r):
+    cat = _category(r)[0]
+    col = _ZONE_COLOR.get(cat, '')
+    zone_label = _ZONE_LABEL.get(cat, cat)
+
+    bar   = _runway_bar(r['runway'], width=14)
+    slope_s = f"{r['slope']:+.1f}%"
+    slope_c = '\033[32m' if r['slope'] > 0 else '\033[31m'
+
+    ext_s = f"{r['ext_now']:+.1f}%"
+    hi_s  = f"{r['pct_from_hi']:+.1f}%"
+    hi_c  = '\033[32m' if r['pct_from_hi'] >= -5 else ('\033[33m' if r['pct_from_hi'] >= -20 else '\033[31m')
+
+    rsi_c = '\033[31m' if r['rsi'] >= 75 else ('\033[33m' if r['rsi'] >= 60 else '\033[32m')
+
+    print(
+        f"  {_BOLD}{r['ticker']:<6}{_RESET}  "
+        f"{col}{zone_label:<9}{_RESET}  "
+        f"${r['price']:<9.2f}  "
+        f"{col}{ext_s:>6} vs 10wMA{_RESET}  "
+        f"{_DIM}ceil→{_RESET}${r['ceiling_90']:.2f} ({r['ext_90p']:+.1f}%)  "
+        f"\033[34m{bar}{_RESET} {r['runway']:.0f}%  "
+        f"RSI {rsi_c}{r['rsi']:.0f}{_RESET}  "
+        f"slope {slope_c}{slope_s}{_RESET}  "
+        f"52wHi {hi_c}{hi_s}{_RESET}"
+    )
+
+
+def _cli_header():
+    print(f"\n  {'TICKER':<6}  {'ZONE':<9}  {'PRICE':<11}  {'vs 10wMA':>8}          {'CEIL $ (%)':>16}  {'RUNWAY':>16}        {'RSI':>5}  {'SLOPE':>8}  {'vs 52wHi':>9}")
+    print(f"  {'─'*6}  {'─'*9}  {'─'*11}  {'─'*8}          {'─'*16}  {'─'*16}        {'─'*5}  {'─'*8}  {'─'*9}")
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
-def run(tickers, label):
+def run(tickers, label, cli_only=False):
     print(f'\n  Extension Scan — {len(tickers)} tickers ...', flush=True)
     with ThreadPoolExecutor(max_workers=12) as ex:
         results = list(ex.map(get_extension_data, tickers))
@@ -252,13 +300,23 @@ def run(tickers, label):
     below   = sorted([r for r in valid if not r['above_10w']], key=lambda x: -x['ext_now'])
     no_data = [t for t, r in zip(tickers, results) if r is None]
 
-    # Sort above-10w by runway descending (most room first)
     above.sort(key=lambda x: -x['runway'])
 
     fresh    = [r for r in above if _category(r)[0] == 'fresh']
     midway   = [r for r in above if _category(r)[0] == 'midway']
     extended = [r for r in above if _category(r)[0] == 'extended']
     ceiling  = [r for r in above if _category(r)[0] == 'ceiling']
+
+    print(f'  ▓ {len(fresh)} fresh  ·  ▒ {len(midway)} midway  ·  ░ {len(extended)} extended  ·  ✕ {len(ceiling)} ceiling  ·  {len(below)} below  ·  {len(no_data)} no data')
+
+    if cli_only:
+        _cli_header()
+        for r in fresh + midway + extended + ceiling + below:
+            _cli_row(r)
+        if no_data:
+            print(f'\n  No data: {", ".join(no_data)}')
+        print()
+        return
 
     now  = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
     html = build_html(fresh, midway, extended, ceiling, below, no_data, now, label)
@@ -267,8 +325,6 @@ def run(tickers, label):
     with open(out, 'w') as f:
         f.write(html)
 
-    total_above = len(fresh) + len(midway) + len(extended) + len(ceiling)
-    print(f'  ▓ {len(fresh)} fresh  ·  ▒ {len(midway)} midway  ·  ░ {len(extended)} extended  ·  ✕ {len(ceiling)} ceiling  ·  {len(below)} below  ·  {len(no_data)} no data')
     print(f'  Opened → {out}\n')
     webbrowser.open(f'file://{out}')
 
@@ -289,5 +345,7 @@ if __name__ == '__main__':
     else:
         tickers = [t.upper() for t in args if not t.startswith('--')]
         label = ', '.join(tickers)
+        run(tickers, label, cli_only=True)
+        sys.exit(0)
 
     run(tickers, label)
