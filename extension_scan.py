@@ -284,7 +284,10 @@ def _cli_row(r):
     price_s   = _rjust(f"${r['price']:.2f}", _W['price'])
     ext_s     = _rjust(col + f"{r['ext_now']:+.1f}%" + _RESET, _W['ext'])
     ceil_s    = _rjust(f"${r['ceiling_90']:.2f} ({r['ext_90p']:+.1f}%)", _W['ceil'])
-    runway_s  = _ljust('\033[34m' + bar + _RESET + f" {r['runway']:>3.0f}%", _W['runway'])
+    if cat == 'below':
+        runway_s = _ljust('\033[90m' + '─' * 14 + '  n/a' + _RESET, _W['runway'])
+    else:
+        runway_s = _ljust('\033[34m' + bar + _RESET + f" {r['runway']:>3.0f}%", _W['runway'])
     rsi_s     = _rjust(rsi_c + f"{r['rsi']:.0f}" + _RESET, _W['rsi'])
     slope_s   = _rjust(slope_c + f"{r['slope']:+.1f}%" + _RESET, _W['slope'])
     hi_s      = _rjust(hi_c + f"{r['pct_from_hi']:+.1f}%" + _RESET, _W['hi'])
