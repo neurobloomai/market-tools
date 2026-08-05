@@ -100,6 +100,7 @@ UNIVERSE = [
     'TXN',   # Texas Instruments — analog semis, 20yr growth, FCF machine
     'MSFT',  # Microsoft — massive FCF, 20yr+ growth, low yield but compounding
     'AAPL',  # Apple — buyback + dividend machine, massive FCF
+    'FIS',   # Fidelity National Information Services — banking + payments infrastructure software (core banking, digital banking, fraud, capital markets, wealth mgmt); post-Worldpay spinoff (2023: sold 55% stake for $18.5B) is now a focused banking-tech platform, not a merchant acquirer; ~4% yield, payout 31.8% (dividend well covered by earnings), FCF $2.45B positive (5.6% yield vs 4% payout = real buffer); OM 16.4%, NM 23.3%, ROE 17.2% all clean; fwdPE 6.5x cheap (priced like the debt is permanent); D/EV 0.486 only blocker — $21B Worldpay merger debt (2019 $43B deal); $18.5B Worldpay proceeds + $2.45B/yr FCF = deleveraging path is real; -42% from 52w high ($76 → $44) — price dislocated from business quality; not a quality-filter screener name (D/EV > 0.30 fails) but FCF coverage is honest and dividend trajectory is durable; added 2026-08-05
 
     # Energy — integrated, durable through cycles
     'CVX',   # Chevron — 37yr aristocrat, integrated oil
