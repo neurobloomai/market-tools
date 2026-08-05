@@ -56,12 +56,12 @@ def score_fundamentals(d):
     if d is None:
         return None, []
     checks = [
-        ('OM ≥ 10%',      (d.get('operating_margin') or 0) >= 0.10),
-        ('NM ≥ 5%',       (d.get('net_margin')        or 0) >= 0.05),
-        ('ROE ≥ 10%',     (d.get('roe')               or 0) >= 0.10),
+        ('OM ≥ 10%',      (d.get('operating_margin') or 0) >= 10),
+        ('NM ≥ 5%',       (d.get('net_margin')        or 0) >= 5),
+        ('ROE ≥ 10%',     (d.get('roe')               or 0) >= 10),
         ('D/EV ≤ 0.20',   (d.get('debt_to_ev')        or 1) <= 0.20),
         ('FCF > 0%',      (d.get('fcf_yield')         or 0) >  0),
-        ('GrossM ≥ 40%',  (d.get('gross_margin')      or 0) >= 0.40),
+        ('GrossM ≥ 40%',  (d.get('gross_margin')      or 0) >= 40),
         ('RevG > 0%',     (d.get('rev_growth')        or 0) >  0),
     ]
     score = sum(1 for _, v in checks if v)
@@ -241,13 +241,13 @@ def run(ticker):
         print()
         for label, passed in checks:
             raw_map = {
-                'OM ≥ 10%':     f"{(d.get('operating_margin') or 0)*100:.1f}%",
-                'NM ≥ 5%':      f"{(d.get('net_margin')       or 0)*100:.1f}%",
-                'ROE ≥ 10%':    f"{(d.get('roe')              or 0)*100:.1f}%",
+                'OM ≥ 10%':     f"{(d.get('operating_margin') or 0):.1f}%",
+                'NM ≥ 5%':      f"{(d.get('net_margin')       or 0):.1f}%",
+                'ROE ≥ 10%':    f"{(d.get('roe')              or 0):.1f}%",
                 'D/EV ≤ 0.20':  f"{(d.get('debt_to_ev')       or 0):.3f}",
-                'FCF > 0%':     f"{(d.get('fcf_yield')        or 0)*100:.1f}%",
-                'GrossM ≥ 40%': f"{(d.get('gross_margin')     or 0)*100:.1f}%",
-                'RevG > 0%':    f"{(d.get('rev_growth')       or 0)*100:.1f}%",
+                'FCF > 0%':     f"{(d.get('fcf_yield')        or 0):.1f}%",
+                'GrossM ≥ 40%': f"{(d.get('gross_margin')     or 0):.1f}%",
+                'RevG > 0%':    f"{(d.get('rev_growth')       or 0):.1f}%",
             }
             val = raw_map.get(label, '—')
             print(f'  {_tick(passed)}  {label:<16}  {val}')
