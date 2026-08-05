@@ -150,6 +150,7 @@ UNIVERSE = [
     'MCO','SPGI','MSCI','ICE','CME','CBOE','FDS','BR','NDAQ',
     'ODFL','EXPD','XPO','JBHT','SAIA','KNSL','RLI','CASH','FICO',
     'ROL','CTAS','CPRT','ADP','PAYX','EFX','TRI','IHS','VRSK','IT',
+    'JKHY',                    # Jack Henry & Associates — core banking + payments software for community banks and credit unions (9,000+ clients); three segments: Core (core banking systems), Payments (ACH/check/card processing), Complementary (digital banking, treasury, fraud); same structural DNA as BR (Broadridge) — recurring subscription + processing fees on deeply embedded financial infrastructure, 80%+ recurring revenue; switching cost = 18-24mo core banking migration project with regulatory examination risk, not an IT decision; GrossM 44.1%, OM 24.4%, NM 20.6%, ROE 24.9%, D/EV 0.012 (near-zero debt, pristine balance sheet), FCF 3.3%; RevG 8.7% (slow, steady — community bank market is mature, not a grower but durable); fwdPE 22.1x; -19% from 52w high ($193 → $157); grade A; added 2026-08-05
     'MU','MPWR','MRVL','ITW','ROP','SYK','BSX','AMZN','APP',
     'MTD','MANH','FAST','POOL','NVR','DHI','LEN','TOL','DOCS','MKTX',  # MKTX: ICE acquisition offer 2026-08 — will be removed once deal closes
     'ACGL',
