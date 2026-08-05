@@ -38,6 +38,7 @@ The rest of this README is the manual for how those two filters are built and ap
 | `pop_scan.py` | 🇺🇸 US | Daily Pop Scanner — price vs 10d/20d/50d MAs across full universe · gold/green/amber range bands · ◎ tight band for coiling setups within -5% of MAs · hourly MA confirmation flag · on-demand |
 | `extension_scan.py` | 🇺🇸 US | Weekly MA Extension + Projection Scanner — for each ticker above its 10w MA, shows current extension vs historical 90th-pct ceiling, runway remaining before ceiling, implied ceiling price, weekly RSI and 10w slope · answers "how much further can this go?" · on-demand |
 | `ticker_score.py` | 🇺🇸 US | On-demand single-ticker deep dive — fundamentals grade, weekly technical (MA alignment, RSI, MACD), weekly momentum, and daily momentum scored in one CLI pass · `python ticker_score.py AAPL` |
+| `buffett_kinda_check.py` | 🇺🇸 US | Buffett-style quality lens — 5 low-fog checks (GM>40%, NM>20%, FCF>0, Cash>Debt, D/EV≤0.10) applied to full Universe + Watchlist · parity column shows where our standards agree or diverge · on-demand |
 | `run_aligned.sh` | — | Cron entry point — runs all four scripts (US + India), auto-pushes to GitHub |
 
 ## Live Outputs
