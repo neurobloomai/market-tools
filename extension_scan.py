@@ -18,6 +18,7 @@ Usage:
 """
 
 import os
+import re
 import sys
 import types
 import warnings
@@ -244,48 +245,61 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
 
 _ZONE_LABEL = {'fresh': '▓ fresh', 'midway': '▒ midway', 'extended': '░ extnd', 'ceiling': '✕ ceil', 'below': '  below'}
 _ZONE_COLOR = {
-    'fresh':    '\033[32m',   # green
-    'midway':   '\033[33m',   # yellow
-    'extended': '\033[38;5;208m',  # amber
-    'ceiling':  '\033[31m',   # red
-    'below':    '\033[90m',   # grey
+    'fresh':    '\033[32m',
+    'midway':   '\033[33m',
+    'extended': '\033[38;5;208m',
+    'ceiling':  '\033[31m',
+    'below':    '\033[90m',
 }
 _RESET = '\033[0m'
 _BOLD  = '\033[1m'
-_DIM   = '\033[2m'
+
+_ANSI_RE = re.compile(r'\033\[[0-9;]*m')
+
+def _vlen(s):
+    """Visible length of string after stripping ANSI escape codes."""
+    return len(_ANSI_RE.sub('', s))
+
+def _ljust(s, w):
+    return s + ' ' * max(0, w - _vlen(s))
+
+def _rjust(s, w):
+    return ' ' * max(0, w - _vlen(s)) + s
+
+# Column widths (visible chars)
+_W = dict(ticker=6, zone=9, price=9, ext=7, ceil=20, runway=19, rsi=3, slope=7, hi=7)
 
 
 def _cli_row(r):
     cat = _category(r)[0]
     col = _ZONE_COLOR.get(cat, '')
-    zone_label = _ZONE_LABEL.get(cat, cat)
 
-    bar   = _runway_bar(r['runway'], width=14)
-    slope_s = f"{r['slope']:+.1f}%"
+    bar     = _runway_bar(r['runway'], width=14)
     slope_c = '\033[32m' if r['slope'] > 0 else '\033[31m'
+    hi_c    = '\033[32m' if r['pct_from_hi'] >= -5 else ('\033[33m' if r['pct_from_hi'] >= -20 else '\033[31m')
+    rsi_c   = '\033[31m' if r['rsi'] >= 75 else ('\033[33m' if r['rsi'] >= 60 else '\033[32m')
 
-    ext_s = f"{r['ext_now']:+.1f}%"
-    hi_s  = f"{r['pct_from_hi']:+.1f}%"
-    hi_c  = '\033[32m' if r['pct_from_hi'] >= -5 else ('\033[33m' if r['pct_from_hi'] >= -20 else '\033[31m')
+    ticker_s  = _ljust(_BOLD + r['ticker'] + _RESET, _W['ticker'])
+    zone_s    = _ljust(col + _ZONE_LABEL.get(cat, cat) + _RESET, _W['zone'])
+    price_s   = _rjust(f"${r['price']:.2f}", _W['price'])
+    ext_s     = _rjust(col + f"{r['ext_now']:+.1f}%" + _RESET, _W['ext'])
+    ceil_s    = _rjust(f"${r['ceiling_90']:.2f} ({r['ext_90p']:+.1f}%)", _W['ceil'])
+    runway_s  = _ljust('\033[34m' + bar + _RESET + f" {r['runway']:>3.0f}%", _W['runway'])
+    rsi_s     = _rjust(rsi_c + f"{r['rsi']:.0f}" + _RESET, _W['rsi'])
+    slope_s   = _rjust(slope_c + f"{r['slope']:+.1f}%" + _RESET, _W['slope'])
+    hi_s      = _rjust(hi_c + f"{r['pct_from_hi']:+.1f}%" + _RESET, _W['hi'])
 
-    rsi_c = '\033[31m' if r['rsi'] >= 75 else ('\033[33m' if r['rsi'] >= 60 else '\033[32m')
-
-    print(
-        f"  {_BOLD}{r['ticker']:<6}{_RESET}  "
-        f"{col}{zone_label:<9}{_RESET}  "
-        f"${r['price']:<9.2f}  "
-        f"{col}{ext_s:>6} vs 10wMA{_RESET}  "
-        f"{_DIM}ceil→{_RESET}${r['ceiling_90']:.2f} ({r['ext_90p']:+.1f}%)  "
-        f"\033[34m{bar}{_RESET} {r['runway']:.0f}%  "
-        f"RSI {rsi_c}{r['rsi']:.0f}{_RESET}  "
-        f"slope {slope_c}{slope_s}{_RESET}  "
-        f"52wHi {hi_c}{hi_s}{_RESET}"
-    )
+    print(f"  {ticker_s}  {zone_s}  {price_s}  {ext_s}  {ceil_s}  {runway_s}  {rsi_s}  {slope_s}  {hi_s}")
 
 
 def _cli_header():
-    print(f"\n  {'TICKER':<6}  {'ZONE':<9}  {'PRICE':<11}  {'vs 10wMA':>8}          {'CEIL $ (%)':>16}  {'RUNWAY':>16}        {'RSI':>5}  {'SLOPE':>8}  {'vs 52wHi':>9}")
-    print(f"  {'─'*6}  {'─'*9}  {'─'*11}  {'─'*8}          {'─'*16}  {'─'*16}        {'─'*5}  {'─'*8}  {'─'*9}")
+    W = _W
+    print(f"\n  {'TICKER':<{W['ticker']}}  {'ZONE':<{W['zone']}}  {'PRICE':>{W['price']}}  "
+          f"{'10wMA%':>{W['ext']}}  {'CEIL $ (to ceiling)':>{W['ceil']}}  "
+          f"{'RUNWAY':<{W['runway']}}  {'RSI':>{W['rsi']}}  {'SLOPE':>{W['slope']}}  {'52wHi':>{W['hi']}}")
+    print(f"  {'─'*W['ticker']}  {'─'*W['zone']}  {'─'*W['price']}  "
+          f"{'─'*W['ext']}  {'─'*W['ceil']}  {'─'*W['runway']}  "
+          f"{'─'*W['rsi']}  {'─'*W['slope']}  {'─'*W['hi']}")
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
