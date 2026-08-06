@@ -90,6 +90,7 @@ UNIVERSE = [
     'GWW',   # W.W. Grainger — industrial distribution, pricing power, 53yr growth
     'CMI',   # Cummins — engines + power, 18yr growth
     'DOV',   # Dover Corp — diversified industrial, 69yr dividend king
+    'SNA',   # Snap-on — professional tools + diagnostics + repair software; franchise toolbox-on-credit dealer network = sticky recurring relationship with technicians (hard to displace once in the bay); GrossM 51.8%, OM 25.4%, NM 19.6%, ROE 17.9%, D/EV 0.061, FCF 5.1%, yield ~2.6%; 14yr+ consecutive div growth (Aristocrat path); A+; 4/4 MA aligned, RSI 68.6, MACD expanding — strong momentum; added 2026-08-06
 
     # Franchise / consumer
     'MCD',   # McDonald's — 44% OM franchise royalty, 49yr div growth
