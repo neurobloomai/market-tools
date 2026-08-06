@@ -334,6 +334,7 @@ WATCHLIST = [
 # Not fetched, not graded. Documented here so the thesis isn't lost.
 # Gate to promote: gross margin consistently positive + OM inflecting toward 0%
 FUTURE_RADAR = {
+    'INSM': 'Insmed — specialty pharma, brensocatib (oral neutrophil elastase inhibitor, FDA approved for bronchiectasis, ASPEN trial); rare lung disease with limited treatment alternatives = real unmet need; GrossM 81.8% (drug economics solid), RevG 229.6% (commercial launch ramp real); OM -65.5%, NM -144.4%, FCF -2.1% — deep investment phase, all margin gates blocking; moat uncertain: bronchiectasis has limited competition now but single-product concentration + patent cliff visibility unknown + pipeline depth TBD; gate to watchlist: OM inflecting toward 0% as launch spend normalizes + FCF turning positive + pipeline asset beyond brensocatib de-risked; added FUTURE_RADAR 2026-08-06',
     'ENVX': 'Enovix — silicon-dominant batteries (100% silicon anode); Fab2 Malaysia in ramp; consumer electronics + defense; most commercially advanced silicon anode play (vs AMPX/EOSE); all quality filters blocking now — gate to watchlist: Fab2 ramp execution + gross margin turning consistently positive + OM inflecting toward 0%; revisit Q3/Q4 2026',
     'RKLB': 'Rocket Lab — only end-to-end small launch + space systems provider; real revenue, real launches; path to profit is long and capex-heavy; gate to watchlist: OM turning positive + FCF inflection; revisit when launch cadence drives margin scale',
 
