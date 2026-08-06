@@ -36,7 +36,7 @@ The rest of this README is the manual for how those two filters are built and ap
 | `india_top_setups.py` | 🇮🇳 India | Same convergence drill for India �� reads `india_screener.html` + `india_aligned_screener.html`, adds sector column (India setups are sector-wave driven), RS vs NIFTY |
 | `monthly_ma_gate.py` | 🇺🇸🇮🇳 Both | Pre-recovery Monthly MA Gate — names within ±2% (Tier 1, on the gate) or ±5% (Tier 2, in the zone) of their 10-month or 20-month SMA · sorted by span (sum of both MA distances) so names sandwiched between both MAs surface first · on-demand only |
 | `pop_scan.py` | 🇺🇸 US | Daily Pop Scanner — price vs 10d/20d/50d MAs across full universe · gold/green/amber range bands · ◎ tight band for coiling setups within -5% of MAs · hourly MA confirmation flag · on-demand |
-| `extension_scan.py` | 🇺🇸 US | Weekly MA Extension + Projection Scanner — for each ticker above its 10w MA, shows current extension vs historical 90th-pct ceiling, runway remaining before ceiling, implied ceiling price, weekly RSI and 10w slope · answers "how much further can this go?" · on-demand |
+| `extension_scan.py` | 🇺🇸 US | Weekly MA Extension + Projection Scanner — for each ticker above its 10w MA, shows current extension vs historical 90th-pct ceiling, runway remaining before ceiling, implied ceiling price, weekly RSI and 10w slope · answers "how much further can this go?" · flags blown-ceiling names in red · supports `--universe`, `--watchlist`, `--dividend`, or explicit tickers (CLI-only) · on-demand |
 | `ticker_score.py` | 🇺🇸 US | On-demand single-ticker deep dive — fundamentals grade, weekly technical (MA alignment, RSI, MACD), weekly momentum, and daily momentum scored in one CLI pass · `python ticker_score.py AAPL` |
 | `buffett_kinda_check.py` | 🇺🇸 US | Buffett-style quality lens — 5 low-fog checks (GM>40%, NM>20%, FCF>0, Cash>Debt, D/EV≤0.10) applied to full Universe + Watchlist · parity column shows where our standards agree or diverge · on-demand · _we borrowed the name; the checks are his kinda standard, not an official Berkshire framework_ |
 | `run_aligned.sh` | — | Cron entry point — runs all four scripts (US + India), auto-pushes to GitHub |
@@ -382,7 +382,15 @@ Most people go the other way — build from charts, add a quality layer as an af
 
 ## Dividend Universe
 
-`dividend_plays_for_longterm.py` is a curated list of 57 dividend-paying names filtered for quality: payout ratio, FCF yield, net margin, ROE, debt/EV. Each entry is annotated with the thesis — why it belongs, what the moat is, what to watch. Sectors: financials, energy, industrials, consumer, healthcare, precious metals.
+`dividend_plays_for_longterm.py` is a curated list of dividend-paying names filtered for quality: payout ratio, FCF yield, net margin, ROE, debt/EV. Each entry is annotated with the thesis — why it belongs, what the moat is, what to watch. Sectors: financials, energy, industrials, consumer, healthcare, precious metals.
+
+Run the extension scan on this universe directly:
+
+```bash
+python3 extension_scan.py --dividend
+```
+
+Produces the same HTML output as `--universe` — all dividend names sorted by extension zone, runway remaining before ceiling, RSI, and 10w slope. Opens in browser automatically.
 
 ## Automation
 
