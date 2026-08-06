@@ -16,6 +16,7 @@ from concurrent.futures import ThreadPoolExecutor
 warnings.filterwarnings('ignore')
 
 _SCREENER_CACHE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'screener_data_cache.json')
+_SCREENER_CACHE = None  # module-level singleton — loaded once, reused across all get_fundamentals() calls
 
 def _load_screener_cache():
     try:
@@ -30,6 +31,12 @@ def _save_screener_cache(cache):
             json.dump(cache, f, indent=2)
     except Exception:
         pass
+
+def _get_cache():
+    global _SCREENER_CACHE
+    if _SCREENER_CACHE is None:
+        _SCREENER_CACHE = _load_screener_cache()
+    return _SCREENER_CACHE
 
 FMP_API_KEY = os.environ.get('FMP_API_KEY', '')
 
@@ -541,10 +548,18 @@ def _get_fundamentals_inner(ticker):
 
 def get_fundamentals(ticker):
     import time
+    # Cache-first: use screener_data_cache.json if available (populated by quality screener run).
+    # Prevents duplicate yfinance calls when aligned screener runs after quality screener.
+    cache = _get_cache()
+    if ticker in cache:
+        return cache[ticker]
+    # Cache miss — hit yfinance with retries
     for attempt in range(3):
         try:
             result = _get_fundamentals_inner(ticker)
             if result is not None:
+                cache[ticker] = result
+                _save_screener_cache(cache)
                 return result
         except Exception as e:
             print(f"  ⚠ {ticker}: {e}", flush=True)
@@ -922,6 +937,7 @@ def build_html(results, watchlist=None, universe_failing=None):
 
 if __name__ == '__main__':
     import sys
+    _SCREENER_CACHE = {}  # force fresh yfinance fetches; aligned_screener reads the populated file cache afterward
 
     # Ad-hoc signal check: python screener.py --signal TICKER [TICKER ...]
     if len(sys.argv) > 1 and sys.argv[1] == '--signal':
