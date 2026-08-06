@@ -13,8 +13,9 @@ Key metrics:
 
 Usage:
   python3 extension_scan.py               # full universe + watchlist
-  python3 extension_scan.py NVDA CIBR     # specific tickers
+  python3 extension_scan.py NVDA AAPL     # specific tickers (CLI only)
   python3 extension_scan.py --watchlist   # watchlist only
+  python3 extension_scan.py --dividend    # dividend universe
 """
 
 import os
@@ -30,6 +31,7 @@ from concurrent.futures import ThreadPoolExecutor
 warnings.filterwarnings('ignore')
 sys.modules.setdefault('_yf_cache', types.ModuleType('_yf_cache'))
 from screener import UNIVERSE, WATCHLIST
+from dividend_plays_for_longterm import UNIVERSE as DIVIDEND_UNIVERSE
 
 
 # ── Data fetch ────────────────────────────────────────────────────────────────
@@ -363,6 +365,9 @@ if __name__ == '__main__':
     elif args == ['--watchlist']:
         tickers = list(dict.fromkeys(WATCHLIST))
         label = 'Watchlist'
+    elif args == ['--dividend']:
+        tickers = list(dict.fromkeys(DIVIDEND_UNIVERSE))
+        label = 'Dividend Universe'
     else:
         tickers = [t.upper() for t in args if not t.startswith('--')]
         label = ', '.join(tickers)
