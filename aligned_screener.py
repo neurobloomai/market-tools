@@ -7,7 +7,7 @@ Run: python aligned_screener.py
 """
 
 import _yf_cache  # noqa: F401 — install HTTP cache before yfinance fetches
-import yfinance as yf, warnings, os, functools
+import yfinance as yf, warnings, os, json, functools
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 warnings.filterwarnings('ignore')
@@ -1007,12 +1007,31 @@ def short_data_ticker(ticker):
     except Exception:
         return (None, None)
 
+_SECTOR_STATIC = {
+    # EXTRA / SPECIAL_MENTION / CYCLICALS not in quality screener cache
+    # Sectors are permanent — no need to fetch from yfinance
+    'ACLS': 'Technology',      'AEM': 'Basic Materials',  'AMR': 'Basic Materials',
+    'AR':   'Energy',          'CAT': 'Industrials',       'CLF': 'Basic Materials',
+    'CMI':  'Industrials',     'COP': 'Energy',            'CVX': 'Energy',
+    'DE':   'Industrials',     'EMR': 'Industrials',       'HAL': 'Energy',
+    'LYFT': 'Technology',      'MOS': 'Basic Materials',   'MPC': 'Energy',
+    'MRAM': 'Technology',      'NUE': 'Basic Materials',   'NXPI': 'Technology',
+    'ON':   'Technology',      'OTLY': 'Consumer Defensive','OXY': 'Energy',
+    'PSX':  'Energy',          'SLB': 'Energy',            'STX': 'Technology',
+    'VLO':  'Energy',          'WDC': 'Technology',        'XOM': 'Energy',
+}
+
 def sector_ticker(ticker):
     try:
-        d = get_fundamentals(ticker)
-        return d.get('sector', 'Unknown') if d else 'Unknown'
+        _cache_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'screener_data_cache.json')
+        with open(_cache_path) as _f:
+            _cache = json.load(_f)
+        d = _cache.get(ticker)
+        if d and d.get('sector'):
+            return d['sector']
+        return _SECTOR_STATIC.get(ticker, 'Unknown')
     except Exception:
-        return 'Unknown'
+        return _SECTOR_STATIC.get(ticker, 'Unknown')
 
 def auto_promote_tickers(promos, repo_path):
     """
