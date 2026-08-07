@@ -462,15 +462,15 @@ This catches a real pattern: a company can grade A on historical quality metrics
 
 ### Entry Zone Column
 
-A quick read on whether the current price offers a margin of safety or demands premium payment.
+Color-coded distance from the 200-day moving average. No label, no verdict — just context.
 
-| Zone | Meaning |
-|------|---------|
-| **● GREEN ZONE** | Price near or below MA200d, strong earnings growth, high grade — favorable entry |
-| **● YELLOW FAIR** | Moderate position vs MA200d or mixed signals — fair value, proceed carefully |
-| **● RED RICH** | Extended above MA200d, weak earnings, or low grade + high PE — margin of safety thin |
+| Color | Threshold | What it means |
+|-------|-----------|---------------|
+| **● Green** | ≤+5% vs MA200d | At or near the long-term trend line — margin of safety intact |
+| **● Amber** | +5% to +20% vs MA200d | Moderate extension — price has moved, but not detached |
+| **● Red** | >+20% vs MA200d | Stretched above the long-term trend — extension is real |
 
-Scoring is additive: base points from price vs MA200d position, adjusted by EPS growth, grade modifier, and a PE penalty for high-multiple names with sub-20% earnings growth. Not a buy/sell signal — a reminder that entry price determines survivability when the trade goes against you.
+Not a buy/sell signal. The framework provides context — you compose the read. A red dot on a recovering stock with A+ fundamentals is a different situation than a red dot on a B-grade name at peak earnings. Same color, different meaning — that's why the verdict is yours, not the tool's.
 
 ### Weekly Signal Column — `Signal (wk)`
 
@@ -546,6 +546,16 @@ The monthly MA gate screen exists for a specific moment: just before or early in
 The screen sorts by **span** — the sum of distances to both the 10-month and 20-month SMA. A name with a tight span (● < 3%) is sandwiched between both MAs simultaneously — both acting as guardrails, energy building for a directional break. That is a different and more compressed setup than a name that is close to only one of the two MAs.
 
 Run it when you sense the market is finding a bottom. Close it when the recovery is underway and the aligned screener takes over.
+
+**Divergence is also context**
+
+When two lenses disagree, that is the framework working — not a contradiction to resolve.
+
+MA200d extension at +68% and 10w MA at -9.5% are both true simultaneously: the long-term trend has run far, and the short-term is digesting. The 52w high at -24% adds a third truth: the digestion has been real. RSI 62 with a positive slope adds a fourth: the digestion may be ending.
+
+None of these contradict each other. The skill is holding all of them at once and knowing which one is load-bearing for the decision you're making.
+
+This is the core distinction: the framework does not collapse multiple signals into one verdict. It keeps them separate. Each lens answers a different question. You supply the judgment; the tools supply the material. Context, not conclusions.
 
 A signal that works on one timeframe can look like failure on another. That isn't failure — it's limitation. Good coverage means knowing what each lens sees and what it cannot. No framework is supposed to be complete.
 
