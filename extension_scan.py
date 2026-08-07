@@ -116,7 +116,13 @@ def _category(r):
         return 'below',    '',        ''
 
     # RSI overbought or runway nearly gone → near ceiling
+    # But if the stock is still far below its 52w high (>15%), the MA-extension
+    # ceiling is a stale reference (recovering stock, MA catching up) — reclassify
+    # as extended rather than ceiling since real overhead supply isn't there yet.
+    pct_from_hi = r.get('pct_from_hi', 0)
     if rsi >= 75 or (ext_90p > 0 and runway < 10):
+        if pct_from_hi < -15:
+            return 'extended', '#1a1000', '#f0883e'  # amber — blown MA ceiling but far from 52w hi
         return 'ceiling',  '#1a0000', '#f85149'   # red
 
     if runway >= 67:
