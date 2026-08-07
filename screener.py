@@ -699,44 +699,20 @@ def pe_html(d):
         return f'{show:.0f}x<span style="font-size:9px;color:#8b949e">f</span>'
     return f'{pe:.1f}x'
 
-def entry_zone(d):
-    """Composite margin-of-safety signal: GREEN / YELLOW / RED."""
-    pma200 = d.get('price_vs_ma200')
-    fy0    = d.get('fy0_growth')
-    grade  = d.get('grade', 'B')
-    fpe    = d.get('fwd_pe') or d.get('pe')
-
-    # Base score from technical position vs MA200d
-    if pma200 is None:
-        base = 1
-    elif pma200 <= 5:
-        base = 2   # at/below MA200 — base zone
-    elif pma200 <= 20:
-        base = 1   # moderate extension
-    else:
-        base = 0   # stretched (>20% above MA200d)
-
-    eps_mod   = (+1 if fy0 is not None and fy0 > 15
-                 else -1 if fy0 is not None and fy0 < 0
-                 else 0)
-    grade_mod = +1 if grade == 'A+' else (0 if grade == 'A' else -1)
-    # High PE without matching growth caps at yellow
-    pe_pen    = -1 if (fpe and fpe > 50 and (fy0 is None or fy0 < 20)) else 0
-
-    total = base + eps_mod + grade_mod + pe_pen
-    if total >= 3: return 'green'
-    if total >= 1: return 'yellow'
-    return 'red'
-
-
 def entry_html(d):
-    zone = entry_zone(d)
-    color = '#3fb950' if zone == 'green' else ('#e3b341' if zone == 'yellow' else '#f85149')
-    label = 'ZONE' if zone == 'green' else ('FAIR' if zone == 'yellow' else 'RICH')
-    pma   = d.get('price_vs_ma200')
-    tip   = f'{pma:+.0f}% vs MA200' if pma is not None else ''
-    return (f'<span style="color:{color};font-weight:700;font-size:11px">● {label}</span>'
-            f'<span style="color:#484f58;font-size:10px"> {tip}</span>')
+    """Color-coded % vs MA200d — green ≤5%, amber 5-20%, red >20%. No label: let the reader interpret."""
+    pma = d.get('price_vs_ma200')
+    if pma is None:
+        return '<span style="color:#484f58">—</span>'
+    if pma <= 5:
+        color = '#3fb950'   # green  — at or near MA200
+    elif pma <= 20:
+        color = '#e3b341'   # amber  — moderate extension
+    else:
+        color = '#f85149'   # red    — stretched
+    return (f'<span style="color:{color};font-weight:700;font-size:11px">●</span>'
+            f'<span style="color:{color};font-size:11px"> {pma:+.0f}%</span>'
+            f'<span style="color:#484f58;font-size:10px"> vs MA200</span>')
 
 
 def eps_trend_html(d):
