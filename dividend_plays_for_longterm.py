@@ -92,6 +92,9 @@ UNIVERSE = [
     'DOV',   # Dover Corp — diversified industrial, 69yr dividend king
     'SNA',   # Snap-on — professional tools + diagnostics + repair software; franchise toolbox-on-credit dealer network = sticky recurring relationship with technicians (hard to displace once in the bay); GrossM 51.8%, OM 25.4%, NM 19.6%, ROE 17.9%, D/EV 0.061, FCF 5.1%, yield ~2.6%; 14yr+ consecutive div growth (Aristocrat path); A+; 4/4 MA aligned, RSI 68.6, MACD expanding — strong momentum; added 2026-08-06
 
+    # Specialty Materials — niche chemical compounders
+    'CBT',   # Cabot Corporation — specialty chemicals (carbon black for tires/rubber/coatings, activated carbon for water/air/pharma purification, specialty fluids for drilling/processing); niche industrial inputs with meaningful switching costs; OM 14.3%, NM 5.2%, ROE 13.3%, FCF 5.8%, RevG 6.4%; D/EV 0.227 (slightly over gate, structural for a capex-intensive materials co) + GrossM 24.2% (materials structural, not fixable) — both acknowledged; yield ~2.8%, consistent payer; watch D/EV trending toward 0.20 as FCF compounds; added 2026-08-07
+
     # Franchise / consumer
     'MCD',   # McDonald's — 44% OM franchise royalty, 49yr div growth
 
@@ -113,6 +116,7 @@ UNIVERSE = [
 
     # Banks — deposit franchise compounders
     'PNC',   # PNC Financial Services — #5 US bank by assets; retail + corporate banking + asset management (BBVA acquisition added scale); Main Street + Wall Street balanced model, not Goldman-style trading-heavy; net interest margin expands as rates stay elevated; consistent dividend grower, returned to pre-COVID payout levels fast; D/EV reads elevated (bank deposits = structural liabilities, same sector-aware read as PRU/VZ — not deteriorating debt); fee income from treasury management + capital markets + asset management cushions NII volatility in rate cycles; watch payout ratio and NIM trend each quarter as the qualifying gate
+    'CATY',  # Cathay General Bancorp — California regional bank serving the Chinese-American community; unique franchise: deep cultural trust + bilingual staff + trade finance expertise (US-China commerce corridor) = sticky deposit base; OM 62.6%, NM 43.7%, ROE 11.7%, D/EV 0.036 (exceptionally well-capitalized for a bank), RevG 13.8%; FCF/GrossM banking artifacts; yield ~3%, consistent payer; 4/4 MA aligned, RSI 72.4 — strong momentum; added 2026-08-07
     'IBOC',  # International Bancshares — Texas regional bank (US-Mexico border corridor); border franchise = unique moat in cross-border commerce, trade finance, remittances between US and Mexico; OM 63.9%, NM 49.9%, ROE 13.5%; FCF/GrossM are banking artifacts (deposits-as-liabilities, same sector read as PNC/CFG); D/EV 0.151 low for a bank; yield ~3.5%, consistent dividend grower; RevG 5.4% slow but NIM discipline is exceptional for a regional bank; watch NIM trend + ROE stability as qualifying gate each quarter; added 2026-08-07
     'CFG',   # Citizens Financial Group — #7 US regional bank by assets; retail + commercial banking across New England + Mid-Atlantic + Midwest; OM 35.1%, NM 26.1%, RevG 14.7%; ROE 8.3% (below 10% gate — genuine watch item for a bank, below PNC/USB peer range); D/EV 0.459 + FCF 0.0% are structural bank artifacts (deposits = liabilities, FCF doesn't report cleanly for banks — same sector-aware read as PNC); dividend yield ~3.5%, consistent payer; 4/4 MA aligned, slope +4.7%, RSI 71.4 — strong momentum; watch NIM trend + ROE recovery above 10% as rate environment normalizes; added 2026-08-06
 
