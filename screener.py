@@ -155,6 +155,7 @@ UNIVERSE = [
     'ZM',                            # Zoom Video — post-COVID valuation reset complete; A+ (7/7): OM 25%, NM 42%, GrossM 78%, ROE 22%, D/E 0.006, FCF $1.98B (~7.6% FCF yield at $87), RevG 5.5%; near-zero debt + massive cash pile; AI Companion + Zoom Contact Center = monetization runway; fwd P/E 13.8x, priced like value, runs like software; 2/4 MA, below MA10w $98 — scan will surface on weekly alignment
     'BRK-B','CB','AFL','TRV','ALL','PGR','AJG','AON','WTW','CINF',
     'NVO','ISRG','EW','IDXX','PODD','WST',
+    'ZTS',                        # Zoetis — #1 global animal health company (Pfizer spinoff 2013); companion animal biologics Librela (dog OA) + Cytopoint (atopy) = monoclonal antibodies with no generic pathway (biologics have no Hatch-Waxman); vet brand loyalty + treatment protocol embeds = pricing power; livestock segment (cattle/swine/poultry) diversifies; pet humanization = secular demand regardless of cycle; GrossM 71.7%, OM 38.0%, NM 28.2%, ROE 80.2% (buyback-suppressed equity), D/EV 0.233 only blocker, FCF 24.1%, RevG 0.3%; grade B; gate: D/EV ≤ 0.20 as debt amortizes + RevG reaccelerating; added 2026-08-07
     'MCO','SPGI','MSCI','ICE','CME','CBOE','FDS','BR','NDAQ',
     'ODFL','EXPD','XPO','JBHT','SAIA','KNSL','RLI','CASH','FICO',
     'ROL','CTAS','CPRT','ADP','PAYX','TRI','VRSK','IT',
