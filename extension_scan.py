@@ -232,13 +232,34 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
             </tr>"""
         return out
 
+    def rows_for_below(group):
+        out = ''
+        for r in sorted(group, key=lambda x: -x['ext_now']):  # closest to MA first
+            slope_str = f"{r['slope']:+.1f}%"
+            slope_col = '#3fb950' if r['slope'] > 0 else '#f85149'
+            hi_c = '#3fb950' if r['pct_from_hi'] >= -5 else ('#d4a017' if r['pct_from_hi'] >= -20 else '#f85149')
+            out += f"""<tr style="opacity:0.75">
+              <td class="ticker" style="color:#8b949e">{r['ticker']}</td>
+              <td><span class="badge" style="background:#21262d;color:#8b949e">↓ below</span></td>
+              <td style="color:#8b949e">${r['price']}</td>
+              <td style="color:#f85149;font-weight:600">{r['ext_now']:+.1f}%</td>
+              <td style="color:#484f58">{r['ext_90p']:+.1f}%</td>
+              <td style="color:#484f58;font-family:monospace">── n/a ──</td>
+              <td style="color:#484f58">${r['ceiling_90']:.2f}</td>
+              <td style="color:{hi_c};font-weight:600">{r['pct_from_hi']:+.1f}%</td>
+              <td style="color:{slope_col};font-size:11px">{slope_str}</td>
+              {_rsi_cell(r['rsi'])}
+              {_lt_struct_cell(r['pct_vs_87w'])}
+            </tr>"""
+        return out
+
     rows  = rows_for(fresh,    '#1a4731', '▓ fresh')
     rows += rows_for(midway,   '#4a3800', '▒ midway')
     rows += rows_for(extended, '#4a2800', '░ extended')
     rows += rows_for(ceiling,  '#4a0000', '✕ ceiling')
 
-    below_tickers  = '  ·  '.join(r['ticker'] for r in below)  if below   else '—'
-    nd_tickers     = '  ·  '.join(no_data)                      if no_data else '—'
+    below_rows = rows_for_below(below) if below else ''
+    nd_tickers = '  ·  '.join(no_data) if no_data else '—'
 
     total_above = len(fresh) + len(midway) + len(extended) + len(ceiling)
 
@@ -299,7 +320,19 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
   <tbody>{rows}</tbody>
 </table>
 
-<div class="section">Below 10w MA ({len(below)}) — {below_tickers}</div>
+<div class="section">Below 10w MA — {len(below)} names &nbsp;·&nbsp; <span style="color:#484f58;font-size:10px">sorted by proximity to MA (closest first) · runway n/a · ceiling shown as reference if/when MA is reclaimed</span></div>
+<table>
+  <thead>
+    <tr>
+      <th>Ticker</th><th>Zone</th><th>Price</th>
+      <th>vs 10wMA</th><th>Ceiling%</th><th>Runway</th>
+      <th>Ceiling $</th><th>vs 52wHi</th><th>Slope</th><th>RSI</th>
+      <th>87w Struct</th>
+    </tr>
+  </thead>
+  <tbody>{below_rows}</tbody>
+</table>
+
 <div class="section">No data — {nd_tickers}</div>
 <div class="disclaimer">For informational purposes only. Market dynamics change constantly — these outputs are auto-generated from Yahoo Finance data and may not reflect current conditions. Not tailored financial advice. Not a recommendation to buy, sell, or hold any security. Always do your own research. · Ceiling = 10wMA × (1 + 90th-pct historical extension).</div>
 </body>
