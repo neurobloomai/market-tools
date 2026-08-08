@@ -64,6 +64,9 @@ UNIVERSE = [
     'ASIANPAINT.NS',  # A+ (7/7) — 50%+ decorative paints market share, pricing power + 3-tier distribution moat; OM 16%, ROE 21%, D/E 0.18, FCF positive, RevG 11%; 4/4 MA aligned slope +209
     'PIDILITIND.NS',  # Pidilite Industries — Fevicol monopoly + construction chemicals (Dr. Fixit, M-seal); 55% gross margin, ROE 23.5%, zero debt, A+; same distribution moat as Asian Paints, deeply embedded in every construction project in India
 
+    # Building Materials — scale + geological moat
+    'ULTRACEMCO.NS', # UltraTech Cement — largest Indian cement manufacturer (~28% market share, 140+ MTPA capacity targeting 200 MTPA); India analog of VMC/MLM — limestone mine ownership near population centers + kiln infrastructure + 80,000+ dealer network = 20-30yr moat impossible to replicate quickly; India Cements acquisition consolidates South India further; OM 15.5%, NM 9.3%, GrossM 58.4%, D/EV 0.063 (exceptionally clean for aggressive capacity expansion), RevG 15.9%; ROE/FCF 0.000 yfinance artifacts; Aditya Birla Group discipline = grow without blowing balance sheet; 4/4 MA, RSI 59.5, MACD expanding; added 2026-08-08
+
     # Infrastructure & Logistics
     'ADANIPORTS.NS','CONCOR.NS','IRCTC.NS',
 
