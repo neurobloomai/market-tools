@@ -86,6 +86,18 @@ def get_extension_data(ticker):
         loss  = (-delta.clip(upper=0)).rolling(14).mean()
         rsi   = float((100 - 100 / (1 + gain / loss)).iloc[-1])
 
+        # Weekly CMF-20 (Chaikin Money Flow)
+        try:
+            high_s   = hist['High'].reindex(close.index)
+            low_s    = hist['Low'].reindex(close.index)
+            vol_s    = hist['Volume'].reindex(close.index)
+            hl_range = (high_s - low_s).replace(0, float('nan'))
+            mfm      = ((close - low_s) - (high_s - close)) / hl_range
+            mfv      = mfm * vol_s
+            cmf      = round(float(mfv.rolling(20).sum().iloc[-1] / vol_s.rolling(20).sum().iloc[-1]), 3)
+        except Exception:
+            cmf = None
+
         return {
             'ticker':      ticker,
             'price':       round(price, 2),
@@ -101,6 +113,7 @@ def get_extension_data(ticker):
             'pct_from_hi': round(pct_from_hi, 1),
             'slope':       round(slope, 1),
             'rsi':         round(rsi, 1),
+            'cmf':         cmf,
             'pct_vs_87w':  pct_vs_87w,
             'above_10w':   ext_now > 0,
         }
@@ -185,6 +198,20 @@ def _rsi_cell(rsi):
     return f'<td style="color:{color};font-weight:600">{rsi:.0f}</td>'
 
 
+def _cmf_cell(cmf):
+    if cmf is None:
+        return '<td style="color:#484f58">—</td>'
+    if cmf >= 0.10:
+        color = '#3fb950'
+    elif cmf >= 0:
+        color = '#8b949e'
+    elif cmf >= -0.10:
+        color = '#d4a017'
+    else:
+        color = '#f85149'
+    return f'<td style="color:{color};font-weight:600">{cmf:+.3f}</td>'
+
+
 def _lt_struct_cell(pct):
     if pct is None:
         return '<td style="color:#484f58">—</td>'
@@ -228,6 +255,7 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
               {_pct_cell(r['pct_from_hi'])}
               <td style="color:{slope_col};font-size:11px">{slope_str}</td>
               {_rsi_cell(r['rsi'])}
+              {_cmf_cell(r.get('cmf'))}
               {_lt_struct_cell(r['pct_vs_87w'])}
             </tr>"""
         return out
@@ -249,6 +277,7 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
               <td style="color:{hi_c};font-weight:600">{r['pct_from_hi']:+.1f}%</td>
               <td style="color:{slope_col};font-size:11px">{slope_str}</td>
               {_rsi_cell(r['rsi'])}
+              {_cmf_cell(r.get('cmf'))}
               {_lt_struct_cell(r['pct_vs_87w'])}
             </tr>"""
         return out
@@ -313,7 +342,7 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
     <tr>
       <th>Ticker</th><th>Zone</th><th>Price</th>
       <th>vs 10wMA</th><th>Ceiling%</th><th>Runway</th>
-      <th>Ceiling $</th><th>vs 52wHi</th><th>Slope</th><th>RSI</th>
+      <th>Ceiling $</th><th>vs 52wHi</th><th>Slope</th><th>RSI</th><th>CMF 20w</th>
       <th>87w Struct</th>
     </tr>
   </thead>
@@ -326,7 +355,7 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
     <tr>
       <th>Ticker</th><th>Zone</th><th>Price</th>
       <th>vs 10wMA</th><th>Ceiling%</th><th>Runway</th>
-      <th>Ceiling $</th><th>vs 52wHi</th><th>Slope</th><th>RSI</th>
+      <th>Ceiling $</th><th>vs 52wHi</th><th>Slope</th><th>RSI</th><th>CMF 20w</th>
       <th>87w Struct</th>
     </tr>
   </thead>
@@ -365,7 +394,7 @@ def _rjust(s, w):
     return ' ' * max(0, w - _vlen(s)) + s
 
 # Column widths (visible chars)
-_W = dict(ticker=6, zone=9, price=9, ext=7, ceil=20, runway=19, rsi=3, slope=7, hi=7, lt=16)
+_W = dict(ticker=6, zone=9, price=9, ext=7, ceil=20, runway=19, rsi=3, slope=7, hi=7, cmf=7, lt=16)
 
 
 def _cli_row(r):
@@ -394,22 +423,35 @@ def _cli_row(r):
     slope_s   = _rjust(slope_c + f"{r['slope']:+.1f}%" + _RESET, _W['slope'])
     hi_s      = _rjust(hi_c + f"{r['pct_from_hi']:+.1f}%" + _RESET, _W['hi'])
 
+    cmf_val = r.get('cmf')
+    if cmf_val is None:
+        cmf_col, cmf_str = '\033[90m', '—'
+    elif cmf_val >= 0.10:
+        cmf_col, cmf_str = '\033[32m', f'{cmf_val:+.3f}'
+    elif cmf_val >= 0:
+        cmf_col, cmf_str = '\033[37m', f'{cmf_val:+.3f}'
+    elif cmf_val >= -0.10:
+        cmf_col, cmf_str = '\033[33m', f'{cmf_val:+.3f}'
+    else:
+        cmf_col, cmf_str = '\033[31m', f'{cmf_val:+.3f}'
+    cmf_s = _rjust(cmf_col + cmf_str + _RESET, _W['cmf'])
+
     lt_label, lt_col = _lt_struct(r.get('pct_vs_87w'))
     pct87 = r.get('pct_vs_87w')
     pct87_str = f"{pct87:+.1f}% {lt_label}" if pct87 is not None else '—'
     lt_s = _ljust(lt_col + pct87_str + _RESET, _W['lt'])
 
-    print(f"  {ticker_s}  {zone_s}  {price_s}  {ext_s}  {ceil_s}  {runway_s}  {rsi_s}  {slope_s}  {hi_s}  {lt_s}")
+    print(f"  {ticker_s}  {zone_s}  {price_s}  {ext_s}  {ceil_s}  {runway_s}  {rsi_s}  {slope_s}  {hi_s}  {cmf_s}  {lt_s}")
 
 
 def _cli_header():
     W = _W
     print(f"\n  {'TICKER':<{W['ticker']}}  {'ZONE':<{W['zone']}}  {'PRICE':>{W['price']}}  "
           f"{'10wMA%':>{W['ext']}}  {'CEIL $ / OVERSHOOT':>{W['ceil']}}  "
-          f"{'RUNWAY':<{W['runway']}}  {'RSI':>{W['rsi']}}  {'SLOPE':>{W['slope']}}  {'52wHi':>{W['hi']}}  {'87w STRUCT':<{W['lt']}}")
+          f"{'RUNWAY':<{W['runway']}}  {'RSI':>{W['rsi']}}  {'SLOPE':>{W['slope']}}  {'52wHi':>{W['hi']}}  {'CMF':>{W['cmf']}}  {'87w STRUCT':<{W['lt']}}")
     print(f"  {'─'*W['ticker']}  {'─'*W['zone']}  {'─'*W['price']}  "
           f"{'─'*W['ext']}  {'─'*W['ceil']}  {'─'*W['runway']}  "
-          f"{'─'*W['rsi']}  {'─'*W['slope']}  {'─'*W['hi']}  {'─'*W['lt']}")
+          f"{'─'*W['rsi']}  {'─'*W['slope']}  {'─'*W['hi']}  {'─'*W['cmf']}  {'─'*W['lt']}")
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
