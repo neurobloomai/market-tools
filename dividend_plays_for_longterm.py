@@ -179,6 +179,7 @@ UNIVERSE = [
     'KMB',   # Kimberly-Clark — tissue/personal care staple; 19.6% OM, 4.9% yield, FCF 3.0%, D/EV 0.172, P/E 20.2; A
     'TRI',   # Thomson Reuters — legal/news data platform; 30.3% OM, 3.1% yield, FCF 4.7%, D/EV 0.072, P/E 23.4; A
     'HD',    # Home Depot — home improvement duopoly; 11.9% OM, 2.8% yield, FCF 3.0%, D/EV 0.160, P/E 23.9; B
+    'PPG',   # PPG Industries — global #2 coatings (architectural: Glidden/Olympic/PPG brands + industrial: automotive OEM, aerospace, packaging, protective coatings); 50+ year Dividend Aristocrat, yield ~2.5-3%; GrossM 41.2%, OM 14.0%, NM 9.6%, ROE 19.3%, FCF 4.2%, RevG 7.2%; D/EV 0.229 only blocker — acquisition-driven (serial acquirer model, same structural read as SHW); FCF 4.2% covers dividend; SHW peer in the coatings duopoly — different channel (PPG heavier in industrial/automotive, SHW heavier in architectural contractor); watch D/EV delevering toward 0.20 as FCF compounds; added 2026-08-08
 
     # REIT — Experiential / Net Lease
     'EPR',   # EPR Properties — experiential net-lease REIT; owns theaters, ski resorts, attractions, early childhood education (La Petite Academy); triple-net leases = tenants pay taxes/insurance/maintenance, EPR collects rent; OM 51.3%, NM 37.7%, ROE 11.7% (passes gate), FCF 7.1% covers 5.8% yield (MOS +1.3%); D/EV 0.392 only blocker — REIT structure debt secured against experiential properties, same read as VICI; judge by AFFO coverage not GAAP earnings; added 2026-07-29
