@@ -185,6 +185,7 @@ UNIVERSE = [
 
     # BDC — Business Development Company
     'MAIN',  # Main Street Capital — BDC lending to lower middle market; internally managed (removes fee conflict vs externally managed peers); ~8.4% yield paid monthly + semi-annual special dividends; trades at ~1.55x NAV (premium unusual for BDCs, reflects management quality); ROE 14.4%; BDC structure means OM/D/E filters don't apply cleanly — judge by: NAV growth + dividend coverage + management track record
+    'ARCC',  # Ares Capital Corporation — largest BDC by assets (~$22B+); externally managed by Ares Management (ARES); lends to middle market companies ($10M–$1B revenue) that can't access public debt markets; scale moat: largest BDC = lowest cost of capital = attracts better borrowers = lower credit losses = virtuous cycle; yield ~9-10%, quarterly distributions; D/EV 0.532 structural (BDCs borrow to lend — leverage is the model), ROE 6.9% mark-to-market distortion — judge by NAV/share growth + dividend coverage ratio + non-accrual rate (credit quality); GrossM 100%, OM 75.7%, 4/4 MA aligned; vs MAIN: ARCC is externally managed (fee conflict exists), larger scale, higher yield; added 2026-08-08
 
 ]
 
