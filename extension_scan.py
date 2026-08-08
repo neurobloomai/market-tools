@@ -49,6 +49,7 @@ def get_extension_data(ticker):
         ma10w = float(close.rolling(10).mean().iloc[-1])
         ma20w = float(close.rolling(20).mean().iloc[-1])
         ma43w = float(close.rolling(43).mean().iloc[-1])
+        ma87w = float(close.rolling(87).mean().iloc[-1]) if len(close) >= 87 else None
 
         # Historical extension distribution vs 10w MA
         ext_series  = ((close / close.rolling(10).mean()) - 1) * 100
@@ -67,6 +68,9 @@ def get_extension_data(ticker):
 
         ceiling_90  = ma10w * (1 + ext_90p  / 100)
         ceiling_max = ma10w * (1 + ext_max  / 100)
+
+        # % above 87w MA — structural long-term extension
+        pct_vs_87w = round((price / ma87w - 1) * 100, 1) if ma87w else None
 
         # % from 52w high
         hi52        = float(close.iloc[-52:].max()) if len(close) >= 52 else float(close.max())
@@ -97,6 +101,7 @@ def get_extension_data(ticker):
             'pct_from_hi': round(pct_from_hi, 1),
             'slope':       round(slope, 1),
             'rsi':         round(rsi, 1),
+            'pct_vs_87w':  pct_vs_87w,
             'above_10w':   ext_now > 0,
         }
     except Exception:
@@ -133,6 +138,23 @@ def _category(r):
         return 'extended', '#1a1000', '#f0883e'   # amber — stretched
 
 
+def _lt_struct(pct):
+    """Returns (short_label, ansi_color) for structural 87w MA extension."""
+    if pct is None:
+        return '—',        '\033[90m'
+    if pct > 100:
+        return 'extreme',  '\033[31m'       # red
+    if pct > 50:
+        return 'high',     '\033[38;5;208m' # orange
+    if pct > 25:
+        return 'moderate', '\033[33m'       # yellow
+    if pct > 10:
+        return 'mild',     '\033[37m'       # white
+    if pct >= 0:
+        return 'at base',  '\033[32m'       # green
+    return 'below LT',     '\033[34m'       # blue
+
+
 def _runway_bar(runway, width=12):
     """ASCII progress bar showing runway consumed."""
     if runway is None:
@@ -163,6 +185,29 @@ def _rsi_cell(rsi):
     return f'<td style="color:{color};font-weight:600">{rsi:.0f}</td>'
 
 
+def _lt_struct_cell(pct):
+    if pct is None:
+        return '<td style="color:#484f58">—</td>'
+    label, _ = _lt_struct(pct)
+    if pct > 100:
+        color, bg = '#f85149', 'rgba(248,81,73,0.10)'
+    elif pct > 50:
+        color, bg = '#f0883e', 'rgba(240,136,62,0.10)'
+    elif pct > 25:
+        color, bg = '#d4a017', 'rgba(212,160,23,0.08)'
+    elif pct > 10:
+        color, bg = '#8b949e', 'transparent'
+    elif pct >= 0:
+        color, bg = '#3fb950', 'rgba(63,185,80,0.08)'
+    else:
+        color, bg = '#58a6ff', 'rgba(88,166,255,0.08)'
+    sign = '+' if pct >= 0 else ''
+    return (f'<td style="background:{bg};border-radius:3px">'
+            f'<span style="color:{color};font-weight:600;font-size:11px">{sign}{pct:.1f}%</span>'
+            f'<span style="color:{color};font-size:10px;margin-left:4px;opacity:0.8">{label}</span>'
+            f'</td>')
+
+
 def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
     def rows_for(group, badge_color, badge_label):
         out = ''
@@ -183,6 +228,7 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
               {_pct_cell(r['pct_from_hi'])}
               <td style="color:{slope_col};font-size:11px">{slope_str}</td>
               {_rsi_cell(r['rsi'])}
+              {_lt_struct_cell(r['pct_vs_87w'])}
             </tr>"""
         return out
 
@@ -237,6 +283,7 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
       <th>Ticker</th><th>Zone</th><th>Price</th>
       <th>vs 10wMA</th><th>Ceiling%</th><th>Runway</th>
       <th>Ceiling $</th><th>vs 52wHi</th><th>Slope</th><th>RSI</th>
+      <th>87w Struct</th>
     </tr>
   </thead>
   <tbody>{rows}</tbody>
@@ -275,7 +322,7 @@ def _rjust(s, w):
     return ' ' * max(0, w - _vlen(s)) + s
 
 # Column widths (visible chars)
-_W = dict(ticker=6, zone=9, price=9, ext=7, ceil=20, runway=19, rsi=3, slope=7, hi=7)
+_W = dict(ticker=6, zone=9, price=9, ext=7, ceil=20, runway=19, rsi=3, slope=7, hi=7, lt=16)
 
 
 def _cli_row(r):
@@ -304,17 +351,22 @@ def _cli_row(r):
     slope_s   = _rjust(slope_c + f"{r['slope']:+.1f}%" + _RESET, _W['slope'])
     hi_s      = _rjust(hi_c + f"{r['pct_from_hi']:+.1f}%" + _RESET, _W['hi'])
 
-    print(f"  {ticker_s}  {zone_s}  {price_s}  {ext_s}  {ceil_s}  {runway_s}  {rsi_s}  {slope_s}  {hi_s}")
+    lt_label, lt_col = _lt_struct(r.get('pct_vs_87w'))
+    pct87 = r.get('pct_vs_87w')
+    pct87_str = f"{pct87:+.1f}% {lt_label}" if pct87 is not None else '—'
+    lt_s = _ljust(lt_col + pct87_str + _RESET, _W['lt'])
+
+    print(f"  {ticker_s}  {zone_s}  {price_s}  {ext_s}  {ceil_s}  {runway_s}  {rsi_s}  {slope_s}  {hi_s}  {lt_s}")
 
 
 def _cli_header():
     W = _W
     print(f"\n  {'TICKER':<{W['ticker']}}  {'ZONE':<{W['zone']}}  {'PRICE':>{W['price']}}  "
           f"{'10wMA%':>{W['ext']}}  {'CEIL $ / OVERSHOOT':>{W['ceil']}}  "
-          f"{'RUNWAY':<{W['runway']}}  {'RSI':>{W['rsi']}}  {'SLOPE':>{W['slope']}}  {'52wHi':>{W['hi']}}")
+          f"{'RUNWAY':<{W['runway']}}  {'RSI':>{W['rsi']}}  {'SLOPE':>{W['slope']}}  {'52wHi':>{W['hi']}}  {'87w STRUCT':<{W['lt']}}")
     print(f"  {'─'*W['ticker']}  {'─'*W['zone']}  {'─'*W['price']}  "
           f"{'─'*W['ext']}  {'─'*W['ceil']}  {'─'*W['runway']}  "
-          f"{'─'*W['rsi']}  {'─'*W['slope']}  {'─'*W['hi']}")
+          f"{'─'*W['rsi']}  {'─'*W['slope']}  {'─'*W['hi']}  {'─'*W['lt']}")
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
