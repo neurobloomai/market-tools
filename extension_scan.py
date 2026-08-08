@@ -269,6 +269,16 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
 <h1>📡 Extension Scan <span style="font-size:13px;color:#8b949e;font-weight:400">— {label}</span></h1>
 <div class="subtitle">{now} &nbsp;·&nbsp; weekly bars · 3yr history &nbsp;·&nbsp; runway = % of 90th-pct ceiling still unused &nbsp;·&nbsp; ceiling = implied price at historical ceiling</div>
 
+<div style="font-size:11px;color:#8b949e;margin-bottom:8px;padding:8px 12px;background:#161b22;border-radius:6px;border-left:3px solid #30363d;">
+  <span style="color:#e6edf3;font-weight:600">87w Struct</span> — how far the price sits above its 87-week (≈20-month) moving average. A different question from the 10w runway: the 10w ceiling tells you short-term momentum extension; the 87w tells you long-term structural extension from the base.
+  &nbsp;·&nbsp; <span style="color:#3fb950;font-weight:600">at base</span> ≤10% &nbsp;·&nbsp;
+  <span style="color:#8b949e;font-weight:600">mild</span> 10–25% &nbsp;·&nbsp;
+  <span style="color:#d4a017;font-weight:600">moderate</span> 25–50% &nbsp;·&nbsp;
+  <span style="color:#f0883e;font-weight:600">high</span> 50–100% &nbsp;·&nbsp;
+  <span style="color:#f85149;font-weight:600">extreme</span> &gt;100% &nbsp;·&nbsp;
+  <span style="color:#58a6ff;font-weight:600">below LT</span> under 87w MA
+</div>
+
 <div class="summary">
   <span>{len(fresh)}</span> fresh (runway ≥ 67%) &nbsp;·&nbsp;
   <span>{len(midway)}</span> midway (34–66%) &nbsp;·&nbsp;
