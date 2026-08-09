@@ -717,6 +717,22 @@ A robo-advisor gives everyone the same right column. That is not personalization
 
 The real objective: **control over your money, through control over your decisions, through clarity about what is actually within your reach.** The screener surfaces the opportunities. The framework disciplines the entry. The missing layer — personalization at scale — closes the loop on sizing, strategy, and response. Together they give you the only kind of edge that compounds: not prediction, but agency.
 
+**Responsible sizing — the ethical layer**
+
+There is one more dimension that belongs here, and it is not optional.
+
+Any system that makes sizing recommendations — or even sizing suggestions — carries a responsibility that goes beyond math. It is not enough to say "here is the optimal position size given your portfolio." The system must also enforce guardrails that protect the person from themselves, from overconfidence, from the specific behavioral failures that markets reliably produce.
+
+This means: sizing recommendations must be bounded by portfolio size. A person with a $5,000 portfolio should never be in a position where a single trade — regardless of how high-conviction — can permanently impair their ability to stay in the game. A person with a $500,000 portfolio has different absolute limits but the same principle applies. The guardrail is not about the quality of the setup. It is about survival. A right thesis sized incorrectly can still end the game.
+
+This applies irrespective of who the user is — individual investor, small fund, institution. The size of the portfolio does not change the principle. It only changes the numbers. Responsible sizing means the system will not recommend — or allow — a position that exceeds what the portfolio can survive if the trade goes to zero. Not because it is likely to go to zero. Because the role of a responsible system is to make sure that even the unlikely outcome does not end the journey.
+
+The projected growth dimension matters too. A portfolio that is growing should have sizing that reflects where it is going, not just where it is today. A portfolio that is shrinking should have sizing that protects the remaining capital more aggressively, not less. Static percentage rules miss this entirely — 5% of a growing portfolio and 5% of a declining portfolio are not the same decision.
+
+This is the layer that separates a tool from a responsible system. Tools give you outputs. Responsible systems refuse to give you certain outputs — not because they can't compute them, but because giving them would be wrong. That refusal is not a limitation. It is the feature.
+
+Heavy? Yes. Needed? Without question. This is not regulatory compliance language. It is the design principle that makes the difference between a system that helps people build wealth and one that helps people lose it faster with more sophistication.
+
 **Auto-sensing on-demand triggers — the next automation layer**
 
 Today, on-demand tools like the monthly MA gate require a human to notice that conditions are right and click "Run workflow." That is one manual step too many at exactly the moment when timing matters most.
