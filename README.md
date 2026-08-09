@@ -731,6 +731,8 @@ The projected growth dimension matters too. A portfolio that is growing should h
 
 This is the layer that separates a tool from a responsible system. Tools give you outputs. Responsible systems refuse to give you certain outputs — not because they can't compute them, but because giving them would be wrong. That refusal is not a limitation. It is the feature.
 
+Calling a system's guardrails "restrictive" gets this backwards. Guardrails don't restrict your agency — they keep you at the table long enough to exercise it. If the system lets you blow up, you lose all future decisions. A system that protects your survival is what makes every future choice possible. The guardrail is not the constraint. Losing the account is.
+
 Heavy? Yes. Needed? Without question. This is not regulatory compliance language. It is the design principle that makes the difference between a system that helps people build wealth and one that helps people lose it faster with more sophistication.
 
 **Auto-sensing on-demand triggers — the next automation layer**
