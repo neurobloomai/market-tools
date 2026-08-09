@@ -697,6 +697,26 @@ The goal is not to make every investor identical. It is to help each investor be
 
 LLMs are well-suited for this — not to replace the math, but to gather honest inputs. A conversational interface can ask the right questions in the right order, detect inconsistencies ("you said high risk tolerance but also said you'd need this money in 18 months"), and translate real life context into structured risk parameters. The math is easy. Getting honest, self-aware inputs from real people — in their actual life context, not their idealized version of themselves — is the hard part. Conversation solves it better than any form.
 
+**Control — the core objective**
+
+Markets are random a significant portion of the time. Outlier events — tariffs, rate shocks, geopolitical surprises, earnings gaps — are not predictable and not controllable. Most people spend most of their mental energy on exactly this: watching macro, reading predictions, worrying about what the Fed will do next. None of it is within reach.
+
+What is within reach is a different list entirely:
+
+- **Which opportunities to seek** — you choose the universe, the quality threshold, the themes you understand
+- **When to enter** — you choose the timing, the structure confirmation, the patience to wait for alignment
+- **How much to size** — you choose the exposure, calibrated to your actual risk capacity not a generic bucket
+- **Which strategies to use** — long equity, spreads, DCA, cash-secured puts — you choose the instrument that fits your capital and temperament
+- **Whether to hold when it moves against you** — you choose whether the thesis is intact or broken
+
+This is the correct frame for what personalization at scale means. Not predicting markets — that is the wrong goal and it is not achievable. But giving every person maximum agency over the things they actually control, calibrated to who they specifically are.
+
+The right column looks different for everyone. Which opportunities to seek depends on what you understand deeply. When to enter depends on your time horizon. How much to size depends on your real obligations and drawdown capacity. Which strategies to use depends on your capital, your temperament, your tax situation. Whether to hold depends on your conviction in the original thesis — not the current price.
+
+A robo-advisor gives everyone the same right column. That is not personalization. That is a template with your name on it.
+
+The real objective: **control over your money, through control over your decisions, through clarity about what is actually within your reach.** The screener surfaces the opportunities. The framework disciplines the entry. The missing layer — personalization at scale — closes the loop on sizing, strategy, and response. Together they give you the only kind of edge that compounds: not prediction, but agency.
+
 **Auto-sensing on-demand triggers — the next automation layer**
 
 Today, on-demand tools like the monthly MA gate require a human to notice that conditions are right and click "Run workflow." That is one manual step too many at exactly the moment when timing matters most.
