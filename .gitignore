@@ -37,3 +37,4 @@ schwab_auth.py
 !dividend_screener.html
 !dividend_data_cache.json
 !screener_data_cache.json
+!iv_data.json

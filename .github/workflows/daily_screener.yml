@@ -43,3 +43,13 @@ jobs:
           git stash --include-untracked || true
           git pull --rebase origin main || true
           git stash pop || true
+
+      - name: IV snapshot
+        run: python iv_snapshot.py
+
+      - name: Commit IV snapshot
+        run: |
+          git add iv_data.json
+          git diff --staged --quiet || git commit -m "iv_snapshot: $(date -u +'%Y-%m-%d') after-close"
+          git pull --rebase origin main || true
+          git push
