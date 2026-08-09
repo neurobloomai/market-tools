@@ -129,40 +129,72 @@ def main():
     latest_date = max(r['date'] for r in results)
     depth       = max(r['days'] for r in results)
 
+    # Column widths — fixed throughout
+    C = {
+        'ticker': 6, 'tier': 1, 'iv': 7, 'hv': 7,
+        'ratio': 7, 'rank': 7, 'pct': 7,
+        't5': 3, 't20': 3, 'range': 13,
+    }
+    DIVIDER = '  ' + '─' * 92
+
     print()
     print(f'  IV RANK — SPREAD UNIVERSE')
-    print(f'  Last snapshot: {latest_date}  |  History: {depth} day(s)')
+    print(f'  Last snapshot : {latest_date}  |  History: {depth} day(s)')
     if depth < 30:
-        print(f'  ⚠  Rank signal builds at 30 days ({30-depth} to go) — IV/HV ratio is reliable now')
+        print(f'  Status        : building ({30-depth} days to rank signal) — IV/HV ratio reliable now')
     elif depth < 252:
-        print(f'  ◎  Rank active ({depth}/252 days) — percentile sharpens as history fills')
+        print(f'  Status        : rank active ({depth}/252 days) — percentile sharpens as history fills')
     else:
-        print(f'  ✓  Full 252-day history — IV Rank and Percentile are reliable')
+        print(f'  Status        : full 252-day history — IV Rank and Percentile reliable')
     print()
-    print(f'  {"Ticker":<7} {"T":>2}  {"IV":>7} {"HV":>7} {"IV/HV":>7}  '
-          f'{"Rank":>7} {"Pct":>6}  {"5d":>3} {"20d":>4}  '
-          f'{"Range (lo–hi)":>16}  Signal')
-    print(f'  {"─"*105}')
+
+    hdr = (f'  {"Ticker":<{C["ticker"]}}  {"T":{C["tier"]}}'
+           f'  {"ATM IV":>{C["iv"]}}'
+           f'  {"HV30":>{C["hv"]}}'
+           f'  {"IV/HV":>{C["ratio"]}}'
+           f'  {"Rank":>{C["rank"]}}'
+           f'  {"Pct":>{C["pct"]}}'
+           f'  {"5d":{C["t5"]}}'
+           f'  {"20d":{C["t20"]}}'
+           f'  {"Range (lo–hi)":>{C["range"]}}'
+           f'  Signal')
+    print(hdr)
+    print(DIVIDER)
 
     for r in results:
-        ratio_str = f'{r["ratio"]:.2f}x' if r['ratio'] else '   —  '
-        hv_str    = f'{r["hv"]:.1f}%'    if r['hv']    else '   —  '
+        building = r['days'] < 5
+
+        iv_str    = f'{r["iv"]:>6.1f}%'
+        hv_str    = f'{r["hv"]:>6.1f}%'   if r['hv']    else f'{"—":>6}'
+        ratio_str = f'{r["ratio"]:>6.2f}x' if r['ratio'] else f'{"—":>6}'
+        rank_str  = f'{"—":>6}'            if building   else f'{r["rank"]:>6.1f}%'
+        pct_str   = f'{"—":>6}'            if building   else f'{r["pct"]:>5.0f}th '
+        t5_str    = f'{r["t5"]:^{C["t5"]}}'
+        t20_str   = f'{r["t20"]:^{C["t20"]}}'
         range_str = f'{r["iv_lo"]:.1f}–{r["iv_hi"]:.1f}%'
 
-        # Highlight strong signals
         sig = r['signal']
-        marker = '●' if 'SELL' in sig else ('○' if 'ELEVATED' in sig else ' ')
+        if   'SELL'     in sig: marker = '●'
+        elif 'ELEVATED' in sig: marker = '○'
+        elif 'LOW'      in sig: marker = '▽'
+        else:                   marker = ' '
 
-        print(f'  {r["ticker"]:<7} {r["tier"]:>2}  '
-              f'{r["iv"]:>6.1f}%  {hv_str:>7}  {ratio_str:>7}  '
-              f'{r["rank"]:>6.1f}%  {r["pct"]:>5.1f}th  '
-              f'{r["t5"]:>3}  {r["t20"]:>4}  '
-              f'{range_str:>16}  {marker} {sig}')
+        print(f'  {r["ticker"]:<{C["ticker"]}}'
+              f'  {r["tier"]:>{C["tier"]}}'
+              f'  {iv_str:>{C["iv"]}}'
+              f'  {hv_str:>{C["hv"]}}'
+              f'  {ratio_str:>{C["ratio"]}}'
+              f'  {rank_str:>{C["rank"]}}'
+              f'  {pct_str:>{C["pct"]}}'
+              f'  {t5_str}'
+              f'  {t20_str}'
+              f'  {range_str:>{C["range"]}}'
+              f'  {marker} {sig}')
 
-    print()
-    print(f'  IV Rank: 0=52w cheapest  100=52w most expensive  |  ≥70 = sell zone  |  <25 = buy options zone')
-    print(f'  IV/HV:   >1.0 = options expensive vs realized moves (variance risk premium = sell signal)')
-    print(f'  Trend:   ↑↓→ = IV rising/falling/flat over last 5d and 20d snapshots')
+    print(DIVIDER)
+    print(f'  Rank  : 0 = 52w IV low · 100 = 52w IV high · ≥70 sell zone · <25 buy options')
+    print(f'  IV/HV : >1.0 options expensive vs realized moves (variance risk premium = sell signal)')
+    print(f'  Trend : ↑ rising · ↓ falling · → flat  (over last 5 and 20 daily snapshots)')
     print()
 
 
