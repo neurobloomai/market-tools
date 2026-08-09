@@ -286,6 +286,12 @@ Names that look like good chart setups but fall below the line (VRTX, NEM, FTNT,
 
 **Honest watchlist** — every entry has a thesis and a blocker noted. Not just a ticker dump. You know exactly why something isn't in the universe yet and what has to change for it to qualify. The rule: if the blocker is a number, it belongs in the watchlist. If the blocker is the business model, it doesn't.
 
+**Numbers over narrative — but not instead of it.**
+
+Stories are infinitely flexible. At any price, for any stock, someone has a compelling narrative — the TAM is enormous, the moat is wide, the CEO is visionary. Numbers are not flexible. GrossM 23% doesn't become 45% because the thesis is good. FCF -50% doesn't disappear because the long-term case is compelling. The framework uses the story to choose *which numbers matter* — and uses the numbers to discipline the story. A story without numbers is speculation. Numbers without story is pattern matching without understanding. The edge lives at the intersection: thesis-driven selection, metric-driven confirmation.
+
+The gate is simple: a story must eventually show up in the numbers. Until it does, it lives in FUTURE_RADAR — not UNIVERSE.
+
 **Three-tier universe structure:**
 
 | Tier | What it is | Gate to next tier |
