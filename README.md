@@ -671,6 +671,32 @@ This is not a feature that can be added with a few lines of code. The reasoning 
 
 Whether this gets built here, somewhere else, or not at all — the gap it would close is real. The screener half works. The survivability half doesn't exist yet at the individual stock level, personalized to who you actually are financially. That combination is where the value is.
 
+**Portfolio construction and risk — the deeper layer**
+
+What makes this hard isn't the math. Beta decomposition, correlation mapping, tail risk estimation — those are solved problems. What's unsolved at the personal scale is the *inputs*.
+
+Large institutions have had this for decades. BlackRock's Aladdin does exactly this — factor exposure, beta decomposition, correlation across thousands of holdings — for pension funds and sovereign wealth funds at millions per year. The personal investor version doesn't exist in any honest form. Robo-advisors give you a static allocation based on a one-time questionnaire. Brokerage risk tools describe your portfolio's beta after the fact. Neither knows that you hold six semiconductor names with combined market beta of ~2x, that your income is variable, and that a 20% drawdown over the next six months would force you to liquidate at exactly the wrong time.
+
+The three layers that would actually work together:
+
+**1 — Portfolio beta decomposition.** You input your holdings. It tells you: your effective market beta is 1.7x, 40% of your risk is sector-specific (idiosyncratic — semiconductor cycle, earnings, geopolitics), 60% is macro. If SPY drops 15%, here is your expected drawdown range — not as a generic percentage, but specific to what you actually own.
+
+**2 — Real risk capacity.** Not a questionnaire. Actual parameters: account size, income stability, upcoming obligations in the next 12 months, time horizon. From these it derives the answer to the question that actually matters: what drawdown can you survive without being *forced* to sell? That number is different from what most people think it is when markets are calm. A $50k account with stable income and no near-term obligations can absorb more risk than a $200k account with variable income and an obligation coming in 14 months. Account size alone tells you almost nothing.
+
+**3 — Dynamic position sizing.** Combines 1 and 2. A 4/4 + CMF+ + A+ quality setup in a 1.2x beta name earns more size than a borderline 3/4 setup in a 2.0x beta name. The output is personalized to your actual risk capacity — not a generic conservative/moderate/aggressive bucket.
+
+**The personality layer — the part most tools miss entirely**
+
+Most financial tools either ignore an investor's personality or try to standardize it away — fitting everyone into three buckets and calling it personalization. That's not personalization. That's categorization.
+
+The right orientation is different: **complement the investor's natural tendencies, then tweak where needed — don't replace them.** A momentum-oriented investor shouldn't be forced into a value framework. A patient, thesis-driven investor shouldn't be pushed toward short-term signals. The goal is to understand how someone naturally thinks about risk and reward, work with that grain, and make targeted adjustments at the edges where their tendencies create blind spots — not override the whole personality.
+
+This matters because behavior under stress is personality-driven, not logic-driven. When a position is down 20%, whether someone holds or folds is determined less by the framework they built in calm conditions and more by who they are. A risk tool that ignores this is giving advice to a person who doesn't exist — the calm, rational, spreadsheet-reading version — not the actual person who will make the decision at 2am during a correction.
+
+The goal is not to make every investor identical. It is to help each investor become a *better version of themselves* — maximizing what they're already good at, minimizing the specific risks their personality creates, and sizing positions to survive the drawdown that will eventually test them.
+
+LLMs are well-suited for this — not to replace the math, but to gather honest inputs. A conversational interface can ask the right questions in the right order, detect inconsistencies ("you said high risk tolerance but also said you'd need this money in 18 months"), and translate real life context into structured risk parameters. The math is easy. Getting honest, self-aware inputs from real people — in their actual life context, not their idealized version of themselves — is the hard part. Conversation solves it better than any form.
+
 **Auto-sensing on-demand triggers — the next automation layer**
 
 Today, on-demand tools like the monthly MA gate require a human to notice that conditions are right and click "Run workflow." That is one manual step too many at exactly the moment when timing matters most.
