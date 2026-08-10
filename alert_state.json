@@ -1,18 +1,31 @@
 {
   "setups": {
-    "AAPL": "-EXT",
-    "MU": "-EXT"
+    "AAPL": "IN",
+    "MU": "IN"
   },
   "watchlist": {
+    "MELI": 1,
     "MKC": 1,
     "DPZ": 1,
+    "MNDY": 1,
+    "P": 1,
+    "CHTR": 1,
     "MKL": 1,
-    "CELH": 1,
+    "ALC": 1,
+    "KMDA": 1,
+    "HAE": 1,
+    "RMD": 1,
+    "TMDX": 1,
     "STNE": 1,
     "CPAY": 1,
     "DRI": 1,
     "GEV": 1,
-    "EXPE": 1,
+    "PEG": 1,
+    "CRH": 1,
+    "DVN": 1,
+    "LNG": 1,
+    "LDOS": 1,
+    "PGY": 1,
     "UPWK": 1,
     "CLS": 1,
     "PRGS": 1,
@@ -22,12 +35,13 @@
     "TGTX": 1,
     "VCYT": 1,
     "ORLY": 1,
+    "ESE": 1,
     "PYPL": 1,
-    "GFS": 1,
+    "LSCC": 1,
     "ONTO": 1,
     "TOST": 1,
+    "CRCL": 1,
     "TPL": 1,
-    "ACAD": 1,
-    "PGY": 1
+    "GCT": 1
   }
 }
