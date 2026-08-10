@@ -292,6 +292,18 @@ Stories are infinitely flexible. At any price, for any stock, someone has a comp
 
 The gate is simple: a story must eventually show up in the numbers. Until it does, it lives in FUTURE_RADAR — not UNIVERSE.
 
+**Financial firm lens — not all ROE is equal.**
+
+When the screener grades a bank, an asset manager, and a market maker, the same ROE number means three different things. The framework reads financial firms through three archetypes:
+
+- **AUM compounders** (BLK, BX, ARES, FHI, AAMI): management fees on a growing AUM base. Capital-light — the business doesn't need a large equity base to generate fee income, so ROE runs structurally high and that is legitimate, not inflated. The durable growth driver is net flows plus market appreciation. D/EV and FCF show as yfinance artifacts (structured credit facilities, carried interest timing) — judge by OM, NM, and AUM growth trajectory instead.
+
+- **Spread-dependent** (JPM, BAC, WFC): borrow short, lend long — net interest margin is the engine. ROE is leverage-amplified (10–15x balance sheet). Fragile to rate inversions, credit cycle turns, and regulatory capital requirements. The same 15% ROE in a bank carries structurally more fragility than 15% ROE in an asset manager. D/EV and FCF are always artifacts for banks — judge by OM, NM, and NIM trend.
+
+- **Performance/volatility-dependent** (VIRT): revenue correlated to market volatility, not compounding. High-vol years are windfall years; low-vol years compress spreads. Passes quality gates when conditions are right — but the earnings base is not the same kind of durable as the AUM compounder.
+
+The implication: when a financial firm passes the quality gates, always ask which archetype it is. AUM compounder quality is durable in a way that spread-dependent quality is not. The numbers can look identical. The business model determines which one compounds and which one cycles.
+
 **Three-tier universe structure:**
 
 | Tier | What it is | Gate to next tier |
