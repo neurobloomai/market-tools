@@ -323,6 +323,14 @@ Recent watchlist additions: **VICI** (gaming REIT — Caesars/MGM landlord, trip
 
 **Theme coverage** — semis, AI infrastructure, defense, healthcare, financials, energy, precious metals, solar, space, quantum, materials. Hard to find a major structural theme that isn't tracked somewhere across the 230+ names.
 
+**Awareness generalist. Execution specialist.**
+
+400+ names in coverage — UNIVERSE, WATCHLIST, FUTURE_RADAR, dividend list — build the map. When SPY moves, you know whether semis are leading or lagging. When JPM prints, you know whether it's sector-wide. The broad coverage is the context layer: it tells you *what kind of move* the liquid name is making, not just that it moved.
+
+But execution stays in 14. Because that's where the math works — bid-ask tight enough that slippage doesn't eat the edge before the trade starts. Every name beyond those 14 is research, not a trade vehicle.
+
+Wide awareness, narrow execution. The speciality isn't the 14 liquid names. The speciality is having 400 names of context behind every decision on those 14.
+
 **The one honest gap** — individual position sizing and entry discipline aren't in the framework. The screener tells you *what* and *when the structure is right*, but not *how much*. That's deliberate — this is a framework for finding, not for executing. Execution discipline lives with you, not in the code. A framework that tried to do everything would do nothing well.
 
 The missing layer is mindset — and mindset varies by timeframe:
