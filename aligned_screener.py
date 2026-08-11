@@ -16,14 +16,12 @@ from screener import UNIVERSE, WATCHLIST, get_fundamentals, passes_quality_filte
 
 # Local tracking — not in public screener, internal watch only
 EXTRA = [
-    'LYFT',  # ride-sharing FCF story; FCF 22.7%, RevG 14%, OM -0.3% and D/EV 0.274 blocking; 6m thesis
     'OTLY',  # Oatly — oat milk brand, strong product; OM -5.3%, D/EV 0.72, FCF negative blocking; LT thesis: monthly squeeze forming, structural base building, 15.6% rev growth; 0/4 MA, years from qualifying
 ]
 
 # Special mention — teasing/puzzling setups not yet in alignment
 # Price has ripped down or structure is rebuilding; quality or thesis intact, not yet actionable
 SPECIAL_MENTION = {
-    'LYFT': 'Ride-sharing FCF turning positive; 2/4 recovering — short-term MAs reclaimed, waiting for 10m/20m to align; watch for monthly structure to complete',
     'PLAB': 'Photomask specialist (semiconductor enabler); quality passed filters but cyclical collapse from highs; above 20m MA only — structure rebuilding, patience required',
     'UPWK': 'Freelance marketplace; price ~$8 far below monthly MAs (~$13-14) but monthly 10m/20m compressing (+/-2%) — MA squeeze forming on monthly chart while price bases; downtrend in averages flattening; D/EV 0.44 (converts) only fundamental blocker; watch for monthly structure recovery',
     'MRAM': 'Magnetoresistive RAM (Everspin) — niche non-volatile memory; fundamentals actively strengthening but 6-9 month thesis; RS 2.26x outperforming SPY despite -38% offHi = recovery not leadership yet; CMF distribution into the bounce; 3/4 MA — wait for 20m confirmation + CMF flip before treating as actionable',
