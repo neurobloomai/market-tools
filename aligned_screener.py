@@ -1104,6 +1104,8 @@ def auto_promote_from_radar(repo_path):
 
     to_universe, to_watchlist, deteriorating = [], [], []
     for t in radar_tickers:
+        if '[LOCKED]' in FUTURE_RADAR.get(t, ''):
+            continue  # manual gate — only promote when specific conditions explicitly met
         d = get_fundamentals(t)
         if d is None:
             continue
