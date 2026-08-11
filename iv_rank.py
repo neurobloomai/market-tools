@@ -142,6 +142,9 @@ def main():
     print(f'  Last snapshot : {latest_date}  |  History: {depth} day(s)')
     if depth < 30:
         print(f'  Status        : building ({30-depth} days to rank signal) — IV/HV ratio reliable now')
+    elif depth == 30:
+        print(f'  Status        : ★ IV RANK NOW ACTIVE (30 days reached)')
+        print(f'  Next step     : add extension scan × IV/HV cross-signal view in extension_scan.py')
     elif depth < 252:
         print(f'  Status        : rank active ({depth}/252 days) — percentile sharpens as history fills')
     else:
