@@ -248,6 +248,7 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
               <td class="ticker">{r['ticker']}</td>
               <td><span class="badge" style="background:{badge_color}">{badge_label}</span></td>
               <td>${r['price']}</td>
+              <td style="color:#8b949e">${r['ma10w']:.2f}</td>
               {_pct_cell(r['ext_now'], neutral=False)}
               <td style="color:#8b949e">{r['ext_90p']:+.1f}%</td>
               <td style="font-family:monospace;color:#58a6ff;letter-spacing:-1px">{bar}</td>
@@ -270,6 +271,7 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
               <td class="ticker" style="color:#8b949e">{r['ticker']}</td>
               <td><span class="badge" style="background:#21262d;color:#8b949e">↓ below</span></td>
               <td style="color:#8b949e">${r['price']}</td>
+              <td style="color:#484f58">${r['ma10w']:.2f}</td>
               <td style="color:#f85149;font-weight:600">{r['ext_now']:+.1f}%</td>
               <td style="color:#484f58">{r['ext_90p']:+.1f}%</td>
               <td style="color:#484f58;font-family:monospace">── n/a ──</td>
@@ -341,7 +343,7 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
   <thead>
     <tr>
       <th>Ticker</th><th>Zone</th><th>Price</th>
-      <th>vs 10wMA</th><th>Ceiling%</th><th>Runway</th>
+      <th>10w MA</th><th>vs 10wMA</th><th>Ceiling%</th><th>Runway</th>
       <th>Ceiling $</th><th>vs 52wHi</th><th>Slope</th><th>RSI</th><th>CMF 20w</th>
       <th>87w Struct</th>
     </tr>
@@ -354,7 +356,7 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
   <thead>
     <tr>
       <th>Ticker</th><th>Zone</th><th>Price</th>
-      <th>vs 10wMA</th><th>Ceiling%</th><th>Runway</th>
+      <th>10w MA</th><th>vs 10wMA</th><th>Ceiling%</th><th>Runway</th>
       <th>Ceiling $</th><th>vs 52wHi</th><th>Slope</th><th>RSI</th><th>CMF 20w</th>
       <th>87w Struct</th>
     </tr>
@@ -394,7 +396,7 @@ def _rjust(s, w):
     return ' ' * max(0, w - _vlen(s)) + s
 
 # Column widths (visible chars)
-_W = dict(ticker=6, zone=9, price=9, ext=7, ceil=20, runway=19, rsi=3, slope=7, hi=7, cmf=7, lt=16)
+_W = dict(ticker=6, zone=9, price=9, ma10w=9, ext=7, ceil=20, runway=19, rsi=3, slope=7, hi=7, cmf=7, lt=16)
 
 
 def _cli_row(r):
@@ -409,6 +411,7 @@ def _cli_row(r):
     ticker_s  = _ljust(_BOLD + r['ticker'] + _RESET, _W['ticker'])
     zone_s    = _ljust(col + _ZONE_LABEL.get(cat, cat) + _RESET, _W['zone'])
     price_s   = _rjust(f"${r['price']:.2f}", _W['price'])
+    ma10w_s   = _rjust('\033[90m' + f"${r['ma10w']:.2f}" + _RESET, _W['ma10w'])
     ext_s     = _rjust(col + f"{r['ext_now']:+.1f}%" + _RESET, _W['ext'])
     if r['ext_now'] > r['ext_90p']:
         overshoot = r['ext_now'] - r['ext_90p']
@@ -441,16 +444,16 @@ def _cli_row(r):
     pct87_str = f"{pct87:+.1f}% {lt_label}" if pct87 is not None else '—'
     lt_s = _ljust(lt_col + pct87_str + _RESET, _W['lt'])
 
-    print(f"  {ticker_s}  {zone_s}  {price_s}  {ext_s}  {ceil_s}  {runway_s}  {rsi_s}  {slope_s}  {hi_s}  {cmf_s}  {lt_s}")
+    print(f"  {ticker_s}  {zone_s}  {price_s}  {ma10w_s}  {ext_s}  {ceil_s}  {runway_s}  {rsi_s}  {slope_s}  {hi_s}  {cmf_s}  {lt_s}")
 
 
 def _cli_header():
     W = _W
     print(f"\n  {'TICKER':<{W['ticker']}}  {'ZONE':<{W['zone']}}  {'PRICE':>{W['price']}}  "
-          f"{'10wMA%':>{W['ext']}}  {'CEIL $ / OVERSHOOT':>{W['ceil']}}  "
+          f"{'10w MA':>{W['ma10w']}}  {'10wMA%':>{W['ext']}}  {'CEIL $ / OVERSHOOT':>{W['ceil']}}  "
           f"{'RUNWAY':<{W['runway']}}  {'RSI':>{W['rsi']}}  {'SLOPE':>{W['slope']}}  {'52wHi':>{W['hi']}}  {'CMF':>{W['cmf']}}  {'87w STRUCT':<{W['lt']}}")
     print(f"  {'─'*W['ticker']}  {'─'*W['zone']}  {'─'*W['price']}  "
-          f"{'─'*W['ext']}  {'─'*W['ceil']}  {'─'*W['runway']}  "
+          f"{'─'*W['ma10w']}  {'─'*W['ext']}  {'─'*W['ceil']}  {'─'*W['runway']}  "
           f"{'─'*W['rsi']}  {'─'*W['slope']}  {'─'*W['hi']}  {'─'*W['cmf']}  {'─'*W['lt']}")
 
 
