@@ -292,6 +292,24 @@ Stories are infinitely flexible. At any price, for any stock, someone has a comp
 
 The gate is simple: a story must eventually show up in the numbers. Until it does, it lives in FUTURE_RADAR — not UNIVERSE.
 
+**Compounder identification — reading ROIC without computing it.**
+
+ROIC (Return on Invested Capital) is the cleanest measure of reinvestment quality: what does the business earn on every dollar it puts back to work? If ROIC > cost of capital, reinvestment creates value. If ROIC < cost of capital, growth destroys it. The problem: ROIC requires computing NOPAT and Invested Capital — data yfinance doesn't cleanly provide.
+
+The shortcut is already in the screener. DuPont decomposition: **ROE = Net Margin × Asset Turnover × Financial Leverage**. When D/EV is near zero, the leverage multiplier collapses to ~1. Whatever ROE remains is coming from pure business economics — that is your ROIC approximation without any extra computation.
+
+| ROE | D/EV | What it means |
+|---|---|---|
+| 30%+ | < 0.10 | Genuine compounder — the business earns that, leverage didn't inflate it |
+| 30%+ | > 0.30 | Leverage-amplified — strip the debt and the real return is much lower |
+| 10–20% | < 0.05 | Honest business, not a compounder tier yet |
+
+The complete read: **ROE > 20% + D/EV < 0.10 + RevG > 10%** identifies a genuine compounder. High return on capital, leverage isn't doing the work, and reinvestment is visibly bearing fruit in revenue growth. If margins hold while revenue grows, the reinvestment is working — you don't need ROIC separately to see it.
+
+Current universe examples of the pure compounder tier: MEDP (ROE 162%, D/EV 0.009), NVDA, MSFT, PAYC, QLYS, FTNT, AAMI (ROE 106%, D/EV 0.075), FHI (ROE 31%, D/EV 0.098), DXCM, MNST, VRSN, REGN, VRTX. These are businesses where every dollar reinvested earns at genuinely high rates — no debt subsidy, no leverage shortcut.
+
+The distinction matters: a harvester generates high FCF but has few reinvestment opportunities at high returns (mature utility, saturated consumer brand). A compounder generates high FCF *and* redeploys it at high ROIC — the cash machine refuels itself. Both can pass the quality gates. The ROE + D/EV + RevG combination tells you which one you're looking at.
+
 **Financial firm lens — not all ROE is equal.**
 
 When the screener grades a bank, an asset manager, and a market maker, the same ROE number means three different things. The framework reads financial firms through three archetypes:
