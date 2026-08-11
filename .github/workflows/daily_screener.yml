@@ -52,4 +52,4 @@ jobs:
           git add iv_data.json
           git diff --staged --quiet || git commit -m "iv_snapshot: $(date -u +'%Y-%m-%d') after-close"
           git pull --rebase origin main || true
-          git push
+          git push || (sleep 10 && git pull --rebase origin main && git push)
