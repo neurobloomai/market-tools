@@ -514,6 +514,18 @@ if __name__ == '__main__':
     elif args == ['--dividend']:
         tickers = list(dict.fromkeys(DIVIDEND_UNIVERSE))
         label = 'Dividend Universe'
+    elif args == ['--india']:
+        from india_screener import UNIVERSE as IND_U, WATCHLIST as IND_W
+        tickers = [t for t in dict.fromkeys(IND_U + IND_W) if '&' not in t]
+        label = 'India Universe + Watchlist'
+    elif args == ['--india', '--universe']:
+        from india_screener import UNIVERSE as IND_U
+        tickers = [t for t in dict.fromkeys(IND_U) if '&' not in t]
+        label = 'India Universe'
+    elif args == ['--india', '--watchlist']:
+        from india_screener import WATCHLIST as IND_W
+        tickers = [t for t in dict.fromkeys(IND_W) if '&' not in t]
+        label = 'India Watchlist'
     else:
         tickers = [t.upper() for t in args if not t.startswith('--')]
         label = ', '.join(tickers)
