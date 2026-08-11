@@ -36,7 +36,9 @@ The rest of this README is the manual for how those two filters are built and ap
 | `india_top_setups.py` | 🇮🇳 India | Same convergence drill for India �� reads `india_screener.html` + `india_aligned_screener.html`, adds sector column (India setups are sector-wave driven), RS vs NIFTY |
 | `monthly_ma_gate.py` | 🇺🇸🇮🇳 Both | Pre-recovery Monthly MA Gate — names within ±2% (Tier 1, on the gate) or ±5% (Tier 2, in the zone) of their 10-month or 20-month SMA · sorted by span (sum of both MA distances) so names sandwiched between both MAs surface first · on-demand only |
 | `pop_scan.py` | 🇺🇸 US | Daily Pop Scanner — price vs 10d/20d/50d MAs across full universe · gold/green/amber range bands · ◎ tight band for coiling setups within -5% of MAs · hourly MA confirmation flag · on-demand |
-| `extension_scan.py` | 🇺🇸 US | Weekly MA Extension + Projection Scanner — for each ticker above its 10w MA, shows current extension vs historical 90th-pct ceiling, runway remaining before ceiling, implied ceiling price, weekly RSI and 10w slope · answers "how much further can this go?" · flags blown-ceiling names in red · supports `--universe`, `--watchlist`, `--dividend`, or explicit tickers (CLI-only) · on-demand |
+| `extension_scan.py` | 🇺🇸🇮🇳 Both | Weekly MA Extension + Projection Scanner — for each ticker above its 10w MA, shows current extension vs historical 90th-pct ceiling, runway remaining before ceiling, implied ceiling price, weekly RSI and 10w slope · answers "how much further can this go?" · flags blown-ceiling names in red · supports `--universe`, `--watchlist`, `--dividend`, `--india`, `--india --universe`, `--india --watchlist`, or explicit tickers (CLI-only) · on-demand |
+| `iv_snapshot.py` | 🇺🇸 US | Daily IV + HV30 snapshot — captures implied volatility and 30-day historical volatility for all `SPREAD_UNIVERSE` names · appends one row per name to `iv_data.json` · run by GitHub Actions after market close (Tue–Sat) · run locally anytime: `python3 iv_snapshot.py` |
+| `iv_rank.py` | 🇺🇸 US | IV Rank reader — reads `iv_data.json`, computes IV Rank (position of today's IV within the 30-day range) and IV/HV ratio for each `SPREAD_UNIVERSE` name · requires ≥30 days of data for a valid signal · at depth==30 prints self-announcement banner with next-step reminder |
 | `ticker_score.py` | 🇺🇸 US | On-demand single-ticker deep dive — fundamentals grade, weekly technical (MA alignment, RSI, MACD), weekly momentum, and daily momentum scored in one CLI pass · `python ticker_score.py AAPL` |
 | `buffett_kinda_check.py` | 🇺🇸 US | Buffett-style quality lens — 5 low-fog checks (GM>40%, NM>20%, FCF>0, Cash>Debt, D/EV≤0.10) applied to full Universe + Watchlist · parity column shows where our standards agree or diverge · on-demand · _we borrowed the name; the checks are his kinda standard, not an official Berkshire framework_ |
 | `run_aligned.sh` | — | Cron entry point — runs all four scripts (US + India), auto-pushes to GitHub |
@@ -331,6 +333,10 @@ The implication: when a financial firm passes the quality gates, always ask whic
 | `FUTURE_RADAR` | Real product, real revenue, path to profit unclear — not scanned | OM turns positive + FCF inflects |
 | Removed entirely | Pre-revenue ventures, survival risk, all filters blocking | Not tracked |
 
+**`[LOCKED]` entries in FUTURE_RADAR** — some entries carry a `[LOCKED]` marker in their note (e.g., SOFI, LYFT). The auto-promoter skips these entirely regardless of quality gate status. To promote a locked entry, manually remove `[LOCKED]` from its note in `screener.py` and re-run. This enforces explicit human review before promotion — the lock means "do not promote until I personally clear this."
+
+**$20 price floor on auto-promotion** — both promotion paths (`FUTURE_RADAR → WATCHLIST` and `WATCHLIST → UNIVERSE`) skip any ticker priced below $20. The price gate runs before quality metrics. A sub-$20 name will not auto-promote even if its financials temporarily qualify.
+
 Names removed from watchlist in first cleanup: SMR, OKLO, XE (pre-revenue nuclear), IONQ (quantum), CRSP/NTLA/BEAM (gene editing), RXRX/RARE (biopharma), MRNA/BNTX (revenue collapsed), ASTS/LUNR (space ventures). India: OLAELEC (deeply loss-making EV in structurally competitive market). These are interesting themes — not watchlist material.
 
 Names removed from watchlist in second cleanup: PCG (wildfire liability structural, not a metric), FCX (own note said "not a compounder" — cleaner expressions already in universe), SEDG (Chinese competitor share loss is structural, not cyclical), KLAR (credit cycle risk inherent to BNPL model), INOD (AI model efficiency reducing annotation demand is an existential business risk), AMKR (services margin ceiling structural, B-grade at best), CELH (energy drink competitive moat fragile vs Monster/Red Bull), MRAM (TAM too small, speculative angle). Moved to FUTURE_RADAR: CORZ (BTC miner pivot unproven), MOD (B grade, multiple blockers), UPST (credit cycle structural, gate is FCF + converts + through-cycle proof), PGY (Pagaya — D/EV too high for WATCHLIST today, AI-powered credit network with real revenue but balance sheet needs work before it earns a watchlist spot).
@@ -436,6 +442,73 @@ python3 extension_scan.py --dividend
 
 Produces the same HTML output as `--universe` — all dividend names sorted by extension zone, runway remaining before ceiling, RSI, and 10w slope. Opens in browser automatically.
 
+## Extension Scan — All Flags
+
+`extension_scan.py` answers one question: **how far has this name extended beyond its 10-week MA, and how much runway remains before the historical ceiling?**
+
+```bash
+# US
+python3 extension_scan.py --universe          # full US UNIVERSE
+python3 extension_scan.py --watchlist         # US WATCHLIST
+python3 extension_scan.py --dividend          # dividend universe
+
+# India / NSE
+python3 extension_scan.py --india             # India UNIVERSE + WATCHLIST combined
+python3 extension_scan.py --india --universe  # India UNIVERSE only
+python3 extension_scan.py --india --watchlist # India WATCHLIST only
+
+# Explicit tickers (CLI-only)
+python3 extension_scan.py NVDA MSFT AAPL
+```
+
+**Output columns:**
+
+| Column | What it means |
+|--------|---------------|
+| **Ext%** | Current extension above 10w MA |
+| **Ceiling** | 90th-percentile historical extension — the level that has consistently acted as resistance |
+| **Runway** | Gap between current extension and ceiling. `< 10%` = approaching ceiling; red = blown through |
+| **Ceil$** | Implied ceiling price at current MA value |
+| **RSI** | Weekly RSI — confirms or contradicts the extension reading |
+| **Slope** | 10w MA slope — rising or decelerating trend |
+
+**IV/HV at the ceiling** — as a stock approaches the extension ceiling (runway < 10%, RSI ≥ 75), the options market bids up implied volatility for downside protection. ATM IV rises faster than realized (HV30) and the IV/HV ratio crosses 1.0. When both the extension ceiling AND IV/HV ≥ 1.0 confirm simultaneously, that is the highest-confidence zone for selling premium (credit spreads). Either signal alone is weaker. See the IV Rank section for how to read this.
+
+## IV Rank and IV/HV
+
+Two scripts track implied volatility for the 14-name `SPREAD_UNIVERSE` (SPY, QQQ, and the 12 most liquid equity names):
+
+### `iv_snapshot.py` — daily data collection
+
+Run by GitHub Actions after market close (Tue–Sat via `daily_screener.yml`). Appends one day's IV and HV30 to `iv_data.json`. Run locally anytime to advance the counter:
+
+```bash
+python3 iv_snapshot.py
+```
+
+### `iv_rank.py` — IV Rank + IV/HV read
+
+```bash
+python3 iv_rank.py
+```
+
+Reads `iv_data.json` and computes two signals per name:
+
+| Signal | Definition | Threshold |
+|--------|------------|-----------|
+| **IV Rank** | `(IV_today − IV_min) / (IV_max − IV_min)` over last 30 days | ≥ 0.70 = elevated premium environment — sell-premium conditions |
+| **IV/HV** | IV ÷ HV30 (30-day historical vol) | ≥ 1.0 = options pricing more risk than realized — premium is expensive relative to realized |
+
+**Minimum depth:** 30 days of data required for a valid IV Rank signal. Until then, the output shows the current depth (`2/30 days`). At exactly 30 days, a self-announcement banner prints automatically.
+
+**Practical read:**
+
+- IV Rank ≥ 0.70 + IV/HV ≥ 1.0 → sell premium (credit spread, iron condor)
+- IV Rank < 0.40 → options are cheap relative to recent history — buy structure if you must trade options
+- Neither signal alone is decisive — look for both to agree, especially when combined with the extension ceiling read
+
+**Pending — IV × extension cross-signal view (~Sep 2026, when 30-day depth is reached):** `extension_scan.py` will gain an `--iv` flag that overlays IV Rank and IV/HV data directly on the extension scan output. A name near its extension ceiling with IV/HV ≥ 1.0 and IV Rank ≥ 0.70 is the highest-confidence credit-spread setup in the framework. The iv_rank.py self-announcement banner at depth==30 is the trigger for building this.
+
 ## Automation
 
 `run_aligned.sh` is designed to run via cron on Monday mornings:
@@ -534,6 +607,19 @@ Single-indicator signals are silenced. Contradictions (RSI says bull, MACD says 
 - FCF gap relief: None allowed when rev growth ≥ 50% AND net margin ≥ 10%
 - Grading: A+ ≥ 6pts · A ≥ 4pts · OM weighted at 2pts (primary signal)
 - Sector-aware thresholds for Financials and IT
+
+**India precision manufacturing additions (Aug 2026):**
+
+| Name | Tier | Thesis |
+|------|------|--------|
+| SANSERA.NS | UNIVERSE | Complex precision forged + machined components (auto + aerospace + non-auto). OM 13.8%, GrossM 58.4%, ROE 11.1%, near-zero debt. FCF -6% is capex expansion into aerospace, not distress. Grade A (6/7, structural exception). |
+| SCHAEFFLER.NS | UNIVERSE | Precision bearings + linear motion components (German parent FAG/LuK/INA). OM 14.8%, ROE 21.6%, zero debt, FCF 3.8%. GrossM 38.4% is structural for precision metal manufacturing — not a blocker. Grade A (6/7, structural exception). |
+| CRAFTSMAN.NS | WATCHLIST | Precision machined components + aluminum die casting (auto + industrial). Visible gates pass. ROE + FCF missing from yfinance (data gap, not operational absence); grade B until confirmed. Gate: ROE ≥10% + FCF >0 data normalizing. |
+| TIMKEN.NS | WATCHLIST | Precision tapered roller bearings (US parent, 120yr bearing heritage). OM 15.5%, NM 11.8% excellent. ROE + FCF missing from yfinance; grade B until data confirms. Gate: ROE/FCF data normalizing + GrossM structural exception review. |
+
+**Precision manufacturing GrossM exception** — bearings, machined parts, and forgings structurally peak at 38–42% GrossM due to material input costs. This is not the same story as software, pharma, or branded consumer where GrossM >60% is achievable. When OM, ROE, FCF, and D/EV all clear, GrossM below 40% is not a blocker for this sector.
+
+**Note on `&` tickers** — ARE&M.NS (Amara Raja) and M&M.NS (Mahindra) contain ampersands that break shell argument parsing. They remain in `india_screener.py` and appear in screener output, but `extension_scan.py --india` skips them to avoid shell errors.
 
 ## Dashboard Signals
 
@@ -780,6 +866,37 @@ Today, on-demand tools like the monthly MA gate require a human to notice that c
 The next layer: an AI reading the scheduled screener outputs and deciding when to fire the on-demand screens automatically. The signals already exist in the data — NH/NL ratio inverting, multiple quality names clustering near monthly MAs simultaneously, CMF turning negative across a broad swath, breadth dropping below threshold. These are the same signals a human would use to decide "it's time to run the gate screen." An LLM with access to the latest HTML outputs can detect that pattern and trigger the GitHub Actions `workflow_dispatch` endpoint programmatically.
 
 The Anthropic API + GitHub Actions API is the natural bridge. The `workflow_dispatch` design already makes every on-demand tool triggerable via a single API call. The sensing layer on top — reading structured screener data, detecting inflection conditions, firing the right tool at the right moment — is where AI earns its place in the loop. Not replacing judgment, but making sure the right question gets asked at the right time without a human having to remember to ask it.
+
+## Simple Entry Strategies
+
+Three repeatable setups extracted from the framework. Not prediction. Each has defined conditions, a defined edge, and a defined exit.
+
+### 1 — IV Rank Credit Spread
+
+**Conditions:** IV Rank ≥ 0.70 + IV/HV ≥ 1.0 on any `SPREAD_UNIVERSE` name (SPY, QQQ, or Tier 1–2 liquid equity names)  
+**Setup:** Sell a vertical credit spread 2–3 weeks to expiration. Bear call spread if price is near extension ceiling; bull put spread if at support with elevated IV  
+**Edge:** Selling premium when options are expensive relative to realized volatility. Both IV Rank and IV/HV confirming = highest-conviction sell-premium environment. Strongest when combined with extension ceiling proximity (runway < 10%)  
+**Exit:** 50% of max profit captured, or close before expiry if IV collapses
+
+### 2 — 4/4 Alignment Entry
+
+**Conditions:** A+ name transitions from 3/4 → 4/4 MA alignment for the first time after ≥1 non-4/4 week  
+**Setup:** Enter on the first confirmed 4/4 weekly close  
+**Edge:** Regime filter selects for trending environments (A+ 4/4 fresh entries cluster in low-vol trending regimes 61% of the time). Quality filter ensures the business survives adverse moves. Backtest: 52.3% win rate vs SPY at 13w for A+ 4/4 fresh entries  
+**Exit:** At extension ceiling (runway < 10% + RSI ≥ 75), or when structure breaks (price closes below 10w MA)
+
+### 3 — Pullback to MA
+
+**Conditions:** A+ name in 4/4 alignment pulls back to 10w or 20w MA, with A/D Line still rising (no distribution into the pullback)  
+**Setup:** Enter on the first green weekly close off the MA  
+**Edge:** Buying structure at a defined support level in an established uptrend. Lower entry cost, tighter stop, rising A/D Line confirms smart money is not distributing into the dip  
+**Exit:** At extension ceiling or structure break (price closes below the same MA that provided support)
+
+**Rules common to all three:**
+- $20 price floor — no exceptions, no matter how clean the setup looks
+- Quality A or A+ only — the A/A+ distinction is load-bearing (A-grade at 4/4 historically underperformed SPY; see backtest). A borderline grade is not the same as a passing grade
+- Options strategies (1) use SPREAD_UNIVERSE names only — execution outside that set means slippage eats the edge before the trade starts
+- Confluence over single signals — one condition alone is context, not a trade
 
 ## Disclaimer
 
