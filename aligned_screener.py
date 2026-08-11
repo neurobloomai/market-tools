@@ -1049,6 +1049,8 @@ def auto_promote_tickers(promos, repo_path):
     promoted = []
 
     for ticker, price, grade, ma in promos:
+        if price < 20:
+            continue  # $20 floor — don't promote below-floor names
         # Capture WATCHLIST comment if ticker has its own line
         m = re.search(rf"^\s+'{re.escape(ticker)}',[ \t]+#[ \t]+(.+)$", src, re.MULTILINE)
         watchlist_note = m.group(1).strip() if m else None
@@ -1105,6 +1107,9 @@ def auto_promote_from_radar(repo_path):
         d = get_fundamentals(t)
         if d is None:
             continue
+        price = d.get('price') or 0
+        if price < 20:
+            continue  # $20 floor — don't promote below-floor names regardless of quality
         if passes_quality_filter(d):
             to_universe.append((t, quality_grade(d)))
         else:
