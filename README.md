@@ -867,9 +867,32 @@ The next layer: an AI reading the scheduled screener outputs and deciding when t
 
 The Anthropic API + GitHub Actions API is the natural bridge. The `workflow_dispatch` design already makes every on-demand tool triggerable via a single API call. The sensing layer on top — reading structured screener data, detecting inflection conditions, firing the right tool at the right moment — is where AI earns its place in the loop. Not replacing judgment, but making sure the right question gets asked at the right time without a human having to remember to ask it.
 
+## The System vs The Single Trade
+
+Tom Sosnoff's answer when asked "what is the one trade you would do if you had only one trade?": sell a naked put on /ES, 45 DTE, 12 delta, take off at 50% profit. Sound strategy. But one literal trade is just an 88/12 coin flip. The system — mechanically repeating that setup across 100 trades — is what generates the edge.
+
+We didn't build a system for that trade. We built one for quality, alignment, structure, and timing. It's more sophisticated than one variable repeated mechanically. It has six orthogonal layers that compound.
+
+| Layer | What it removes | What passes through |
+|---|---|---|
+| **Quality gates** (GrossM / OM / NM / ROE / FCF / D/EV) | Companies that die in adversity | Only businesses that survive and compound |
+| **Tier placement** (UNIVERSE / WATCHLIST / FUTURE_RADAR) | Premature capital allocation | Capital goes where conviction is earned |
+| **Extension scan** (10w MA, ceiling, RSI, slope, 87w) | Wrong timing on right names | Right name at structurally sound entry zone |
+| **CMF / A/D Line** | Dips with distribution behind them | Dips with institutional accumulation behind them |
+| **IV Rank / IV/HV** | Selling premium when it's cheap | Premium selling only when options are expensive |
+| **Entry + exit rules** (4/4 alignment, pullback to MA, 50% take-off) | Discretionary drift | Mechanical discipline at both ends |
+
+Each filter alone is ~55–60% signal. But they are **orthogonal** — quality says nothing about timing, timing says nothing about IV, IV says nothing about structure. When all six align, the joint edge compounds. That is the architecture.
+
+The deeper point: Sosnoff's system works because it removes the human from the decision after setup. The same discipline is built into every layer here — the $20 price floor, the `[LOCKED]` gate, the 50% take-off rule, the A/A+ only rule. None of those are predictions. They are friction that prevents bad decisions at emotional moments.
+
+One quality screen on a name is just a data point. Running it through all six layers — quality ✓, tier placement ✓, below 10w MA but CMF accumulating ✓, ceiling runway intact ✓, slope positive ✓ — that is the system speaking. The system does not predict. It removes everything that is not signal.
+
+---
+
 ## Simple Entry Strategies
 
-Three repeatable setups extracted from the framework. Not prediction. Each has defined conditions, a defined edge, and a defined exit.
+Four repeatable setups extracted from the framework. Not prediction. Each has defined conditions, a defined edge, and a defined exit.
 
 ### 1 — IV Rank Credit Spread
 
