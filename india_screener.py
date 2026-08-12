@@ -133,6 +133,8 @@ WATCHLIST = [
 # Not fetched, not graded. Documented here so the thesis isn't lost.
 # Rule: if the blocker is the business model (survival risk, no path to profit), it belongs here not WATCHLIST
 FUTURE_RADAR = {
+    'TACINFOSEC':  'TAC Infosec (TAC Security, founded Trishneet Arora) — VAPT, bug bounty, enterprise pen-testing, managed security; NSE Emerge (SME) listed; Kedia ~7.85% direct stake — sector-thesis signal; yfinance: no coverage (too new / ticker unmapped); gate to watchlist: mainboard migration + OM > 10% confirmed + revenue scale past ₹50Cr; added FUTURE_RADAR 2026-08-12',
+    'TECHDCYBER':  'TechD Cybersecurity — specialized digital security; SME listed; Kedia ~5.3% stake; yfinance: no coverage; gate to watchlist: mainboard migration + fundamentals visible + OM > 10%; added FUTURE_RADAR 2026-08-12',
     'OLAELEC.NS':  'Ola Electric — EV two-wheeler, high growth but deeply loss-making; competitive market (Hero, Ather, TVS iQube, Bajaj Chetak all competing) = structural pressure not just cycle; path to profitability unclear; gate to watchlist: OM turning positive sustained + FCF inflection + competitive position stabilising',
     'RELIANCE.NS': 'Reliance Industries — conglomerate discount masking two A-grade businesses: Jio (telecom/digital platform, duopoly with Airtel, growing ARPU) + Reliance Retail (largest Indian retailer); O2C (oil-to-chemicals) is the margin drag blending quality metrics to C grade today; thesis: Jio IPO / Retail listing / O2C demerger expected 2026-2028 — revisit when structure clarifies; gate to watchlist: demerger announced OR Jio/Retail listed separately',
 }
