@@ -51,6 +51,7 @@ UNIVERSE = [
     # Pharma, CDMO & Diagnostics
     'SUNPHARMA.NS','DIVISLAB.NS','CIPLA.NS','DRREDDY.NS','LAURUSLABS.NS',
     'AUROPHARMA.NS','MANKIND.NS','LALPATHLAB.NS',
+    'NEULANDLAB.NS',# Neuland Laboratories — pharma API + CDMO; GrossM 31.65% structural for API synthesis (material-cost-intensive raw material base — not a software/pharma branded GrossM story); OM 23.5%, NM 18.21%, ROE 21.42%, ROIC 19.31%, D/EV 1.0% (near-zero debt); RevG 119% (CDMO super-cycle + low base effect); FCF unconfirmed via yfinance data gap — likely positive given OM + near-zero debt; A (5/6 structural exception, likely A+ if FCF confirms); extension ceiling as of Aug 2026 (runway 1.4%, RSI 73, +41% vs 10m MA) — wait for pullback to 10w/20w MA before entry; added 2026-08-12
 
     # IT Services & Engineering R&D
     'TCS.NS','INFY.NS','HCLTECH.NS','WIPRO.NS','PERSISTENT.NS',
