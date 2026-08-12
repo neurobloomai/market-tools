@@ -892,6 +892,19 @@ Three repeatable setups extracted from the framework. Not prediction. Each has d
 **Edge:** Buying structure at a defined support level in an established uptrend. Lower entry cost, tighter stop, rising A/D Line confirms smart money is not distributing into the dip  
 **Exit:** At extension ceiling or structure break (price closes below the same MA that provided support)
 
+### 4 — SPY Put Credit Spread (Sosnoff Mechanical)
+
+The accessible version of Tom Sosnoff's "one trade" — sell a naked put on /ES at 12 delta, 45 DTE, take off at 50% profit. Same mechanics, defined risk, doable at retail capital levels.
+
+**Conditions:** No IV filter required — run this mechanically on a schedule, not on signal. SPY only (most liquid, tightest spreads, no earnings gap risk)  
+**Setup:** Sell a bull put spread on SPY. 45 DTE. Short put at 12 delta (~88% probability OTM). Buy put 5–10 points lower for defined risk  
+**Edge:** Volatility risk premium — the options market structurally overprices implied volatility vs realized because institutions must buy puts for portfolio hedging regardless of price. You are the insurance company. Over many trades, the 88% win rate at 12 delta compounds into a measurable edge. The 50% take-off rule captures the early theta decay and cuts gamma exposure before the final weeks  
+**Exit:** 50% of max credit collected — close the spread, don't hold to expiration. Frees capital to reload the next cycle  
+**Sizing:** 1–2% of account per trade. This is a system, not a single bet — the edge emerges over 50–100+ repetitions, not one trade  
+**Why not naked /ES:** Same directional thesis, same delta, same DTE — but /ES naked puts require $25–40k+ margin per contract. The spread is the retail-accessible wrapper around the identical strategy
+
+**What Sosnoff actually meant:** The "one trade" soundbite is shorthand for the philosophy — be *mechanically* short premium in elevated IV environments, take profits early, repeat relentlessly. One literal trade is just an 88/12 coin flip. The system is what generates the edge
+
 **Rules common to all three:**
 - $20 price floor — no exceptions, no matter how clean the setup looks
 - Quality A or A+ only — the A/A+ distinction is load-bearing (A-grade at 4/4 historically underperformed SPY; see backtest). A borderline grade is not the same as a passing grade
