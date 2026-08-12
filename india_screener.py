@@ -100,6 +100,7 @@ WATCHLIST = [
     'IXIGO.NS',       # ixigo — travel-tech, recently listed, margins building
     'DIXON.NS',       # Dixon Technologies — EMS/contract manufacturing, ROE 37% but OM ~3% by design (assembler model)
     'KAYNES.NS',      # Kaynes Technology — defense/semi electronics, OM 11% but FCF -10% (heavy capex ramp) + ROE just under threshold
+    'ADVAIT.NS',      # Advait Energy Transitions (fmr Infratech) — power T&D infra + OPGW cables + telecom infra + renewable energy segment (name change reflects real segment addition); OM 12.2%, NM 7.2%, ROE 22.1% (genuine — D/EV 5.3% near-zero), EPS G 52.3%, RevG 17.2%; FCF -₹19Cr sole blocker (-2.7% of revenue — capex cycle for RE segment buildout, not structural); 1/4 MA broken, -14.8% from 52w high, RSI 50 — base-building; grade B; gate: FCF consistently positive as capex normalises; added 2026-08-12
     'APOLLOHOSP.NS',  # Apollo Hospitals — healthcare brand growing well, FCF inconsistent due to hospital capex
     # ANGELONE.NS promoted to universe — A+, OM 32%, ROE 15.5%, D/EV 0.200, passes financial sector gate
     '360ONE.NS',      # 360 ONE WAM (formerly IIFL Wealth) — HNI/ultra-HNI wealth + asset mgmt; OM 57.7%, NM 27.2%; ROE 14.4% just below 15% financial threshold; D/EV 0.262; near-miss, watch for ROE crossing 15%
