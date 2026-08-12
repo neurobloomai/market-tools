@@ -172,6 +172,23 @@ UNIVERSE = [
              # OM went negative (-0.5%) during 2023-24 destocking trough — NOT structural deterioration;
              # NM -72.9% = goodwill impairments, not operations; D/EV 0.823 elevated, needs delevering;
              # gate: OM recovery above 15% as destocking normalizes + D/EV below 0.5
+    'IFF',   # International Flavors & Fragrances — flavors + fragrances + food ingredients + health biosciences;
+             # the underlying businesses are real: IFF flavors/scent (Givaudan/Firmenich competitor), Pharma
+             # Solutions (excipients for drug delivery), Health & Biosciences (cultures, enzymes, probiotics);
+             # WHAT WENT WRONG: 2021 merger with DuPont Nutrition & Biosciences ($26B deal) was massively
+             # dilutive — took on $9B+ debt, massive goodwill, lost key customers during integration chaos,
+             # CEO Silveira replaced by Frank Clyburn (2023, ex-J&J); dividend CUT 50% in 2023 ($3.24→$1.60/yr);
+             # FLAGS (as of Aug 2026): ROE -5.5% (negative), FCF yield -8.0% (burning cash),
+             # NM 2.6% (below 5% gate), OM 8.5% (barely above 8% gate), D/EV 22.9%;
+             # payout 49.5% looks ok but EPS base is thin — dividend NOT safe if NM stays at 2.6%;
+             # GrossM 36.6% shows underlying business margins are decent — the problem is SG&A + integration
+             # costs + D&A from goodwill eating through the operating margin to near-zero net;
+             # asset sales underway (divested Health & Biosciences pharma unit, Nouryon stake) for
+             # debt paydown — deleveraging is real but slow;
+             # ~1.9% yield at $84 ($1.60/yr) — low yield for the risk being carried;
+             # GATE TO DIVIDEND UNIVERSE: OM sustained >12% + FCF yield positive + D/EV below 0.20
+             # + ROE recovering above 10% + dividend not cut again; all four must clear simultaneously;
+             # watch each earnings print for NM trajectory and asset sale proceeds going to debt;
 
 
     # Precious Metals — high-margin royalty and mining compounders
