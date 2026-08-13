@@ -890,6 +890,35 @@ One quality screen on a name is just a data point. Running it through all six la
 
 ---
 
+## Capital Deployment Principles
+
+Finding the right name is half the job. How you deploy capital once you've found it is the other half — and it's where most frameworks go silent. These principles are not aspirational. They are the practical output of running the six-layer system.
+
+**1 — Quality gates before anything else**  
+No capital moves before the quality screen passes. This is not a formality. A name that fails even one gate (OM, NM, ROE, FCF, D/EV, RevG) is not a borderline candidate — it is not a candidate. Quality is not a tiebreaker. It is the entry requirement. The $20 price floor and the `[LOCKED]` mechanism enforce this mechanically so it does not become a negotiation at a moment of excitement.
+
+**2 — Tier placement determines priority, not price action**  
+UNIVERSE names get first allocation. WATCHLIST names get smaller, patient sizing — they are there because one gate is failing, not because the thesis is weak. FUTURE_RADAR names get zero capital until the unlock condition is met. This ordering is not about being conservative. It is about deploying capital where conviction is earned by the framework, not by the story.
+
+**3 — Extension zone determines timing, not urgency**  
+Fresh (just above 10w MA) earns full position size. Midway earns a partial. Extended earns a trim or a wait. Ceiling (87w extreme) earns nothing — let it correct first. Chasing a name at 87w extreme when a fresh entry exists elsewhere is not high-conviction. It is capital misallocation dressed as confidence.
+
+**4 — CMF overrides the wait when accumulation is confirmed**  
+If a name is below its 10w MA but CMF is +0.20 or better, institutional money is entering the dip. You do not have to wait for the 10w reclaim — that is already happening below the surface. CMF negative or flat at a dip means the dip is not being bought. Wait. Same quality, same tier, same extension — the CMF reading alone determines whether the dip is an entry or a falling knife.
+
+**5 — Position size scales with confluence, not conviction alone**  
+A single positive signal is context. All six layers aligned — quality A+, tier UNIVERSE, fresh zone, CMF accumulating, IV rank elevated, slope positive — earns the full position. Each layer missing drops the size: a borderline 3/4 signal with neutral CMF earns half or less. Conviction without confluence is the most expensive mistake in position sizing.
+
+**6 — Discipline is the mechanism, not a value**  
+The $20 floor, the 50% take-off rule, the `[LOCKED]` gate, the A/A+ only filter — none of these are about being cautious. Each one is mechanical friction that removes a specific bad decision from the table at the moment when emotion is most likely to override logic. The rules do not restrict agency. They preserve it by keeping you at the table.
+
+**7 — Dry powder is a position**  
+Not being deployed is a decision, not a failure. A name at 87w extreme with CMF flat is not an opportunity — it is a trap. The capital you don't deploy there is available when the same name corrects to the 10w MA with CMF turning positive. Patient capital compounds. Impatient capital funds other people's exits.
+
+**The summary read:** quality first → tier sets the priority → extension zone sets the timing → CMF confirms the dip or flags the knife → confluence determines size → mechanical rules enforce the exit. Nothing in that sequence requires prediction. All of it requires discipline.
+
+---
+
 ## Simple Entry Strategies
 
 Four repeatable setups extracted from the framework. Not prediction. Each has defined conditions, a defined edge, and a defined exit.
