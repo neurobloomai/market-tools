@@ -928,6 +928,27 @@ The accessible version of Tom Sosnoff's "one trade" — sell a naked put on /ES 
 
 **What Sosnoff actually meant:** The "one trade" soundbite is shorthand for the philosophy — be *mechanically* short premium in elevated IV environments, take profits early, repeat relentlessly. One literal trade is just an 88/12 coin flip. The system is what generates the edge
 
+**Concrete example — SPY near $800:**
+
+> SPY at ~$800 · 45 DTE · CMF +0.378 (institutional buffer — dips get bought)
+>
+> Sell $735 put / Buy $725 put (10-point wide spread)  
+> Credit collected: ~$0.80 ($80/contract)  
+> 50% take-off target: $0.40 profit ($40/contract)  
+> Breakeven at expiration: $734.20 (SPY must fall **8.2%** in 45 days to lose)  
+> Max loss: $920/contract (spread width minus credit)
+
+| Outcome | Probability | P&L per contract |
+|---|---|---|
+| SPY stays above $735 (OTM — wins here) | ~88% | +$40 (50% take-off) |
+| SPY between $735–$734.20 (near breakeven) | ~2% | near zero |
+| SPY below $734.20 (loss territory) | ~10% | −$40 to −$920 |
+
+10-trade run at 88% win rate: 8 wins × $40 = +$320, 2 losses × −$460 avg = −$920. Net: **+$400 on ~$9,200 margin deployed** over ~6 months. That's the system — not the single trade
+
+**Capital reality — "somehow capital required, somehow safe":**  
+Not capital-intensive like /ES naked puts ($25–40k margin per contract). But proper sizing still requires ~$45k to keep one SPY spread at 1–2% account risk. At $5k, a $920 max-loss is an 18% drawdown — the math doesn't hold. The "safe" part comes from three layers working together: defined max loss (spread caps the downside), CMF buffer (institutional accumulation at elevated levels means dips get bought), and the 88% base rate at 12 delta. Remove any one layer and it's just a directional bet
+
 **Rules common to all three:**
 - $20 price floor — no exceptions, no matter how clean the setup looks
 - Quality A or A+ only — the A/A+ distinction is load-bearing (A-grade at 4/4 historically underperformed SPY; see backtest). A borderline grade is not the same as a passing grade
