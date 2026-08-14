@@ -106,6 +106,7 @@ UNIVERSE = [
 
     # Franchise / consumer
     'MCD',   # McDonald's — 44% OM franchise royalty, 49yr div growth
+    'LEVI',  # Levi Strauss — 150+ yr denim brand (Levi's + Dockers + Beyond Yoga); direct-to-consumer shift improving margins; GrossM 61.7%, NM 9.7%, ROE 25.4%, FCF 6.8%, D/EV 23.1%, payout 40.0%; ~2.85% yield; fwdPE 13.2x cheap for the brand quality; 5/5 dividend gates; added 2026-08-14
     'QSR',   # Restaurant Brands International — 3G Capital franchise holding co (Burger King global #2 QSR + Tim Hortons Canada coffee dominance + Popeyes fast-growing fried chicken + Firehouse Subs); pure franchise royalty model = asset-light, recurring, global; Tim Hortons ~90%+ brand awareness in Canada (cultural institution, not just a brand); Popeyes Chicken Sandwich viral moment = structural traffic reacceleration; OM 27.7%, NM 13.1%, ROE 34.8%, FCF yield 5.0% (covers dividend comfortably in cash); D/EV 37.6% structural LBO financing (same read as MCD — franchise model leverage, not deteriorating); ~3.5% yield, P/E 18.8x (cheap vs MCD peer); payout 63.8% soft miss on GAAP (FCF coverage is real — 5% FCF yield vs 3.5% dividend); 4/5 gates; added 2026-08-12
 
 
