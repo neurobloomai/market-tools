@@ -44,7 +44,13 @@ def get_extension_data(ticker):
         close = hist['Close'].dropna()
         if len(close) < 55:
             return None
-        price = float(close.iloc[-1])
+        # Use latest daily close for current price so mid-week scans reflect
+        # today's actual price, not last week's completed bar
+        try:
+            daily = yf.Ticker(ticker).history(period='5d', interval='1d')
+            price = float(daily['Close'].iloc[-1]) if daily is not None and len(daily) > 0 else float(close.iloc[-1])
+        except Exception:
+            price = float(close.iloc[-1])
 
         ma10w = float(close.rolling(10).mean().iloc[-1])
         ma20w = float(close.rolling(20).mean().iloc[-1])
