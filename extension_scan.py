@@ -36,21 +36,72 @@ from dividend_plays_for_longterm import UNIVERSE as DIVIDEND_UNIVERSE
 
 # ── Data fetch ────────────────────────────────────────────────────────────────
 
+def _build_current_week_bar(ticker, weekly_hist):
+    """
+    Fetch this week's daily bars and aggregate into a partial OHLCV bar.
+    Appends to weekly_hist if the current week isn't already the last bar,
+    otherwise replaces the last bar so mid-week CMF/RSI/slope are live.
+    Returns augmented hist DataFrame.
+    """
+    import pandas as pd
+    try:
+        daily = yf.Ticker(ticker).history(period='10d', interval='1d')
+        if daily is None or daily.empty:
+            return weekly_hist
+
+        # Identify Mon of the current week (market week)
+        last_daily = daily.index[-1]
+        week_start = last_daily - pd.Timedelta(days=last_daily.weekday())  # Monday
+
+        this_week = daily[daily.index >= week_start]
+        if this_week.empty:
+            return weekly_hist
+
+        # Aggregate: O=Mon open, H=week high, L=week low, C=latest close, V=sum
+        partial = {
+            'Open':   float(this_week['Open'].iloc[0]),
+            'High':   float(this_week['High'].max()),
+            'Low':    float(this_week['Low'].min()),
+            'Close':  float(this_week['Close'].iloc[-1]),
+            'Volume': int(this_week['Volume'].sum()),
+        }
+
+        # Use Monday's timestamp as the bar index (same tz as weekly_hist)
+        bar_ts = pd.Timestamp(week_start.date(), tz=weekly_hist.index.tz)
+
+        # If last weekly bar is already this week, replace it; else append
+        last_wk = weekly_hist.index[-1]
+        aug = weekly_hist.copy()
+        if abs((last_wk - bar_ts).days) <= 4:
+            for col, val in partial.items():
+                if col in aug.columns:
+                    aug.at[last_wk, col] = val
+        else:
+            new_row = pd.DataFrame([partial], index=[bar_ts])
+            new_row.index.name = weekly_hist.index.name
+            for col in aug.columns:
+                if col not in new_row.columns:
+                    new_row[col] = float('nan')
+            aug = pd.concat([aug, new_row[aug.columns]])
+
+        return aug
+    except Exception:
+        return weekly_hist
+
+
 def get_extension_data(ticker):
     try:
         hist  = yf.Ticker(ticker).history(period='3y', interval='1wk')
         if hist is None or len(hist) < 55:
             return None
+
+        # Augment with current week's partial bar so CMF/RSI/slope are live
+        hist = _build_current_week_bar(ticker, hist)
+
         close = hist['Close'].dropna()
         if len(close) < 55:
             return None
-        # Use latest daily close for current price so mid-week scans reflect
-        # today's actual price, not last week's completed bar
-        try:
-            daily = yf.Ticker(ticker).history(period='5d', interval='1d')
-            price = float(daily['Close'].iloc[-1]) if daily is not None and len(daily) > 0 else float(close.iloc[-1])
-        except Exception:
-            price = float(close.iloc[-1])
+        price = float(close.iloc[-1])
 
         ma10w = float(close.rolling(10).mean().iloc[-1])
         ma20w = float(close.rolling(20).mean().iloc[-1])
