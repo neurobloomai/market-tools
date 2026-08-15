@@ -286,7 +286,19 @@ Names that look like good chart setups but fall below the line (VRTX, NEM, FTNT,
 
 **Early warning system** — Special Mention catches names before they qualify. You're not chasing; you're watching the base build. A/D Line and OBV divergence add an extra layer — when smart money starts accumulating before the monthly regime flips, the volume picture changes before the price structure does. When a name finally surfaces in the aligned list, it's not a surprise — it was already on the radar with the volume story already forming.
 
-**Honest watchlist** — every entry has a thesis and a blocker noted. Not just a ticker dump. You know exactly why something isn't in the universe yet and what has to change for it to qualify. The rule: if the blocker is a number, it belongs in the watchlist. If the blocker is the business model, it doesn't.
+**Honest watchlist** — every entry has a thesis and a blocker noted. Not just a ticker dump. You know exactly why something isn't in the universe yet and what has to change for it to qualify. Peter Lynch's rule applies: "know what you own and why you own it." If you can't write a sentence explaining the moat and the blocker, the name doesn't belong. The rule: if the blocker is a number, it belongs in the watchlist. If the blocker is the business model, it doesn't.
+
+**Three tiers of risk — what the framework handles and what it doesn't.**
+
+Known risks — quality gate failures, structural margin ceilings, leverage-inflated ROE, thin FCF on stretched valuations. The framework catches these at gate-check time. A name fails GrossM or D/EV, it never reaches capital.
+
+Anticipated risks — cyclicality in semis, patent cliffs in pharma, leverage decay in 2x ETFs, multiple compression when recovery growth normalizes. These get noted in the watchlist thesis, sized smaller, and managed with runway awareness.
+
+Unanticipated risks — the ones that end careers if you're overconcentrated. COVID crash. Rate shock. Accounting restatement. CEO fraud. No framework catches these. But the framework's real job is to make you **antifragile** to them — Nassim Taleb's principle: systems that don't just survive disorder but gain from it. Quality gates keep you in names with real FCF (they bounce back), tier placement keeps sizing appropriate (1–3% per name, not 20%), dry powder keeps capital available for the correction (you buy the panic instead of selling into it).
+
+The framework doesn't prevent unanticipated risk. It makes the portfolio **survivable** when it arrives. A 30% single-name hit in a 2% position is painful but not fatal. The same hit in a 20% position forces decisions you shouldn't have to make at exactly the worst time. Survivability is the design goal — not prediction.
+
+Calibrate for known risks. Monitor anticipated ones. Structure the portfolio so unanticipated ones don't end the game.
 
 **Numbers over narrative — but not instead of it.**
 
@@ -367,7 +379,11 @@ Margin of safety isn't just a valuation concept — it applies at every level. I
 
 Charlie Munger's principles apply here more than any indicator: **common sense** — if the business can't explain how it makes money, neither can the screener. **Rationality** — separate what the price is doing from what the business is doing; they diverge constantly and converge eventually. **Inversion** — don't just ask what could go right; ask what has to *not* go wrong for this to work. **Circle of competence** — track themes you understand well enough to know when the thesis is breaking, not just when the price is.
 
-The screener surfaces the candidates. Common sense and rationality close the gap.
+Howard Marks' body of work — *The Most Important Thing* and *Mastering the Market Cycle* — runs through the extension scan and the 87w structural read directly. The ceiling concept is cycle awareness made mechanical: knowing where a name stands relative to its own history, sizing accordingly, and holding dry powder for the inevitable mean reversion. His distinction between first-level and second-level thinking maps exactly onto this framework's architecture. First-level asks "is this a good business?" — that's the quality gate. Second-level asks "what is the market already pricing in, and is the expectation already reflected in the extension?" — that's the runway and the 87w read. A name at 87w extreme with CMF flat is not an opportunity even if the business is excellent. That's second-level thinking in practice: not just *what* but *at what price and at what point in the cycle*. Marks also gave the framework its most honest guardrail — "if we avoid the losers, the winners take care of themselves." The quality gates are exactly that: not a system for finding winners, but a system for eliminating the names that can permanently impair capital.
+
+Peter Lynch — *One Up on Wall Street* and *Beating the Street* — contributes three things the framework would be incomplete without. First: "invest in what you know" — the annotated thesis format exists because of this. A ticker without a plain-language explanation of its moat, its gate, and its blocker isn't tracked — it's noise. Second: GARP, Growth at a Reasonable Price. The quality gates are the growth screen; the extension scan and 87w structural read are the "reasonable price" discipline. Combining them is GARP made mechanical — not paying up for quality when the cycle has already priced in perfection. Third: "the person who turns over the most rocks wins." The 400+ names across UNIVERSE, WATCHLIST, FUTURE_RADAR, and the dividend list are not all trade candidates — most will never see capital. But the breadth exists so that when the liquid name moves, there is context behind it. Turning over rocks isn't trading everything. It's knowing the landscape well enough to act with conviction on the few that matter.
+
+The screener surfaces the candidates. Common sense, rationality, cycle awareness, the avoidance of permanent loss, and knowing what you own and why — close the gap.
 
 ## What the Backtest Says
 
@@ -869,7 +885,7 @@ The Anthropic API + GitHub Actions API is the natural bridge. The `workflow_disp
 
 ## The System vs The Single Trade
 
-Tom Sosnoff's answer when asked "what is the one trade you would do if you had only one trade?": sell a naked put on /ES, 45 DTE, 12 delta, take off at 50% profit. Sound strategy. But one literal trade is just an 88/12 coin flip. The system — mechanically repeating that setup across 100 trades — is what generates the edge.
+The practitioner's answer when asked "what is the one trade you would do if you had only one trade?": sell a naked put on /ES, 45 DTE, 12 delta, take off at 50% profit. Sound strategy. But one literal trade is just an 88/12 coin flip. The system — mechanically repeating that setup across 100 trades — is what generates the edge.
 
 We didn't build a system for that trade. We built one for quality, alignment, structure, and timing. It's more sophisticated than one variable repeated mechanically. It has six orthogonal layers that compound.
 
@@ -884,7 +900,7 @@ We didn't build a system for that trade. We built one for quality, alignment, st
 
 Each filter alone is ~55–60% signal. But they are **orthogonal** — quality says nothing about timing, timing says nothing about IV, IV says nothing about structure. When all six align, the joint edge compounds. That is the architecture.
 
-The deeper point: Sosnoff's system works because it removes the human from the decision after setup. The same discipline is built into every layer here — the $20 price floor, the `[LOCKED]` gate, the 50% take-off rule, the A/A+ only rule. None of those are predictions. They are friction that prevents bad decisions at emotional moments.
+The deeper point: the system works because it removes the human from the decision after setup. The same discipline is built into every layer here — the $20 price floor, the `[LOCKED]` gate, the 50% take-off rule, the A/A+ only rule. None of those are predictions. They are friction that prevents bad decisions at emotional moments.
 
 One quality screen on a name is just a data point. Running it through all six layers — quality ✓, tier placement ✓, below 10w MA but CMF accumulating ✓, ceiling runway intact ✓, slope positive ✓ — that is the system speaking. The system does not predict. It removes everything that is not signal.
 
@@ -944,9 +960,9 @@ Four repeatable setups extracted from the framework. Not prediction. Each has de
 **Edge:** Buying structure at a defined support level in an established uptrend. Lower entry cost, tighter stop, rising A/D Line confirms smart money is not distributing into the dip  
 **Exit:** At extension ceiling or structure break (price closes below the same MA that provided support)
 
-### 4 — SPY Put Credit Spread (Sosnoff Mechanical)
+### 4 — SPY Put Credit Spread (Mechanical)
 
-The accessible version of Tom Sosnoff's "one trade" — sell a naked put on /ES at 12 delta, 45 DTE, take off at 50% profit. Same mechanics, defined risk, doable at retail capital levels.
+The accessible version of the "one trade" philosophy — sell a naked put on /ES at 12 delta, 45 DTE, take off at 50% profit. Same mechanics, defined risk, doable at retail capital levels.
 
 **Conditions:** No IV filter required — run this mechanically on a schedule, not on signal. SPY only (most liquid, tightest spreads, no earnings gap risk)  
 **Setup:** Sell a bull put spread on SPY. 45 DTE. Short put at 12 delta (~88% probability OTM). Buy put 5–10 points lower for defined risk  
@@ -955,7 +971,7 @@ The accessible version of Tom Sosnoff's "one trade" — sell a naked put on /ES 
 **Sizing:** 1–2% of account per trade. This is a system, not a single bet — the edge emerges over 50–100+ repetitions, not one trade  
 **Why not naked /ES:** Same directional thesis, same delta, same DTE — but /ES naked puts require $25–40k+ margin per contract. The spread is the retail-accessible wrapper around the identical strategy
 
-**What Sosnoff actually meant:** The "one trade" soundbite is shorthand for the philosophy — be *mechanically* short premium in elevated IV environments, take profits early, repeat relentlessly. One literal trade is just an 88/12 coin flip. The system is what generates the edge
+**What the philosophy actually means:** The "one trade" soundbite is shorthand for a discipline — be *mechanically* short premium in elevated IV environments, take profits early, repeat relentlessly. One literal trade is just an 88/12 coin flip. The system is what generates the edge
 
 **Concrete example — SPY near $800:**
 
