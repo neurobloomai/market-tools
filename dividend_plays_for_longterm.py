@@ -73,6 +73,7 @@ UNIVERSE = [
     'NVO',   # Novo Nordisk — GLP-1 franchise (Ozempic/Wegovy/Victoza); ~40% OM, ~30% NM, ROE 80%+, near-zero debt; ~1.5% yield (Danish semi-annual payer); FCF machine; growth + dividend compounder
     'PFE',   # Pfizer — 6.6% yield, FCF 8.4% covers dividend; OM 31.6% (core pharma intact); ROE 8.3% + D/EV 0.323 (Seagen acq) block filter; post-COVID revenue cliff in numbers, grades A
     'CVS',   # CVS Health — pharmacy/PBM/Aetna; 2.6% yield, FCF 4.1%; OM 4.1%/ROE 3.8%/D/EV 0.401 all blocking; Aetna debt + PBM regulatory headwinds; grades B, watch for restructuring
+    'FMS',   # Fresenius Medical Care AG (ADR) — world's largest kidney dialysis operator (~4,100 clinics globally, ~342k patients, ~2,700 US clinics); also manufactures dialysis machines/dialyzers — vertically integrated; Medicare ESRD reimbursement = guaranteed revenue floor (dialysis is life-sustaining 3x/week treatment, patients don't switch clinics); ~3.7% yield, payout 45% ✓, FCF 16% ✓ (exceptional); GrossM 26.4% structural (medical services labor model, not a quality blocker); OM 10.8% ✓; NM negative ✗, ROE 8.5% ✗, D/EV 46.6% ✗ — 2/5 dividend gates; fwdPE 6.6x cheap; LT watch: GLP-1 drugs (Ozempic/Wegovy) reduce obesity → less diabetic kidney disease → less ESRD incidence — a 10-20yr structural headwind, not imminent; gate to full conviction: ROE ≥ 10% + NM ≥ 5% + D/EV ≤ 35% via FCF deleveraging; added 2026-08-15
 
     # Consumer staples — pricing power tollbooths
     'PG',    # P&G — 68yr dividend king, brand moat
