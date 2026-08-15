@@ -385,6 +385,8 @@ Peter Lynch — *One Up on Wall Street* and *Beating the Street* — contributes
 
 The screener surfaces the candidates. Common sense, rationality, cycle awareness, the avoidance of permanent loss, and knowing what you own and why — close the gap.
 
+Dry runs without capital are underrated. You get the full reps — the scan, the read, the framework verdict — without the emotional stakes. By the time a real setup appears with real capital, the pattern is already familiar. The decision feels obvious because you've made it 50 times in practice. Howard Marks would call it building the process before you need it. Lynch would say you turned over the rock before the opportunity required it.
+
 ## What the Backtest Says
 
 `backtest.py` validates the framework against 5 years of weekly price history across 264 tickers. Full results at [`backtest.html`](https://neurobloomai.github.io/market-tools/backtest.html).
