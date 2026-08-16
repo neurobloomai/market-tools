@@ -709,6 +709,18 @@ A signal that works on one timeframe can look like failure on another. That isn'
 
 Completeness would be a bug, not a feature. If the framework said "buy this, definitely" it would be lying.
 
+**Technicals reflect correlations that existed. They don't guarantee correlations that will exist.**
+
+The extension scan, the runway, the 87w structural read — these are real. IWR at 10% runway with RSI 79 is a factual price/structure reading. But the interpretation layered on top — "mid-caps topping precedes consolidation, next leg comes from tech" — is a pattern from past cycles being applied to this one. And every cycle has a reason the pattern behaves differently.
+
+2020: small caps lagged the initial recovery, then caught up violently in the vaccine rotation. 2022: QQQ had the most runway by extension metrics in early January — it led the crash. 2023: the Magnificent 7 decoupled from the rest of SPY entirely; IWM went nowhere while SPY looked healthy. Each cycle the correlations shifted, and the shift was driven by the macro underneath — not by the technicals.
+
+Correlations are emergent. They come from the underlying macro conditions: rate trajectory, credit availability, geopolitical friction, earnings cycle, sector-specific catalysts. The technicals reflect correlations that already formed. They don't lock in correlations going forward. If rates re-accelerate sharply, small caps (more floating-rate debt) get hit hardest regardless of how much runway the extension scan shows. The map changes faster than anyone can redraw it.
+
+This is why the framework is quality-first and structure-second. MA alignment breaks in every crash — it's a regime filter, not a survival guarantee. Quality FCF, low debt, durable margins — those are what allow a business to outlast the correlation breakdown, whatever form it takes.
+
+The technicals are the map. The macro is the terrain. The terrain changes faster than the map. Sit with that every time a technical read feels conclusive.
+
 These tools do not recommend. They do not provide tailored advice. They are one person's attempt to organize a few questions about quality, structure, and momentum — and share that attempt openly. What you do with the output is entirely your own judgment, your own context, and your own responsibility.
 
 ## SIP Watchlist — US
