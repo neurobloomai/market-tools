@@ -1,20 +1,23 @@
 {
   "setups": {
-    "AAPL": "IN",
-    "MU": "IN"
+    "NVDA": "IN",
+    "MSFT": "IN",
+    "AAPL": "IN"
   },
   "watchlist": {
     "MELI": 1,
     "MKC": 1,
     "DPZ": 1,
+    "ON": 1,
+    "GWRE": 1,
+    "WING": 1,
     "MNDY": 1,
     "P": 1,
     "CHTR": 1,
     "MKL": 1,
     "ALC": 1,
-    "KMDA": 1,
+    "BIO": 1,
     "HAE": 1,
-    "RMD": 1,
     "TMDX": 1,
     "STNE": 1,
     "CPAY": 1,
@@ -22,7 +25,6 @@
     "GEV": 1,
     "PEG": 1,
     "CRH": 1,
-    "DVN": 1,
     "LNG": 1,
     "LDOS": 1,
     "PGY": 1,
