@@ -7,7 +7,7 @@ Run `python india_weekly_snapshot.py` each week to refresh. History is in git.
 
 ---
 
-## Week of Aug 10 2026 (India)
+## Week of Aug 17 2026 (India)
 
 ### 4/4 Aligned — 0 names
 
@@ -33,6 +33,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **AAVAS** | — | — | ETF | — | Aavas Financiers — affordable housing finance (₹10-50L ticket, self-em… |
 | **ADANIENT** | — | — | ETF | — | conglomerate, debt heavy |
 | **ADANIGREEN** | — | — | ETF | — | Adani Green — heavy capex, debt, P/E stretched but 57% op margin |
+| **ADVAIT** | — | — | ETF | — | Advait Energy Transitions (fmr Infratech) — power T&D infra + OPGW cab… |
 | **ANANDRATHI** | — | — | ETF | — | Anand Rathi Wealth — wealth management, asset-light; OM 40%, NM 32%, R… |
 | **APOLLOHOSP** | — | — | ETF | — | Apollo Hospitals — healthcare brand growing well, FCF inconsistent due… |
 | **ARE&M** | — | — | ETF | — | Amara Raja Energy — Op margin just under threshold, clean balance shee… |
@@ -40,11 +41,15 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **BAJAJHFL** | — | — | ETF | — | Bajaj Housing Finance — fast-growing NBFC, recently listed; ROE buildi… |
 | **BHARTIARTL** | — | — | ETF | — | Bharti Airtel — telecom duopoly (Jio + Airtel); OM 32.2%, NM 12.7%, RO… |
 | **BIOCON** | — | — | ETF | — | Biocon — India's largest biopharmaceutical company (Kiran Mazumdar-Sha… |
+| **COCKERILL** | — | — | ETF | — | John Cockerill India (fmr CMI FPE; NSE: COCKERILL, BSE: 500147) — two … |
 | **CONCORDBIO** | — | — | ETF | — | Concord Biotech — fermentation-based APIs (immunosuppressants: tacroli… |
+| **CRAFTSMAN** | — | — | ETF | — | Craftsman Automation — precision machined components + aluminum die ca… |
 | **CRISIL** | — | — | ETF | — | CRISIL — India's dominant credit rating agency, S&P Global subsidiary;… |
 | **DELHIVERY** | — | — | ETF | — | logistics, margins building |
 | **DIXON** | — | — | ETF | — | Dixon Technologies — EMS/contract manufacturing, ROE 37% but OM ~3% by… |
+| **EMAMILTD** | — | — | ETF | — | Emami — ayurvedic/OTC consumer brands (Navratna cooling oil market lea… |
 | **ETERNAL** | — | — | ETF | — | Eternal (formerly Zomato) — food delivery + quick commerce; profitabil… |
+| **HAPPSTMNDS** | — | — | ETF | — | Happiest Minds Technologies — founder-led (Ashok Soota, MindTree co-fo… |
 | **HSCL** | — | — | ETF | — | Himadri Speciality Chemical — pivoting to battery anode materials + LF… |
 | **ICRA** | — | — | ETF | — | ICRA — Moody's India subsidiary (~52% Moody's stake); MCO analog for I… |
 | **INDUSTOWER** | — | — | ETF | — | Indus Towers — largest India tower infra company; leases tower space t… |
@@ -58,6 +63,9 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **METROBRAND** | — | — | ETF | — | Metro Brands — organized footwear retail (Metro, Mochi, Walkway + Croc… |
 | **NYKAA** | — | — | ETF | — | profitability still building |
 | **POLICYBZR** | — | — | ETF | — | high growth, early stage |
+| **SATTRIX** | — | — | ETF | — | Sattrix Information Security — pure-play MSSP (managed security servic… |
 | **SONACOMS** | — | — | ETF | — | Sona BLW Precision — precision differential gears + motor housings for… |
 | **SUPREMEIND** | — | — | ETF | — | Supreme Industries — largest plastic pipes/products company; zero debt… |
 | **SWIGGY** | — | — | ETF | — | Swiggy — food delivery, profitability inflecting, duopoly with Zomato |
+| **TIIL** | — | — | ETF | — | Triveni Turbine — dominant in industrial steam turbines 0.5-100MW (cap… |
+| **TIMKEN** | — | — | ETF | — | Timken India — precision tapered roller bearings + industrial drivetra… |
