@@ -45,7 +45,7 @@
       ],
       [
         "P/E",
-        "122.5x",
+        "124.0x",
         "\u2264 100x"
       ]
     ],
@@ -97,7 +97,7 @@
       ],
       [
         "P/E",
-        "137.2x",
+        "143.9x",
         "\u2264 100x"
       ]
     ],
@@ -226,6 +226,39 @@
     "note": "",
     "grade": "B"
   },
+  "ON": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE 8.3% / ROA 6.8%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "ON Semiconductor \u2014 SiC (silicon carbide) power semiconductors for EV inverters + ADAS power management; every EV drivetrain needs SiC MOSFETs/modules \u2014 ON is top-3 globally (alongside Infineon/STMicro); GrossM 42.8%, OM 19.5%, NM 10.2%, FCF 5.1%, D/EV 14.5%, RevG 9.2%; ROE 8.3% sole blocker (below 10% gate \u2014 transitional as SiC capacity ramps and EV volumes absorb fixed wafer fab costs); fwdPE 18.4x; gate: ROE crossing 10% as SiC mix grows; added 2026-08-12",
+    "grade": "B"
+  },
+  "GWRE": {
+    "fails": [
+      [
+        "Op Margin",
+        "8.2%",
+        "\u2265 10%"
+      ]
+    ],
+    "note": "Guidewire \u2014 insurance core system software (PolicyCenter/BillingCenter/ClaimCenter) for P&C insurers globally; replacing a core system requires 3-5yr migration + regulatory re-approval = maximum switching cost; GrossM 64.0%, NM 11.2%, ROE 11.9%, FCF 2.0%, D/EV 4.8%, RevG 26.9%; OM 8.2% sole blocker (1.8% below 10% gate \u2014 SaaS cloud transition timing, not structural); fwdPE 42.5x; gate: OM crossing 10% as cloud migration mix shift absorbs R&D; added 2026-08-12",
+    "grade": "B"
+  },
+  "WING": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.278",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "Wingstop \u2014 asset-light franchise QSR (owns ~1% of restaurants, earns royalties on all); digital ordering ~70% of sales; GrossM 49.4%, OM 29.8%, NM 16.2%, FCF 3.2%, RevG 6.4%; D/EV 30.5% sole blocker (franchise brand debt \u2014 structural for capital-return QSR, same read as QSR/MCD); ROE yfinance gap (negative book equity from buybacks); fwdPE 20.9x cheap for franchise quality; gate: D/EV trending below 20% as system cash flow amortizes brand debt; added 2026-08-12",
+    "grade": "B"
+  },
   "MNDY": {
     "fails": [
       [
@@ -236,6 +269,27 @@
     ],
     "note": "Monday.com \u2014 work OS (project mgmt + CRM + dev + marketing) built on a flexible canvas; Israel-based; GrossM 89.2%, FCF 25.2%, RevG 24.5% \u2014 the three honest signals; OM -0.1% (essentially breakeven, hairline below gate) + ROE 9.5% (hairline below 10% gate) both blocking; D/EV 0.064 (near-zero debt); fwdPE 16.9x; differentiated from MSFT Project/Asana/Smartsheet by flexibility (no-code automation, cross-team use cases) + Shopify/Salesforce integrations; gate: OM crossing 10% as S&M leverage builds + ROE crossing 10%; 2 hairline blockers \u2014 could clear in 1-2 quarters; added WATCHLIST 2026-08-07",
     "grade": "A"
+  },
+  "MXL": {
+    "fails": [
+      [
+        "Op Margin",
+        "-2.4%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-18.2%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -21.3% / ROA -4.9%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "MaxLinear \u2014 high-speed analog/mixed-signal semiconductors; PAM4 DSPs for 400G/800G optical datacenter interconnects (AI GPU cluster bandwidth), DOCSIS 3.1/4.0 broadband access SoCs, Wi-Fi; revenue collapsed 2023-2024 from broadband/cable inventory correction (ISPs over-ordered post-COVID), recovering now as datacenter interconnect mix grows; GrossM 57.5%, D/EV 1.9% (clean), RevG 55.2% \u2014 recovery ramp real; OM -2.4% (at zero, one quarter from positive), NM neg, ROE -21.3%, FCF 0.2% \u2014 cyclical trough artifacts, not structural ceilings; 87w +190.2% extreme is a recovery-from-collapse artifact (stock: $90\u2192$7\u2192$84), not dangerous extension; gate: OM \u2265 10% + FCF \u2265 3% as PAM4 datacenter interconnect revenue becomes majority mix; added WATCHLIST 2026-08-15',",
+    "grade": "B"
   },
   "SLAB": {
     "fails": [
@@ -353,7 +407,7 @@
     "fails": [
       [
         "FCF Yield",
-        "-7.4%",
+        "-7.5%",
         "> 0%"
       ]
     ],
@@ -364,7 +418,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.427",
+        "0.408",
         "\u2264 0.20"
       ],
       [
@@ -400,7 +454,7 @@
       ],
       [
         "P/E",
-        "180.0x",
+        "185.9x",
         "\u2264 100x"
       ]
     ],
@@ -434,31 +488,52 @@
     "note": "Alcon \u2014 global #1 in surgical eye care (cataract IOLs, vitreoretinal surgery, glaucoma equipment) + vision care (DAILIES contact lenses); Novartis spinoff 2019; surgical moat = surgeons train on specific equipment and don't switch, hospital preferred-vendor relationships, IOL is a consumable in every cataract surgery worldwide; DAILIES brand loyalty sticky (daily disposable repeat purchase through eye doctors); GrossM 55.2%, OM 13.1%, NM 9.4%, D/EV 0.015, FCF 15.5%, RevG 9.4%; ROE 4.5% only blocker \u2014 structural from massive $22B equity base inherited at Novartis spinoff (not acquisition goodwill distortion \u2014 genuine ROE dilution); gate: ROE crossing 10% as NI compounds into the equity base; added WATCHLIST 2026-08-07",
     "grade": "B"
   },
-  "KMDA": {
+  "WAT": {
+    "fails": [
+      [
+        "Net Margin",
+        "3.6%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE 1.9% / ROA 3.5%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "missing (no data relief)",
+        "> 0% or rev>50%+margin>10%"
+      ]
+    ],
+    "note": "Waters Corporation \u2014 premium HPLC + mass spectrometry instruments for pharma QC, protein analysis, biopolymer characterization; most precise analytical chemistry instruments in pharma (Acquity UPLC, Xevo MS); consumables moat same as Agilent \u2014 validated pharma methods locked to Waters columns + software; Wyatt Technology acquisition 2023 (~$1.36B, light scattering for biologics) distorting all margin metrics: NM 3.6%, ROE 1.9%, FCF 0.0%, RevG 113.3% all yfinance acquisition artifacts \u2014 real Waters is historically ROE 30%+, NM 20%+; GrossM 56.3%, OM 10.0%, D/EV 0.114 real; 4/4 MA + 4/4 weekly momentum, RSI 64.5, MACD expanding; 87w ext +17.3% mild \u2014 chart confirming recovery; \u26a0 no MOS at current price \u2014 full suite of life sciences tools running simultaneously; gate: data normalizing post-Wyatt + ROE recovering toward 20%; added WATCHLIST 2026-08-10",
+    "grade": "B"
+  },
+  "BIO": {
     "fails": [
       [
         "ROE/ROA",
-        "ROE 8.0% / ROA 4.2%",
+        "ROE 3.1% / ROA 1.7%",
         "\u2265 10% / \u2265 15%"
       ]
     ],
-    "note": "Kamada Ltd. \u2014 Israeli specialty plasma-derived protein therapeutics; GLASSIA/PROLASTIN-C (Alpha-1 antitrypsin replacement therapy \u2014 AAT deficiency is a rare genetic disorder causing progressive lung/liver disease; patients require weekly IV infusions for life = deeply sticky recurring revenue per patient); inhaled AAT program in development (differentiated delivery route vs IV); niche within specialty plasma biologics \u2014 not competing in broad IVIG market, owning a specific chronic disease indication; GrossM 41.2% (just above gate), OM 15.4%, NM 11.2%, D/EV 0.033 (near-zero debt), FCF 2.6%, RevG 2.8%; ROE 8.0% only blocker (2% below gate \u2014 NI scaling into equity base, not a structural failure; D/EV 0.033 confirms no leverage distortion); 6/7 gates; 2/4 MA (above 10w +0.5% + 87w +2.1%, below 20w/43w), slope falling, RSI 44.8, MACD below signal \u2014 chart not yet confirming; RevG 2.8% is the real concern \u2014 AAT market is stable chronic disease, not high-growth; geopolitical risk: Israeli company, NASDAQ-listed, regional tensions add volatility layer beyond fundamentals; gate: ROE crossing 10% as NI scales + RevG reaccelerating above 5% as AAT patient additions compound + chart 4/4 recovery; added WATCHLIST 2026-08-10",
+    "note": "Bio-Rad Laboratories \u2014 PCR/qPCR instruments, gel electrophoresis, western blot, ddPCR (Droplet Digital PCR \u2014 most accurate low-abundance nucleic acid quantification, specialty moat for liquid biopsy + food safety + environmental); also clinical quality control products for hospital labs; Sartorius stake accounting drag: owns ~13% of Sartorius AG (~$2.5B), Sartorius corrected -60%+ from peak \u2014 unrealized losses flooded through balance sheet, suppressing stated ROE 3.1% (not operational failure); RevG -0.1% barely negative \u2014 essentially flat from biotech funding cycle; GrossM 52.0%, OM 11.2%, NM 8.6%, D/EV 0.149, FCF 3.0%; 5/7 gates; 4/4 MA + 4/4 weekly momentum, RSI 67.3, MACD expanding; 87w ext +23.9% moderate \u2014 no MOS currently; gate: RevG turning positive + Sartorius stake stabilizing/recovering as ROE corrects upward; added WATCHLIST 2026-08-10",
     "grade": "B"
   },
-  "ADMA": {
+  "RVTY": {
     "fails": [
       [
         "Debt/EV",
-        "2.222",
+        "0.219",
         "\u2264 0.20"
       ],
       [
-        "Op Margin",
-        "-123.4%",
-        "\u2265 10%"
+        "ROE/ROA",
+        "ROE 3.2% / ROA 2.3%",
+        "\u2265 10% / \u2265 15%"
       ]
     ],
-    "note": "ADMA Biologics \u2014 small-cap plasma-derived immunoglobulin manufacturer; BIVIGAM + ASCENIV (high-titer IGIV for primary immunodeficiency, immune-compromised patients); collects plasma, manufactures specialty plasma proteins end-to-end \u2014 vertical integration gives margin control vs pure plasma buyers; turnaround fully executed: real profitability now printing (OM 37.53%, NM 28.80%, ROE 35.56%, GrossM 57.36%, ROA 25.97% per verified source \u2014 exceptional for a biologics manufacturer, software-level operating margins); \u26a0 yfinance data unreliable for this ticker (shows OM -123% \u2014 garbage read from warrant revaluation quarter; D/EV 2.222 also suspect artifact); RevG 15.9% real; grade A on verified metrics but cannot be auto-scored reliably; chart broken: 2/4 MA, -36.7% below 87w \u2014 quality intact, structure not confirmed; gate: 43w/87w MA reclaim + yfinance data normalizing so automated screener can grade accurately; added WATCHLIST 2026-08-10",
+    "note": "Revvity (formerly PerkinElmer) \u2014 life sciences instruments + diagnostics; sold industrial/environmental segment 2023, rebranded to focus purely on life sciences; newborn screening infrastructure moat: ~80% of all US newborn screens run through Revvity's platform (every baby screened for 50+ genetic diseases at birth) \u2014 mandatory healthcare toll-booth with government relationships and regulatory depth that makes displacement structurally impossible; also: immunoassay detection instruments (VICTOR, EnVision plate readers), reproductive health diagnostics, biobanking; GrossM 55.0%, OM 17.0%, NM 8.2%, FCF 4.6%, RevG 1.3% (biotech funding cycle hangover, recovering); ROE 3.2% (massive goodwill from historical acquisitions + PerkinElmer separation accounting \u2014 structural artifact, not operational failure) + D/EV 0.219 (0.019 above gate \u2014 acquisition debt); 5/7 gates; 4/4 MA, RSI 63.2, MACD fading; 87w ext +16.3% mild; gate: ROE crossing 10% as NI scales into the equity base + D/EV below 0.20 via FCF paydown + RevG reaccelerating above 5% as biotech cycle recovers; added WATCHLIST 2026-08-10",
     "grade": "B"
   },
   "HAE": {
@@ -471,17 +546,6 @@
     ],
     "note": "Haemonetics \u2014 blood management technology: NexSys PCS apheresis machines (plasma + platelet collection), BloodTrack hospital blood management software, vascular closure devices; plasma collection is structurally growing \u2014 immunoglobulin therapies (IVIG, SCIG) for immune deficiency, neurology, transplant are demand-compounding; HAE machines are contracted with major plasma center operators (CSL, BioLife, Grifols) = recurring disposables revenue on a placed-machine base; GrossM 59.3%, OM 17.9%, NM 7.1%, ROE 11.2%, FCF 7.8%, RevG 5.6%; D/EV 0.237 only blocker \u2014 acquisition/restructuring debt; FCF 7.8% is the paydown engine; 6/7 gates; 4/4 MA, RSI 70.0, MACD expanding, 87w ext +31.1% moderate \u2014 technically strongest of recent WATCHLIST additions; gate: D/EV below 0.20 via FCF paydown (2-3 quarters at current pace); added WATCHLIST 2026-08-10",
     "grade": "B"
-  },
-  "RMD": {
-    "fails": [
-      [
-        "Passes all filters",
-        "\u2014",
-        "\u2014"
-      ]
-    ],
-    "note": "ResMed \u2014 dominant CPAP/BiPAP device + connected care platform for sleep apnea and respiratory disease; only two real competitors (ResMed + Philips \u2014 and Philips had a massive foam degradation recall in 2021 that handed RMD durable market share gains it has not given back); myAir software + AirSense connected device = recurring engagement layer on top of hardware that creates switching cost beyond the mask; GLP-1 narrative broke the chart (fear: obesity drugs eliminate sleep apnea, reducing TAM) \u2014 overblown: sleep apnea is structurally underdiagnosed, GLP-1 reduces severity not cure, and CPAP compliance (consistent device use) is the real TAM driver; GrossM 61.6%, OM 31.0%, NM 26.9%, ROE 24.3%, D/EV 0.028, FCF 3.1%, RevG 8.6%; A+ 7/7; 2/4 MA (above 10w/20w, below 43w -7.9% + 87w -11.0% \u2014 recovering from GLP-1 selloff), MACD expanding, RSI 48.1 neutral; gate: 43w/87w reclaim for UNIVERSE; added WATCHLIST 2026-08-09",
-    "grade": "A+"
   },
   "ZBH": {
     "fails": [
@@ -503,11 +567,58 @@
     "fails": [
       [
         "Debt/EV",
-        "0.263",
+        "0.251",
         "\u2264 0.20"
       ]
     ],
     "note": "TransMedics Group \u2014 Organ Care System (OCS): normothermic machine perfusion keeps donor hearts, lungs, livers warm and viable during transport; extends transplant window dramatically vs traditional static cold storage (cold = 4hr window, OCS = 8-12hr+) = more transplants from marginal donors, longer-distance matching; FDA-approved, real clinical utility, genuinely saves lives; built own aviation network (TransMedics Air) to control end-to-end organ logistics \u2014 expensive but creates a logistics moat no competitor can replicate quickly; GrossM 58.7%, OM 12.5%, NM 22.7% (NM > OM = non-operating income component, watch normalize), ROE 36.3%, FCF 1.5%, RevG 20.7%; D/EV 0.263 only blocker \u2014 aviation network capex, amortizes as volume scales; 6/7 gates; 2/4 MA (above 10w/20w, well below 43w -22.2% + 87w -17.9% \u2014 chart corrected hard after a major run); RSI 46.6, daily bounce above 10d/20d/50d; gate: D/EV \u2264 0.20 as transplant volume + aviation utilization scales + weekly MA structure recovers (43w/87w reclaim first); added WATCHLIST 2026-08-09",
+    "grade": "B"
+  },
+  "CNC": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.717",
+        "\u2264 0.20"
+      ],
+      [
+        "Op Margin",
+        "3.8%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-2.8%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -20.4% / ROA 2.5%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Centene Corporation \u2014 #2 US Medicaid managed care (behind UNH); govnt-contracted health insurance across Medicaid + Medicare (Wellcare brand) + ACA marketplace (Ambetter brand); 26 states; recession-resistant moat: Medicaid enrollment grows in downturns (more people qualify when economy weakens); $180B revenue, $33B market cap = 0.18x P/S; FCF $9.6B = 28.8% FCF yield on market cap; fwdPE 12.7x; GrossM 11.4% structural exception (medical loss ratio \u2014 same lens as UNH, not a quality blocker); OM 3.76% + NM negative both blocking \u2014 Medicaid redetermination headwinds (2023-2024: post-COVID continuous enrollment ended, states re-checked eligibility, disenrolled millions, revenue/margin pressure real but transient); ROE -20.4% headwind artifact; CMF +0.439 exceptional \u2014 strongest accumulation signal in healthcare right now, institutions pricing in headwind resolution; gate: OM \u2265 10% + NM consistently positive as redetermination cycle completes and medical cost inflation normalizes; added WATCHLIST 2026-08-15',",
+    "grade": "B"
+  },
+  "COR": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.202",
+        "\u2264 0.20"
+      ],
+      [
+        "Op Margin",
+        "1.4%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "0.8%",
+        "\u2265 5%"
+      ]
+    ],
+    "note": "Cencora (fmr AmerisourceBergen) \u2014 #2 US pharmaceutical distributor (McKesson/COR/Cardinal Health = ~90% US drug distribution oligopoly); every GLP-1 prescription (Ozempic/Wegovy/tirzepatide), oncology biologic, and specialty drug reaching a US hospital or pharmacy flows through this network; $332B revenue, $60B market cap; GrossM 3.96% structural exception (drug pass-through model \u2014 distributor earns a fee spread on drug cost, not a margin on product; same lens as FERG/GWW distribution model); OM 1.4% + NM negative blocking; ROE 96.9% leverage artifact (D/E 446% = insurance float analog \u2014 working capital funded by supplier credit); FCF $2B = 3.4% yield (the real economics); GLP-1 structural tailwind: specialty drug volumes compounding as GLP-1 prescriptions scale nationally, specialty drugs carry higher distribution fees than generics; fwdPE 15.8x; gate: OM crossing 3%+ sustained + NM turning positive + FCF expanding as specialty/GLP-1 mix grows as % of volume; added WATCHLIST 2026-08-15',",
     "grade": "B"
   },
   "COO": {
@@ -578,7 +689,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.316",
+        "0.312",
         "\u2264 0.20"
       ]
     ],
@@ -669,7 +780,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.397",
+        "0.4",
         "\u2264 0.20"
       ]
     ],
@@ -696,7 +807,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.376",
+        "0.382",
         "\u2264 0.20"
       ],
       [
@@ -717,7 +828,7 @@
       ],
       [
         "FCF Yield",
-        "-6.7%",
+        "-6.8%",
         "> 0%"
       ]
     ],
@@ -733,7 +844,7 @@
       ],
       [
         "FCF Yield",
-        "-6.3%",
+        "-6.4%",
         "> 0%"
       ]
     ],
@@ -754,7 +865,7 @@
       ],
       [
         "FCF Yield",
-        "-16.2%",
+        "-16.5%",
         "> 0%"
       ]
     ],
@@ -765,7 +876,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.222",
+        "0.225",
         "\u2264 0.20"
       ],
       [
@@ -781,7 +892,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.397",
+        "0.393",
         "\u2264 0.20"
       ],
       [
@@ -820,22 +931,11 @@
     "note": "CRH plc \u2014 largest building materials company globally (aggregates, cement, asphalt, ready-mix concrete, construction products); redomiciled primary listing to NYSE 2023; same geological moat profile as VMC/MLM (permit scarcity near population centers) but broader: also includes downstream concrete products + building envelope; GrossM 36.2% structural (mining + manufacturing \u2014 same exception as VMC/MLM), OM 19.0%, NM 9.9%, ROE 15.8%, D/EV 0.233 (serial acquisitor \u2014 real leverage, primary blocker), FCF 3.0%, RevG 5.6%; 5/7 gates; 0/4 MA, RSI 42.9, MACD below signal \u2014 chart broken right now; gate to UNIVERSE: D/EV \u2264 0.20 as FCF deleverages + MA structure recovers (0/4 is the tell \u2014 don't touch until weekly alignment improves); added WATCHLIST 2026-08-08",
     "grade": "B"
   },
-  "DVN": {
-    "fails": [
-      [
-        "Debt/EV",
-        "0.204",
-        "\u2264 0.20"
-      ]
-    ],
-    "note": "Devon Energy \u2014 formed from CTRA+DVN merger; Permian + Appalachia nat gas/oil; NM 14.2%, ROE 15.2%, FCF 3.2%, P/E 11.8x \u2014 solid underlying economics; D/EV 0.257 (merger leverage) + OM 6.9% both blocking; gate: D/EV \u2264 0.20 as merger debt amortizes + OM \u2265 10% on commodity price recovery",
-    "grade": "A"
-  },
   "NRG": {
     "fails": [
       [
         "Debt/EV",
-        "0.481",
+        "0.479",
         "\u2264 0.20"
       ],
       [
@@ -851,7 +951,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.368",
+        "0.371",
         "\u2264 0.20"
       ],
       [
@@ -898,7 +998,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.329",
+        "0.321",
         "\u2264 0.20"
       ]
     ],
@@ -909,7 +1009,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.284",
+        "0.282",
         "\u2264 0.20"
       ]
     ],
@@ -987,7 +1087,7 @@
       ],
       [
         "FCF Yield",
-        "-6.0%",
+        "-6.1%",
         "> 0%"
       ]
     ],
@@ -998,34 +1098,18 @@
     "fails": [
       [
         "Debt/EV",
-        "0.614",
+        "0.603",
         "\u2264 0.20"
       ]
     ],
     "note": "Pagaya Technologies \u2014 AI-powered credit underwriting network; embeds into bank/lender origination flows, expands credit access via ML risk models; NM 9.1%, ROE 19.5%, FCF 11.3% all strong; D/EV 0.593 the one blocker \u2014 improved from 0.81 at FUTURE_RADAR promotion but still well above 0.20 gate; gate: D/EV \u2264 0.20 as credit book matures and debt amortizes; promoted FUTURE_RADAR \u2192 WATCHLIST 2026-07-29",
     "grade": "A"
   },
-  "SOFI": {
-    "fails": [
-      [
-        "ROE/ROA",
-        "ROE 7.1% / ROA 1.2%",
-        "\u2265 10% / \u2265 15%"
-      ],
-      [
-        "FCF Yield",
-        "missing (no data relief)",
-        "> 0% or rev>50%+margin>10%"
-      ]
-    ],
-    "note": "SoFi \u2014 neobank scaling; ROE 6.6% and trending right",
-    "grade": "A"
-  },
   "UPWK": {
     "fails": [
       [
         "Debt/EV",
-        "0.382",
+        "0.374",
         "\u2264 0.20"
       ]
     ],
@@ -1058,7 +1142,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.299",
+        "0.298",
         "\u2264 0.20"
       ]
     ],
@@ -1251,7 +1335,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.209",
+        "0.206",
         "\u2264 0.20"
       ],
       [
@@ -1266,7 +1350,7 @@
       ],
       [
         "FCF Yield",
-        "-5.6%",
+        "-5.5%",
         "> 0%"
       ]
     ],
@@ -1341,7 +1425,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.204",
+        "0.207",
         "\u2264 0.20"
       ],
       [
@@ -1506,7 +1590,7 @@
       ],
       [
         "FCF Yield",
-        "-2.7%",
+        "-2.6%",
         "> 0%"
       ]
     ],
@@ -1612,7 +1696,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.314",
+        "0.33",
         "\u2264 0.20"
       ],
       [
@@ -1654,7 +1738,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.374",
+        "0.372",
         "\u2264 0.20"
       ],
       [
@@ -1686,7 +1770,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.247",
+        "0.243",
         "\u2264 0.20"
       ],
       [
@@ -1707,7 +1791,7 @@
       ],
       [
         "P/E",
-        "234.9x",
+        "238.3x",
         "\u2264 100x"
       ]
     ],
@@ -1723,22 +1807,6 @@
       ]
     ],
     "note": "GigaCloud Technology \u2014 B2B marketplace for large-parcel goods (furniture, appliances, fitness equipment, home d\u00e9cor); connects Chinese manufacturers to overseas resellers/retailers; marketplace model with logistics integration (handles warehousing + last-mile for oversized goods) = not pure software; GrossM 23.4% (structural \u2014 physical logistics drag, not a SaaS platform), OM 11.8%, NM 10.8%, ROE 32.1% (exceptional), D/EV 0.262, FCF 4.2%, RevG 32.2%; 5/7 gates, grade \u2014; blockers: GrossM 23.4% (structural, marketplace with logistics overhead vs 40% gate) + D/EV 0.262 (above 0.20 \u2014 debt vs EV); caution: currently +44.8% above 10w MA \u2014 very extended, not an entry, monitor for base; gate to UNIVERSE: GrossM approaching 30%+ as take-rate improves + D/EV \u2264 0.20 via FCF deleveraging; added 2026-08-06",
-    "grade": "B"
-  },
-  "EMBC": {
-    "fails": [
-      [
-        "Debt/EV",
-        "0.977",
-        "\u2264 0.20"
-      ],
-      [
-        "ROE/ROA",
-        "ROE None% / ROA 12.5%",
-        "\u2265 10% / \u2265 15%"
-      ]
-    ],
-    "note": "Embecta \u2014 BD spinoff (2022), insulin delivery devices (pen needles, syringes, patch pumps); auto-promoted from FUTURE_RADAR 2026-08-07 [grade B, blocking: Debt/EV 0.984]",
     "grade": "B"
   }
 }
