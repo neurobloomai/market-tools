@@ -1,23 +1,24 @@
-**Subject:** Market Pulse — Week ending Aug 07 2026 · Broad Rally / Aligned
+**Subject:** Market Pulse — Week ending Aug 14 2026 · Broad Rally / Aligned
 
 ---
 
 **POSTURE**
 
-US: 72.4% above MA20, 72.4% above MA100 — short-term momentum leading. 38 names Fully Stacked. India: 48.7% above MA20, 60.3% above MA100 — mixed, structure holding. 13 names Fully Stacked.
+US: 70.5% above MA20, 74.2% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 35 names Fully Stacked. India: 48.7% above MA20, 60.3% above MA100 — mixed, structure holding. 13 names Fully Stacked.
 
 
 **WHAT MOVED**
 
-Entered Fully Stacked — Universe: NVDA, V, LLY, JNJ, PANW, WST, EXPD, CL, KMB
-Entered Fully Stacked — Watchlist: SNOW, CRWD, BIIB, APD
-Left Fully Stacked — Universe: MRK, AFL, AMZN, MNST
-Left Fully Stacked — Watchlist: DDOG, RPRX
+Entered Fully Stacked — Universe: MRK, HEI, BLK, FCX, VRTX, QRVO, EXPE
+Entered Fully Stacked — Watchlist: DDOG, HAE, DRI, LNG, RPRX
+Left Fully Stacked — Universe: TRV, ALL, WST, VRSN, HIG
+Left Fully Stacked — Watchlist: BMY, ETSY
 
 **SETUPS WORTH WATCHING**
 
-**MU** [Universe] — weekly gate open, IN, -8.0% vs MA10w, W.slope +17.53
-**AAPL** [Universe] — weekly gate open, IN, +1.3% vs MA10w, W.slope +3.41
+**MSFT** [Universe] — weekly gate open, IN, +19.2% vs MA10w, W.slope +17.46
+**NVDA** [Universe] — weekly gate open, IN, +8.6% vs MA10w, W.slope +1.88
+**AAPL** [Universe] — weekly gate open, IN, -1.0% vs MA10w, W.slope +0.02
 
 **WATCHLIST WATCH**
 
@@ -28,10 +29,10 @@ Left Fully Stacked — Watchlist: DDOG, RPRX
 
 **ONE THOUGHT**
 
-The rotation into healthcare and industrials—evidenced by LLY, JNJ, BIIB, and APD joining Fully Stacked while consumer discretionary names like AMZN and MNST exited—suggests conviction is shifting toward sectors with clearer earnings visibility rather than growth-at-any-price narratives. Momentum remains genuinely strong in the broad market, but the *composition* of that strength is narrowing into names where valuation can be justified by fundamentals, not just technicals. This isn't a reversal signal; it's a maturation of the move.
+The roster turnover—12 names entering Fully Stacked against 7 exiting—reflects what the breadth numbers suggest: a market where long-term structure remains intact but near-term conviction is narrowing. The exits (TRV, ALL, BMY, HIG, ETSY) skew toward defensive and crowded-momentum names, while entries lean toward cyclicals and faster-growth names that had fallen away. This isn't a reversal signal, but it does suggest the market is rotating within its uptrend rather than extending it uniformly—a shift worth watching in how your portfolio allocations are positioned relative to what's actually holding long-term support versus what's become fragile.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-08-10 04:17 UTC · Not financial advice_
+_Draft generated 2026-08-17 03:29 UTC · Not financial advice_
