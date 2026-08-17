@@ -474,7 +474,8 @@ def _cli_row(r):
         overshoot = r['ext_now'] - r['ext_90p']
         ceil_s = _rjust('\033[31m' + f"↑ blown +{overshoot:.1f}%" + _RESET, _W['ceil'])
     else:
-        ceil_s = _rjust(f"${r['ceiling_90']:.2f} ({r['ext_90p']:+.1f}%)", _W['ceil'])
+        upside = (r['ceiling_90'] - r['price']) / r['price'] * 100
+        ceil_s = _rjust(f"${r['ceiling_90']:.2f} ({upside:+.1f}%)", _W['ceil'])
     if cat == 'below':
         runway_s = _ljust('\033[90m' + '─' * 14 + '  n/a' + _RESET, _W['runway'])
     else:
