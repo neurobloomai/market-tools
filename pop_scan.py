@@ -186,8 +186,15 @@ def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly):
     rows += rows_for(two,   '#1a4731', '◐ 2/3')
     rows += rows_for(tight, '#1a4a4a', '◎ tight', is_tight=True)
 
-    miss_tickers = '  ·  '.join(r['ticker'] for r in misses) if misses else '—'
-    nd_tickers   = '  ·  '.join(no_data) if no_data else '—'
+    miss_rows  = rows_for(misses, '#3d1212', '✕ below')
+    nd_tickers = '  ·  '.join(no_data) if no_data else '—'
+
+    thead = """<thead>
+    <tr>
+      <th>Ticker</th><th>MAs</th><th>Price</th>
+      <th>vs 10dMA</th><th>vs 20dMA</th><th>vs 50dMA</th><th>CMF</th><th>Slope</th>
+    </tr>
+  </thead>"""
 
     return f"""<!DOCTYPE html>
 <html>
@@ -208,7 +215,8 @@ def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly):
   tr:hover td {{ background: rgba(255,255,255,0.03); }}
   .ticker {{ font-weight: 700; color: #e6edf3; font-size: 13px; }}
   .badge {{ font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; color: #fff; }}
-  .section {{ font-size: 11px; color: #8b949e; margin: 24px 0 8px; border-top: 1px solid #21262d; padding-top: 12px; }}
+  .section-header {{ font-size: 11px; font-weight: 600; color: #8b949e; margin: 24px 0 8px;
+                     border-top: 1px solid #21262d; padding-top: 12px; text-transform: uppercase; letter-spacing: .05em; }}
   .disclaimer {{ color: #484f58; font-size: 10px; margin-top: 24px; border-top: 1px solid #21262d; padding-top: 8px; }}
 </style>
 </head>
@@ -225,17 +233,17 @@ def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly):
 </div>
 
 <table>
-  <thead>
-    <tr>
-      <th>Ticker</th><th>MAs</th><th>Price</th>
-      <th>vs 10dMA</th><th>vs 20dMA</th><th>vs 50dMA</th><th>CMF</th><th>Slope</th>
-    </tr>
-  </thead>
+  {thead}
   <tbody>{rows}</tbody>
 </table>
 
-<div class="section">Below — {miss_tickers}</div>
-<div class="section">No data — {nd_tickers}</div>
+<div class="section-header">Below All MAs — {len(misses)} tickers</div>
+<table>
+  {thead}
+  <tbody>{miss_rows}</tbody>
+</table>
+
+<div class="section-header">No data — {nd_tickers}</div>
 <div class="disclaimer">For informational purposes only. Market dynamics change constantly — these outputs are auto-generated from Yahoo Finance data and may not reflect current conditions. Not tailored financial advice. Not a recommendation to buy, sell, or hold any security. Always do your own research.</div>
 </body>
 </html>"""
