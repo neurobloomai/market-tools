@@ -74,12 +74,12 @@ def _setup_score(r, grades):
     range_pts, _, _, _ = _range_band(r['pct50'])
     return g_pts + ma_pts + range_pts, grade
 
-def _daily_cmf(hist, period=20):
+def _weekly_cmf(hist_w, period=10):
     try:
-        hl = (hist['High'] - hist['Low']).replace(0, float('nan'))
-        mfm = ((hist['Close'] - hist['Low']) - (hist['High'] - hist['Close'])) / hl
-        mfv = mfm * hist['Volume']
-        vol_sum = hist['Volume'].rolling(period).sum().iloc[-1]
+        hl = (hist_w['High'] - hist_w['Low']).replace(0, float('nan'))
+        mfm = ((hist_w['Close'] - hist_w['Low']) - (hist_w['High'] - hist_w['Close'])) / hl
+        mfv = mfm * hist_w['Volume']
+        vol_sum = hist_w['Volume'].rolling(period).sum().iloc[-1]
         if not vol_sum or vol_sum == 0:
             return float('nan')
         return round(float(mfv.rolling(period).sum().iloc[-1] / vol_sum), 3)
@@ -88,7 +88,9 @@ def _daily_cmf(hist, period=20):
 
 def get_daily_ma_pos(ticker):
     try:
-        hist = yf.Ticker(ticker).history(period='3mo', interval='1d')
+        tkr    = yf.Ticker(ticker)
+        hist   = tkr.history(period='3mo',  interval='1d')
+        hist_w = tkr.history(period='26mo', interval='1wk')
         if hist is None or len(hist) < 52:
             return None
         close = hist['Close'].dropna()
@@ -98,21 +100,26 @@ def get_daily_ma_pos(ticker):
         ma50  = close.iloc[-50:].mean()
         count = sum([price > ma10, price > ma20, price > ma50])
         near  = sum([price >= ma10*0.95, price >= ma20*0.95, price >= ma50*0.95])
-        # slope: % change in 10d MA over last 5 sessions
-        ma10_series = close.rolling(10).mean().dropna()
-        slope = round((ma10_series.iloc[-1] / ma10_series.iloc[-6] - 1) * 100, 1) if len(ma10_series) >= 6 else float('nan')
-        cmf   = _daily_cmf(hist)
+        # weekly slope: % change in 10wk MA over last 5 weekly bars
+        wk_close = hist_w['Close'].dropna() if hist_w is not None and len(hist_w) >= 15 else None
+        if wk_close is not None:
+            ma10w_series = wk_close.rolling(10).mean().dropna()
+            wk_slope = round((ma10w_series.iloc[-1] / ma10w_series.iloc[-6] - 1) * 100, 1) if len(ma10w_series) >= 6 else float('nan')
+            wk_cmf = _weekly_cmf(hist_w)
+        else:
+            wk_slope = float('nan')
+            wk_cmf   = float('nan')
         return {
-            'ticker': ticker,
-            'price':  round(price, 2),
-            'pct10':  round((price / ma10 - 1) * 100, 1),
-            'pct20':  round((price / ma20 - 1) * 100, 1),
-            'pct50':  round((price / ma50 - 1) * 100, 1),
-            'above':  count,
-            'all3':   count == 3,
-            'near':   near,
-            'cmf':    cmf,
-            'slope':  slope,
+            'ticker':   ticker,
+            'price':    round(price, 2),
+            'pct10':    round((price / ma10 - 1) * 100, 1),
+            'pct20':    round((price / ma20 - 1) * 100, 1),
+            'pct50':    round((price / ma50 - 1) * 100, 1),
+            'above':    count,
+            'all3':     count == 3,
+            'near':     near,
+            'wk_cmf':   wk_cmf,
+            'wk_slope': wk_slope,
         }
     except Exception:
         return None
@@ -158,27 +165,66 @@ def _slope_cell(slope):
     sign  = '+' if slope > 0 else ''
     return f'<td style="color:{color};font-size:11px">{sign}{slope}%</td>'
 
+def _algo_tier(r):
+    import math
+    cmf   = r.get('wk_cmf',   float('nan'))
+    slope = r.get('wk_slope', float('nan'))
+    cmf_ok   = not (isinstance(cmf,   float) and math.isnan(cmf))
+    slope_ok = not (isinstance(slope, float) and math.isnan(slope))
+    if not cmf_ok or not slope_ok or slope <= 0:
+        return None
+    above = r.get('above', 0)
+    # strong: all three signals at max conviction
+    if cmf >= 0.15 and above == 3:
+        return 'strong'
+    # positive: good confluence, price structure holding
+    if cmf >= 0.10 and above >= 2:
+        return 'positive'
+    return None
+
 def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly):
     def rows_for(group, badge_color, badge_label, is_tight=False):
         out = ''
         for r in group:
-            score, grade   = _setup_score(r, grades)
+            score, grade = _setup_score(r, grades)
+            tier = _algo_tier(r)
+
+            # base background from range band
+            _, _, bg, rng_border = _range_band(r['pct50'])
+            bg_style = f'background:{bg};' if bg else ''
+
+            # border: algo overrides range band; tight overrides both
             if is_tight:
-                row_style = 'border-left:3px solid #1a6b7a;'
+                border_style = 'border-left:3px solid #1a6b7a;'
+            elif tier == 'strong':
+                border_style = 'border-left:3px solid #d4a017;'
+                bg_style = bg_style or 'background:rgba(212,160,23,0.07);'
+            elif tier == 'positive':
+                border_style = 'border-left:3px solid #58a6ff;'
+                bg_style = bg_style or 'background:rgba(88,166,255,0.05);'
+            elif rng_border:
+                border_style = f'border-left:3px solid {rng_border};'
             else:
-                _, _, bg, border = _range_band(r['pct50'])
-                row_style = f'background:{bg};border-left:3px solid {border};' if bg else ''
-            grade_str   = f'<span style="color:#8b949e;font-size:10px">{grade}</span>' if grade else ''
-            hourly_flag = '<span title="Hourly: price above 10hMA, 20hMA, 50hMA (not necessarily stacked)" style="color:#58a6ff;font-size:10px;margin-left:4px">⚡H</span>' if hourly.get(r['ticker']) else ''
+                border_style = ''
+
+            row_style  = bg_style + border_style
+            grade_str  = f'<span style="color:#8b949e;font-size:10px">{grade}</span>' if grade else ''
+            hourly_flag = '<span title="Hourly stack" style="color:#58a6ff;font-size:10px;margin-left:4px">⚡H</span>' if hourly.get(r['ticker']) else ''
+            algo_flag   = (
+                '<span title="Strong algo: Wk CMF ≥0.15 + slope up + 3/3 MAs" style="color:#d4a017;font-size:11px;margin-left:4px">◆</span>'
+                if tier == 'strong' else
+                '<span title="Algo positive: Wk CMF ≥0.10 + slope up + 2+/3 MAs" style="color:#58a6ff;font-size:11px;margin-left:4px">▲</span>'
+                if tier == 'positive' else ''
+            )
             out += f"""<tr style="{row_style}">
-              <td class="ticker">{r['ticker']} {grade_str}{hourly_flag}</td>
+              <td class="ticker">{r['ticker']} {grade_str}{hourly_flag}{algo_flag}</td>
               <td><span class="badge" style="background:{badge_color}">{badge_label}</span></td>
               <td>${r['price']}</td>
               {_pct_cell(r['pct10'])}
               {_pct_cell(r['pct20'])}
               {_pct_cell(r['pct50'])}
-              {_cmf_cell(r.get('cmf'))}
-              {_slope_cell(r.get('slope'))}
+              {_cmf_cell(r.get('wk_cmf'))}
+              {_slope_cell(r.get('wk_slope'))}
             </tr>"""
         return out
 
@@ -192,7 +238,7 @@ def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly):
     thead = """<thead>
     <tr>
       <th>Ticker</th><th>MAs</th><th>Price</th>
-      <th>vs 10dMA</th><th>vs 20dMA</th><th>vs 50dMA</th><th>CMF</th><th>Slope</th>
+      <th>vs 10dMA</th><th>vs 20dMA</th><th>vs 50dMA</th><th>Wk CMF</th><th>Wk Slope</th>
     </tr>
   </thead>"""
 
