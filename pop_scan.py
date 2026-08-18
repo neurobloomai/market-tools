@@ -74,6 +74,18 @@ def _setup_score(r, grades):
     range_pts, _, _, _ = _range_band(r['pct50'])
     return g_pts + ma_pts + range_pts, grade
 
+def _daily_cmf(hist, period=20):
+    try:
+        hl = (hist['High'] - hist['Low']).replace(0, float('nan'))
+        mfm = ((hist['Close'] - hist['Low']) - (hist['High'] - hist['Close'])) / hl
+        mfv = mfm * hist['Volume']
+        vol_sum = hist['Volume'].rolling(period).sum().iloc[-1]
+        if not vol_sum or vol_sum == 0:
+            return float('nan')
+        return round(float(mfv.rolling(period).sum().iloc[-1] / vol_sum), 3)
+    except Exception:
+        return float('nan')
+
 def get_daily_ma_pos(ticker):
     try:
         hist = yf.Ticker(ticker).history(period='3mo', interval='1d')
@@ -86,6 +98,10 @@ def get_daily_ma_pos(ticker):
         ma50  = close.iloc[-50:].mean()
         count = sum([price > ma10, price > ma20, price > ma50])
         near  = sum([price >= ma10*0.95, price >= ma20*0.95, price >= ma50*0.95])
+        # slope: % change in 10d MA over last 5 sessions
+        ma10_series = close.rolling(10).mean().dropna()
+        slope = round((ma10_series.iloc[-1] / ma10_series.iloc[-6] - 1) * 100, 1) if len(ma10_series) >= 6 else float('nan')
+        cmf   = _daily_cmf(hist)
         return {
             'ticker': ticker,
             'price':  round(price, 2),
@@ -95,6 +111,8 @@ def get_daily_ma_pos(ticker):
             'above':  count,
             'all3':   count == 3,
             'near':   near,
+            'cmf':    cmf,
+            'slope':  slope,
         }
     except Exception:
         return None
@@ -119,6 +137,27 @@ def _pct_cell(pct):
     sign  = '+' if pct > 0 else ''
     return f'<td style="color:{color};font-weight:600">{sign}{pct}%</td>'
 
+def _cmf_cell(cmf):
+    import math
+    if cmf is None or (isinstance(cmf, float) and math.isnan(cmf)):
+        return '<td style="color:#484f58">—</td>'
+    if cmf >= 0.15:
+        color = '#3fb950'
+    elif cmf <= -0.15:
+        color = '#f85149'
+    else:
+        color = '#8b949e'
+    sign = '+' if cmf > 0 else ''
+    return f'<td style="color:{color};font-weight:600">{sign}{cmf:.3f}</td>'
+
+def _slope_cell(slope):
+    import math
+    if slope is None or (isinstance(slope, float) and math.isnan(slope)):
+        return '<td style="color:#484f58">—</td>'
+    color = '#3fb950' if slope > 0 else '#f85149'
+    sign  = '+' if slope > 0 else ''
+    return f'<td style="color:{color};font-size:11px">{sign}{slope}%</td>'
+
 def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly):
     def rows_for(group, badge_color, badge_label, is_tight=False):
         out = ''
@@ -138,6 +177,8 @@ def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly):
               {_pct_cell(r['pct10'])}
               {_pct_cell(r['pct20'])}
               {_pct_cell(r['pct50'])}
+              {_cmf_cell(r.get('cmf'))}
+              {_slope_cell(r.get('slope'))}
             </tr>"""
         return out
 
@@ -187,7 +228,7 @@ def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly):
   <thead>
     <tr>
       <th>Ticker</th><th>MAs</th><th>Price</th>
-      <th>vs 10dMA</th><th>vs 20dMA</th><th>vs 50dMA</th>
+      <th>vs 10dMA</th><th>vs 20dMA</th><th>vs 50dMA</th><th>CMF</th><th>Slope</th>
     </tr>
   </thead>
   <tbody>{rows}</tbody>
