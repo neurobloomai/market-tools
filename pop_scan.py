@@ -295,13 +295,23 @@ def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly):
 </html>"""
 
 # ── ANSI helpers ────────────────────────────────────────────────────────────
-_G  = '\033[92m'   # bright green
-_R  = '\033[91m'   # bright red
-_Y  = '\033[93m'   # gold/yellow
-_B  = '\033[94m'   # blue
-_DIM = '\033[2m'   # dim
-_RST = '\033[0m'   # reset
-_BLD = '\033[1m'   # bold
+_G   = '\033[92m'
+_R   = '\033[91m'
+_Y   = '\033[93m'
+_B   = '\033[94m'
+_DIM = '\033[2m'
+_RST = '\033[0m'
+_BLD = '\033[1m'
+
+import re as _re
+_ANSI_RE = _re.compile(r'\033\[[0-9;]*m')
+
+def _vlen(s):
+    return len(_ANSI_RE.sub('', s))
+
+def _lpad(s, w):
+    """Right-align s in w visible characters (left-pad with spaces)."""
+    return ' ' * max(0, w - _vlen(s)) + s
 
 def _c(val, text):
     return f'{val}{text}{_RST}'
@@ -362,11 +372,11 @@ def print_cli_table(all3, two, tight, misses, no_data, label, grades, hourly, sh
 
         print(
             f'  {tick}{pad} {zone_col} {price_col}'
-            f'  {_cli_pct(r["pct10"]):>{COL["pct"] + 10}}'
-            f'  {_cli_pct(r["pct20"]):>{COL["pct"] + 10}}'
-            f'  {_cli_pct(r["pct50"]):>{COL["pct"] + 10}}'
-            f'  {_cli_cmf(r.get("wk_cmf")):>{COL["cmf"] + 10}}'
-            f'  {_cli_slope(r.get("wk_slope")):>{COL["slope"] + 10}}'
+            f'  {_lpad(_cli_pct(r["pct10"]),        COL["pct"])}'
+            f'  {_lpad(_cli_pct(r["pct20"]),        COL["pct"])}'
+            f'  {_lpad(_cli_pct(r["pct50"]),        COL["pct"])}'
+            f'  {_lpad(_cli_cmf(r.get("wk_cmf")),  COL["cmf"])}'
+            f'  {_lpad(_cli_slope(r.get("wk_slope")), COL["slope"])}'
         )
 
     groups = [
