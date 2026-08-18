@@ -294,7 +294,97 @@ def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly):
 </body>
 </html>"""
 
-def run(tickers, label):
+# ── ANSI helpers ────────────────────────────────────────────────────────────
+_G  = '\033[92m'   # bright green
+_R  = '\033[91m'   # bright red
+_Y  = '\033[93m'   # gold/yellow
+_B  = '\033[94m'   # blue
+_DIM = '\033[2m'   # dim
+_RST = '\033[0m'   # reset
+_BLD = '\033[1m'   # bold
+
+def _c(val, text):
+    return f'{val}{text}{_RST}'
+
+def _cli_pct(pct):
+    import math
+    if pct is None or (isinstance(pct, float) and math.isnan(pct)):
+        return f'{_DIM}  —  {_RST}'
+    s = f'{pct:+.1f}%'
+    return _c(_G, s) if pct >= 0 else _c(_R, s)
+
+def _cli_cmf(cmf):
+    import math
+    if cmf is None or (isinstance(cmf, float) and math.isnan(cmf)):
+        return f'{_DIM}  —  {_RST}'
+    s = f'{cmf:+.3f}'
+    if cmf >= 0.15:   return _c(_G, s)
+    if cmf <= -0.15:  return _c(_R, s)
+    return f'\033[37m{s}{_RST}'
+
+def _cli_slope(slope):
+    import math
+    if slope is None or (isinstance(slope, float) and math.isnan(slope)):
+        return f'{_DIM}  —  {_RST}'
+    s = f'{slope:+.1f}%'
+    return _c(_G, s) if slope > 0 else _c(_R, s)
+
+def print_cli_table(all3, two, tight, misses, no_data, label, grades, hourly):
+    now = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
+    print(f'\n  {_BLD}Pop Scan — {label}{_RST}  {_DIM}{now}{_RST}')
+    print()
+
+    # column widths (fixed, no ANSI in header)
+    COL = {'tick': 14, 'zone': 10, 'price': 9, 'pct': 8, 'cmf': 9, 'slope': 9}
+    hdr = (
+        f"  {'TICKER':<{COL['tick']}} {'ZONE':<{COL['zone']}} {'PRICE':>{COL['price']}}"
+        f"  {'vs10d':>{COL['pct']}}  {'vs20d':>{COL['pct']}}  {'vs50d':>{COL['pct']}}"
+        f"  {'WkCMF':>{COL['cmf']}}  {'WkSlope':>{COL['slope']}}"
+    )
+    sep = '  ' + '─' * (len(hdr) - 2)
+    print(f'{_DIM}{hdr}{_RST}')
+    print(f'{_DIM}{sep}{_RST}')
+
+    def _row(r, zone_label, section_color=''):
+        tier = _algo_tier(r)
+        grade = grades.get(r['ticker'])
+        g_str = f' {_DIM}{grade}{_RST}' if grade else ''
+        h_str = f' {_B}⚡H{_RST}' if hourly.get(r['ticker']) else ''
+        a_str = (f' {_Y}◆{_RST}' if tier == 'strong' else f' {_B}▲{_RST}' if tier == 'positive' else '')
+        tick  = r['ticker'] + g_str + h_str + a_str
+        # visible width of tick column (strip ANSI for padding math)
+        raw_tick = r['ticker'] + (f' {grade}' if grade else '') + (' ⚡H' if hourly.get(r['ticker']) else '') + (' ◆' if tier == 'strong' else ' ▲' if tier == 'positive' else '')
+        pad = ' ' * max(0, COL['tick'] - len(raw_tick))
+
+        zone_col = f'{section_color}{zone_label:<{COL["zone"]}}{_RST}'
+        price_col = f'${r["price"]:>{COL["price"] - 1}.2f}'
+
+        print(
+            f'  {tick}{pad} {zone_col} {price_col}'
+            f'  {_cli_pct(r["pct10"]):>{COL["pct"] + 10}}'
+            f'  {_cli_pct(r["pct20"]):>{COL["pct"] + 10}}'
+            f'  {_cli_pct(r["pct50"]):>{COL["pct"] + 10}}'
+            f'  {_cli_cmf(r.get("wk_cmf")):>{COL["cmf"] + 10}}'
+            f'  {_cli_slope(r.get("wk_slope")):>{COL["slope"] + 10}}'
+        )
+
+    groups = [
+        (all3,   '● 3/3',    _G),
+        (two,    '◐ 2/3',    '\033[32m'),
+        (tight,  '◎ tight',  '\033[36m'),
+        (misses, '✕ below',  _R),
+    ]
+    for group, label_z, color in groups:
+        if not group:
+            continue
+        for r in group:
+            _row(r, label_z, color)
+
+    if no_data:
+        print(f'\n  {_DIM}No data: {", ".join(no_data)}{_RST}')
+    print()
+
+def run(tickers, label, cli_only=False):
     print(f'\n  Pop Scan — {len(tickers)} tickers ...', flush=True)
     grades = _load_grades()
     with ThreadPoolExecutor(max_workers=12) as ex:
@@ -310,6 +400,10 @@ def run(tickers, label):
     no_data = [t for t, r in zip(tickers, results) if r is None]
     all3    = [h for h in hits if h['all3']]
     two     = [h for h in hits if h['above'] == 2]
+
+    if cli_only:
+        print_cli_table(all3, two, tight, misses, no_data, label, grades, hourly)
+        return
 
     now  = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
     html = build_html(all3, two, tight, misses, no_data, now, label, grades, hourly)
@@ -329,14 +423,11 @@ if __name__ == '__main__':
         tickers = list(dict.fromkeys(UNIVERSE))
         tickers += [t for t in WATCHLIST if t not in tickers]
         label = 'Universe + Watchlist'
+        run(tickers, label)
     elif args == ['--universe']:
-        tickers = list(dict.fromkeys(UNIVERSE))
-        label = 'Universe'
+        run(list(dict.fromkeys(UNIVERSE)), 'Universe')
     elif args == ['--watchlist']:
-        tickers = list(dict.fromkeys(WATCHLIST))
-        label = 'Watchlist'
+        run(list(dict.fromkeys(WATCHLIST)), 'Watchlist')
     else:
         tickers = [t.upper() for t in args if not t.startswith('--')]
-        label = ', '.join(tickers)
-
-    run(tickers, label)
+        run(tickers, ', '.join(tickers), cli_only=True)
