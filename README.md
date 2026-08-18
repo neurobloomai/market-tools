@@ -949,6 +949,61 @@ Not being deployed is a decision, not a failure. A name at 87w extreme with CMF 
 
 ---
 
+## Not Losing > Making
+
+The math is asymmetric and unforgiving. Lose 50%, need 100% to recover. Lose 30%, need 43%. And while you're recovering, you're not compounding — that's the hidden cost nobody counts. Dead time is dead capital.
+
+Losses carry three costs, not one:
+- The capital gone
+- The time to recover it
+- The opportunity you couldn't take because the capital was stuck healing
+
+Dry powder isn't just safety — it's optionality. The person who didn't lose in the drawdown is the one who can buy at the bottom. The person who lost 40% is just trying to get back to even.
+
+This is why the quality gate is the first filter, not the last. Non-quality names don't just correct — they impair permanently. Quality corrects and recovers. That asymmetry matters more than any upside captured by owning lower-quality names.
+
+Position sizing matters more than entry timing. A 15% drawdown in a 3% position is a rounding error. The same drawdown in a 25% position is a psychological event that triggers bad decisions — and converts a temporary drawdown into a permanent loss.
+
+**Drawdowns are the price of admission, not a failure of the framework.** Ultra-easy markets are rare. Volatility is the permanent condition, not the exception. Always ready for it, never surprised by it. Quality endures — but only if the position was sized to survive the time it takes to endure.
+
+Volatility is the filter. Quality passes through it. Non-quality corrects and doesn't come back. Position size determines whether you're still there when quality does what quality does.
+
+Not losing is active. It's the real edge.
+
+---
+
+## The Confluence Lens
+
+The market is always simultaneously broadcasting everything — price, volume, flow, sentiment, macro, narrative. The noise is real and relentless. The framework's answer isn't to process more of it. It's to process in the right order.
+
+```
+Quality gate          → is this worth owning at all?
+  ↓ (if yes)
+87w STRUCT            → where are we in the long cycle? room or stretched?
+  ↓
+Weekly extension zone → where is price vs its own mean (10w MA)?
+  ↓
+CMF (20w then 10w)    → what is money actually doing, not just price?
+  ↓
+Slope                 → is the trend direction confirmed?
+  ↓
+Daily MA alignment    → does the shorter timeframe agree or diverge?
+  ↓
+Hourly (⚡H)          → timing confirmation only — not a decision signal
+```
+
+CMF sits above zone in the hierarchy because price can lie — a name can look "fresh" on price while distributing underneath. Money flow cuts through that. When the 20-week and 10-week CMF agree, the signal is clean. When they diverge (20w positive, 10w negative), that divergence is itself information — longer accumulation but recent distribution — not a green light.
+
+**Confluence means all lenses agree, not just most.** When every layer points the same direction simultaneously — quality gate clear, 87w structure mild, price at the 10w MA, CMF positive on both windows, slope up, daily confirming — that is the framework speaking at full conviction. Each layer that contradicts another is a signal of uncertainty, not opportunity.
+
+**Divergence across lenses is not a contradiction to resolve. It's the framework working.** A name at 87w extreme with daily price below all MAs and CMF turning negative is not a "mixed signal" — it's three lenses independently saying the same thing from different directions. Hold multiple reads simultaneously. Know which one is load-bearing for the decision at hand.
+
+The edge isn't finding more signals. It's having fewer, cleaner ones all pointing the same direction — and the patience to wait for that alignment before committing capital.
+
+Most people never get there because they're optimizing for action, not clarity. The framework is built for clarity.
+
+---
+
 ## Simple Entry Strategies
 
 Four repeatable setups extracted from the framework. Not prediction. Each has defined conditions, a defined edge, and a defined exit.
