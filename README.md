@@ -324,6 +324,23 @@ Current universe examples of the pure compounder tier: MEDP (ROE 162%, D/EV 0.00
 
 The distinction matters: a harvester generates high FCF but has few reinvestment opportunities at high returns (mature utility, saturated consumer brand). A compounder generates high FCF *and* redeploys it at high ROIC — the cash machine refuels itself. Both can pass the quality gates. The ROE + D/EV + RevG combination tells you which one you're looking at.
 
+**Reinvestment runway — the dimension the screener cannot fully capture.**
+
+ROIC being high today is one question. How long it stays high as the business reinvests is the more important one. That duration — the reinvestment runway — is what drives the compounding. A business with 40% ROIC and two years of runway is worth less than a business with 25% ROIC and fifteen years of runway. The rate matters. The duration matters more.
+
+The screener catches the snapshot. Reinvestment runway is the judgment call the numbers alone cannot answer — it requires understanding the TAM, the competitive position, and whether the business has structural reasons to earn high returns on the *next* dollar, not just the last one.
+
+| Name | ROIC today | Runway read |
+|---|---|---|
+| NVDA | Exceptional | Long — every AI cluster, every inference deployment, every new datacenter build is a reinvestment opportunity at high return. Runway extends as the market expands. |
+| MSFT | High | Very long — Azure, Copilot, LinkedIn, security, gaming. Multiple large markets where reinvestment compounds for decades. Lower ROIC than NVDA, longer runway. |
+| AAPL | Decent | Honest debate. Services is the runway extension. Hardware alone is a harvester. |
+| ADMA | Real | Short. TAM ceiling is visible from where they stand — PI patient pool is defined, market share capture already happened. Quality metrics are real, reinvestment opportunity is limited. |
+
+The screener grade tells you quality today. The thesis annotation tells you whether today's quality compounds forward or harvests what's already built. A name with A+ metrics but a TAM ceiling is a harvester — real FCF, limited runway, and the market prices that correctly regardless of how clean the quality gates look.
+
+This is why the watchlist format requires a thesis, not just a ticker. "ROE 40%, D/EV 0.02" is the snapshot. "Reinvesting into X at high returns because of Y structural advantage, with Z years of addressable market ahead" is the runway read. The number is easy. The runway judgment is the edge.
+
 **Financial firm lens — not all ROE is equal.**
 
 When the screener grades a bank, an asset manager, and a market maker, the same ROE number means three different things. The framework reads financial firms through three archetypes:
