@@ -329,9 +329,10 @@ def _cli_slope(slope):
     s = f'{slope:+.1f}%'
     return _c(_G, s) if slope > 0 else _c(_R, s)
 
-def print_cli_table(all3, two, tight, misses, no_data, label, grades, hourly):
-    now = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
-    print(f'\n  {_BLD}Pop Scan — {label}{_RST}  {_DIM}{now}{_RST}')
+def print_cli_table(all3, two, tight, misses, no_data, label, grades, hourly, show_title=True):
+    if show_title:
+        now = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
+        print(f'\n  {_BLD}Pop Scan — {label}{_RST}  {_DIM}{now}{_RST}')
     print()
 
     # column widths (fixed, no ANSI in header)
@@ -384,9 +385,49 @@ def print_cli_table(all3, two, tight, misses, no_data, label, grades, hourly):
         print(f'\n  {_DIM}No data: {", ".join(no_data)}{_RST}')
     print()
 
+def print_combined_cli(tickers, ext_results, pop_results, h_stacks, label, grades):
+    from extension_scan import _cli_header, _cli_row
+    now = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
+    print(f'\n  {_BLD}{label}{_RST}  {_DIM}{now}{_RST}')
+
+    # ── Weekly extension lens ──────────────────────────────────────────────
+    print(f'\n  {_DIM}── Weekly Extension ──────────────────────────────────────────────────────────────────────────────────────────────{_RST}')
+    ext_map = {r['ticker']: r for r in ext_results if r is not None}
+    _cli_header()
+    for t in tickers:
+        r = ext_map.get(t)
+        if r:
+            _cli_row(r)
+        else:
+            print(f'  {t:<12}  {_DIM}no data{_RST}')
+
+    # ── Daily MA lens ──────────────────────────────────────────────────────
+    print(f'\n  {_DIM}── Daily MA Position ─────────────────────────────────────────────────────{_RST}')
+    hourly = {t: s for t, s in zip(tickers, h_stacks)}
+    valid  = [r for r in pop_results if r is not None]
+    hits   = sorted([r for r in valid if r['above'] >= 2], key=lambda x: (-x['above'], -x['pct50']))
+    below  = [r for r in valid if r['above'] < 2]
+    tight  = sorted([r for r in below if r.get('near', 0) >= 2], key=lambda x: -x['pct50'])
+    misses = sorted([r for r in below if r.get('near', 0) < 2],  key=lambda x: -x['above'])
+    nd     = [t for t, r in zip(tickers, pop_results) if r is None]
+    all3   = [h for h in hits if h['all3']]
+    two    = [h for h in hits if h['above'] == 2]
+    print_cli_table(all3, two, tight, misses, nd, label, grades, hourly, show_title=False)
+
+
 def run(tickers, label, cli_only=False):
-    print(f'\n  Pop Scan — {len(tickers)} tickers ...', flush=True)
+    print(f'\n  Scanning {len(tickers)} tickers ...', flush=True)
     grades = _load_grades()
+
+    if cli_only:
+        from extension_scan import get_extension_data
+        with ThreadPoolExecutor(max_workers=16) as ex:
+            ext_results = list(ex.map(get_extension_data, tickers))
+            pop_results = list(ex.map(get_daily_ma_pos,   tickers))
+            h_stacks    = list(ex.map(get_hourly_stack,   tickers))
+        print_combined_cli(tickers, ext_results, pop_results, h_stacks, label, grades)
+        return
+
     with ThreadPoolExecutor(max_workers=12) as ex:
         results  = list(ex.map(get_daily_ma_pos, tickers))
         h_stacks = list(ex.map(get_hourly_stack, tickers))
@@ -400,10 +441,6 @@ def run(tickers, label, cli_only=False):
     no_data = [t for t, r in zip(tickers, results) if r is None]
     all3    = [h for h in hits if h['all3']]
     two     = [h for h in hits if h['above'] == 2]
-
-    if cli_only:
-        print_cli_table(all3, two, tight, misses, no_data, label, grades, hourly)
-        return
 
     now  = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
     html = build_html(all3, two, tight, misses, no_data, now, label, grades, hourly)
