@@ -28,6 +28,7 @@ import yfinance as yf
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
 from regime import get_regime, regime_html, REGIME_CSS
+from event_risk import get_earnings_batch, earnings_html_badge, EVENT_CSS
 
 warnings.filterwarnings('ignore')
 sys.modules.setdefault('_yf_cache', types.ModuleType('_yf_cache'))
@@ -293,7 +294,7 @@ def _lt_struct_cell(pct):
             f'</td>')
 
 
-def build_html(fresh, midway, extended, ceiling, below, no_data, now, label, regime=None):
+def build_html(fresh, midway, extended, ceiling, below, no_data, now, label, regime=None, earnings_map=None):
     def rows_for(group, badge_color, badge_label):
         out = ''
         for r in group:
@@ -302,8 +303,9 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label, reg
             bar   = _runway_bar(r['runway'])
             slope_str = f"{r['slope']:+.1f}%"
             slope_col = '#3fb950' if r['slope'] > 0 else '#f85149'
+            er_badge = earnings_html_badge((earnings_map or {}).get(r['ticker']))
             out += f"""<tr style="{row_style}">
-              <td class="ticker">{r['ticker']}</td>
+              <td class="ticker">{r['ticker']}{er_badge}</td>
               <td><span class="badge" style="background:{badge_color}">{badge_label}</span></td>
               <td>${r['price']}</td>
               <td style="color:#8b949e">${r['ma10w']:.2f}</td>
@@ -374,6 +376,7 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label, reg
   .section {{ font-size: 11px; color: #8b949e; margin: 16px 0 6px; border-top: 1px solid #21262d; padding-top: 10px; }}
   .disclaimer {{ color: #484f58; font-size: 10px; margin-top: 24px; border-top: 1px solid #21262d; padding-top: 8px; }}
 {REGIME_CSS}
+{EVENT_CSS}
 </style>
 </head>
 <body>
@@ -550,7 +553,10 @@ def run(tickers, label, cli_only=False):
 
     now    = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
     regime = get_regime()
-    html   = build_html(fresh, midway, extended, ceiling, below, no_data, now, label, regime=regime)
+    above_tickers = [r['ticker'] for r in fresh + midway + extended + ceiling]
+    earnings_map  = get_earnings_batch(above_tickers) if above_tickers else {}
+    html   = build_html(fresh, midway, extended, ceiling, below, no_data, now, label,
+                        regime=regime, earnings_map=earnings_map)
 
     out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'extension_scan.html')
     with open(out, 'w') as f:

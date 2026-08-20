@@ -32,6 +32,7 @@ sys.modules.setdefault('_yf_cache', types.ModuleType('_yf_cache'))
 
 from screener import UNIVERSE, WATCHLIST
 from regime import get_regime, regime_html, REGIME_CSS
+from event_risk import get_earnings_batch, earnings_cli, earnings_html_badge, EVENT_CSS
 
 _CACHE_FILE       = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'screener_data_cache.json')
 _GRADE_CACHE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'grade_cache.json')
@@ -440,11 +441,17 @@ def run_top10(n=10, tickers_override=None):
 
     scored.sort(key=lambda x: -x[0])
     top = scored[:n]
+
+    # Fetch earnings dates for final top-N only (fast — small set)
+    print(f'  Fetching event calendar ...', flush=True)
+    top_tickers  = [ticker for _, ticker, *_ in top]
+    earnings_map = get_earnings_batch(top_tickers)
     print()
 
     # Header
-    H = {'rk': 2, 'tk': 8, 'gr': 2, 'pr': 8, 'wz': 11, 'wc': 7, 'ws': 7, 'dz': 7, 'al': 10, 'sc': 5}
+    H = {'rk': 2, 'tk': 8, 'gr': 2, 'er': 5, 'pr': 8, 'wz': 11, 'wc': 7, 'ws': 7, 'dz': 7, 'al': 10, 'sc': 5}
     hdr = (f"  {'#':>{H['rk']}}  {'TICKER':<{H['tk']}}  {'GR':>{H['gr']}}"
+           f"  {'ER':<{H['er']}}"
            f"  {'PRICE':>{H['pr']}}"
            f"  {'Wk Zone':<{H['wz']}}  {'WkCMF':>{H['wc']}}  {'WkSlp':>{H['ws']}}"
            f"  {'Daily':<{H['dz']}}  {'Algo':<{H['al']}}  {'Score':>{H['sc']}}")
@@ -470,6 +477,7 @@ def run_top10(n=10, tickers_override=None):
         algo_str = ' '.join(algo_parts)
 
         gr_s  = grade or '—'
+        er_s  = earnings_cli(earnings_map.get(ticker))
         pr_s  = f'${price:,.2f}'
         cmf_s = _cli_cmf(wk_cmf)
         slp_s = _cli_slope(wk_slope)
@@ -487,6 +495,7 @@ def run_top10(n=10, tickers_override=None):
 
         print(
             f'  {rank_s}  {tick_s}  {gr_col}'
+            f'  {_rpad(er_s,    H["er"])}'
             f'  {_lpad(pr_s,    H["pr"])}'
             f'  {_rpad(wz_c,    H["wz"])}'
             f'  {_lpad(cmf_s,   H["wc"])}'
@@ -502,7 +511,7 @@ def run_top10(n=10, tickers_override=None):
     print()
 
 
-def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly, regime=None):
+def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly, regime=None, earnings_map=None):
     def rows_for(group, badge_color, badge_label, is_tight=False):
         out = ''
         for r in group:
@@ -529,6 +538,7 @@ def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly, re
 
             row_style  = bg_style + border_style
             grade_str  = f'<span style="color:#8b949e;font-size:10px">{grade}</span>' if grade else ''
+            er_badge   = earnings_html_badge((earnings_map or {}).get(r['ticker']))
             hourly_flag = '<span title="Hourly stack" style="color:#58a6ff;font-size:10px;margin-left:4px">⚡H</span>' if hourly.get(r['ticker']) else ''
             algo_flag   = (
                 '<span title="Strong algo: Wk CMF ≥0.15 + slope up + 3/3 MAs" style="color:#d4a017;font-size:11px;margin-left:4px">◆</span>'
@@ -537,7 +547,7 @@ def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly, re
                 if tier == 'positive' else ''
             )
             out += f"""<tr style="{row_style}">
-              <td class="ticker">{r['ticker']} {grade_str}{hourly_flag}{algo_flag}</td>
+              <td class="ticker">{r['ticker']} {grade_str}{er_badge}{hourly_flag}{algo_flag}</td>
               <td><span class="badge" style="background:{badge_color}">{badge_label}</span></td>
               <td>${r['price']}</td>
               {_pct_cell(r['pct10'])}
@@ -585,6 +595,7 @@ def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly, re
                      border-top: 1px solid #21262d; padding-top: 12px; text-transform: uppercase; letter-spacing: .05em; }}
   .disclaimer {{ color: #484f58; font-size: 10px; margin-top: 24px; border-top: 1px solid #21262d; padding-top: 8px; }}
 {REGIME_CSS}
+{EVENT_CSS}
 </style>
 </head>
 <body>
@@ -798,7 +809,10 @@ def run(tickers, label, cli_only=False):
 
     now    = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
     regime = get_regime()
-    html   = build_html(all3, two, tight, misses, no_data, now, label, grades, hourly, regime=regime)
+    hit_tickers  = [r['ticker'] for r in all3 + two]
+    earnings_map = get_earnings_batch(hit_tickers) if hit_tickers else {}
+    html   = build_html(all3, two, tight, misses, no_data, now, label, grades, hourly,
+                        regime=regime, earnings_map=earnings_map)
 
     out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pop_scan.html')
     with open(out, 'w') as f:

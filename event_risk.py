@@ -1,0 +1,87 @@
+"""
+event_risk.py — Per-ticker earnings date fetch and risk flagging.
+
+Shared by pop_scan and extension_scan. No scan imports.
+Only flags earnings within 30 days — beyond that it's not a near-term setup risk.
+"""
+
+import yfinance as yf
+from datetime import datetime, timezone
+from concurrent.futures import ThreadPoolExecutor
+
+EVENT_CSS = """
+  .er-high { font-size:10px; font-weight:700; color:#f85149; margin-left:5px;
+             background:rgba(248,81,73,0.12); padding:1px 5px; border-radius:3px; }
+  .er-warn { font-size:10px; font-weight:600; color:#f0883e; margin-left:5px;
+             background:rgba(240,136,62,0.10); padding:1px 5px; border-radius:3px; }
+  .er-near { font-size:10px; color:#d4a017; margin-left:5px; }"""
+
+_R   = '\033[91m'
+_ORG = '\033[33m'
+_DIM = '\033[2m'
+_RST = '\033[0m'
+
+
+def get_earnings_date(ticker):
+    """Return next upcoming earnings date as datetime.date, or None."""
+    try:
+        ed = yf.Ticker(ticker).earnings_dates
+        if ed is not None and not ed.empty:
+            today  = datetime.now(timezone.utc).date()
+            future = [d.date() for d in ed.index if hasattr(d, 'date') and d.date() >= today]
+            if future:
+                return min(future)
+    except Exception:
+        pass
+    return None
+
+
+def get_earnings_batch(tickers, max_workers=8):
+    """Parallel fetch. Returns {ticker: date_or_None}."""
+    with ThreadPoolExecutor(max_workers=max_workers) as ex:
+        dates = list(ex.map(get_earnings_date, tickers))
+    return dict(zip(tickers, dates))
+
+
+def earnings_risk(earnings_date):
+    """
+    Returns (days, level) or (None, None).
+    level: 'HIGH' ≤7d · 'WARN' 8-14d · 'NEAR' 15-30d · None >30d
+    """
+    if earnings_date is None:
+        return None, None
+    today = datetime.now(timezone.utc).date()
+    days  = (earnings_date - today).days
+    if days < 0:
+        return None, None
+    if days <= 7:
+        return days, 'HIGH'
+    if days <= 14:
+        return days, 'WARN'
+    if days <= 30:
+        return days, 'NEAR'
+    return days, None
+
+
+def earnings_cli(earnings_date):
+    """ANSI CLI string for ER column. Empty string if >30d or unknown."""
+    days, level = earnings_risk(earnings_date)
+    if level == 'HIGH':
+        return f'{_R}⚠{days}d{_RST}'
+    if level == 'WARN':
+        return f'{_ORG}~{days}d{_RST}'
+    if level == 'NEAR':
+        return f'{_DIM}{days}d{_RST}'
+    return ''
+
+
+def earnings_html_badge(earnings_date):
+    """Inline HTML badge. Empty string if >30d or unknown."""
+    days, level = earnings_risk(earnings_date)
+    if level == 'HIGH':
+        return f'<span class="er-high" title="Earnings in {days} days">⚠ ER {days}d</span>'
+    if level == 'WARN':
+        return f'<span class="er-warn" title="Earnings in {days} days">ER {days}d</span>'
+    if level == 'NEAR':
+        return f'<span class="er-near" title="Earnings in {days} days">ER {days}d</span>'
+    return ''
