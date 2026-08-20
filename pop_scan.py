@@ -347,7 +347,7 @@ def run_top10(n=10):
     print(f'\n  Scanning {len(tickers)} tickers for top {n} setups  (takes ~90s) ...', flush=True)
 
     # Pass 1 — parallel fetch, score without grade bonus
-    with ThreadPoolExecutor(max_workers=16) as ex:
+    with ThreadPoolExecutor(max_workers=8) as ex:
         ext_results = list(ex.map(get_extension_data, tickers))
         pop_results = list(ex.map(get_daily_ma_pos,   tickers))
         h_stacks    = list(ex.map(get_hourly_stack,   tickers))
@@ -358,6 +358,11 @@ def run_top10(n=10):
             continue
         sc = _top10_score(ext_r, pop_r, h_ok, None)
         pass1.append((sc, ticker, ext_r, pop_r, h_ok))
+
+    if len(pass1) < 20:
+        print(f'\n  {_R}⚠ Only {len(pass1)} tickers returned data — Yahoo likely rate-limited.{_RST}')
+        print(f'  {_DIM}Wait 2-3 minutes and retry.{_RST}\n')
+        return
 
     pass1.sort(key=lambda x: -x[0])
     pool = pass1[:candidates]
