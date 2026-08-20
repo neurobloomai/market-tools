@@ -32,22 +32,40 @@ sys.modules.setdefault('_yf_cache', types.ModuleType('_yf_cache'))
 
 from screener import UNIVERSE, WATCHLIST
 
-_CACHE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'screener_data_cache.json')
+_CACHE_FILE       = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'screener_data_cache.json')
+_GRADE_CACHE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'grade_cache.json')
 
-# Mega-cap watchlist — top liquid names driving market/QQQ/SPY structure
+def _load_grade_cache():
+    try:
+        with open(_GRADE_CACHE_FILE) as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def _save_grade_cache(new_grades):
+    existing = _load_grade_cache()
+    existing.update({k: v for k, v in new_grades.items() if v is not None})
+    try:
+        with open(_GRADE_CACHE_FILE, 'w') as f:
+            json.dump(existing, f, indent=2)
+    except Exception:
+        pass
+
+# Market pulse list — names to quick-scan with --mega10/--mega20
+# Covers: user positions + spread universe + key QQQ/SPY movers
 MEGA_CAP = [
-    # Magnificent 7
-    'AAPL', 'MSFT', 'NVDA', 'GOOGL', 'AMZN', 'META', 'TSLA',
+    # Core positions + semis
+    'MU', 'AMD', 'NVDA', 'AVGO', 'QCOM', 'ALAB',
+    # Mega-cap tech (QQQ drivers)
+    'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META', 'TSLA', 'NFLX',
     # Financials
-    'JPM', 'V', 'MA', 'GS', 'BAC',
+    'JPM', 'V', 'MA', 'GS',
     # Healthcare / Pharma
-    'UNH', 'LLY', 'ABBV', 'JNJ',
-    # Consumer
-    'HD', 'WMT', 'COST', 'PG',
-    # Semis (beyond NVDA)
-    'AVGO', 'AMD', 'QCOM',
-    # Other large liquid names
-    'NFLX', 'ADP',
+    'LLY', 'ABBV', 'UNH',
+    # Consumer + Industrials
+    'HD', 'COST', 'ADP',
+    # Indices (structure read)
+    'SPY', 'QQQ', 'IWM',
 ]
 
 def _load_grades():
@@ -390,17 +408,21 @@ def run_top10(n=10, tickers_override=None):
     pass1.sort(key=lambda x: -x[0])
     pool = pass1[:candidates]
 
-    # Pass 2 — fetch grades sequentially (avoids Yahoo rate limiting)
+    # Pass 2 — fetch grades sequentially; read disk cache first to survive rate limits
     import time
     pool_tickers = [t for _, t, *_ in pool]
     print(f'  Fetching grades for top {len(pool_tickers)} candidates ...', flush=True)
-    cached_grades = _load_grades()
-    needs_live = [t for t in pool_tickers if cached_grades.get(t) is None]
-    live_grades = {}
+    disk_grades  = _load_grade_cache()
+    mem_grades   = _load_grades()          # screener_data_cache.json (usually sparse)
+    pre_loaded   = {**mem_grades, **disk_grades}
+    needs_live   = [t for t in pool_tickers if pre_loaded.get(t) is None]
+    live_grades  = {}
     for t in needs_live:
         live_grades[t] = _fetch_grade_live(t)
         time.sleep(0.5)
-    all_grades = {**cached_grades, **live_grades}
+    if live_grades:
+        _save_grade_cache(live_grades)     # persist for next run
+    all_grades = {**pre_loaded, **live_grades}
 
     # Re-score with grades and take top n
     scored = []
