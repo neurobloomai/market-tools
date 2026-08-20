@@ -385,7 +385,13 @@ def run_top10(n=10, tickers_override=None):
     candidates = min(n * 2, len(tickers))   # oversample before grade re-score
     label = 'Mega-Cap' if tickers_override else 'Universe + Watchlist'
     eta   = '~30s' if tickers_override else '~90s'
-    print(f'\n  Scanning {len(tickers)} tickers for top {n} setups  ({eta}) ...', flush=True)
+
+    # Regime gate — fetch before scan so user sees market context immediately
+    regime = get_regime()
+    now    = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
+    print(f'\n  {_BLD}TOP {n} SETUPS — {label}{_RST}  {_DIM}{now}{_RST}')
+    _print_regime_banner(regime)
+    print(f'\n  Scanning {len(tickers)} tickers  ({eta}) ...', flush=True)
 
     # Pass 1 — parallel fetch, score without grade bonus
     with ThreadPoolExecutor(max_workers=8) as ex:
@@ -433,9 +439,6 @@ def run_top10(n=10, tickers_override=None):
 
     scored.sort(key=lambda x: -x[0])
     top = scored[:n]
-
-    now = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
-    print(f'\n  {_BLD}TOP {n} SETUPS — {label}{_RST}  {_DIM}{now}{_RST}')
     print()
 
     # Header
@@ -658,6 +661,56 @@ def _cli_slope(slope):
         return f'{_DIM}  —  {_RST}'
     s = f'{slope:+.1f}%'
     return _c(_G, s) if slope > 0 else _c(_R, s)
+
+def get_regime():
+    """Fetch SPY 10w MA position + VIX; classify market regime for gate display."""
+    try:
+        vix_hist = yf.Ticker('^VIX').history(period='5d', interval='1d')
+        vix      = float(vix_hist['Close'].iloc[-1]) if not vix_hist.empty else None
+
+        spy_hist  = yf.Ticker('SPY').history(period='3mo', interval='1wk')
+        if len(spy_hist) >= 10:
+            spy_price = float(spy_hist['Close'].iloc[-1])
+            ma10w     = float(spy_hist['Close'].iloc[-10:].mean())
+            spy_pct   = (spy_price - ma10w) / ma10w * 100
+        else:
+            spy_pct = None
+    except Exception:
+        return {'label': 'UNKNOWN', 'vix': None, 'spy_pct': None,
+                'color': _DIM, 'note': 'regime data unavailable'}
+
+    v         = vix or 0
+    spy_below = spy_pct is not None and spy_pct < -1.0
+
+    if v > 35:
+        label = 'STORM'
+        color = _R
+        note  = 'Sell-premium only — directional setups unreliable'
+    elif v > 28 or spy_below:
+        label = 'DEFENSE'
+        color = '\033[33m'   # amber — warning without full alarm
+        note  = 'Elevated risk — size down, defined-risk structures only'
+    elif v > 22 or (spy_pct is not None and abs(spy_pct) < 1.5):
+        label = 'CAUTION'
+        color = _Y
+        note  = 'Setups valid — watch for macro overrides, half-size preferred'
+    else:
+        label = 'BULL'
+        color = _G
+        note  = 'Setups live — standard sizing'
+
+    return {'label': label, 'vix': vix, 'spy_pct': spy_pct, 'color': color, 'note': note}
+
+
+def _print_regime_banner(regime):
+    rc    = regime['color']
+    rl    = regime['label']
+    vix_s = f"VIX {regime['vix']:.1f}" if regime['vix'] is not None else 'VIX —'
+    spy_s = (f"SPY {regime['spy_pct']:+.1f}% vs 10w"
+             if regime['spy_pct'] is not None else 'SPY vs 10w —')
+    print(f'  {_BLD}REGIME{_RST}  {rc}{_BLD}{rl:7}{_RST}  '
+          f'{_DIM}{vix_s}  ·  {spy_s}  ·  {regime["note"]}{_RST}')
+
 
 def print_cli_table(all3, two, tight, misses, no_data, label, grades, hourly, show_title=True):
     if show_title:
