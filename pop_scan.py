@@ -6,9 +6,11 @@ Useful for spotting M&A burst pops, momentum setups, and sudden breakouts.
 
 Usage:
   python pop_scan.py               # scan full UNIVERSE + WATCHLIST
-  python pop_scan.py MKTX NVDA     # scan specific tickers
+  python pop_scan.py MKTX NVDA     # scan specific tickers (CLI, no browser)
   python pop_scan.py --universe    # universe only
   python pop_scan.py --watchlist   # watchlist only
+  python pop_scan.py --top10       # top 10 setups ranked by composite score
+  python pop_scan.py --top20       # top 20 setups (any N works: --top5, --top15 ...)
 """
 
 import json
@@ -182,6 +184,270 @@ def _algo_tier(r):
         return 'positive'
     return None
 
+def _top10_score(ext_r, pop_r, hourly_ok, grade):
+    """Composite setup quality score. Higher = better current entry setup."""
+    import math
+    nan = float('nan')
+
+    def _ok(v):  return v is not None and not (isinstance(v, float) and math.isnan(v))
+
+    score = 0
+
+    # Grade bonus
+    score += {'A+': 10, 'A': 6, 'B': 2}.get(grade or '', 0)
+
+    # ── Extension scan ────────────────────────────────────────────────────
+    if ext_r is not None:
+        runway    = ext_r.get('runway', 0)
+        above_10w = ext_r.get('above_10w', False)
+        cmf       = ext_r.get('cmf', nan)
+        slope     = ext_r.get('slope', nan)
+        rsi       = ext_r.get('rsi', nan)
+        pct_87w   = ext_r.get('pct_vs_87w', nan)
+
+        # Zone / runway
+        if above_10w:
+            if runway >= 70:    score += 25   # fresh — room to run
+            elif runway >= 40:  score += 15   # midway
+            elif runway >= 10:  score +=  5   # near ceiling
+            else:               score -=  5   # blown ceiling
+        else:
+            # below 10w MA — CMF override rule (≥+0.20 = accumulation underneath)
+            if _ok(cmf) and cmf >= 0.20:
+                score +=  8
+            else:
+                score -= 15
+
+        # Weekly CMF (extension)
+        if _ok(cmf):
+            if   cmf >= 0.25:  score += 20
+            elif cmf >= 0.15:  score += 14
+            elif cmf >= 0.10:  score +=  8
+            elif cmf >= 0:     score +=  2
+            else:              score -= 12
+
+        # Weekly slope (10w MA trend)
+        if _ok(slope):
+            if   slope > 3:  score += 12
+            elif slope > 1:  score +=  7
+            elif slope > 0:  score +=  2
+            else:            score -=  8
+
+        # RSI (sweet spot = momentum without exhaustion)
+        if _ok(rsi):
+            if   45 <= rsi <= 65:  score +=  8
+            elif 65 < rsi <= 75:   score +=  3
+            elif rsi > 75:         score -=  5
+            elif rsi < 35:         score -=  5
+
+        # 87w structural position
+        if _ok(pct_87w):
+            if   pct_87w < 0:    score +=  5   # below LT mean — recovery setup
+            elif pct_87w <= 10:  score +=  8   # at base — cleanest
+            elif pct_87w <= 25:  score +=  4   # mild
+            elif pct_87w <= 50:  score +=  0   # moderate
+            elif pct_87w <= 100: score -=  5   # high
+            else:                score -= 12   # extreme
+
+    # ── Daily pop scan ────────────────────────────────────────────────────
+    if pop_r is not None:
+        wk_cmf   = pop_r.get('wk_cmf',   nan)
+        wk_slope = pop_r.get('wk_slope', nan)
+        above    = pop_r.get('above', 0)
+        pct10    = pop_r.get('pct10', nan)
+        near     = pop_r.get('near',  0)
+
+        # Algo tier — highest conviction signal
+        tier = _algo_tier(pop_r)
+        if tier == 'strong':    score += 25
+        elif tier == 'positive': score += 15
+
+        # Daily MA zone
+        if   above == 3:              score += 15
+        elif above == 2:              score +=  8
+        elif above == 1:              score +=  2
+        elif near >= 2:               score +=  0   # tight
+        else:                         score -= 10
+
+        # vs 10d MA momentum check
+        if _ok(pct10):
+            if   pct10 > 1:   score +=  5
+            elif pct10 >= -1: score +=  0
+            else:             score -=  3
+
+        # WkCMF (pop version)
+        if _ok(wk_cmf):
+            if   wk_cmf >= 0.25:  score += 10
+            elif wk_cmf >= 0.15:  score +=  6
+            elif wk_cmf >= 0.10:  score +=  3
+            elif wk_cmf >= 0:     score +=  1
+            else:                 score -=  8
+
+        # WkSlope (pop version)
+        if _ok(wk_slope):
+            if   wk_slope > 3:  score +=  8
+            elif wk_slope > 1:  score +=  4
+            elif wk_slope > 0:  score +=  1
+            else:               score -=  5
+
+    if hourly_ok:
+        score += 5
+
+    return score
+
+
+def _fetch_grade_live(ticker):
+    """Fetch fundamental grade from yfinance. Returns 'A+', 'A', 'B', or None."""
+    try:
+        info = yf.Ticker(ticker).info
+        gm   = info.get('grossMargins')   or 0
+        om   = info.get('operatingMargins') or 0
+        nm   = info.get('profitMargins')  or 0
+        roe  = info.get('returnOnEquity') or 0
+        ev   = info.get('enterpriseValue') or 0
+        debt = info.get('totalDebt') or 0
+        fcf  = info.get('freeCashflow') or 0
+        mktcap = info.get('marketCap') or 1
+        rg   = info.get('revenueGrowth') or 0
+        d_ev = (debt / ev) if ev > 0 else 1.0
+        fcf_y = fcf / mktcap
+        passes = om >= 0.10 and nm >= 0.05 and roe >= 0.10 and d_ev <= 0.20 and fcf_y > 0
+        if not passes:
+            return None
+        aplus = (d_ev <= 0.03 and om >= 0.20 and nm >= 0.10 and roe >= 0.20
+                 and fcf_y >= 0.02 and gm >= 0.60 and rg >= 0.05)
+        a     = (d_ev <= 0.10 and om >= 0.15 and nm >= 0.08 and roe >= 0.15 and fcf_y >= 0.01)
+        return 'A+' if aplus else ('A' if a else 'B')
+    except Exception:
+        return None
+
+
+def _ext_zone_label(ext_r):
+    """Short zone label from extension data."""
+    if ext_r is None:
+        return '—'
+    if not ext_r.get('above_10w', False):
+        return '⬇ below'
+    runway = ext_r.get('runway', 0)
+    if runway >= 70:   return '▓ fresh'
+    if runway >= 40:   return '▒ midway'
+    if runway >= 10:   return '⬡ near ceil'
+    return '✕ blown'
+
+
+def run_top10(n=10):
+    import math
+    from extension_scan import get_extension_data
+
+    tickers_raw = list(dict.fromkeys(UNIVERSE))
+    tickers_raw += [t for t in WATCHLIST if t not in tickers_raw]
+    tickers = [t for t in tickers_raw if isinstance(t, str)]
+
+    candidates = n * 2   # oversample before grade re-score
+    print(f'\n  Scanning {len(tickers)} tickers for top {n} setups  (takes ~90s) ...', flush=True)
+
+    # Pass 1 — parallel fetch, score without grade bonus
+    with ThreadPoolExecutor(max_workers=16) as ex:
+        ext_results = list(ex.map(get_extension_data, tickers))
+        pop_results = list(ex.map(get_daily_ma_pos,   tickers))
+        h_stacks    = list(ex.map(get_hourly_stack,   tickers))
+
+    pass1 = []
+    for ticker, ext_r, pop_r, h_ok in zip(tickers, ext_results, pop_results, h_stacks):
+        if pop_r is None:
+            continue
+        sc = _top10_score(ext_r, pop_r, h_ok, None)
+        pass1.append((sc, ticker, ext_r, pop_r, h_ok))
+
+    pass1.sort(key=lambda x: -x[0])
+    pool = pass1[:candidates]
+
+    # Pass 2 — fetch grades sequentially (avoids Yahoo rate limiting)
+    import time
+    pool_tickers = [t for _, t, *_ in pool]
+    print(f'  Fetching grades for top {len(pool_tickers)} candidates ...', flush=True)
+    cached_grades = _load_grades()
+    needs_live = [t for t in pool_tickers if cached_grades.get(t) is None]
+    live_grades = {}
+    for t in needs_live:
+        live_grades[t] = _fetch_grade_live(t)
+        time.sleep(0.25)
+    all_grades = {**cached_grades, **live_grades}
+
+    # Re-score with grades and take top n
+    scored = []
+    for sc0, ticker, ext_r, pop_r, h_ok in pool:
+        grade = all_grades.get(ticker)
+        sc = _top10_score(ext_r, pop_r, h_ok, grade)
+        scored.append((sc, ticker, ext_r, pop_r, h_ok, grade))
+
+    scored.sort(key=lambda x: -x[0])
+    top = scored[:n]
+
+    now = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
+    print(f'\n  {_BLD}TOP {n} SETUPS — Universe + Watchlist{_RST}  {_DIM}{now}{_RST}')
+    print()
+
+    # Header
+    H = {'rk': 2, 'tk': 8, 'gr': 2, 'pr': 8, 'wz': 11, 'wc': 7, 'ws': 7, 'dz': 7, 'al': 10, 'sc': 5}
+    hdr = (f"  {'#':>{H['rk']}}  {'TICKER':<{H['tk']}}  {'GR':>{H['gr']}}"
+           f"  {'PRICE':>{H['pr']}}"
+           f"  {'Wk Zone':<{H['wz']}}  {'WkCMF':>{H['wc']}}  {'WkSlp':>{H['ws']}}"
+           f"  {'Daily':<{H['dz']}}  {'Algo':<{H['al']}}  {'Score':>{H['sc']}}")
+    print(f'{_DIM}{hdr}{_RST}')
+    print(f'{_DIM}  {"─" * (len(hdr) - 2)}{_RST}')
+
+    for rank, (sc, ticker, ext_r, pop_r, h_ok, grade) in enumerate(top, 1):
+        wk_cmf   = pop_r.get('wk_cmf',   float('nan'))
+        wk_slope = pop_r.get('wk_slope', float('nan'))
+        above    = pop_r.get('above', 0)
+        near     = pop_r.get('near',  0)
+        price    = pop_r.get('price', 0)
+
+        wz = _ext_zone_label(ext_r)
+        dz = ('● 3/3' if above == 3 else '◐ 2/3' if above == 2
+              else '◎ tight' if near >= 2 else '✕ below')
+
+        tier = _algo_tier(pop_r)
+        algo_parts = []
+        if h_ok:                     algo_parts.append(f'{_B}⚡H{_RST}')
+        if tier == 'strong':         algo_parts.append(f'{_Y}◆ str{_RST}')
+        elif tier == 'positive':     algo_parts.append(f'{_B}▲ pos{_RST}')
+        algo_str = ' '.join(algo_parts)
+
+        gr_s  = grade or '—'
+        pr_s  = f'${price:,.2f}'
+        cmf_s = _cli_cmf(wk_cmf)
+        slp_s = _cli_slope(wk_slope)
+        wz_c  = (_c(_G, wz) if 'fresh' in wz else
+                 _c('\033[32m', wz) if 'midway' in wz else
+                 _c(_DIM, wz) if 'blown' in wz or 'below' in wz else wz)
+        dz_c  = (_c(_G, dz) if '3/3' in dz else
+                 _c('\033[32m', dz) if '2/3' in dz else
+                 _c(_DIM, dz))
+        sc_c  = _c(_G, f'{sc:>5}') if sc >= 60 else _c('\033[37m', f'{sc:>5}')
+
+        rank_s = f'{_BLD}{rank:>2}{_RST}'
+        tick_s = f'{_BLD}{ticker:<{H["tk"]}}{_RST}'
+        gr_col = f'{_DIM}{gr_s:>{H["gr"]}}{_RST}'
+
+        print(
+            f'  {rank_s}  {tick_s}  {gr_col}'
+            f'  {_lpad(pr_s,    H["pr"])}'
+            f'  {_rpad(wz_c,    H["wz"])}'
+            f'  {_lpad(cmf_s,   H["wc"])}'
+            f'  {_lpad(slp_s,   H["ws"])}'
+            f'  {_rpad(dz_c,    H["dz"])}'
+            f'  {_rpad(algo_str, H["al"])}'
+            f'  {_lpad(sc_c,    H["sc"])}'
+        )
+
+    print()
+    print(f'  {_DIM}Score = zone(25) + ext CMF(20) + slope(12) + RSI(8) + 87w(8)'
+          f' + algo(25) + daily(15) + WkCMF(10) + WkSlp(8) + ⚡H(5) + grade(10){_RST}')
+    print()
+
+
 def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly):
     def rows_for(group, badge_color, badge_label, is_tight=False):
         out = ''
@@ -312,6 +578,10 @@ def _vlen(s):
 def _lpad(s, w):
     """Right-align s in w visible characters (left-pad with spaces)."""
     return ' ' * max(0, w - _vlen(s)) + s
+
+def _rpad(s, w):
+    """Left-align s in w visible characters (right-pad with spaces)."""
+    return s + ' ' * max(0, w - _vlen(s))
 
 def _c(val, text):
     return f'{val}{text}{_RST}'
@@ -475,6 +745,10 @@ if __name__ == '__main__':
         run(list(dict.fromkeys(UNIVERSE)), 'Universe')
     elif args == ['--watchlist']:
         run(list(dict.fromkeys(WATCHLIST)), 'Watchlist')
+    elif args[0].startswith('--top'):
+        suffix = args[0][5:]
+        n = int(suffix) if suffix.isdigit() else (int(args[1]) if len(args) > 1 and args[1].isdigit() else 10)
+        run_top10(n)
     else:
         tickers = [t.upper() for t in args if not t.startswith('--')]
         run(tickers, ', '.join(tickers), cli_only=True)
