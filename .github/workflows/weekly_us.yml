@@ -94,7 +94,7 @@ jobs:
           git stash pop || true
 
       - name: India Quality screener
-        run: sleep 30 && python india_screener.py
+        run: sleep 120 && python india_screener.py
 
       - name: Sync after India screener
         run: |
@@ -118,7 +118,7 @@ jobs:
           git stash pop || true
 
       - name: India Aligned screener
-        run: sleep 30 && python india_aligned_screener.py || true
+        run: sleep 90 && python india_aligned_screener.py || true
 
       - name: Sync after India aligned screener
         run: |
