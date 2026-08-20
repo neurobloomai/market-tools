@@ -45,7 +45,7 @@
       ],
       [
         "P/E",
-        "118.7x",
+        "118.8x",
         "\u2264 100x"
       ]
     ],
@@ -97,7 +97,7 @@
       ],
       [
         "P/E",
-        "121.8x",
+        "121.7x",
         "\u2264 100x"
       ]
     ],
@@ -496,7 +496,7 @@
       ],
       [
         "P/E",
-        "168.2x",
+        "167.7x",
         "\u2264 100x"
       ]
     ],
@@ -912,7 +912,7 @@
       ]
     ],
     "note": "Affiliated Managers Group \u2014 multi-boutique AM (AQR, Tweedy Browne etc.); owns fee economics in independent boutiques, asset-light; OM 22.1%, NM 35.5%, ROE 21.8%, FCF 2.6%, fwd P/E 8.5x; D/EV 0.245 only blocker (structural debt to buy stakes, paying down with FCF); grade A",
-    "grade": "A+"
+    "grade": "A"
   },
   "NTRS": {
     "fails": [
@@ -1452,7 +1452,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.207",
+        "0.206",
         "\u2264 0.20"
       ],
       [
@@ -1495,7 +1495,7 @@
     "fails": [
       [
         "ROE/ROA",
-        "ROE 6.8% / ROA 4.7%",
+        "ROE 6.8% / ROA 4.8%",
         "\u2265 10% / \u2265 15%"
       ]
     ],
@@ -1586,12 +1586,12 @@
     "fails": [
       [
         "ROE/ROA",
-        "ROE 4.7% / ROA 3.1%",
+        "ROE 8.0% / ROA 3.4%",
         "\u2265 10% / \u2265 15%"
       ],
       [
         "FCF Yield",
-        "-0.3%",
+        "-1.2%",
         "> 0%"
       ]
     ],
@@ -1628,7 +1628,7 @@
       ],
       [
         "FCF Yield",
-        "-2.6%",
+        "-3.1%",
         "> 0%"
       ]
     ],
@@ -1676,7 +1676,7 @@
     "fails": [
       [
         "Op Margin",
-        "6.4%",
+        "7.6%",
         "\u2265 10%"
       ],
       [
@@ -1686,13 +1686,8 @@
       ],
       [
         "ROE/ROA",
-        "ROE 8.0% / ROA 3.3%",
+        "ROE 8.3% / ROA 3.5%",
         "\u2265 10% / \u2265 15%"
-      ],
-      [
-        "FCF Yield",
-        "-0.2%",
-        "> 0%"
       ]
     ],
     "note": "CAVA Group \u2014 Mediterranean fast-casual (hummus/pita/bowls); the CMG analog in a less-penetrated cuisine category; company-owned model, same unit economics playbook; RevG 32.1% (still expanding rapidly, ~350 locations vs CMG's ~3,500 = long runway); GrossM 37.7% (restaurant ceiling, same as CMG); OM 6.4% (needs 10%), NM 4.8% (needs 5%), ROE 8.0% (needs 10%), FCF -0.2% (essentially breakeven) \u2014 all 4 within 2-3 quarters of clearing as new units mature and operating leverage kicks in; D/EV 0.066 (near-zero debt, clean balance sheet); fwd P/E 84x (growth premium, not a value entry); gate: OM \u2265 10% + NM \u2265 5% + FCF positive + ROE \u2265 10% \u2014 unit-level AUV growth + store maturity is the path, not a business model change; added 2026-08-04",
@@ -1734,7 +1729,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.33",
+        "0.329",
         "\u2264 0.20"
       ],
       [
@@ -1750,7 +1745,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.207",
+        "0.205",
         "\u2264 0.20"
       ],
       [
@@ -1776,7 +1771,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.372",
+        "0.377",
         "\u2264 0.20"
       ],
       [
@@ -1808,12 +1803,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.243",
+        "0.232",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-3.6%",
+        "-3.4%",
         "> 0%"
       ]
     ],
@@ -1824,12 +1819,27 @@
     "fails": [
       [
         "Op Margin",
-        "-7.8%",
+        "-265.0%",
         "\u2265 10%"
       ],
       [
+        "Net Margin",
+        "-75.3%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE None% / ROA None%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "missing (no data relief)",
+        "> 0% or rev>50%+margin>10%"
+      ],
+      [
         "P/E",
-        "238.3x",
+        "160.8x",
         "\u2264 100x"
       ]
     ],
@@ -1840,7 +1850,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.25",
+        "0.255",
         "\u2264 0.20"
       ]
     ],
