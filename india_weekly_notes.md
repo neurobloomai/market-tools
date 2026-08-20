@@ -30,7 +30,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | Ticker | Price | MA | Grade | Blockers | Thesis |
 |:-------|------:|:--:|:-----:|:---------|:-------|
 | **360ONE** | — | — | ETF | — | 360 ONE WAM (formerly IIFL Wealth) — HNI/ultra-HNI wealth + asset mgmt… |
-| **AAVAS** | — | — | ETF | — | Aavas Financiers — affordable housing finance (₹10-50L ticket, self-em… |
+| **AAVAS** | ₹1364.90 | 0/4 | ETF | — | Aavas Financiers — affordable housing finance (₹10-50L ticket, self-em… |
 | **ADANIENT** | — | — | ETF | — | conglomerate, debt heavy |
 | **ADANIGREEN** | — | — | ETF | — | Adani Green — heavy capex, debt, P/E stretched but 57% op margin |
 | **ADVAIT** | — | — | ETF | — | Advait Energy Transitions (fmr Infratech) — power T&D infra + OPGW cab… |
