@@ -45,7 +45,7 @@
       ],
       [
         "P/E",
-        "124.0x",
+        "118.7x",
         "\u2264 100x"
       ]
     ],
@@ -56,7 +56,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.42",
+        "0.422",
         "\u2264 0.20"
       ],
       [
@@ -97,7 +97,7 @@
       ],
       [
         "P/E",
-        "143.9x",
+        "121.8x",
         "\u2264 100x"
       ]
     ],
@@ -208,7 +208,7 @@
       ],
       [
         "ROE/ROA",
-        "ROE -4.5% / ROA 0.6%",
+        "ROE -4.5% / ROA 3.0%",
         "\u2265 10% / \u2265 15%"
       ]
     ],
@@ -219,7 +219,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.254",
+        "0.242",
         "\u2264 0.20"
       ]
     ],
@@ -230,7 +230,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.309",
+        "0.318",
         "\u2264 0.20"
       ]
     ],
@@ -274,7 +274,7 @@
     "fails": [
       [
         "Op Margin",
-        "5.6%",
+        "5.5%",
         "\u2265 10%"
       ]
     ],
@@ -300,7 +300,7 @@
       ],
       [
         "FCF Yield",
-        "-7.7%",
+        "-8.1%",
         "> 0%"
       ]
     ],
@@ -332,18 +332,23 @@
     "fails": [
       [
         "Op Margin",
-        "-8.0%",
+        "-4.7%",
         "\u2265 10%"
       ],
       [
         "Net Margin",
-        "-6.1%",
+        "-4.6%",
         "\u2265 5%"
       ],
       [
         "ROE/ROA",
-        "ROE -4.6% / ROA -2.8%",
+        "ROE -3.6% / ROA -2.2%",
         "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "-0.2%",
+        "> 0%"
       ]
     ],
     "note": "Silicon Laboratories \u2014 pure-play IoT wireless MCU maker; divested infrastructure & automotive to Skyworks in 2021 ($2.75B) and went all-in on IoT; EFR32 wireless MCUs handle Bluetooth + Zigbee + Z-Wave + Thread + Wi-Fi in a single chip \u2014 Matter protocol (Apple/Google/Amazon/Samsung smart home standard) runs on SLAB silicon; industrial IoT + medical IoT = longer design cycles, stickier revenue than consumer; GrossM 59.3% (fabless model, underlying quality real); RevG 20.1% = IoT inventory correction ending, demand recovering; OM -8.0% + ROE -4.6% + FCF ~0 all blocking \u2014 losses are scale-gap, not business-model failure; fwdPE 51x priced for recovery; gate: OM crossing 0% sustained + FCF building above 5% as IoT volume absorbs fixed R&D cost base; added 2026-07-30",
@@ -376,24 +381,8 @@
     "note": "Dell Technologies \u2014 largest US server + PC + storage vendor; ISG (Infrastructure Solutions Group) AI server business (PowerEdge + Nvidia GPU) driving RevG 87.5%; GrossM 19.2% (hardware assembler structural, same as SMCI but clean accounting) + OM 8.9% (1.1% below gate) + ROE 0% (negative book equity from aggressive buybacks \u2014 artifact, not failure) \u2014 all structural or artifacts; D/EV 0.102, FCF 1.9%; 4/4 MA aligned but +172.5% above 87w MA = extreme structural extension; gate: OM crossing 10% as AI server mix grows + price pulling back to rational entry zone; added WATCHLIST 2026-08-08",
     "grade": "B"
   },
-  "NTAP": {
-    "fails": [
-      [
-        "Passes all filters",
-        "\u2014",
-        "\u2014"
-      ]
-    ],
-    "note": "NetApp \u2014 enterprise hybrid cloud storage; ONTAP OS + StorageGRID object storage + Azure NetApp Files (Microsoft's preferred high-performance NFS for enterprise Azure workloads) + Google Cloud NetApp Volumes \u2014 hyperscaler integration is the durable distribution moat; GrossM 70.7%, OM 27.3%, NM 18.4%, ROE 106.7% (buyback artifact \u2014 same read as STX), D/EV 7.0%, FCF 18.7% of revenue; RevG 12.5% sole blocker (gate \u226515%); 6/7 gates; A+ quality on every metric except RevG; AI unstructured data storage = durable structural tailwind (LLM fine-tuning datasets, inference logs, RAG vector stores all compound NTAP's addressable volume); fwdPE 19.4x reasonable; at ceiling ($194.48 vs $195.85 ceiling), RSI 74, -2.6% below 10d \u2014 already rolling off; gate: RevG \u2265 15% as AI storage demand + Azure/GCP NetApp volume accelerates + price pulls back to 10w MA zone; added WATCHLIST 2026-08-19",
-    "grade": "A+"
-  },
   "FERG": {
     "fails": [
-      [
-        "Op Margin",
-        "8.1%",
-        "\u2265 10%"
-      ],
       [
         "ROE/ROA",
         "ROE None% / ROA None%",
@@ -423,7 +412,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.252",
+        "0.25",
         "\u2264 0.20"
       ],
       [
@@ -454,8 +443,13 @@
   "MKL": {
     "fails": [
       [
+        "Debt/EV",
+        "0.205",
+        "\u2264 0.20"
+      ],
+      [
         "FCF Yield",
-        "-7.5%",
+        "-7.7%",
         "> 0%"
       ]
     ],
@@ -466,7 +460,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.408",
+        "0.421",
         "\u2264 0.20"
       ],
       [
@@ -502,7 +496,7 @@
       ],
       [
         "P/E",
-        "185.9x",
+        "168.2x",
         "\u2264 100x"
       ]
     ],
@@ -513,7 +507,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.562",
+        "0.571",
         "\u2264 0.20"
       ],
       [
@@ -529,7 +523,7 @@
     "fails": [
       [
         "ROE/ROA",
-        "ROE 3.7% / ROA 2.5%",
+        "ROE 2.9% / ROA 2.8%",
         "\u2265 10% / \u2265 15%"
       ]
     ],
@@ -539,19 +533,24 @@
   "WAT": {
     "fails": [
       [
+        "Op Margin",
+        "9.4%",
+        "\u2265 10%"
+      ],
+      [
         "Net Margin",
         "3.6%",
         "\u2265 5%"
       ],
       [
         "ROE/ROA",
-        "ROE 1.9% / ROA 3.5%",
+        "ROE 1.9% / ROA 3.6%",
         "\u2265 10% / \u2265 15%"
       ],
       [
         "FCF Yield",
-        "missing (no data relief)",
-        "> 0% or rev>50%+margin>10%"
+        "-0.4%",
+        "> 0%"
       ]
     ],
     "note": "Waters Corporation \u2014 premium HPLC + mass spectrometry instruments for pharma QC, protein analysis, biopolymer characterization; most precise analytical chemistry instruments in pharma (Acquity UPLC, Xevo MS); consumables moat same as Agilent \u2014 validated pharma methods locked to Waters columns + software; Wyatt Technology acquisition 2023 (~$1.36B, light scattering for biologics) distorting all margin metrics: NM 3.6%, ROE 1.9%, FCF 0.0%, RevG 113.3% all yfinance acquisition artifacts \u2014 real Waters is historically ROE 30%+, NM 20%+; GrossM 56.3%, OM 10.0%, D/EV 0.114 real; 4/4 MA + 4/4 weekly momentum, RSI 64.5, MACD expanding; 87w ext +17.3% mild \u2014 chart confirming recovery; \u26a0 no MOS at current price \u2014 full suite of life sciences tools running simultaneously; gate: data normalizing post-Wyatt + ROE recovering toward 20%; added WATCHLIST 2026-08-10",
@@ -572,34 +571,23 @@
     "fails": [
       [
         "Debt/EV",
-        "0.219",
+        "0.214",
         "\u2264 0.20"
       ],
       [
         "ROE/ROA",
-        "ROE 3.2% / ROA 2.3%",
+        "ROE 3.2% / ROA 2.4%",
         "\u2265 10% / \u2265 15%"
       ]
     ],
     "note": "Revvity (formerly PerkinElmer) \u2014 life sciences instruments + diagnostics; sold industrial/environmental segment 2023, rebranded to focus purely on life sciences; newborn screening infrastructure moat: ~80% of all US newborn screens run through Revvity's platform (every baby screened for 50+ genetic diseases at birth) \u2014 mandatory healthcare toll-booth with government relationships and regulatory depth that makes displacement structurally impossible; also: immunoassay detection instruments (VICTOR, EnVision plate readers), reproductive health diagnostics, biobanking; GrossM 55.0%, OM 17.0%, NM 8.2%, FCF 4.6%, RevG 1.3% (biotech funding cycle hangover, recovering); ROE 3.2% (massive goodwill from historical acquisitions + PerkinElmer separation accounting \u2014 structural artifact, not operational failure) + D/EV 0.219 (0.019 above gate \u2014 acquisition debt); 5/7 gates; 4/4 MA, RSI 63.2, MACD fading; 87w ext +16.3% mild; gate: ROE crossing 10% as NI scales into the equity base + D/EV below 0.20 via FCF paydown + RevG reaccelerating above 5% as biotech cycle recovers; added WATCHLIST 2026-08-10",
     "grade": "B"
   },
-  "HAE": {
-    "fails": [
-      [
-        "Debt/EV",
-        "0.237",
-        "\u2264 0.20"
-      ]
-    ],
-    "note": "Haemonetics \u2014 blood management technology: NexSys PCS apheresis machines (plasma + platelet collection), BloodTrack hospital blood management software, vascular closure devices; plasma collection is structurally growing \u2014 immunoglobulin therapies (IVIG, SCIG) for immune deficiency, neurology, transplant are demand-compounding; HAE machines are contracted with major plasma center operators (CSL, BioLife, Grifols) = recurring disposables revenue on a placed-machine base; GrossM 59.3%, OM 17.9%, NM 7.1%, ROE 11.2%, FCF 7.8%, RevG 5.6%; D/EV 0.237 only blocker \u2014 acquisition/restructuring debt; FCF 7.8% is the paydown engine; 6/7 gates; 4/4 MA, RSI 70.0, MACD expanding, 87w ext +31.1% moderate \u2014 technically strongest of recent WATCHLIST additions; gate: D/EV below 0.20 via FCF paydown (2-3 quarters at current pace); added WATCHLIST 2026-08-10",
-    "grade": "B"
-  },
   "ZBH": {
     "fails": [
       [
         "Debt/EV",
-        "0.297",
+        "0.288",
         "\u2264 0.20"
       ],
       [
@@ -615,7 +603,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.251",
+        "0.238",
         "\u2264 0.20"
       ]
     ],
@@ -689,7 +677,7 @@
       ],
       [
         "ROE/ROA",
-        "ROE 5.1% / ROA 9.3%",
+        "ROE 5.1% / ROA 9.0%",
         "\u2265 10% / \u2265 15%"
       ]
     ],
@@ -721,7 +709,7 @@
     "fails": [
       [
         "Debt/EV",
-        "1.864",
+        "1.543",
         "\u2264 0.20"
       ]
     ],
@@ -732,7 +720,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.312",
+        "0.31",
         "\u2264 0.20"
       ]
     ],
@@ -743,7 +731,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.25",
+        "0.243",
         "\u2264 0.20"
       ]
     ],
@@ -823,7 +811,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.4",
+        "0.398",
         "\u2264 0.20"
       ]
     ],
@@ -834,12 +822,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.374",
+        "0.37",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-10.1%",
+        "-10.0%",
         "> 0%"
       ]
     ],
@@ -850,7 +838,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.382",
+        "0.38",
         "\u2264 0.20"
       ],
       [
@@ -866,12 +854,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.394",
+        "0.39",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-6.8%",
+        "-6.7%",
         "> 0%"
       ]
     ],
@@ -882,12 +870,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.403",
+        "0.4",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-6.4%",
+        "-6.3%",
         "> 0%"
       ]
     ],
@@ -898,7 +886,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.471",
+        "0.467",
         "\u2264 0.20"
       ],
       [
@@ -908,7 +896,7 @@
       ],
       [
         "FCF Yield",
-        "-16.5%",
+        "-16.0%",
         "> 0%"
       ]
     ],
@@ -919,23 +907,18 @@
     "fails": [
       [
         "Debt/EV",
-        "0.225",
+        "0.245",
         "\u2264 0.20"
-      ],
-      [
-        "FCF Yield",
-        "missing (no data relief)",
-        "> 0% or rev>50%+margin>10%"
       ]
     ],
     "note": "Affiliated Managers Group \u2014 multi-boutique AM (AQR, Tweedy Browne etc.); owns fee economics in independent boutiques, asset-light; OM 22.1%, NM 35.5%, ROE 21.8%, FCF 2.6%, fwd P/E 8.5x; D/EV 0.245 only blocker (structural debt to buy stakes, paying down with FCF); grade A",
-    "grade": "A"
+    "grade": "A+"
   },
   "NTRS": {
     "fails": [
       [
         "Debt/EV",
-        "0.393",
+        "0.397",
         "\u2264 0.20"
       ],
       [
@@ -967,7 +950,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.233",
+        "0.244",
         "\u2264 0.20"
       ]
     ],
@@ -978,7 +961,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.479",
+        "0.476",
         "\u2264 0.20"
       ],
       [
@@ -994,7 +977,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.371",
+        "0.386",
         "\u2264 0.20"
       ],
       [
@@ -1020,18 +1003,8 @@
     "fails": [
       [
         "Debt/EV",
-        "0.295",
+        "0.291",
         "\u2264 0.20"
-      ],
-      [
-        "ROE/ROA",
-        "ROE None% / ROA None%",
-        "\u2265 10% / \u2265 15%"
-      ],
-      [
-        "FCF Yield",
-        "missing (no data relief)",
-        "> 0% or rev>50%+margin>10%"
       ]
     ],
     "note": "Vistra \u2014 deregulated nuclear+gas (Energy Harbor acq), Texas/ERCOT exposure; OM 26.6%, ROE 42.9%, FCF +0.9%, RevG 43.4%, fwd P/E 14.1x; D/EV 0.265 only blocker (closer to threshold than NEE); grade A single blocker \u2014 cleaner than CEG on framework metrics; 27.6% off 52w high, below 20w+40w MAs; promote when D/EV \u2264 0.20 + MA structure recovers",
@@ -1041,7 +1014,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.321",
+        "0.315",
         "\u2264 0.20"
       ]
     ],
@@ -1052,7 +1025,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.282",
+        "0.271",
         "\u2264 0.20"
       ]
     ],
@@ -1099,7 +1072,7 @@
       ],
       [
         "FCF Yield",
-        "-1.0%",
+        "-1.1%",
         "> 0%"
       ]
     ],
@@ -1110,7 +1083,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.449",
+        "0.437",
         "\u2264 0.20"
       ],
       [
@@ -1130,7 +1103,7 @@
       ],
       [
         "FCF Yield",
-        "-6.1%",
+        "-5.7%",
         "> 0%"
       ]
     ],
@@ -1141,7 +1114,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.603",
+        "0.643",
         "\u2264 0.20"
       ]
     ],
@@ -1152,12 +1125,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.374",
+        "0.447",
         "\u2264 0.20"
       ]
     ],
     "note": "Upwork \u2014 freelance marketplace; D/EV 0.44 (converts) only blocker, margins/FCF solid",
-    "grade": "B"
+    "grade": "A"
   },
   "CLS": {
     "fails": [
@@ -1174,7 +1147,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.445",
+        "0.439",
         "\u2264 0.20"
       ]
     ],
@@ -1185,7 +1158,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.298",
+        "0.291",
         "\u2264 0.20"
       ]
     ],
@@ -1228,7 +1201,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.271",
+        "0.262",
         "\u2264 0.20"
       ]
     ],
@@ -1255,13 +1228,13 @@
       ]
     ],
     "note": "Veracyte \u2014 genomic diagnostics; moat = guideline inclusion (NCCN/medical society); Afirma (thyroid indeterminate biopsy, prevents unnecessary surgery) + Decipher Prostate (active surveillance vs treatment, growth engine) + Percepta/Envisia; OM 16.3%, NM 16.2%, GrossM 72.9%, D/E 0.029, FCF $105M, RevG 21.5%; ROE 6.9% only blocker (Decipher acq goodwill, resolves as earnings scale); 4/4 MA aligned, price at MA10d",
-    "grade": "A"
+    "grade": "A+"
   },
   "MDT": {
     "fails": [
       [
         "Debt/EV",
-        "0.221",
+        "0.207",
         "\u2264 0.20"
       ],
       [
@@ -1277,7 +1250,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.221",
+        "0.21",
         "\u2264 0.20"
       ],
       [
@@ -1378,7 +1351,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.206",
+        "0.209",
         "\u2264 0.20"
       ],
       [
@@ -1388,12 +1361,12 @@
       ],
       [
         "ROE/ROA",
-        "ROE 0.0% / ROA -0.8%",
+        "ROE 0.0% / ROA 4.7%",
         "\u2265 10% / \u2265 15%"
       ],
       [
         "FCF Yield",
-        "-5.5%",
+        "-2.2%",
         "> 0%"
       ]
     ],
@@ -1404,7 +1377,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.266",
+        "0.257",
         "\u2264 0.20"
       ]
     ],
