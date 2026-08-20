@@ -31,7 +31,7 @@ warnings.filterwarnings('ignore')
 sys.modules.setdefault('_yf_cache', types.ModuleType('_yf_cache'))
 
 from screener import UNIVERSE, WATCHLIST
-from regime import get_regime, regime_html, REGIME_CSS
+from regime import get_regime, regime_html, sizing_signal, REGIME_CSS
 from event_risk import get_earnings_batch, earnings_cli, earnings_html_badge, EVENT_CSS
 
 _CACHE_FILE       = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'screener_data_cache.json')
@@ -698,7 +698,11 @@ def _print_regime_banner(regime):
     spy_s = (f"SPY {regime['spy_pct']:+.1f}% vs 10w"
              if regime['spy_pct'] is not None else 'SPY vs 10w —')
     print(f'  {_BLD}REGIME{_RST}  {rc}{_BLD}{rl:7}{_RST}  '
-          f'{_DIM}{vix_s}  ·  {spy_s}  ·  {regime["note"]}{_RST}')
+          f'{_DIM}{vix_s}  ·  {spy_s}{_RST}')
+    sz = sizing_signal(regime)
+    sc = _REGIME_ANSI.get({'FULL':'BULL','HALF':'CAUTION','QUARTER':'DEFENSE','SELL-IV':'STORM'}.get(sz['size']), _DIM)
+    print(f'  {_BLD}SIZING{_RST}  {sc}{_BLD}{sz["size"]:7}{_RST}  '
+          f'{sc}{sz["bar"]}{_RST}  {_DIM}{sz["note"]}{_RST}')
 
 
 def print_cli_table(all3, two, tight, misses, no_data, label, grades, hourly, show_title=True):
