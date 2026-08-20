@@ -3,10 +3,16 @@ event_risk.py — Per-ticker earnings date fetch and risk flagging.
 
 Shared by pop_scan and extension_scan. No scan imports.
 Only flags earnings within 30 days — beyond that it's not a near-term setup risk.
+
+Caches results to earnings_cache.json (7-day TTL) so back-to-back runs
+don't re-hit Yahoo after a heavy pass1 scan has already stressed the session.
 """
 
+import json
+import os
+import time
 import yfinance as yf
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from concurrent.futures import ThreadPoolExecutor
 
 EVENT_CSS = """
@@ -21,9 +27,58 @@ _ORG = '\033[33m'
 _DIM = '\033[2m'
 _RST = '\033[0m'
 
+_CACHE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'earnings_cache.json')
+_TTL_DAYS   = 7
+
+
+# ── Cache helpers ─────────────────────────────────────────────────────────────
+
+def _load_cache():
+    try:
+        with open(_CACHE_FILE) as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def _save_cache(new_entries):
+    """Merge new_entries into cache. new_entries: {ticker: date_or_None}."""
+    existing  = _load_cache()
+    today_str = datetime.now(timezone.utc).date().isoformat()
+    for ticker, date in new_entries.items():
+        existing[ticker] = {
+            'date':    date.isoformat() if date else None,
+            'fetched': today_str,
+        }
+    try:
+        with open(_CACHE_FILE, 'w') as f:
+            json.dump(existing, f, indent=2)
+    except Exception:
+        pass
+
+def _check_cache(ticker, cache, today):
+    """Returns (date_or_None, hit) — hit=True means use cached value."""
+    entry = cache.get(ticker)
+    if not isinstance(entry, dict):
+        return None, False
+    try:
+        fetched = datetime.fromisoformat(entry['fetched']).date()
+        if (today - fetched).days > _TTL_DAYS:
+            return None, False
+    except Exception:
+        return None, False
+    date_str = entry.get('date')
+    if not date_str:
+        return None, True   # cached as None (ETF / no earnings)
+    try:
+        return datetime.fromisoformat(date_str).date(), True
+    except Exception:
+        return None, False
+
+
+# ── Live fetch ────────────────────────────────────────────────────────────────
 
 def get_earnings_date(ticker):
-    """Return next upcoming earnings date as datetime.date, or None."""
+    """Return next upcoming earnings date as datetime.date, or None (live fetch)."""
     today = datetime.now(timezone.utc).date()
     try:
         t   = yf.Ticker(ticker)
@@ -47,12 +102,38 @@ def get_earnings_date(ticker):
     return None
 
 
-def get_earnings_batch(tickers, max_workers=8):
-    """Parallel fetch. Returns {ticker: date_or_None}."""
-    with ThreadPoolExecutor(max_workers=max_workers) as ex:
-        dates = list(ex.map(get_earnings_date, tickers))
-    return dict(zip(tickers, dates))
+def get_earnings_batch(tickers, max_workers=4):
+    """
+    Batch fetch with disk cache.
+    - Cache-hits skip live calls (7-day TTL).
+    - Live fetches use max_workers=4 (lower than pass1 to avoid rate limits).
+    - 1s pause before live calls so post-scan Yahoo session can recover.
+    Returns {ticker: date_or_None}.
+    """
+    cache  = _load_cache()
+    today  = datetime.now(timezone.utc).date()
+    result = {}
+    needs  = []
 
+    for t in tickers:
+        date, hit = _check_cache(t, cache, today)
+        if hit:
+            result[t] = date
+        else:
+            needs.append(t)
+
+    if needs:
+        time.sleep(1.0)   # let Yahoo recover after heavy pass1 traffic
+        with ThreadPoolExecutor(max_workers=max_workers) as ex:
+            dates = list(ex.map(get_earnings_date, needs))
+        new_entries = dict(zip(needs, dates))
+        result.update(new_entries)
+        _save_cache(new_entries)
+
+    return result
+
+
+# ── Risk classification ───────────────────────────────────────────────────────
 
 def earnings_risk(earnings_date):
     """
