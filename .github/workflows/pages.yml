@@ -1,13 +1,6 @@
 name: Deploy GitHub Pages
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '**.html'
-  workflow_run:
-    workflows: ["Weekly Screener — US + India", "Dividend Screener"]
-    types: [completed]
   workflow_dispatch:
 
 permissions:

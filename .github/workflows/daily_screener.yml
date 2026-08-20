@@ -10,6 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
 
     steps:
       - uses: actions/checkout@v7.0.0
@@ -53,3 +58,13 @@ jobs:
           git diff --staged --quiet || git commit -m "iv_snapshot: $(date -u +'%Y-%m-%d') after-close"
           git pull --rebase origin main || true
           git push || (sleep 10 && git pull --rebase origin main && git push)
+
+      # ── Deploy GitHub Pages ───────────────────────────────────────────────────
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
