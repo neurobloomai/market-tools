@@ -10,13 +10,14 @@ US: 53.6% above MA20, 66.8% above MA100 — more names intact long-term than sho
 **WHAT MOVED**
 
 No new Fully Stacked entries this week.
-No exits from Fully Stacked.
+Left Fully Stacked — Universe: NVDA
+Left Fully Stacked — Watchlist: SLAB
 
 **SETUPS WORTH WATCHING**
 
-**MSFT** [Universe] — weekly gate open, IN, +13.6% vs MA10w, W.slope +22.00
-**NVDA** [Universe] — weekly gate open, IN, +4.2% vs MA10w, W.slope +4.52
-**AAPL** [Universe] — weekly gate open, IN, +0.7% vs MA10w, W.slope +2.26
+**MSFT** [Universe] — weekly gate open, IN, +13.6% vs MA10w, W.slope +21.98
+**NVDA** [Universe] — weekly gate open, IN, +3.9% vs MA10w, W.slope +4.46
+**AAPL** [Universe] — weekly gate open, IN, +0.5% vs MA10w, W.slope +2.18
 
 **WATCHLIST WATCH**
 
@@ -27,10 +28,10 @@ No exits from Fully Stacked.
 
 **ONE THOUGHT**
 
-The gap between long-term and short-term positioning tells us something important: the market structure is sound enough to absorb near-term weakness without breaking conviction. With nearly two-thirds of names above their 100-day average across both US and India, pullbacks toward the 20-day aren't warning signs—they're the normal friction of healthy trends. The three mega-cap tech names near their moving averages aren't redemption opportunities; they're consolidations within intact uptrends, which is where the most reliable entries actually live.
+The market structure remains anchored to longer-term trends—two-thirds of names still above their 100-day averages—while short-term momentum has naturally compressed, with only about half the market above MA20. This isn't a warning signal; it's the normal texture of a market that hasn't broken its foundation. What's notable is which names are *leaving* that stability: NVDA exiting Fully Stacked suggests even the most structurally sound positions aren't immune to consolidation, while the setup list (MSFT, NVDA, AAPL all near their moving averages) indicates that the next directional move, when it comes, may depend less on broad participation and more on whether the largest positions find support or crack through it.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-08-20 19:47 UTC · Not financial advice_
+_Draft generated 2026-08-20 20:03 UTC · Not financial advice_
