@@ -371,7 +371,7 @@ def run_top10(n=10):
     live_grades = {}
     for t in needs_live:
         live_grades[t] = _fetch_grade_live(t)
-        time.sleep(0.25)
+        time.sleep(0.5)
     all_grades = {**cached_grades, **live_grades}
 
     # Re-score with grades and take top n
