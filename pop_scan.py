@@ -334,10 +334,17 @@ def _top10_score(ext_r, pop_r, hourly_ok, grade):
     return score
 
 
+_ETF_SET = {'SPY','QQQ','IWM','GLD','TLT','SLV','DIA','XLF','XLK','XLE','ARKK','VTI','VOO'}
+
 def _fetch_grade_live(ticker):
     """Fetch fundamental grade from yfinance. Returns 'A+', 'A', 'B', or None."""
+    if ticker in _ETF_SET:
+        return None
     try:
-        info = yf.Ticker(ticker).info
+        import io, contextlib
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(buf):
+            info = yf.Ticker(ticker).info
         gm   = info.get('grossMargins')   or 0
         om   = info.get('operatingMargins') or 0
         nm   = info.get('profitMargins')  or 0
