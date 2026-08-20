@@ -81,7 +81,7 @@ jobs:
       # ── India ─────────────────────────────────────────────────────────────────
 
       - name: India Dashboard
-        run: python india_dashboard.py --refresh
+        run: sleep 90 && python india_dashboard.py --refresh
 
       - name: Sync after India dashboard
         run: |
