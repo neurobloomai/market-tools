@@ -1,24 +1,24 @@
-**Subject:** Market Pulse — Week ending Aug 14 2026 · Broad Rally / Aligned
+**Subject:** Market Pulse — Week ending Aug 14 2026 · Broad Rally / Breadth Diverging
 
 ---
 
 **POSTURE**
 
-US: 70.5% above MA20, 74.2% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 35 names Fully Stacked. India: 48.7% above MA20, 60.3% above MA100 — mixed, structure holding. 13 names Fully Stacked.
+US: 53.6% above MA20, 66.9% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 26 names Fully Stacked. India: 48.7% above MA20, 60.3% above MA100 — mixed, structure holding. 13 names Fully Stacked.
 
 
 **WHAT MOVED**
 
-Entered Fully Stacked — Universe: MRK, HEI, BLK, FCX, VRTX, QRVO, EXPE
-Entered Fully Stacked — Watchlist: DDOG, HAE, DRI, LNG, RPRX
-Left Fully Stacked — Universe: TRV, ALL, WST, VRSN, HIG
-Left Fully Stacked — Watchlist: BMY, ETSY
+Entered Fully Stacked — Universe: ABBV, PAYC, EW, WST, PAYX, BMRN, QLYS
+Entered Fully Stacked — Watchlist: SLAB, WAT, FROG, JLL, BMY
+Left Fully Stacked — Universe: JPM, FTNT, PANW, ITW, CHD, CL, WSM, KMB, HWM, ZWS, APH, ETN, HEI, GE, GD, ANET, QRVO, RTX
+Left Fully Stacked — Watchlist: CRWD, DDOG, DELL, NET, AMG, NTRS, APD, S
 
 **SETUPS WORTH WATCHING**
 
-**MSFT** [Universe] — weekly gate open, IN, +19.2% vs MA10w, W.slope +17.46
-**NVDA** [Universe] — weekly gate open, IN, +8.6% vs MA10w, W.slope +1.88
-**AAPL** [Universe] — weekly gate open, IN, -1.0% vs MA10w, W.slope +0.02
+**MSFT** [Universe] — weekly gate open, IN, +13.6% vs MA10w, W.slope +21.99
+**NVDA** [Universe] — weekly gate open, IN, +4.0% vs MA10w, W.slope +4.48
+**AAPL** [Universe] — weekly gate open, IN, +0.9% vs MA10w, W.slope +2.34
 
 **WATCHLIST WATCH**
 
@@ -29,10 +29,10 @@ Left Fully Stacked — Watchlist: BMY, ETSY
 
 **ONE THOUGHT**
 
-The roster turnover—12 names entering Fully Stacked against 7 exiting—reflects what the breadth numbers suggest: a market where long-term structure remains intact but near-term conviction is narrowing. The exits (TRV, ALL, BMY, HIG, ETSY) skew toward defensive and crowded-momentum names, while entries lean toward cyclicals and faster-growth names that had fallen away. This isn't a reversal signal, but it does suggest the market is rotating within its uptrend rather than extending it uniformly—a shift worth watching in how your portfolio allocations are positioned relative to what's actually holding long-term support versus what's become fragile.
+The market is shedding names from its highest conviction setup while simultaneously adding fresh ones—26 Fully Stacked positions represent real money, but the 26 exits in a single week suggest a market in rotation rather than breakdown. What's notable is the composition: we're losing large-cap defensive and cyclical leaders (JPM, RTX, GE, CL, KMB) while gaining names across healthcare (ABBV, BMY, EW, BMRN), software (PAYC), and industrials (WST, JLL)—a shift toward names with clearer earnings leverage. US structure remains intact at the longer timeframe, which means these exits aren't panic selling but deliberate reallocation, and the near-promotion candidates (AMSC, BMY) suggest the market is actively testing new names rather than consolidating around proven ones.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-08-17 03:29 UTC · Not financial advice_
+_Draft generated 2026-08-20 19:24 UTC · Not financial advice_
