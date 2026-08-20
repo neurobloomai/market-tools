@@ -27,6 +27,7 @@ import webbrowser
 import yfinance as yf
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
+from regime import get_regime, regime_html, REGIME_CSS
 
 warnings.filterwarnings('ignore')
 sys.modules.setdefault('_yf_cache', types.ModuleType('_yf_cache'))
@@ -292,7 +293,7 @@ def _lt_struct_cell(pct):
             f'</td>')
 
 
-def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
+def build_html(fresh, midway, extended, ceiling, below, no_data, now, label, regime=None):
     def rows_for(group, badge_color, badge_label):
         out = ''
         for r in group:
@@ -372,10 +373,12 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label):
   .badge {{ font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 3px; color: #fff; }}
   .section {{ font-size: 11px; color: #8b949e; margin: 16px 0 6px; border-top: 1px solid #21262d; padding-top: 10px; }}
   .disclaimer {{ color: #484f58; font-size: 10px; margin-top: 24px; border-top: 1px solid #21262d; padding-top: 8px; }}
+{REGIME_CSS}
 </style>
 </head>
 <body>
 <h1>📡 Extension Scan <span style="font-size:13px;color:#8b949e;font-weight:400">— {label}</span></h1>
+{regime_html(regime) if regime else ''}
 <div class="subtitle">{now} &nbsp;·&nbsp; weekly bars · 3yr history &nbsp;·&nbsp; runway = % of 90th-pct ceiling still unused &nbsp;·&nbsp; ceiling = implied price at historical ceiling</div>
 
 <div style="font-size:11px;color:#8b949e;margin-bottom:8px;padding:8px 12px;background:#161b22;border-radius:6px;border-left:3px solid #30363d;">
@@ -545,8 +548,9 @@ def run(tickers, label, cli_only=False):
         print()
         return
 
-    now  = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
-    html = build_html(fresh, midway, extended, ceiling, below, no_data, now, label)
+    now    = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
+    regime = get_regime()
+    html   = build_html(fresh, midway, extended, ceiling, below, no_data, now, label, regime=regime)
 
     out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'extension_scan.html')
     with open(out, 'w') as f:

@@ -31,6 +31,7 @@ warnings.filterwarnings('ignore')
 sys.modules.setdefault('_yf_cache', types.ModuleType('_yf_cache'))
 
 from screener import UNIVERSE, WATCHLIST
+from regime import get_regime, regime_html, REGIME_CSS
 
 _CACHE_FILE       = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'screener_data_cache.json')
 _GRADE_CACHE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'grade_cache.json')
@@ -501,7 +502,7 @@ def run_top10(n=10, tickers_override=None):
     print()
 
 
-def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly):
+def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly, regime=None):
     def rows_for(group, badge_color, badge_label, is_tight=False):
         out = ''
         for r in group:
@@ -583,10 +584,12 @@ def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly):
   .section-header {{ font-size: 11px; font-weight: 600; color: #8b949e; margin: 24px 0 8px;
                      border-top: 1px solid #21262d; padding-top: 12px; text-transform: uppercase; letter-spacing: .05em; }}
   .disclaimer {{ color: #484f58; font-size: 10px; margin-top: 24px; border-top: 1px solid #21262d; padding-top: 8px; }}
+{REGIME_CSS}
 </style>
 </head>
 <body>
 <h1>📈 Daily Pop Scanner <span style="font-size:13px;color:#8b949e;font-weight:400">— {label}</span></h1>
+{regime_html(regime) if regime else ''}
 <div class="subtitle">{now} &nbsp;·&nbsp; price vs 10d / 20d / 50d daily MAs &nbsp;·&nbsp; not necessarily stacked &nbsp;·&nbsp; gold 1-6% · green 7-15% · amber 16-30% vs 50dMA &nbsp;·&nbsp; ◎ tight = within -5% of 2+ MAs</div>
 
 <div class="summary">
@@ -662,48 +665,16 @@ def _cli_slope(slope):
     s = f'{slope:+.1f}%'
     return _c(_G, s) if slope > 0 else _c(_R, s)
 
-def get_regime():
-    """Fetch SPY 10w MA position + VIX; classify market regime for gate display."""
-    try:
-        vix_hist = yf.Ticker('^VIX').history(period='5d', interval='1d')
-        vix      = float(vix_hist['Close'].iloc[-1]) if not vix_hist.empty else None
-
-        spy_hist  = yf.Ticker('SPY').history(period='3mo', interval='1wk')
-        if len(spy_hist) >= 10:
-            spy_price = float(spy_hist['Close'].iloc[-1])
-            ma10w     = float(spy_hist['Close'].iloc[-10:].mean())
-            spy_pct   = (spy_price - ma10w) / ma10w * 100
-        else:
-            spy_pct = None
-    except Exception:
-        return {'label': 'UNKNOWN', 'vix': None, 'spy_pct': None,
-                'color': _DIM, 'note': 'regime data unavailable'}
-
-    v         = vix or 0
-    spy_below = spy_pct is not None and spy_pct < -1.0
-
-    if v > 35:
-        label = 'STORM'
-        color = _R
-        note  = 'Sell-premium only — directional setups unreliable'
-    elif v > 28 or spy_below:
-        label = 'DEFENSE'
-        color = '\033[33m'   # amber — warning without full alarm
-        note  = 'Elevated risk — size down, defined-risk structures only'
-    elif v > 22 or (spy_pct is not None and abs(spy_pct) < 1.5):
-        label = 'CAUTION'
-        color = _Y
-        note  = 'Setups valid — watch for macro overrides, half-size preferred'
-    else:
-        label = 'BULL'
-        color = _G
-        note  = 'Setups live — standard sizing'
-
-    return {'label': label, 'vix': vix, 'spy_pct': spy_pct, 'color': color, 'note': note}
-
+_REGIME_ANSI = {
+    'BULL':    '\033[92m',
+    'CAUTION': '\033[93m',
+    'DEFENSE': '\033[33m',
+    'STORM':   '\033[91m',
+    'UNKNOWN': '\033[2m',
+}
 
 def _print_regime_banner(regime):
-    rc    = regime['color']
+    rc    = _REGIME_ANSI.get(regime['label'], _DIM)
     rl    = regime['label']
     vix_s = f"VIX {regime['vix']:.1f}" if regime['vix'] is not None else 'VIX —'
     spy_s = (f"SPY {regime['spy_pct']:+.1f}% vs 10w"
@@ -825,8 +796,9 @@ def run(tickers, label, cli_only=False):
     all3    = [h for h in hits if h['all3']]
     two     = [h for h in hits if h['above'] == 2]
 
-    now  = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
-    html = build_html(all3, two, tight, misses, no_data, now, label, grades, hourly)
+    now    = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
+    regime = get_regime()
+    html   = build_html(all3, two, tight, misses, no_data, now, label, grades, hourly, regime=regime)
 
     out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pop_scan.html')
     with open(out, 'w') as f:
