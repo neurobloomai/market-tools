@@ -4,19 +4,19 @@
 
 **POSTURE**
 
-US: 54.4% above MA20, 67.2% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 28 names Fully Stacked. India: 48.7% above MA20, 60.3% above MA100 — mixed, structure holding. 13 names Fully Stacked.
+US: 53.6% above MA20, 66.8% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 28 names Fully Stacked. India: 42.0% above MA20, 61.4% above MA100 — mixed, structure holding. 19 names Fully Stacked.
 
 
 **WHAT MOVED**
 
-Entered Fully Stacked — Watchlist: IOT, GCT
+No new Fully Stacked entries this week.
 No exits from Fully Stacked.
 
 **SETUPS WORTH WATCHING**
 
-**MSFT** [Universe] — weekly gate open, IN, +13.5% vs MA10w, W.slope +21.95
-**NVDA** [Universe] — weekly gate open, IN, +4.2% vs MA10w, W.slope +4.53
-**AAPL** [Universe] — weekly gate open, IN, +0.8% vs MA10w, W.slope +2.28
+**MSFT** [Universe] — weekly gate open, IN, +13.6% vs MA10w, W.slope +22.00
+**NVDA** [Universe] — weekly gate open, IN, +4.2% vs MA10w, W.slope +4.52
+**AAPL** [Universe] — weekly gate open, IN, +0.7% vs MA10w, W.slope +2.26
 
 **WATCHLIST WATCH**
 
@@ -27,10 +27,10 @@ No exits from Fully Stacked.
 
 **ONE THOUGHT**
 
-The US market's resilience shows up differently at different time horizons: while short-term pullbacks are real enough to keep most names below their 20-day averages, the majority still sit above their 100-day lines, suggesting the structure that matters—the one that filters out noise—remains intact. This asymmetry is neither bullish nor bearish in itself, but it tells you that if you're watching for deterioration, you're looking for that 100-day support to break, not for temporary dips to the 20-day. The addition of IOT and GCT to Fully Stacked this week shows the market is still finding names worth stacking into, even as it digests near-term weakness.
+The gap between long-term and short-term positioning tells us something important: the market structure is sound enough to absorb near-term weakness without breaking conviction. With nearly two-thirds of names above their 100-day average across both US and India, pullbacks toward the 20-day aren't warning signs—they're the normal friction of healthy trends. The three mega-cap tech names near their moving averages aren't redemption opportunities; they're consolidations within intact uptrends, which is where the most reliable entries actually live.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-08-20 19:35 UTC · Not financial advice_
+_Draft generated 2026-08-20 19:47 UTC · Not financial advice_
