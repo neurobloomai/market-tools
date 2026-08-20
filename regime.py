@@ -52,7 +52,7 @@ def get_regime():
     elif v > 28 or spy_below:
         label = 'DEFENSE'
         note  = 'Elevated risk — size down, defined-risk structures only'
-    elif v > 22 or (spy_pct is not None and abs(spy_pct) < 1.5):
+    elif v > 22 or (spy_pct is not None and abs(spy_pct) < 1.0):
         label = 'CAUTION'
         note  = 'Setups valid — watch for macro overrides, half-size preferred'
     else:
