@@ -6,6 +6,7 @@
   },
   "watchlist": {
     "MELI": 1,
+    "DT": 1,
     "MKC": 1,
     "DPZ": 1,
     "ON": 1,
@@ -13,6 +14,7 @@
     "WING": 1,
     "MNDY": 1,
     "P": 1,
+    "NTAP": 1,
     "CHTR": 1,
     "MKL": 1,
     "ALC": 1,
@@ -39,10 +41,12 @@
     "ORLY": 1,
     "ESE": 1,
     "PYPL": 1,
+    "EVTC": 1,
     "LSCC": 1,
     "ONTO": 1,
     "TOST": 1,
     "CRCL": 1,
+    "FN": 1,
     "TPL": 1,
     "GCT": 1
   }
