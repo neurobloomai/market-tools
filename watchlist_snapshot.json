@@ -146,6 +146,17 @@
     "note": "Datadog \u2014 cloud observability + security platform (infrastructure monitoring, APM, logs, SIEM); every cloud-native app needs observability \u2014 DDOG is the default for DevOps/SRE teams; GrossM 79.9%, RevG 32.2%, D/EV 0.013 (net cash); OM 0.8%, NM 3.7%, ROE 3.9% \u2014 all three blocking; $100B+ market cap on near-zero operating earnings = paying 40-50x forward revenue for margin expansion that hasn't printed; the spend is real (R&D + S&M consuming all gross profit), the platform is real, the ARR compounding is real \u2014 but the current metrics don't support UNIVERSE placement; gate: OM crossing 10% as RevG compounds and S&M/R&D as % of revenue normalizes; moved from UNIVERSE 2026-08-06",
     "grade": "A"
   },
+  "DT": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE 5.9% / ROA 4.2%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Dynatrace \u2014 AI-powered observability platform (infrastructure + APM + logs + security + digital experience monitoring); Davis causal AI engine auto-detects root cause without manual alert configuration \u2014 differentiated vs DDOG's query-first model; GrossM 81.6%, RevG 16.2%, D/EV 1.2% (near-zero debt), FCF 26.1% of revenue; OM 12.9%, NM 7.2%, ROE 5.9% \u2014 all three blocking; context: OM 12.9% already ahead of DDOG (0.8%), CRWD (-2.2%), ZS (-3.3%) \u2014 margin path shorter than peers; AI observability angle is real new TAM: monitoring LLM traces, AI model latency, GPU infra performance as enterprises deploy AI at scale; fwdPE 21.6x reasonable; 4/7 gates; at ceiling (+0.2% blown), RSI 75, 3/3 daily \u26a1H \u2014 technically extended, wait for pullback; gate: OM \u2265 20% + NM \u2265 10% + ROE \u2265 10% as SBC normalizes and ARR scale drives leverage; added WATCHLIST 2026-08-19",
+    "grade": "A"
+  },
   "MDB": {
     "fails": [
       [
@@ -252,12 +263,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.278",
+        "0.287",
         "\u2264 0.20"
       ]
     ],
     "note": "Wingstop \u2014 asset-light franchise QSR (owns ~1% of restaurants, earns royalties on all); digital ordering ~70% of sales; GrossM 49.4%, OM 29.8%, NM 16.2%, FCF 3.2%, RevG 6.4%; D/EV 30.5% sole blocker (franchise brand debt \u2014 structural for capital-return QSR, same read as QSR/MCD); ROE yfinance gap (negative book equity from buybacks); fwdPE 20.9x cheap for franchise quality; gate: D/EV trending below 20% as system cash flow amortizes brand debt; added 2026-08-12",
-    "grade": "B"
+    "grade": "A"
   },
   "MNDY": {
     "fails": [
@@ -269,6 +280,32 @@
     ],
     "note": "Monday.com \u2014 work OS (project mgmt + CRM + dev + marketing) built on a flexible canvas; Israel-based; GrossM 89.2%, FCF 25.2%, RevG 24.5% \u2014 the three honest signals; OM -0.1% (essentially breakeven, hairline below gate) + ROE 9.5% (hairline below 10% gate) both blocking; D/EV 0.064 (near-zero debt); fwdPE 16.9x; differentiated from MSFT Project/Asana/Smartsheet by flexibility (no-code automation, cross-team use cases) + Shopify/Salesforce integrations; gate: OM crossing 10% as S&M leverage builds + ROE crossing 10%; 2 hairline blockers \u2014 could clear in 1-2 quarters; added WATCHLIST 2026-08-07",
     "grade": "A"
+  },
+  "AAOI": {
+    "fails": [
+      [
+        "Op Margin",
+        "-12.9%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-9.6%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -5.4% / ROA -2.7%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "-7.7%",
+        "> 0%"
+      ]
+    ],
+    "note": "Applied Optoelectronics \u2014 fiber-optic transceiver maker for AI datacenters (100G/400G/800G optical modules for hyperscaler GPU cluster interconnects); RevG 86.4% = hyperscaler 800G transceiver demand is real and accelerating; D/EV 2.4% clean; GrossM 28.9% (hardware components \u2014 can improve with volume but structural ceiling question vs fabless peers), OM -12.9%, FCF -$887M, ROE -5.5% \u2014 all blocking, deep investment phase; 87w +159.6% extreme = stock recovered from near-zero ($2\u2192$150), artifact not ceiling risk; slope -15.0% (10w MA still declining sharply), CMF +0.030 essentially zero \u2014 not being accumulated yet despite RevG; borderline FUTURE_RADAR on the numbers but optical transceiver moat + 800G datacenter timing earns WATCHLIST; gate: GrossM \u2265 35% as 800G volume absorbs fixed cost + OM turning positive + FCF inflecting; added WATCHLIST 2026-08-17',",
+    "grade": "B"
   },
   "MXL": {
     "fails": [
@@ -338,6 +375,17 @@
     ],
     "note": "Dell Technologies \u2014 largest US server + PC + storage vendor; ISG (Infrastructure Solutions Group) AI server business (PowerEdge + Nvidia GPU) driving RevG 87.5%; GrossM 19.2% (hardware assembler structural, same as SMCI but clean accounting) + OM 8.9% (1.1% below gate) + ROE 0% (negative book equity from aggressive buybacks \u2014 artifact, not failure) \u2014 all structural or artifacts; D/EV 0.102, FCF 1.9%; 4/4 MA aligned but +172.5% above 87w MA = extreme structural extension; gate: OM crossing 10% as AI server mix grows + price pulling back to rational entry zone; added WATCHLIST 2026-08-08",
     "grade": "B"
+  },
+  "NTAP": {
+    "fails": [
+      [
+        "Passes all filters",
+        "\u2014",
+        "\u2014"
+      ]
+    ],
+    "note": "NetApp \u2014 enterprise hybrid cloud storage; ONTAP OS + StorageGRID object storage + Azure NetApp Files (Microsoft's preferred high-performance NFS for enterprise Azure workloads) + Google Cloud NetApp Volumes \u2014 hyperscaler integration is the durable distribution moat; GrossM 70.7%, OM 27.3%, NM 18.4%, ROE 106.7% (buyback artifact \u2014 same read as STX), D/EV 7.0%, FCF 18.7% of revenue; RevG 12.5% sole blocker (gate \u226515%); 6/7 gates; A+ quality on every metric except RevG; AI unstructured data storage = durable structural tailwind (LLM fine-tuning datasets, inference logs, RAG vector stores all compound NTAP's addressable volume); fwdPE 19.4x reasonable; at ceiling ($194.48 vs $195.85 ceiling), RSI 74, -2.6% below 10d \u2014 already rolling off; gate: RevG \u2265 15% as AI storage demand + Azure/GCP NetApp volume accelerates + price pulls back to 10w MA zone; added WATCHLIST 2026-08-19",
+    "grade": "A+"
   },
   "FERG": {
     "fails": [
@@ -578,7 +626,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.717",
+        "0.763",
         "\u2264 0.20"
       ],
       [
@@ -602,11 +650,6 @@
   },
   "COR": {
     "fails": [
-      [
-        "Debt/EV",
-        "0.202",
-        "\u2264 0.20"
-      ],
       [
         "Op Margin",
         "1.4%",
@@ -1368,6 +1411,17 @@
     "note": "PayPal \u2014 OM 18%, NM 15%, ROE 25%, FCF 11%, P/E 7.8x; D/EV 0.30 only blocker (customer float structural); Chriss margin recovery showing in numbers",
     "grade": "A"
   },
+  "EVTC": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.454",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "EVERTEC \u2014 dominant payment processing network in Puerto Rico (~75% market share in captive US-regulated geography) + expanding LatAm (Colombia, Chile, Costa Rica, Ecuador); processes credit/debit, ACH, ATM networks; revenue = recurring transaction fees on every payment in those markets; LatAm digital payment penetration still early-innings = structural growth runway; GrossM 51.1% (payment network infra, structural), OM 19.4%, NM 9.8%, ROE 14.8%, FCF 8.5%, RevG 19.7% \u2014 five gates clear; D/EV only blocker (legacy Apollo LBO debt, not deteriorating); fwdPE 6.8x cheap for payment infra with 19.7% growth; gate: D/EV \u2264 0.20 as 8.5% FCF yield systematically deleverages",
+    "grade": "B"
+  },
   "IOT": {
     "fails": [
       [
@@ -1570,6 +1624,17 @@
     ],
     "note": "Coherent Corp \u2014 optical components (800G/1.6T datacenter interconnect + telecom); OM 13.6%, NM 7.1%, D/EV 0.045; ROE 4.7% + FCF -0.3% blocking; post II-VI merger integration phase; watch FCF inflection",
     "grade": "B"
+  },
+  "FN": {
+    "fails": [
+      [
+        "FCF Yield",
+        "-0.4%",
+        "> 0%"
+      ]
+    ],
+    "note": "Fabrinet \u2014 precision optical/photonic contract manufacturer (clean-room assembly of optical transceivers, networking hardware, medical devices); primary manufacturer for Coherent, Lumentum, Ciena \u2014 the factory behind AI datacenter optical interconnects without owning the IP; GrossM 12.0% structural exception (contract manufacturing model \u2014 same lens as FERG/COR, margin is for process precision not IP ownership; 12% is exceptional for a CM); OM 9.9% \u2717 (one quarter from 10% gate), NM 9.9% \u2713, ROE 20.0% \u2713 (strong capital efficiency despite thin GrossM), D/EV 0.0% \u2713 (zero debt \u2014 exceptional for manufacturing), RevG 39.3% \u2713; FCF -$79M \u2717 (capex ramp for AI optical volume surge); 2 real blockers: OM 9.9% + FCF negative; Thailand manufacturing base = cost advantage + geopolitical concentration risk; gate: OM crossing 10% sustained + FCF turning positive as 800G/1.6T optical capex normalizes; added WATCHLIST 2026-08-18",
+    "grade": "A"
   },
   "AVAV": {
     "fails": [
