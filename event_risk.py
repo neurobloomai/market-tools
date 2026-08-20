@@ -24,13 +24,24 @@ _RST = '\033[0m'
 
 def get_earnings_date(ticker):
     """Return next upcoming earnings date as datetime.date, or None."""
+    today = datetime.now(timezone.utc).date()
     try:
-        ed = yf.Ticker(ticker).earnings_dates
-        if ed is not None and not ed.empty:
-            today  = datetime.now(timezone.utc).date()
-            future = [d.date() for d in ed.index if hasattr(d, 'date') and d.date() >= today]
-            if future:
-                return min(future)
+        t   = yf.Ticker(ticker)
+        cal = t.calendar
+        if isinstance(cal, dict):
+            dates = cal.get('Earnings Date') or []
+            if isinstance(dates, list):
+                future = [d for d in dates if hasattr(d, 'year') and d >= today]
+                if future:
+                    return min(future)
+            elif hasattr(dates, 'year') and dates >= today:
+                return dates
+        # fallback: earningsTimestamp from info
+        ts = (t.info or {}).get('earningsTimestamp')
+        if ts:
+            d = datetime.fromtimestamp(ts, tz=timezone.utc).date()
+            if d >= today:
+                return d
     except Exception:
         pass
     return None
