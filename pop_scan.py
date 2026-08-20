@@ -752,8 +752,21 @@ def print_cli_table(all3, two, tight, misses, no_data, label, grades, hourly, sh
 
 def print_combined_cli(tickers, ext_results, pop_results, h_stacks, label, grades):
     from extension_scan import _cli_header, _cli_row
+    from event_risk import get_earnings_batch, earnings_risk
     now = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
     print(f'\n  {_BLD}{label}{_RST}  {_DIM}{now}{_RST}')
+
+    # Earnings event line — shows any ticker with earnings ≤30 days out
+    earnings_map = get_earnings_batch(tickers)
+    _ER_COLOR = {'HIGH': _R, 'WARN': '\033[33m', 'NEAR': _Y}
+    er_parts = []
+    for t in tickers:
+        days, level = earnings_risk(earnings_map.get(t))
+        if level:
+            c = _ER_COLOR.get(level, _DIM)
+            er_parts.append(f'{c}{t} {earnings_map[t].strftime("%b %d")} ({days}d){_RST}')
+    if er_parts:
+        print(f'  {_BLD}Earnings:{_RST}  {" · ".join(er_parts)}')
 
     # ── Weekly extension lens ──────────────────────────────────────────────
     print(f'\n  {_DIM}── Weekly Extension ──────────────────────────────────────────────────────────────────────────────────────────────{_RST}')
