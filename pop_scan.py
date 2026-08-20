@@ -11,6 +11,8 @@ Usage:
   python pop_scan.py --watchlist   # watchlist only
   python pop_scan.py --top10       # top 10 setups ranked by composite score
   python pop_scan.py --top20       # top 20 setups (any N works: --top5, --top15 ...)
+  python pop_scan.py --mega10      # top 10 from mega-cap list only (~30s, more reliable)
+  python pop_scan.py --mega20      # top 20 from mega-cap list
 """
 
 import json
@@ -31,6 +33,22 @@ sys.modules.setdefault('_yf_cache', types.ModuleType('_yf_cache'))
 from screener import UNIVERSE, WATCHLIST
 
 _CACHE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'screener_data_cache.json')
+
+# Mega-cap watchlist — top liquid names driving market/QQQ/SPY structure
+MEGA_CAP = [
+    # Magnificent 7
+    'AAPL', 'MSFT', 'NVDA', 'GOOGL', 'AMZN', 'META', 'TSLA',
+    # Financials
+    'JPM', 'V', 'MA', 'GS', 'BAC',
+    # Healthcare / Pharma
+    'UNH', 'LLY', 'ABBV', 'JNJ',
+    # Consumer
+    'HD', 'WMT', 'COST', 'PG',
+    # Semis (beyond NVDA)
+    'AVGO', 'AMD', 'QCOM',
+    # Other large liquid names
+    'NFLX', 'ADP',
+]
 
 def _load_grades():
     try:
@@ -335,16 +353,21 @@ def _ext_zone_label(ext_r):
     return '✕ blown'
 
 
-def run_top10(n=10):
+def run_top10(n=10, tickers_override=None):
     import math
     from extension_scan import get_extension_data
 
-    tickers_raw = list(dict.fromkeys(UNIVERSE))
-    tickers_raw += [t for t in WATCHLIST if t not in tickers_raw]
-    tickers = [t for t in tickers_raw if isinstance(t, str)]
+    if tickers_override:
+        tickers = [t for t in tickers_override if isinstance(t, str)]
+    else:
+        tickers_raw = list(dict.fromkeys(UNIVERSE))
+        tickers_raw += [t for t in WATCHLIST if t not in tickers_raw]
+        tickers = [t for t in tickers_raw if isinstance(t, str)]
 
-    candidates = n * 2   # oversample before grade re-score
-    print(f'\n  Scanning {len(tickers)} tickers for top {n} setups  (takes ~90s) ...', flush=True)
+    candidates = min(n * 2, len(tickers))   # oversample before grade re-score
+    label = 'Mega-Cap' if tickers_override else 'Universe + Watchlist'
+    eta   = '~30s' if tickers_override else '~90s'
+    print(f'\n  Scanning {len(tickers)} tickers for top {n} setups  ({eta}) ...', flush=True)
 
     # Pass 1 — parallel fetch, score without grade bonus
     with ThreadPoolExecutor(max_workers=8) as ex:
@@ -390,7 +413,7 @@ def run_top10(n=10):
     top = scored[:n]
 
     now = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
-    print(f'\n  {_BLD}TOP {n} SETUPS — Universe + Watchlist{_RST}  {_DIM}{now}{_RST}')
+    print(f'\n  {_BLD}TOP {n} SETUPS — {label}{_RST}  {_DIM}{now}{_RST}')
     print()
 
     # Header
@@ -754,6 +777,10 @@ if __name__ == '__main__':
         suffix = args[0][5:]
         n = int(suffix) if suffix.isdigit() else (int(args[1]) if len(args) > 1 and args[1].isdigit() else 10)
         run_top10(n)
+    elif args[0].startswith('--mega'):
+        suffix = args[0][6:]
+        n = int(suffix) if suffix.isdigit() else (int(args[1]) if len(args) > 1 and args[1].isdigit() else 10)
+        run_top10(n, tickers_override=MEGA_CAP)
     else:
         tickers = [t.upper() for t in args if not t.startswith('--')]
         run(tickers, ', '.join(tickers), cli_only=True)
