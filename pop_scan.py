@@ -703,7 +703,8 @@ import re as _re
 _ANSI_RE = _re.compile(r'\033\[[0-9;]*m')
 
 def _vlen(s):
-    return len(_ANSI_RE.sub('', s))
+    s = _ANSI_RE.sub('', s)
+    return len(s) + s.count('⚡')   # ⚡ renders as 2 terminal cols
 
 def _lpad(s, w):
     """Right-align s in w visible characters (left-pad with spaces)."""
