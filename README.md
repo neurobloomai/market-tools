@@ -35,7 +35,7 @@ The rest of this README is the manual for how those two filters are built and ap
 | `top_setups.py` | 🇺🇸 US | Convergence drill — reads last-run HTML outputs, scores every name across quality + RS + CMF + A/D + OBV, fetches monthly MA distance for top 20, prints ranked table in seconds |
 | `india_top_setups.py` | 🇮🇳 India | Same convergence drill for India �� reads `india_screener.html` + `india_aligned_screener.html`, adds sector column (India setups are sector-wave driven), RS vs NIFTY |
 | `monthly_ma_gate.py` | 🇺🇸🇮🇳 Both | Pre-recovery Monthly MA Gate — names within ±2% (Tier 1, on the gate) or ±5% (Tier 2, in the zone) of their 10-month or 20-month SMA · sorted by span (sum of both MA distances) so names sandwiched between both MAs surface first · on-demand only |
-| `pop_scan.py` | 🇺🇸 US | Daily Pop Scanner — price vs 10d/20d/50d MAs · ranked setup modes (`--top10` / `--mega10`) score the full 366-name universe or 26-name pulse list · regime gate + VIX sizing signal + event risk calendar on every ranked run · gold/green/amber range bands · ◎ coiling setups · on-demand |
+| `pop_scan.py` | 🇺🇸 US | Daily Pop Scanner — price vs 10d/20d/50d MAs · ranked setup modes (`--top10` / `--mega10`) score the full 366-name universe or 32-name pulse list · regime gate + VIX sizing signal + event risk calendar on every ranked run · gold/green/amber range bands · ◎ coiling setups · on-demand |
 | `extension_scan.py` | 🇺🇸🇮🇳 Both | Weekly MA Extension + Projection Scanner — for each ticker above its 10w MA, shows current extension vs historical 90th-pct ceiling, runway remaining before ceiling, implied ceiling price, weekly RSI and 10w slope · answers "how much further can this go?" · flags blown-ceiling names in red · supports `--universe`, `--watchlist`, `--dividend`, `--india`, `--india --universe`, `--india --watchlist`, or explicit tickers (CLI-only) · on-demand |
 | `iv_snapshot.py` | 🇺🇸 US | Daily IV + HV30 snapshot — captures implied volatility and 30-day historical volatility for all `SPREAD_UNIVERSE` names · appends one row per name to `iv_data.json` · run by GitHub Actions after market close (Tue–Sat) · run locally anytime: `python3 iv_snapshot.py` |
 | `iv_rank.py` | 🇺🇸 US | IV Rank reader — reads `iv_data.json`, computes IV Rank (position of today's IV within the 30-day range) and IV/HV ratio for each `SPREAD_UNIVERSE` name · requires ≥30 days of data for a valid signal · at depth==30 prints self-announcement banner with next-step reminder |
@@ -567,7 +567,7 @@ python3 pop_scan.py NVDA --html        # individual ticker with HTML output
 ```bash
 python3 pop_scan.py --top10            # top 10 setups across full universe (366 tickers, ~90s)
 python3 pop_scan.py --top20            # top 20
-python3 pop_scan.py --mega10           # top 10 from 26-name pulse list (~30s)
+python3 pop_scan.py --mega10           # top 10 from 32-name pulse list (~30s)
 python3 pop_scan.py --mega20           # top 20 from pulse list
 ```
 
@@ -619,14 +619,15 @@ A blank ER column is the correct reading outside earnings season — the column 
 
 ### Mega-Cap Pulse List
 
-`--mega10` and `--mega20` scan a focused 26-name list — not an S&P definition, a curated read on market structure and highest-conviction names:
+`--mega10` and `--mega20` scan a focused 32-name list — not an S&P definition, a curated read on market structure and highest-conviction names:
 
 ```
-MU AMD NVDA AVGO QCOM ALAB          — core positions + semis
-AAPL MSFT GOOGL AMZN META TSLA NFLX — QQQ drivers
+MU AMD NVDA AVGO QCOM INTC AMAT     — semis + equipment
+AAPL MSFT GOOGL AMZN META TSLA NFLX CSCO — QQQ drivers + networking
 JPM V MA GS                          — financials
-LLY ABBV UNH                         — healthcare
-HD COST ADP                          — consumer + industrials
+LLY ABBV UNH JNJ                     — healthcare
+XOM                                  — energy
+HD COST ADP WMT                      — consumer + industrials
 SPY QQQ IWM                          — structure read (grade skipped — ETF)
 ```
 

@@ -56,16 +56,18 @@ def _save_grade_cache(new_grades):
 # Market pulse list — names to quick-scan with --mega10/--mega20
 # Covers: user positions + spread universe + key QQQ/SPY movers
 MEGA_CAP = [
-    # Core positions + semis
-    'MU', 'AMD', 'NVDA', 'AVGO', 'QCOM', 'ALAB',
+    # Semis + equipment
+    'MU', 'AMD', 'NVDA', 'AVGO', 'QCOM', 'INTC', 'AMAT',
     # Mega-cap tech (QQQ drivers)
-    'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META', 'TSLA', 'NFLX',
+    'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META', 'TSLA', 'NFLX', 'CSCO',
     # Financials
     'JPM', 'V', 'MA', 'GS',
     # Healthcare / Pharma
-    'LLY', 'ABBV', 'UNH',
+    'LLY', 'ABBV', 'UNH', 'JNJ',
+    # Energy
+    'XOM',
     # Consumer + Industrials
-    'HD', 'COST', 'ADP',
+    'HD', 'COST', 'ADP', 'WMT',
     # Indices (structure read)
     'SPY', 'QQQ', 'IWM',
 ]
