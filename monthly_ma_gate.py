@@ -338,12 +338,16 @@ if __name__ == '__main__':
     webbrowser.open(f'file://{out_path}')
 
     try:
-        subprocess.run(['git', '-C', repo, 'add', 'monthly_ma_gate.html'], check=True)
+        devnull = subprocess.DEVNULL
+        subprocess.run(['git', '-C', repo, 'add', 'monthly_ma_gate.html'],
+                       check=True, stdout=devnull, stderr=devnull)
         result = subprocess.run(['git', '-C', repo, 'diff', '--cached', '--quiet'])
         if result.returncode != 0:
             subprocess.run(['git', '-C', repo, 'commit',
-                            '-m', f'monthly_ma_gate: {now}'], check=True)
-            subprocess.run(['git', '-C', repo, 'push'], check=True)
+                            '-m', f'monthly_ma_gate: {now}'],
+                           check=True, stdout=devnull, stderr=devnull)
+            subprocess.run(['git', '-C', repo, 'push'],
+                           check=True, stdout=devnull, stderr=devnull)
             print(f"  Pushed → GitHub  (monthly_ma_gate: {now})")
         else:
             print("  GitHub — no changes to push")
