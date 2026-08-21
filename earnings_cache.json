@@ -154,5 +154,201 @@
   "PLD": {
     "date": "2026-10-14",
     "fetched": "2026-08-20"
+  },
+  "TQQQ": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "ALAB": {
+    "date": "2026-11-03",
+    "fetched": "2026-08-21"
+  },
+  "MUU": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "AMDL": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "LABX": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "NVDL": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "AAPU": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "COST": {
+    "date": "2026-09-24",
+    "fetched": "2026-08-21"
+  },
+  "TSLA": {
+    "date": "2026-10-21",
+    "fetched": "2026-08-21"
+  },
+  "NRG": {
+    "date": "2026-11-05",
+    "fetched": "2026-08-21"
+  },
+  "XLU": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "TGTX": {
+    "date": "2026-11-02",
+    "fetched": "2026-08-21"
+  },
+  "EXEL": {
+    "date": "2026-10-27",
+    "fetched": "2026-08-21"
+  },
+  "MNDY": {
+    "date": "2026-11-09",
+    "fetched": "2026-08-21"
+  },
+  "DXCM": {
+    "date": "2026-10-29",
+    "fetched": "2026-08-21"
+  },
+  "ACGL": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "NVO": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "JNJ": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "AON": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "EXPD": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "JKHY": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "MORN": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "NOW": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "WDAY": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "CNDT": {
+    "date": "2026-11-06",
+    "fetched": "2026-08-21"
+  },
+  "PLUG": {
+    "date": "2026-11-09",
+    "fetched": "2026-08-21"
+  },
+  "AMC": {
+    "date": "2026-10-20",
+    "fetched": "2026-08-21"
+  },
+  "ICLN": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "LABU": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "SMH": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "SOXL": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "IPST": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "DVLT": {
+    "date": "2026-11-13",
+    "fetched": "2026-08-21"
+  },
+  "BYND": {
+    "date": "2026-11-04",
+    "fetched": "2026-08-21"
+  },
+  "OTLY": {
+    "date": "2026-10-28",
+    "fetched": "2026-08-21"
+  },
+  "IRWD": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "KNSK": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "KNSA": {
+    "date": "2026-10-27",
+    "fetched": "2026-08-21"
+  },
+  "FN": {
+    "date": "2026-11-02",
+    "fetched": "2026-08-21"
+  },
+  "FFAI": {
+    "date": "2026-11-12",
+    "fetched": "2026-08-21"
+  },
+  "AVGO": {
+    "date": "2026-09-02",
+    "fetched": "2026-08-21"
+  },
+  "META": {
+    "date": "2026-10-28",
+    "fetched": "2026-08-21"
+  },
+  "STE": {
+    "date": "2026-11-04",
+    "fetched": "2026-08-21"
+  },
+  "CMG": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "ADBE": {
+    "date": "2026-09-10",
+    "fetched": "2026-08-21"
+  },
+  "CELH": {
+    "date": null,
+    "fetched": "2026-08-21"
+  },
+  "ORCL": {
+    "date": "2026-09-10",
+    "fetched": "2026-08-21"
+  },
+  "ANET": {
+    "date": "2026-11-03",
+    "fetched": "2026-08-21"
+  },
+  "CRWD": {
+    "date": "2026-08-26",
+    "fetched": "2026-08-21"
   }
 }
