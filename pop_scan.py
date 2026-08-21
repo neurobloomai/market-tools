@@ -419,16 +419,14 @@ def run_top10(n=10, tickers_override=None):
     import math
     from extension_scan import get_extension_data
 
-    mega_mode = tickers_override is not None
+    mega_mode     = tickers_override is not None
+    index_tickers = _PINNED_INDICES
     if mega_mode:
-        # Pin indices; rank only the non-index tickers
-        index_tickers = [t for t in _PINNED_INDICES if t in tickers_override]
         tickers = [t for t in tickers_override if isinstance(t, str) and t not in _PINNED_INDICES]
     else:
-        index_tickers = []
         tickers_raw = list(dict.fromkeys(UNIVERSE))
         tickers_raw += [t for t in WATCHLIST if t not in tickers_raw]
-        tickers = [t for t in tickers_raw if isinstance(t, str)]
+        tickers = [t for t in tickers_raw if isinstance(t, str) and t not in _PINNED_INDICES]
 
     candidates = min(n * 2, len(tickers))   # oversample before grade re-score
     label = 'Mega-Cap' if mega_mode else 'Universe + Watchlist'
@@ -440,10 +438,9 @@ def run_top10(n=10, tickers_override=None):
     print(f'\n  {_BLD}TOP {n} SETUPS — {label}{_RST}  {_DIM}{now}{_RST}')
     _print_regime_banner(regime)
 
-    # Always show index pulse first in mega mode
-    if index_tickers:
-        print(f'\n  Fetching index pulse ...', flush=True)
-        _print_index_pulse(index_tickers)
+    # Always show index pulse at the top of any scan
+    print(f'\n  Fetching index pulse ...', flush=True)
+    _print_index_pulse(index_tickers)
 
     print(f'  Scanning {len(tickers)} tickers  ({eta}) ...', flush=True)
 
