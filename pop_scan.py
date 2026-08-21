@@ -390,29 +390,42 @@ def _print_index_pulse(index_tickers):
     with ThreadPoolExecutor(max_workers=3) as ex:
         idx_pop = list(ex.map(get_daily_ma_pos, index_tickers))
 
-    def _pct_str(v):
+    # Pad visible text FIRST, then wrap in color — keeps column alignment intact
+    def _pct_col(v, w=7):
         if v is None or (isinstance(v, float) and math.isnan(v)):
-            return '  —  '
+            return f'{_DIM}{"—":>{w}}{_RST}'
         sign = '+' if v > 0 else ''
-        col  = _G if v > 0 else _R
-        return _c(col, f'{sign}{v}%')
+        return _c(_G if v > 0 else _R, f'{sign}{v}%'.rjust(w))
 
-    print(f'  {_DIM}{"─" * 66}{_RST}')
+    def _cmf_col(cmf, w=7):
+        if cmf is None or (isinstance(cmf, float) and math.isnan(cmf)):
+            return f'{_DIM}{"—":>{w}}{_RST}'
+        raw = f'{cmf:+.3f}'
+        col = _G if cmf >= 0.15 else _R if cmf <= -0.15 else '\033[37m'
+        return _c(col, raw.rjust(w))
+
+    def _slp_col(slope, w=7):
+        if slope is None or (isinstance(slope, float) and math.isnan(slope)):
+            return f'{_DIM}{"—":>{w}}{_RST}'
+        return _c(_G if slope > 0 else _R, f'{slope:+.1f}%'.rjust(w))
+
+    SEP = '─' * 66
+    print(f'  {_DIM}{SEP}{_RST}')
     print(f'  {_BLD}{"INDEX PULSE":<10}{_RST}  '
-          f'{_DIM}{"PRICE":>8}  {"vs10m":>7}  {"vs20m":>7}  {"vs50m":>7}  {"WkCMF":>7}  {"WkSlp":>7}{_RST}')
-    print(f'  {_DIM}{"─" * 66}{_RST}')
+          f'{_DIM}{"PRICE":>9}  {"vs10m":>7}  {"vs20m":>7}  {"vs50m":>7}  {"WkCMF":>7}  {"WkSlp":>7}{_RST}')
+    print(f'  {_DIM}{SEP}{_RST}')
     for t, r in zip(index_tickers, idx_pop):
         if r is None:
             print(f'  {_BLD}{t:<10}{_RST}  {_DIM}no data{_RST}')
             continue
-        pr_s   = f'${r["price"]:>8,.2f}'
-        p10_s  = _pct_str(r['pct10'])
-        p20_s  = _pct_str(r['pct20'])
-        p50_s  = _pct_str(r['pct50'])
-        cmf_s  = _cli_cmf(r.get('wk_cmf',   float('nan')))
-        slp_s  = _cli_slope(r.get('wk_slope', float('nan')))
-        print(f'  {_BLD}{t:<10}{_RST}  {pr_s}  {p10_s}  {p20_s}  {p50_s}  {cmf_s}  {slp_s}')
-    print(f'  {_DIM}{"─" * 66}{_RST}')
+        pr_s = f'${r["price"]:>8,.2f}'
+        print(f'  {_BLD}{t:<10}{_RST}  {pr_s}'
+              f'  {_pct_col(r["pct10"])}'
+              f'  {_pct_col(r["pct20"])}'
+              f'  {_pct_col(r["pct50"])}'
+              f'  {_cmf_col(r.get("wk_cmf",   float("nan")))}'
+              f'  {_slp_col(r.get("wk_slope", float("nan")))}')
+    print(f'  {_DIM}{SEP}{_RST}')
     print()
 
 def run_top10(n=10, tickers_override=None):
