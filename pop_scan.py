@@ -785,11 +785,16 @@ def print_cli_table(all3, two, tight, misses, no_data, label, grades, hourly, sh
         h_str = f' {_B}⚡H{_RST}' if hourly.get(r['ticker']) else ''
         a_str = (f' {_Y}◆{_RST}' if tier == 'strong' else f' {_B}▲{_RST}' if tier == 'positive' else '')
         tick  = r['ticker'] + g_str + h_str + a_str
-        # visible width of tick column (strip ANSI for padding math)
-        raw_tick = r['ticker'] + (f' {grade}' if grade else '') + (' ⚡H' if hourly.get(r['ticker']) else '') + (' ◆' if tier == 'strong' else ' ▲' if tier == 'positive' else '')
-        pad = ' ' * max(0, COL['tick'] - len(raw_tick))
+        # Compute visible tick width; ⚡ renders as 2 terminal cols but len() counts 1
+        raw_tick = (r['ticker']
+                    + (f' {grade}' if grade else '')
+                    + (' ⚡H' if hourly.get(r['ticker']) else '')
+                    + (' ◆' if tier == 'strong' else ' ▲' if tier == 'positive' else ''))
+        extra_w = raw_tick.count('⚡')          # each ⚡ steals 1 extra terminal col
+        pad = ' ' * max(0, COL['tick'] - len(raw_tick) - extra_w)
 
-        zone_col = f'{section_color}{zone_label:<{COL["zone"]}}{_RST}'
+        # Pad zone label to fixed width before adding color so terminal width is locked
+        zone_col = f'{section_color}{zone_label.ljust(COL["zone"])}{_RST}'
         price_col = f'${r["price"]:>{COL["price"] - 1}.2f}'
 
         print(
