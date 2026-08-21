@@ -382,27 +382,70 @@ def _ext_zone_label(ext_r):
     return '✕ blown'
 
 
+_PINNED_INDICES = ['SPY', 'QQQ', 'IWM']
+
+def _print_index_pulse(index_tickers):
+    """Fetch and print a pinned INDEX PULSE section for the given index tickers."""
+    import math
+    with ThreadPoolExecutor(max_workers=3) as ex:
+        idx_pop = list(ex.map(get_daily_ma_pos, index_tickers))
+
+    def _pct_str(v):
+        if v is None or (isinstance(v, float) and math.isnan(v)):
+            return '  —  '
+        sign = '+' if v > 0 else ''
+        col  = _G if v > 0 else _R
+        return _c(col, f'{sign}{v}%')
+
+    print(f'  {_DIM}{"─" * 66}{_RST}')
+    print(f'  {_BLD}{"INDEX PULSE":<10}{_RST}  '
+          f'{_DIM}{"PRICE":>8}  {"vs10m":>7}  {"vs20m":>7}  {"vs50m":>7}  {"WkCMF":>7}  {"WkSlp":>7}{_RST}')
+    print(f'  {_DIM}{"─" * 66}{_RST}')
+    for t, r in zip(index_tickers, idx_pop):
+        if r is None:
+            print(f'  {_BLD}{t:<10}{_RST}  {_DIM}no data{_RST}')
+            continue
+        pr_s   = f'${r["price"]:>8,.2f}'
+        p10_s  = _pct_str(r['pct10'])
+        p20_s  = _pct_str(r['pct20'])
+        p50_s  = _pct_str(r['pct50'])
+        cmf_s  = _cli_cmf(r.get('wk_cmf',   float('nan')))
+        slp_s  = _cli_slope(r.get('wk_slope', float('nan')))
+        print(f'  {_BLD}{t:<10}{_RST}  {pr_s}  {p10_s}  {p20_s}  {p50_s}  {cmf_s}  {slp_s}')
+    print(f'  {_DIM}{"─" * 66}{_RST}')
+    print()
+
 def run_top10(n=10, tickers_override=None):
     import math
     from extension_scan import get_extension_data
 
-    if tickers_override:
-        tickers = [t for t in tickers_override if isinstance(t, str)]
+    mega_mode = tickers_override is not None
+    if mega_mode:
+        # Pin indices; rank only the non-index tickers
+        index_tickers = [t for t in _PINNED_INDICES if t in tickers_override]
+        tickers = [t for t in tickers_override if isinstance(t, str) and t not in _PINNED_INDICES]
     else:
+        index_tickers = []
         tickers_raw = list(dict.fromkeys(UNIVERSE))
         tickers_raw += [t for t in WATCHLIST if t not in tickers_raw]
         tickers = [t for t in tickers_raw if isinstance(t, str)]
 
     candidates = min(n * 2, len(tickers))   # oversample before grade re-score
-    label = 'Mega-Cap' if tickers_override else 'Universe + Watchlist'
-    eta   = '~30s' if tickers_override else '~90s'
+    label = 'Mega-Cap' if mega_mode else 'Universe + Watchlist'
+    eta   = '~30s' if mega_mode else '~90s'
 
     # Regime gate — fetch before scan so user sees market context immediately
     regime = get_regime()
     now    = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
     print(f'\n  {_BLD}TOP {n} SETUPS — {label}{_RST}  {_DIM}{now}{_RST}')
     _print_regime_banner(regime)
-    print(f'\n  Scanning {len(tickers)} tickers  ({eta}) ...', flush=True)
+
+    # Always show index pulse first in mega mode
+    if index_tickers:
+        print(f'\n  Fetching index pulse ...', flush=True)
+        _print_index_pulse(index_tickers)
+
+    print(f'  Scanning {len(tickers)} tickers  ({eta}) ...', flush=True)
 
     # Pass 1 — parallel fetch, score without grade bonus
     with ThreadPoolExecutor(max_workers=8) as ex:
