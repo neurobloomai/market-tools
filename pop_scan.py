@@ -543,12 +543,13 @@ def run_top10(n=10, tickers_override=None):
         pr_s  = f'${price:,.2f}'
         cmf_s = _cli_cmf(wk_cmf)
         slp_s = _cli_slope(wk_slope)
-        wz_c  = (_c(_G, wz) if 'fresh' in wz else
-                 _c('\033[32m', wz) if 'midway' in wz else
-                 _c(_DIM, wz) if 'blown' in wz or 'below' in wz else wz)
-        dz_c  = (_c(_G, dz) if '3/3' in dz else
-                 _c('\033[32m', dz) if '2/3' in dz else
-                 _c(_DIM, dz))
+        wz_c  = (_c(_G,          wz.ljust(H['wz'])) if 'fresh'  in wz else
+                 _c('\033[32m', wz.ljust(H['wz'])) if 'midway' in wz else
+                 _c(_DIM,       wz.ljust(H['wz'])) if 'blown'  in wz or 'below' in wz else
+                 wz.ljust(H['wz']))
+        dz_c  = (_c(_G,          dz.ljust(H['dz'])) if '3/3' in dz else
+                 _c('\033[32m',  dz.ljust(H['dz'])) if '2/3' in dz else
+                 _c(_DIM,        dz.ljust(H['dz'])))
         sc_c  = _c(_G, f'{sc:>5}') if sc >= 60 else _c('\033[37m', f'{sc:>5}')
 
         rank_s = f'{_BLD}{rank:>2}{_RST}'
@@ -559,10 +560,10 @@ def run_top10(n=10, tickers_override=None):
             f'  {rank_s}  {tick_s}  {gr_col}'
             f'  {_rpad(er_s,    H["er"])}'
             f'  {_lpad(pr_s,    H["pr"])}'
-            f'  {_rpad(wz_c,    H["wz"])}'
+            f'  {wz_c}'
             f'  {_lpad(cmf_s,   H["wc"])}'
             f'  {_lpad(slp_s,   H["ws"])}'
-            f'  {_rpad(dz_c,    H["dz"])}'
+            f'  {dz_c}'
             f'  {_rpad(algo_str, H["al"])}'
             f'  {_lpad(sc_c,    H["sc"])}'
         )
