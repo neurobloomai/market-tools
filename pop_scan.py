@@ -704,7 +704,9 @@ _ANSI_RE = _re.compile(r'\033\[[0-9;]*m')
 
 def _vlen(s):
     s = _ANSI_RE.sub('', s)
-    return len(s) + s.count('⚡')   # ⚡ renders as 2 terminal cols
+    # ⚡ ◆ ▲ are ambiguous-width chars that render as 2 terminal cols
+    extra = sum(1 for c in s if c in ('⚡', '◆', '▲'))
+    return len(s) + extra
 
 def _lpad(s, w):
     """Right-align s in w visible characters (left-pad with spaces)."""
