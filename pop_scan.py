@@ -511,7 +511,7 @@ def run_top10(n=10, tickers_override=None):
     print()
 
     # Header
-    H = {'rk': 2, 'tk': 8, 'gr': 2, 'er': 5, 'pr': 8, 'wz': 11, 'wc': 7, 'ws': 7, 'dz': 7, 'al': 10, 'sc': 5}
+    H = {'rk': 2, 'tk': 8, 'gr': 2, 'er': 5, 'pr': 10, 'wz': 11, 'wc': 7, 'ws': 7, 'dz': 7, 'al': 10, 'sc': 5}
     hdr = (f"  {'#':>{H['rk']}}  {'TICKER':<{H['tk']}}  {'GR':>{H['gr']}}"
            f"  {'ER':<{H['er']}}"
            f"  {'PRICE':>{H['pr']}}"
@@ -704,9 +704,7 @@ _ANSI_RE = _re.compile(r'\033\[[0-9;]*m')
 
 def _vlen(s):
     s = _ANSI_RE.sub('', s)
-    # ⚡ ◆ ▲ are ambiguous-width chars that render as 2 terminal cols
-    extra = sum(1 for c in s if c in ('⚡', '◆', '▲'))
-    return len(s) + extra
+    return len(s) + s.count('⚡')   # ⚡ renders as 2 terminal cols; ◆ ▲ are 1-wide
 
 def _lpad(s, w):
     """Right-align s in w visible characters (left-pad with spaces)."""
