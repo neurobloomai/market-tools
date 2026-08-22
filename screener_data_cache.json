@@ -1482,8 +1482,8 @@
     "pb": 15.2,
     "fcf_yield": 0.1,
     "rev_growth": -5.5,
-    "fy0_growth": 323.6,
-    "fy1_growth": 13.2,
+    "fy0_growth": null,
+    "fy1_growth": null,
     "price_vs_ma200": -14.8,
     "short_pct_float": 3.0,
     "days_to_cover": 2.1
