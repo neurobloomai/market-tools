@@ -696,7 +696,7 @@ pip install yfinance
 
 ## Schwab Integration (Optional — Local Only)
 
-`schwab_client.py` is an optional alternative data source for price history and fundamentals. When enabled, tools that fetch single-ticker or small-batch price data query the Schwab API instead of Yahoo Finance. Useful when yfinance returns stale post-split data (e.g. MNST pre-split adjustment lag) or when you want to cross-check fundamentals against a broker-grade source.
+`schwab_client.py` is an optional alternative data source for price history and fundamentals. **US markets only** — Schwab does not cover NSE/BSE; all Indian tickers (`.NS` / `.BO`) are always fetched from yfinance regardless of this toggle. When enabled, tools that fetch single-ticker or small-batch US price data query the Schwab API instead of Yahoo Finance. Useful when yfinance returns stale post-split data (e.g. MNST pre-split adjustment lag) or when you want to cross-check fundamentals against a broker-grade source.
 
 **Bulk scans always use yfinance regardless of this toggle** — fetching 377 tickers via Schwab would hit rate limits immediately. The toggle applies only to single-ticker lookups, small-batch ops, and explicit ticker arguments.
 
