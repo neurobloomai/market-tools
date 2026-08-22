@@ -694,6 +694,90 @@ python3 --version
 pip install yfinance
 ```
 
+## Schwab Integration (Optional — Local Only)
+
+`schwab_client.py` is an optional alternative data source for price history and fundamentals. When enabled, tools that fetch single-ticker or small-batch price data query the Schwab API instead of Yahoo Finance. Useful when yfinance returns stale post-split data (e.g. MNST pre-split adjustment lag) or when you want to cross-check fundamentals against a broker-grade source.
+
+**Bulk scans always use yfinance regardless of this toggle** — fetching 377 tickers via Schwab would hit rate limits immediately. The toggle applies only to single-ticker lookups, small-batch ops, and explicit ticker arguments.
+
+### What it does
+
+| Path | With `SCHWAB_DATA=1` | Without |
+|---|---|---|
+| `pop_scan.py NVDA` | Schwab price history | yfinance |
+| `pop_scan.py --top10` | Schwab for top-N scoring pass | yfinance for bulk |
+| `extension_scan.py NVDA MSFT` | Schwab | yfinance |
+| `extension_scan.py --universe` | yfinance (forced) | yfinance |
+| `monthly_ma_gate.py` | Schwab for US tickers | yfinance |
+| India tickers (`.NS` / `.BO`) | yfinance (forced — Schwab doesn't cover NSE/BSE) | yfinance |
+| Index pulse (SPY/QQQ/IWM) | yfinance (forced) | yfinance |
+| `screener.py` | yfinance (always — not wired to Schwab) | yfinance |
+
+### Setup
+
+**1 — Register a Schwab developer app**
+
+Go to [developer.schwab.com](https://developer.schwab.com), create an app, and note your **App Key** and **App Secret**. Set the callback URL to `https://127.0.0.1`.
+
+**2 — Add credentials to your shell environment**
+
+```bash
+# Add to ~/.zshrc (or ~/.bashrc)
+export SCHWAB_APP_KEY=your_app_key_here
+export SCHWAB_APP_SECRET=your_app_secret_here
+```
+
+Then reload: `source ~/.zshrc`
+
+**3 — Authenticate once**
+
+```bash
+python schwab_auth.py
+```
+
+This opens a browser OAuth flow. After approval, the token is saved to `~/.schwab_token.json` (gitignored — never committed). The token auto-refreshes on subsequent runs.
+
+**4 — Verify**
+
+```bash
+python schwab_client.py --fundamentals NVDA
+```
+
+Should print Schwab's fundamentals for NVDA: margins, ROE, P/E, PEG, debt ratios, dividend data, beta, 52-week range.
+
+### Commands
+
+```bash
+# Single ticker — Schwab price history
+SCHWAB_DATA=1 python pop_scan.py NVDA
+
+# Small batch — Schwab for all
+SCHWAB_DATA=1 python extension_scan.py NVDA MSFT AAPL
+
+# Ranked modes — Schwab for top-N scoring pass, yfinance for bulk
+SCHWAB_DATA=1 python pop_scan.py --top10
+SCHWAB_DATA=1 python pop_scan.py --mega10
+
+# Monthly MA gate — Schwab for US tickers
+SCHWAB_DATA=1 python monthly_ma_gate.py
+SCHWAB_DATA=1 python monthly_ma_gate.py --dividend
+
+# Fundamentals endpoint — broker-grade metrics for any ticker
+python schwab_client.py --fundamentals NVDA AAPL MSFT
+```
+
+### Symbol normalization
+
+Schwab uses `/` for share classes; yfinance uses `-`. `schwab_client.py` normalizes automatically — `BRK-B` becomes `BRK/B` on the wire, results come back correctly.
+
+### Why Schwab vs yfinance
+
+yfinance sometimes lags on split adjustments (prices look wrong for several days after a split). Schwab provides correctly adjusted data immediately. The toggle lets you switch to Schwab for a specific ticker without changing anything else. For routine weekly scans, yfinance is fine — the cache handles rate limits.
+
+### Disk cache (yfinance path)
+
+All yfinance price fetches go through a TTL-based pickle cache at `~/.cache/market-tools/`. Daily bars: 20-minute TTL. Weekly bars: 4-hour TTL. Back-to-back runs within those windows skip Yahoo entirely. Schwab path bypasses cache (always live from broker).
+
 ## Usage
 
 ```bash
