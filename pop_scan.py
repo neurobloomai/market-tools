@@ -130,9 +130,9 @@ def _weekly_cmf(hist_w, period=10):
 
 def get_daily_ma_pos(ticker):
     try:
-        tkr    = yf.Ticker(ticker)
-        hist   = tkr.history(period='3mo',  interval='1d')
-        hist_w = tkr.history(period='26mo', interval='1wk')
+        from market_data import fetch_daily, fetch_weekly
+        hist   = fetch_daily(ticker,  months=3)
+        hist_w = fetch_weekly(ticker, years=2)
         if hist is None or len(hist) < 52:
             return None
         close = hist['Close'].dropna()
@@ -448,7 +448,9 @@ def run_top10(n=10, tickers_override=None):
     # Regime gate — fetch before scan so user sees market context immediately
     regime = get_regime()
     now    = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
-    print(f'\n  {_BLD}TOP {n} SETUPS — {label}{_RST}  {_DIM}{now}{_RST}')
+    from market_data import active_source
+    src_tag = f'  {_DIM}[data: {active_source()}]{_RST}' if active_source() == 'schwab' else ''
+    print(f'\n  {_BLD}TOP {n} SETUPS — {label}{_RST}  {_DIM}{now}{_RST}{src_tag}')
     _print_regime_banner(regime)
 
     # Always show index pulse at the top of any scan

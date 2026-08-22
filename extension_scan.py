@@ -47,7 +47,8 @@ def _build_current_week_bar(ticker, weekly_hist):
     """
     import pandas as pd
     try:
-        daily = yf.Ticker(ticker).history(period='10d', interval='1d')
+        from market_data import fetch_daily
+        daily = fetch_daily(ticker, months=1)
         if daily is None or daily.empty:
             return weekly_hist
 
@@ -93,7 +94,8 @@ def _build_current_week_bar(ticker, weekly_hist):
 
 def get_extension_data(ticker):
     try:
-        hist  = yf.Ticker(ticker).history(period='3y', interval='1wk')
+        from market_data import fetch_weekly
+        hist  = fetch_weekly(ticker, years=3)
         if hist is None or len(hist) < 55:
             return None
 
