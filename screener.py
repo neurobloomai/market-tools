@@ -1121,7 +1121,8 @@ if __name__ == '__main__':
         webbrowser.open(f'file://{out_path}')
 
     if FUTURE_RADAR:
-        tickers_str = '  '.join(FUTURE_RADAR.keys())
+        visible = [t for t, note in FUTURE_RADAR.items() if not note.startswith('[LOCKED]')]
+        tickers_str = '  '.join(visible)
         print(f"\n  FUTURE RADAR ({len(FUTURE_RADAR)} tickers — full notes in HTML)")
         print(f"  {tickers_str}")
 
