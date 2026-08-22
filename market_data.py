@@ -14,7 +14,10 @@ Usage:
 import os
 import pandas as pd
 
-_USE_SCHWAB = os.getenv('SCHWAB_DATA', '').strip() == '1'
+
+def _use_schwab(force_yf=False):
+    """Check at call time so the env var can be read dynamically."""
+    return not force_yf and os.getenv('SCHWAB_DATA', '').strip() == '1'
 
 
 def _candles_to_df(candles):
@@ -29,12 +32,13 @@ def _candles_to_df(candles):
     return df[['Open', 'High', 'Low', 'Close', 'Volume']]
 
 
-def fetch_daily(ticker, months=3):
+def fetch_daily(ticker, months=3, force_yf=False):
     """
     Return daily OHLCV DataFrame (~3 months).
     Schwab: properly split-adjusted. yfinance: may lag on recent splits.
+    force_yf=True: skip Schwab even if SCHWAB_DATA=1 (used for bulk scans).
     """
-    if _USE_SCHWAB:
+    if _use_schwab(force_yf):
         from schwab_client import get_price_history
         period = '3m' if months <= 3 else ('6m' if months <= 6 else '1y')
         candles = get_price_history(ticker, period=period, bar='daily')
@@ -45,12 +49,12 @@ def fetch_daily(ticker, months=3):
         return yf.Ticker(ticker).history(period=period_str, interval='1d')
 
 
-def fetch_weekly(ticker, years=2):
+def fetch_weekly(ticker, years=2, force_yf=False):
     """
-    Return weekly OHLCV DataFrame (~2 years).
-    Schwab: properly split-adjusted. yfinance: may lag on recent splits.
+    Return weekly OHLCV DataFrame.
+    force_yf=True: skip Schwab even if SCHWAB_DATA=1 (used for bulk scans).
     """
-    if _USE_SCHWAB:
+    if _use_schwab(force_yf):
         from schwab_client import get_price_history
         period = '2y' if years >= 2 else '1y'
         candles = get_price_history(ticker, period=period, bar='weekly')
@@ -62,4 +66,4 @@ def fetch_weekly(ticker, years=2):
 
 
 def active_source():
-    return 'schwab' if _USE_SCHWAB else 'yfinance'
+    return 'schwab' if _use_schwab() else 'yfinance'

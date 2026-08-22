@@ -92,10 +92,10 @@ def _build_current_week_bar(ticker, weekly_hist):
         return weekly_hist
 
 
-def get_extension_data(ticker):
+def get_extension_data(ticker, force_yf=False):
     try:
         from market_data import fetch_weekly
-        hist  = fetch_weekly(ticker, years=3)
+        hist  = fetch_weekly(ticker, years=3, force_yf=force_yf)
         if hist is None or len(hist) < 55:
             return None
 

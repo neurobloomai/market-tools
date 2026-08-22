@@ -128,11 +128,11 @@ def _weekly_cmf(hist_w, period=10):
     except Exception:
         return float('nan')
 
-def get_daily_ma_pos(ticker):
+def get_daily_ma_pos(ticker, force_yf=False):
     try:
         from market_data import fetch_daily, fetch_weekly
-        hist   = fetch_daily(ticker,  months=3)
-        hist_w = fetch_weekly(ticker, years=2)
+        hist   = fetch_daily(ticker,  months=3, force_yf=force_yf)
+        hist_w = fetch_weekly(ticker, years=2,  force_yf=force_yf)
         if hist is None or len(hist) < 52:
             return None
         close = hist['Close'].dropna()
@@ -460,10 +460,14 @@ def run_top10(n=10, tickers_override=None):
     print(f'  Scanning {len(tickers)} tickers  ({eta}) ...', flush=True)
 
     # Pass 1 — parallel fetch, score without grade bonus
+    # Bulk scan always uses yfinance — Schwab API not built for 377-ticker parallel fetch
+    from functools import partial
+    _ma_pos = partial(get_daily_ma_pos, force_yf=True)
+    _ext    = partial(get_extension_data, force_yf=True)
     with ThreadPoolExecutor(max_workers=8) as ex:
-        ext_results = list(ex.map(get_extension_data, tickers))
-        pop_results = list(ex.map(get_daily_ma_pos,   tickers))
-        h_stacks    = list(ex.map(get_hourly_stack,   tickers))
+        ext_results = list(ex.map(_ext,    tickers))
+        pop_results = list(ex.map(_ma_pos, tickers))
+        h_stacks    = list(ex.map(get_hourly_stack, tickers))
 
     pass1 = []
     for ticker, ext_r, pop_r, h_ok in zip(tickers, ext_results, pop_results, h_stacks):
