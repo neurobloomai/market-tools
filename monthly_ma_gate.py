@@ -26,6 +26,7 @@ import _yf_cache  # noqa: F401 — install HTTP cache before yfinance fetches
 import yfinance as yf, warnings, os, subprocess, webbrowser
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
+from regime import get_regime, regime_html, REGIME_CSS
 warnings.filterwarnings('ignore')
 
 from screener import UNIVERSE, WATCHLIST
@@ -271,14 +272,19 @@ def _html_block(label, color_class, stacked, tier1, tier2, currency, n_total):
 
 
 def build_html(us_stacked, us_t1, us_t2, us_n,
-               ind_stacked, ind_t1, ind_t2, ind_n, now):
+               ind_stacked, ind_t1, ind_t2, ind_n, now,
+               regime=None, index_pulse=None):
     us_block    = _html_block('US Universe', 'us',
                               us_stacked, us_t1, us_t2, '$', us_n)
     india_block = _html_block('India Universe', 'india',
                               ind_stacked, ind_t1, ind_t2, '₹', ind_n)
+    from pop_scan import _index_pulse_html
+    idx_html = _index_pulse_html(index_pulse) if index_pulse else ''
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8">
-<title>Monthly MA Gate — {now}</title><style>{_CSS}</style></head><body>
+<title>Monthly MA Gate — {now}</title><style>{_CSS}{REGIME_CSS}</style></head><body>
 <h1>Monthly MA Gate <a class="guide-home" href="index.html">← Home</a></h1>
+{regime_html(regime) if regime else ''}
+{idx_html}
 <div class="meta">{now} · on-demand · pre-recovery / early-recovery screen</div>
 
 <details class="guide">
@@ -320,6 +326,11 @@ if __name__ == '__main__':
     repo = os.path.dirname(os.path.abspath(__file__))
 
     print(f"\n  Monthly MA Gate — {now}")
+    print(f"  Fetching index pulse ...")
+    from pop_scan import _fetch_index_pulse, _PINNED_INDICES
+    idx_pairs = _fetch_index_pulse(_PINNED_INDICES)
+    regime    = get_regime()
+
     print(f"  Fetching US ({len(US_TICKERS)} tickers) ...")
     us_stacked, us_t1, us_t2, us_n = _screen(US_TICKERS)
 
@@ -330,7 +341,8 @@ if __name__ == '__main__':
     print(f"  India — {ind_n} screened  |  Stacked: {len(ind_stacked)}  |  Tier1: {len(ind_t1)}  |  Tier2: {len(ind_t2)}")
 
     html     = build_html(us_stacked, us_t1, us_t2, us_n,
-                          ind_stacked, ind_t1, ind_t2, ind_n, now)
+                          ind_stacked, ind_t1, ind_t2, ind_n, now,
+                          regime=regime, index_pulse=idx_pairs)
     out_path = os.path.join(repo, 'monthly_ma_gate.html')
     with open(out_path, 'w') as f:
         f.write(html)
