@@ -10,10 +10,11 @@ Disclaimer: For informational purposes only. Not financial advice.
 
 import _yf_cache  # noqa: F401 — install HTTP cache before yfinance fetches
 import yfinance as yf
-import warnings, os, json, webbrowser, requests
+import warnings, os, json, webbrowser, requests, logging
 from datetime import datetime, date
 from concurrent.futures import ThreadPoolExecutor
 warnings.filterwarnings('ignore')
+logging.getLogger('yfinance').setLevel(logging.CRITICAL)
 
 _SCREENER_CACHE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'screener_data_cache.json')
 _SCREENER_CACHE = None  # module-level singleton — loaded once, reused across all get_fundamentals() calls
@@ -1054,15 +1055,18 @@ if __name__ == '__main__':
         fresh = list(ex.map(get_fundamentals, UNIVERSE))
 
     raw = []
+    _universe_cached = []
     for t, d in zip(UNIVERSE, fresh):
         if d is not None:
             cache[t] = d
             raw.append(d)
         elif t in cache:
-            print(f"  [{t}] yfinance miss — using cached data", flush=True)
+            _universe_cached.append(t)
             raw.append(cache[t])
 
     _save_screener_cache(cache)
+    if _universe_cached:
+        print(f"  ⚠ rate-limited — used cache for {len(_universe_cached)}/{len(UNIVERSE)} tickers", flush=True)
 
     passed  = [d for d in raw if passes_quality_filter(d)]
     failing = [d for d in raw if not passes_quality_filter(d)]
