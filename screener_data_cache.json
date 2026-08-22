@@ -1650,8 +1650,8 @@
     "pb": 1.9,
     "fcf_yield": 14.5,
     "rev_growth": -1.7,
-    "fy0_growth": -1.4,
-    "fy1_growth": -1.8,
+    "fy0_growth": null,
+    "fy1_growth": null,
     "price_vs_ma200": -35.1,
     "short_pct_float": 28.1,
     "days_to_cover": 8.4
@@ -1698,8 +1698,8 @@
     "pb": 3.6,
     "fcf_yield": 16.9,
     "rev_growth": 6.8,
-    "fy0_growth": 7.0,
-    "fy1_growth": 1.8,
+    "fy0_growth": null,
+    "fy1_growth": null,
     "price_vs_ma200": 20.3,
     "short_pct_float": 16.3,
     "days_to_cover": 9.4
