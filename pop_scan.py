@@ -384,11 +384,21 @@ def _ext_zone_label(ext_r):
 
 _PINNED_INDICES = ['SPY', 'QQQ', 'IWM']
 
-def _print_index_pulse(index_tickers):
-    """Fetch and print a pinned INDEX PULSE section for the given index tickers."""
-    import math
+def _fetch_index_pulse(index_tickers):
+    from functools import partial
+    _idx_ma = partial(get_daily_ma_pos, force_yf=True)
     with ThreadPoolExecutor(max_workers=3) as ex:
-        idx_pop = list(ex.map(get_daily_ma_pos, index_tickers))
+        idx_pop = list(ex.map(_idx_ma, index_tickers))
+    return list(zip(index_tickers, idx_pop))
+
+
+def _print_index_pulse(index_tickers, pairs=None):
+    """Print the INDEX PULSE section. Accepts pre-fetched pairs to avoid double-fetch."""
+    import math
+    if pairs is None:
+        pairs = _fetch_index_pulse(index_tickers)
+    idx_pop        = [r for _, r in pairs]
+    index_tickers  = [t for t, _ in pairs]
 
     # Pad visible text FIRST, then wrap in color — keeps column alignment intact
     def _pct_col(v, w=7):
@@ -580,7 +590,42 @@ def run_top10(n=10, tickers_override=None):
     print()
 
 
-def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly, regime=None, earnings_map=None):
+def _index_pulse_html(pairs):
+    import math
+    def _pct(v):
+        if v is None or (isinstance(v, float) and math.isnan(v)):
+            return '<td style="color:#484f58">—</td>'
+        color = '#3fb950' if v > 0 else '#f85149'
+        sign  = '+' if v > 0 else ''
+        return f'<td style="color:{color};font-weight:600">{sign}{v}%</td>'
+
+    rows = ''
+    for t, r in pairs:
+        if r is None:
+            rows += f'<tr><td class="ticker" style="color:#c9d1d9">{t}</td><td colspan="6" style="color:#484f58">—</td></tr>\n'
+            continue
+        rows += (f'<tr>'
+                 f'<td class="ticker" style="color:#c9d1d9;font-size:13px">{t}</td>'
+                 f'<td>${r["price"]:,.2f}</td>'
+                 f'{_pct(r.get("pct10"))}'
+                 f'{_pct(r.get("pct20"))}'
+                 f'{_pct(r.get("pct50"))}'
+                 f'{_cmf_cell(r.get("wk_cmf"))}'
+                 f'{_slope_cell(r.get("wk_slope"))}'
+                 f'</tr>\n')
+
+    return f'''<div class="section-header" style="margin-bottom:8px">Index Pulse — SPY · QQQ · IWM</div>
+<table style="margin-bottom:28px;width:auto;min-width:560px">
+  <thead><tr>
+    <th style="width:80px">Index</th><th>Price</th>
+    <th>vs 10dMA</th><th>vs 20dMA</th><th>vs 50dMA</th>
+    <th>Wk CMF</th><th>Wk Slope</th>
+  </tr></thead>
+  <tbody>{rows}</tbody>
+</table>'''
+
+
+def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly, regime=None, earnings_map=None, index_pulse=None):
     def rows_for(group, badge_color, badge_label, is_tight=False):
         out = ''
         for r in group:
@@ -670,6 +715,7 @@ def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly, re
 <body>
 <h1>📈 Daily Pop Scanner <span style="font-size:13px;color:#8b949e;font-weight:400">— {label}</span></h1>
 {regime_html(regime) if regime else ''}
+{_index_pulse_html(index_pulse) if index_pulse else ''}
 <div class="subtitle">{now} &nbsp;·&nbsp; price vs 10d / 20d / 50d daily MAs &nbsp;·&nbsp; not necessarily stacked &nbsp;·&nbsp; gold 1-6% · green 7-15% · amber 16-30% vs 50dMA &nbsp;·&nbsp; ◎ tight = within -5% of 2+ MAs</div>
 
 <div class="summary">
@@ -873,7 +919,11 @@ def print_combined_cli(tickers, ext_results, pop_results, h_stacks, label, grade
 
 
 def run(tickers, label, cli_only=False):
-    print(f'\n  Scanning {len(tickers)} tickers ...', flush=True)
+    print(f'\n  Fetching index pulse ...', flush=True)
+    idx_pairs = _fetch_index_pulse(_PINNED_INDICES)
+    _print_index_pulse(_PINNED_INDICES, pairs=idx_pairs)
+
+    print(f'  Scanning {len(tickers)} tickers ...', flush=True)
     grades = _load_grades()
 
     if cli_only:
@@ -904,7 +954,7 @@ def run(tickers, label, cli_only=False):
     hit_tickers  = [r['ticker'] for r in all3 + two]
     earnings_map = get_earnings_batch(hit_tickers) if hit_tickers else {}
     html   = build_html(all3, two, tight, misses, no_data, now, label, grades, hourly,
-                        regime=regime, earnings_map=earnings_map)
+                        regime=regime, earnings_map=earnings_map, index_pulse=idx_pairs)
 
     out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'pop_scan.html')
     with open(out, 'w') as f:
@@ -926,6 +976,9 @@ if __name__ == '__main__':
         run(list(dict.fromkeys(UNIVERSE)), 'Universe')
     elif args == ['--watchlist']:
         run(list(dict.fromkeys(WATCHLIST)), 'Watchlist')
+    elif args == ['--dividend']:
+        from dividend_plays_for_longterm import UNIVERSE as DIVIDEND_UNIVERSE
+        run(list(dict.fromkeys(DIVIDEND_UNIVERSE)), 'Dividend')
     elif args[0].startswith('--top'):
         suffix = args[0][5:]
         n = int(suffix) if suffix.isdigit() else (int(args[1]) if len(args) > 1 and args[1].isdigit() else 10)

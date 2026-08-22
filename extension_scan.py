@@ -38,7 +38,7 @@ from dividend_plays_for_longterm import UNIVERSE as DIVIDEND_UNIVERSE
 
 # ── Data fetch ────────────────────────────────────────────────────────────────
 
-def _build_current_week_bar(ticker, weekly_hist):
+def _build_current_week_bar(ticker, weekly_hist, force_yf=False):
     """
     Fetch this week's daily bars and aggregate into a partial OHLCV bar.
     Appends to weekly_hist if the current week isn't already the last bar,
@@ -48,7 +48,7 @@ def _build_current_week_bar(ticker, weekly_hist):
     import pandas as pd
     try:
         from market_data import fetch_daily
-        daily = fetch_daily(ticker, months=1)
+        daily = fetch_daily(ticker, months=1, force_yf=force_yf)
         if daily is None or daily.empty:
             return weekly_hist
 
@@ -100,7 +100,7 @@ def get_extension_data(ticker, force_yf=False):
             return None
 
         # Augment with current week's partial bar so CMF/RSI/slope are live
-        hist = _build_current_week_bar(ticker, hist)
+        hist = _build_current_week_bar(ticker, hist, force_yf=force_yf)
 
         close = hist['Close'].dropna()
         if len(close) < 55:
@@ -296,7 +296,63 @@ def _lt_struct_cell(pct):
             f'</td>')
 
 
-def build_html(fresh, midway, extended, ceiling, below, no_data, now, label, regime=None, earnings_map=None):
+_PINNED_INDICES = ['SPY', 'QQQ', 'IWM']
+
+
+def _fetch_index_pulse():
+    # Lazy import avoids circular dependency (pop_scan imports extension_scan at module level)
+    from pop_scan import get_daily_ma_pos
+    from functools import partial
+    _idx_ma = partial(get_daily_ma_pos, force_yf=True)
+    with ThreadPoolExecutor(max_workers=3) as ex:
+        idx_pop = list(ex.map(_idx_ma, _PINNED_INDICES))
+    return list(zip(_PINNED_INDICES, idx_pop))
+
+
+def _index_pulse_html(pairs):
+    import math
+
+    def _pct(v):
+        if v is None or (isinstance(v, float) and math.isnan(v)):
+            return '<td style="color:#484f58">—</td>'
+        color = '#3fb950' if v > 0 else '#f85149'
+        sign  = '+' if v > 0 else ''
+        return f'<td style="color:{color};font-weight:600">{sign}{v}%</td>'
+
+    def _slope(v):
+        if v is None or (isinstance(v, float) and math.isnan(v)):
+            return '<td style="color:#484f58">—</td>'
+        color = '#3fb950' if v > 0 else '#f85149'
+        sign  = '+' if v > 0 else ''
+        return f'<td style="color:{color};font-size:11px">{sign}{v}%</td>'
+
+    rows = ''
+    for t, r in pairs:
+        if r is None:
+            rows += f'<tr><td class="ticker" style="color:#c9d1d9">{t}</td><td colspan="6" style="color:#484f58">—</td></tr>\n'
+            continue
+        rows += (f'<tr>'
+                 f'<td class="ticker" style="color:#c9d1d9;font-size:13px">{t}</td>'
+                 f'<td>${r["price"]:,.2f}</td>'
+                 f'{_pct(r.get("pct10"))}'
+                 f'{_pct(r.get("pct20"))}'
+                 f'{_pct(r.get("pct50"))}'
+                 f'{_cmf_cell(r.get("wk_cmf"))}'
+                 f'{_slope(r.get("wk_slope"))}'
+                 f'</tr>\n')
+
+    return f'''<div class="section" style="margin-bottom:8px;border-top:none;padding-top:0;font-size:12px;color:#c9d1d9;font-weight:600;letter-spacing:0">Index Pulse — SPY · QQQ · IWM</div>
+<table style="margin-bottom:24px;width:auto;min-width:520px">
+  <thead><tr>
+    <th style="width:80px">Index</th><th>Price</th>
+    <th>vs 10dMA</th><th>vs 20dMA</th><th>vs 50dMA</th>
+    <th>Wk CMF</th><th>Wk Slope</th>
+  </tr></thead>
+  <tbody>{rows}</tbody>
+</table>'''
+
+
+def build_html(fresh, midway, extended, ceiling, below, no_data, now, label, regime=None, earnings_map=None, index_pulse=None):
     def rows_for(group, badge_color, badge_label):
         out = ''
         for r in group:
@@ -384,6 +440,7 @@ def build_html(fresh, midway, extended, ceiling, below, no_data, now, label, reg
 <body>
 <h1>📡 Extension Scan <span style="font-size:13px;color:#8b949e;font-weight:400">— {label}</span></h1>
 {regime_html(regime) if regime else ''}
+{_index_pulse_html(index_pulse) if index_pulse else ''}
 <div class="subtitle">{now} &nbsp;·&nbsp; weekly bars · 3yr history &nbsp;·&nbsp; runway = % of 90th-pct ceiling still unused &nbsp;·&nbsp; ceiling = implied price at historical ceiling</div>
 
 <div style="font-size:11px;color:#8b949e;margin-bottom:8px;padding:8px 12px;background:#161b22;border-radius:6px;border-left:3px solid #30363d;">
@@ -526,7 +583,10 @@ def _cli_header():
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def run(tickers, label, cli_only=False):
-    print(f'\n  Extension Scan — {len(tickers)} tickers ...', flush=True)
+    print(f'\n  Fetching index pulse ...', flush=True)
+    idx_pairs = _fetch_index_pulse()
+
+    print(f'  Extension Scan — {len(tickers)} tickers ...', flush=True)
     with ThreadPoolExecutor(max_workers=12) as ex:
         results = list(ex.map(get_extension_data, tickers))
 
@@ -558,7 +618,7 @@ def run(tickers, label, cli_only=False):
     above_tickers = [r['ticker'] for r in fresh + midway + extended + ceiling]
     earnings_map  = get_earnings_batch(above_tickers) if above_tickers else {}
     html   = build_html(fresh, midway, extended, ceiling, below, no_data, now, label,
-                        regime=regime, earnings_map=earnings_map)
+                        regime=regime, earnings_map=earnings_map, index_pulse=idx_pairs)
 
     out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'extension_scan.html')
     with open(out, 'w') as f:
