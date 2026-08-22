@@ -654,6 +654,7 @@ def get_fundamentals(ticker):
     if ticker in cache:
         return cache[ticker]
     # Cache miss — hit yfinance with retries
+    _last_err = None
     for attempt in range(3):
         try:
             result = _get_fundamentals_inner(ticker)
@@ -662,9 +663,10 @@ def get_fundamentals(ticker):
                 _save_screener_cache(cache)
                 return result
         except Exception as e:
-            print(f"  ⚠ {ticker}: {e}", flush=True)
+            _last_err = e
         if attempt < 2:
             time.sleep(1.5 * (attempt + 1))
+    # silent — caller surfaces a compact summary if needed
     return None
 
 def passes_quality_filter(d):
@@ -1080,13 +1082,17 @@ if __name__ == '__main__':
         watch_fresh = list(ex.map(get_fundamentals, WATCHLIST))
 
     watch_raw = []
+    _cached_fallback = []
     for t, d in zip(WATCHLIST, watch_fresh):
         if d is not None:
             cache[t] = d
             watch_raw.append(d)
         elif t in cache:
+            _cached_fallback.append(t)
             watch_raw.append(cache[t])
     _save_screener_cache(cache)
+    if _cached_fallback:
+        print(f"  ⚠ rate-limited — used cache: {' '.join(_cached_fallback)}", flush=True)
     watch_raw.sort(key=lambda x: -(x['market_cap_b'] or 0))
 
     print(f"  👀  {len(watch_raw)} watchlist entries fetched\n")
@@ -1107,10 +1113,9 @@ if __name__ == '__main__':
         webbrowser.open(f'file://{out_path}')
 
     if FUTURE_RADAR:
-        print(f"\n  FUTURE RADAR — revisit in 2-3 quarters (not scanned)")
-        print(f"  {'─'*60}")
-        for t, note in FUTURE_RADAR.items():
-            print(f"  {t:8}  {note}")
+        tickers_str = '  '.join(FUTURE_RADAR.keys())
+        print(f"\n  FUTURE RADAR ({len(FUTURE_RADAR)} tickers — full notes in HTML)")
+        print(f"  {tickers_str}")
 
     try:
         repo = _os.path.dirname(out_path)
