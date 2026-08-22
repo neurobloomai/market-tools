@@ -41,7 +41,9 @@ INDIA_TICKERS = _india_all
 
 def _fetch(ticker):
     try:
-        hist  = yf.Ticker(ticker).history(period='2y', interval='1wk')
+        from market_data import fetch_weekly
+        force_yf = ticker.endswith(('.NS', '.BO'))   # Schwab doesn't cover Indian markets
+        hist  = fetch_weekly(ticker, years=2, force_yf=force_yf)
         close = hist['Close'].dropna()
         if len(close) < 43:
             return None
@@ -70,7 +72,7 @@ def _fetch(ticker):
 
 def _screen(tickers):
     results = []
-    with ThreadPoolExecutor(max_workers=20) as ex:
+    with ThreadPoolExecutor(max_workers=12) as ex:
         for r in ex.map(_fetch, tickers):
             if r:
                 results.append(r)
@@ -273,11 +275,14 @@ def _html_block(label, color_class, stacked, tier1, tier2, currency, n_total):
 
 def build_html(us_stacked, us_t1, us_t2, us_n,
                ind_stacked, ind_t1, ind_t2, ind_n, now,
-               regime=None, index_pulse=None):
-    us_block    = _html_block('US Universe', 'us',
+               regime=None, index_pulse=None, us_label='US Universe', show_india=True):
+    us_block    = _html_block(us_label, 'us',
                               us_stacked, us_t1, us_t2, '$', us_n)
-    india_block = _html_block('India Universe', 'india',
-                              ind_stacked, ind_t1, ind_t2, '₹', ind_n)
+    india_section = ''
+    if show_india and ind_stacked is not None:
+        india_block   = _html_block('India Universe', 'india',
+                                    ind_stacked, ind_t1, ind_t2, '₹', ind_n)
+        india_section = f'<hr class="section-break">{india_block}'
     from pop_scan import _index_pulse_html
     idx_html = _index_pulse_html(index_pulse) if index_pulse else ''
     return f"""<!DOCTYPE html><html><head><meta charset="utf-8">
@@ -303,17 +308,14 @@ def build_html(us_stacked, us_t1, us_t2, us_n,
 </details>
 
 <div class="summary">
-  <div class="stat"><div class="stat-val" style="color:#3fb950">{len(us_stacked)}</div><div class="stat-lbl">US Fully Stacked</div></div>
-  <div class="stat"><div class="stat-val" style="color:#3fb950;opacity:.7">{len(us_t1)}</div><div class="stat-lbl">US Tier 1 (±2%)</div></div>
-  <div class="stat"><div class="stat-val" style="color:#e3b341">{len(us_t2)}</div><div class="stat-lbl">US Tier 2 (±5%)</div></div>
-  <div class="stat"><div class="stat-val" style="color:#bc8cff">{len(ind_stacked)}</div><div class="stat-lbl">India Fully Stacked</div></div>
-  <div class="stat"><div class="stat-val" style="color:#bc8cff;opacity:.7">{len(ind_t1)}</div><div class="stat-lbl">India Tier 1 (±2%)</div></div>
-  <div class="stat"><div class="stat-val" style="color:#bc8cff;opacity:.5">{len(ind_t2)}</div><div class="stat-lbl">India Tier 2 (±5%)</div></div>
+  <div class="stat"><div class="stat-val" style="color:#3fb950">{len(us_stacked)}</div><div class="stat-lbl">Fully Stacked</div></div>
+  <div class="stat"><div class="stat-val" style="color:#3fb950;opacity:.7">{len(us_t1)}</div><div class="stat-lbl">Tier 1 (±2%)</div></div>
+  <div class="stat"><div class="stat-val" style="color:#e3b341">{len(us_t2)}</div><div class="stat-lbl">Tier 2 (±5%)</div></div>
+  {'<div class="stat"><div class="stat-val" style="color:#bc8cff">' + str(len(ind_stacked)) + '</div><div class="stat-lbl">India Fully Stacked</div></div><div class="stat"><div class="stat-val" style="color:#bc8cff;opacity:.7">' + str(len(ind_t1)) + '</div><div class="stat-lbl">India Tier 1 (±2%)</div></div><div class="stat"><div class="stat-val" style="color:#bc8cff;opacity:.5">' + str(len(ind_t2)) + '</div><div class="stat-lbl">India Tier 2 (±5%)</div></div>' if show_india and ind_stacked is not None else ''}
 </div>
 
 {us_block}
-<hr class="section-break">
-{india_block}
+{india_section}
 
 <p style="color:#484f58;font-size:10px;margin-top:24px;border-top:1px solid #21262d;padding-top:8px">For informational purposes only. Not financial advice. Auto-generated from Yahoo Finance data.</p>
 </body></html>"""
@@ -322,25 +324,41 @@ def build_html(us_stacked, us_t1, us_t2, us_n,
 # ── main ──────────────────────────────────────────────────────────────────────
 
 if __name__ == '__main__':
+    import sys
+    args = sys.argv[1:]
+    dividend_mode = '--dividend' in args
+
     now  = datetime.now(timezone.utc).strftime('%b %d %Y  %H:%M UTC')
     repo = os.path.dirname(os.path.abspath(__file__))
 
-    print(f"\n  Monthly MA Gate — {now}")
+    schwab_tag = '  [data: schwab]' if os.getenv('SCHWAB_DATA', '').strip() == '1' else ''
+    print(f"\n  Monthly MA Gate — {now}{schwab_tag}")
     print(f"  Fetching index pulse ...")
     from pop_scan import _fetch_index_pulse, _PINNED_INDICES
     idx_pairs = _fetch_index_pulse(_PINNED_INDICES)
     regime    = get_regime()
 
-    print(f"  Fetching US ({len(US_TICKERS)} tickers) ...")
-    us_stacked, us_t1, us_t2, us_n = _screen(US_TICKERS)
+    if dividend_mode:
+        from dividend_plays_for_longterm import UNIVERSE as DIVIDEND_UNIVERSE
+        div_tickers = list(dict.fromkeys(DIVIDEND_UNIVERSE))
+        print(f"  Fetching Dividend ({len(div_tickers)} tickers) ...")
+        us_stacked, us_t1, us_t2, us_n = _screen(div_tickers)
+        print(f"\n  Dividend — {us_n} screened  |  Stacked: {len(us_stacked)}  |  Tier1: {len(us_t1)}  |  Tier2: {len(us_t2)}")
+        html = build_html(us_stacked, us_t1, us_t2, us_n,
+                          None, None, None, None, now,
+                          regime=regime, index_pulse=idx_pairs,
+                          us_label='Dividend Universe', show_india=False)
+    else:
+        print(f"  Fetching US ({len(US_TICKERS)} tickers) ...")
+        us_stacked, us_t1, us_t2, us_n = _screen(US_TICKERS)
 
-    print(f"  Fetching India ({len(INDIA_TICKERS)} tickers) ...")
-    ind_stacked, ind_t1, ind_t2, ind_n = _screen(INDIA_TICKERS)
+        print(f"  Fetching India ({len(INDIA_TICKERS)} tickers) ...")
+        ind_stacked, ind_t1, ind_t2, ind_n = _screen(INDIA_TICKERS)
 
-    print(f"\n  US    — {us_n} screened  |  Stacked: {len(us_stacked)}  |  Tier1: {len(us_t1)}  |  Tier2: {len(us_t2)}")
-    print(f"  India — {ind_n} screened  |  Stacked: {len(ind_stacked)}  |  Tier1: {len(ind_t1)}  |  Tier2: {len(ind_t2)}")
+        print(f"\n  US    — {us_n} screened  |  Stacked: {len(us_stacked)}  |  Tier1: {len(us_t1)}  |  Tier2: {len(us_t2)}")
+        print(f"  India — {ind_n} screened  |  Stacked: {len(ind_stacked)}  |  Tier1: {len(ind_t1)}  |  Tier2: {len(ind_t2)}")
 
-    html     = build_html(us_stacked, us_t1, us_t2, us_n,
+        html = build_html(us_stacked, us_t1, us_t2, us_n,
                           ind_stacked, ind_t1, ind_t2, ind_n, now,
                           regime=regime, index_pulse=idx_pairs)
     out_path = os.path.join(repo, 'monthly_ma_gate.html')
