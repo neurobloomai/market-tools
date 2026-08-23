@@ -107,8 +107,12 @@ def get_price_history(ticker, period='3m', bar='daily'):
         frequency_type = freq_type,
         frequency      = freq_val,
     )
-    data = r.json()
-    return data.get('candles', [])
+    data    = r.json()
+    candles = data.get('candles', [])
+    if not candles:
+        err = data.get('error') or data.get('message') or r.status_code
+        print(f"  [Schwab] {ticker}: no candles — {err}", file=sys.stderr)
+    return candles
 
 
 def print_history_summary(ticker, period='3m', bar='daily'):
