@@ -1173,9 +1173,46 @@ def build_html(results, watchlist=None, universe_failing=None):
 </html>"""
 
 if __name__ == '__main__':
-    import sys, socket as _socket
+    import sys, socket as _socket, json as _json, os as _osp
+    from datetime import datetime as _dtnow, timedelta as _td
     _socket.setdefaulttimeout(15)  # prevent yfinance from hanging indefinitely in --top/--mega scans
     _SCREENER_CACHE = {}  # force fresh yfinance fetches; aligned_screener reads the populated file cache afterward
+
+    # ── Weekend / cache detection ─────────────────────────────────────────────
+    _now  = _dtnow.utcnow()
+    _dow  = _now.weekday()          # 0=Mon … 4=Fri, 5=Sat, 6=Sun
+    _is_wknd = _dow >= 5
+    # Sat/Sun map to Friday's trading week so cache written Friday stays valid all weekend
+    _trade_week = (
+        (_now - _td(days=1)).strftime('%Y-W%W') if _dow == 5 else
+        (_now - _td(days=2)).strftime('%Y-W%W') if _dow == 6 else
+        _now.strftime('%Y-W%W')
+    )
+
+    _SIG_CACHE_FILE = _osp.path.join(_osp.path.dirname(_osp.path.abspath(__file__)), 'signal_cache.json')
+
+    def _load_sig_cache():
+        try:
+            with open(_SIG_CACHE_FILE) as f: return _json.load(f)
+        except Exception: return {}
+
+    def _save_sig_cache(sc):
+        try:
+            with open(_SIG_CACHE_FILE, 'w') as f: _json.dump(sc, f)
+        except Exception: pass
+
+    _sig_cache = _load_sig_cache()
+
+    def _get_signal_cached(t):
+        entry = _sig_cache.get(t, {})
+        if entry.get('week') == _trade_week or (_is_wknd and entry):
+            sig = tuple(entry['signal']) if entry.get('signal') else None
+            return sig, entry.get('ma_detail')
+        if _is_wknd:
+            return None, None  # weekend + no cached entry → no data, no API call
+        sig, ma = get_signal_detail(t)
+        _sig_cache[t] = {'signal': list(sig) if sig else None, 'ma_detail': ma, 'week': _trade_week}
+        return sig, ma
 
     # ── Signal CLI helpers ────────────────────────────────────────────────────
     def _fmt_signal_row(t, d, s, m, show_blockers=True):
@@ -1229,11 +1266,20 @@ if __name__ == '__main__':
             print("Usage: python screener.py --signal TICKER [TICKER ...]")
             sys.exit(1)
         print()
-        with ThreadPoolExecutor(max_workers=6) as ex:
-            funds    = list(ex.map(get_fundamentals,  tickers))
-            sig_mads = list(ex.map(get_signal_detail, tickers))
+        _f_cache = _load_screener_cache()
+        if _is_wknd:
+            funds = [_f_cache.get(t) for t in tickers]
+        else:
+            with ThreadPoolExecutor(max_workers=6) as ex:
+                funds = list(ex.map(get_fundamentals, tickers))
+            for t, d in zip(tickers, funds):
+                if d is not None: _f_cache[t] = d
+        sig_mads = [_get_signal_cached(t) for t in tickers]
+        _save_sig_cache(_sig_cache)
         sigs = [x[0] for x in sig_mads]
         mads = [x[1] for x in sig_mads]
+        if _is_wknd:
+            print(f"  [weekend — using cached data]\n")
         _print_signal_header()
         for t, d, s, m in zip(tickers, funds, sigs, mads):
             if d:
@@ -1266,20 +1312,26 @@ if __name__ == '__main__':
             _pool  = list(dict.fromkeys(UNIVERSE + list(WATCHLIST)))
             _label = f'UNIVERSE + WATCHLIST ({len(_pool)} tickers)'
 
-        print(f"\n  Scanning {_label} for bull signals ...\n", flush=True)
+        _wknd_note = '  [weekend — using cached data]\n' if _is_wknd else ''
+        print(f"\n  Scanning {_label} for bull signals ...\n{_wknd_note}", flush=True)
         _disk_cache = _load_screener_cache()
-        def _get_funds_cached(t):
-            d = get_fundamentals(t)
-            return d if d is not None else _disk_cache.get(t)
 
-        with ThreadPoolExecutor(max_workers=6) as ex:
-            _funds    = list(ex.map(_get_funds_cached,  _pool))
-            _sig_mads = list(ex.map(get_signal_detail, _pool))
+        if _is_wknd:
+            _funds = [_disk_cache.get(t) for t in _pool]
+        else:
+            def _get_funds_cached(t):
+                d = get_fundamentals(t)
+                return d if d is not None else _disk_cache.get(t)
+            with ThreadPoolExecutor(max_workers=6) as ex:
+                _funds = list(ex.map(_get_funds_cached, _pool))
+
+        _sig_mads = [_get_signal_cached(t) for t in _pool]
+        _save_sig_cache(_sig_cache)
         _sigs = [x[0] for x in _sig_mads]
         _mads = [x[1] for x in _sig_mads]
         _none_count = sum(1 for d in _funds if d is None)
         if _none_count:
-            print(f"  ⚠ {_none_count} tickers skipped — rate-limited and not in cache\n", flush=True)
+            print(f"  ⚠ {_none_count} tickers skipped — not in cache\n", flush=True)
 
         _hits = [
             (t, d, s, m)
