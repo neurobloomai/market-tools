@@ -1245,6 +1245,30 @@ if __name__ == '__main__':
 
         print(f"  {t:6}  {sig_str:9}  {price_str:10}  {grade:3}{ma_str}{blocker_str}")
 
+    def _rsp_spy_context():
+        """Fetch RSP/SPY ratio via Schwab. Returns one-line string or None if unavailable."""
+        try:
+            from schwab_client import get_price_history
+            import statistics as _st
+            rsp = get_price_history('RSP', period='2y', bar='weekly')
+            spy = get_price_history('SPY', period='2y', bar='weekly')
+            rsp_m = {c['datetime']: c['close'] for c in rsp}
+            spy_m = {c['datetime']: c['close'] for c in spy}
+            common = sorted(set(rsp_m) & set(spy_m))
+            if len(common) < 14:
+                return None
+            vals  = [rsp_m[dt] / spy_m[dt] for dt in common]
+            cur   = vals[-1]
+            w13   = vals[-14]
+            ma10  = _st.mean(vals[-10:])
+            chg13 = (cur / w13 - 1) * 100
+            label = ('broadening'   if cur > ma10 and chg13 > 0 else
+                     'concentrated' if cur < ma10 and chg13 < 0 else
+                     'neutral')
+            return f'RSP/SPY {cur:.4f}  {chg13:+.1f}% 13w  — {label}'
+        except Exception:
+            return None
+
     def _print_signal_header():
         print(f"  {'ticker':<6}  {'signal':<9}  {'price':<10}  {'grd':<3}  {'align':<5}  {'vs 10w':<9}  {'slope':<8}  {'RSI':<6}  ext87w")
         print(f"  {'──────':<6}  {'─────────':<9}  {'──────────':<10}  {'───':<3}  {'─────':<5}  {'─────────':<9}  {'────────':<8}  {'──────':<6}  ──────")
@@ -1318,6 +1342,9 @@ if __name__ == '__main__':
 
         _wknd_note = '  [weekend — using cached data]\n' if _is_wknd else ''
         print(f"\n  Scanning {_label} for bull signals ...\n{_wknd_note}", flush=True)
+        _ctx = _rsp_spy_context()
+        if _ctx:
+            print(f"  Market: {_ctx}\n", flush=True)
         _disk_cache = _load_screener_cache()
 
         if _is_wknd:
