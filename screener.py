@@ -143,6 +143,50 @@ def get_tech_signal(ticker):
     except Exception:
         return None
 
+
+def get_ma_detail(ticker):
+    """
+    Weekly MA structure for --signal detail display.
+    Returns dict: align, vs_10w, slope, rsi, ext87, ma10/20/43/87
+    """
+    try:
+        h = yf.Ticker(ticker).history(period='2y', interval='1wk')
+        if len(h) < 15:
+            return None
+        closes = h['Close'].dropna()
+        n = len(closes)
+        p = closes.iloc[-1]
+
+        def _ma(w):
+            return closes.tail(w).mean() if n >= w else None
+
+        ma10, ma20, ma43, ma87 = _ma(10), _ma(20), _ma(43), _ma(87)
+
+        slope = None
+        if n >= 11 and ma10 is not None:
+            prev_ma10 = closes.iloc[-11:-1].mean()
+            slope = (ma10 - prev_ma10) / prev_ma10 * 100
+
+        delta = closes.diff().dropna()
+        gain  = delta.clip(lower=0).tail(14).mean()
+        loss  = (-delta.clip(upper=0)).tail(14).mean()
+        rsi   = 100 - 100 / (1 + (gain / loss if loss else 999))
+
+        mas   = [m for m in [ma10, ma20, ma43, ma87] if m is not None]
+        align = sum(1 for m in mas if p > m)
+
+        return {
+            'align':   align,
+            'total':   len(mas),
+            'vs_10w':  (p - ma10) / ma10 * 100 if ma10 else None,
+            'slope':   slope,
+            'rsi':     rsi,
+            'ext87':   (p - ma87) / ma87 * 100 if ma87 else None,
+            'ma10': ma10, 'ma20': ma20, 'ma43': ma43, 'ma87': ma87,
+        }
+    except Exception:
+        return None
+
 # Broad universe — S&P 500 quality names worth screening
 UNIVERSE = [
     'AAPL','MSFT','META','NVDA','GOOGL','V','MA','UNH','LLY','JPM',
@@ -1028,7 +1072,48 @@ if __name__ == '__main__':
     import sys
     _SCREENER_CACHE = {}  # force fresh yfinance fetches; aligned_screener reads the populated file cache afterward
 
-    # Ad-hoc signal check: python screener.py --signal TICKER [TICKER ...]
+    # ── Signal CLI helpers ────────────────────────────────────────────────────
+    def _fmt_signal_row(t, d, s, m, show_blockers=True):
+        if s:
+            arrow   = '⬆' if s[0] == 'bull' else '⬇'
+            sig_str = f'{arrow} {s[0]}'
+        else:
+            sig_str = '—'
+
+        if d:
+            grade = quality_grade(d) if passes_quality_filter(d) else '–'
+            price_str = f'${d["price"]:.2f}' if isinstance(d.get('price'), (int, float)) else f'${d.get("price","?")}'
+        else:
+            grade, price_str = '?', '$?'
+
+        ma_str = ''
+        if m:
+            a_str  = f'MA{m["align"]}/{m["total"]}'
+            v10    = f'10w:{m["vs_10w"]:+.1f}%'  if m.get('vs_10w') is not None else ''
+            sl     = f'sl:{m["slope"]:+.1f}%'    if m.get('slope')  is not None else ''
+            ri     = f'RSI:{m["rsi"]:.0f}'        if m.get('rsi')    is not None else ''
+            ex     = f'ext:{m["ext87"]:+.0f}%'    if m.get('ext87')  is not None else ''
+            warn   = '  ⚠ ext' if (m.get('ext87') or 0) > 100 else ''
+            ma_str = f'  {a_str}  {v10}  {sl}  {ri}  {ex}{warn}'
+
+        blocker_str = ''
+        if show_blockers and d and not passes_quality_filter(d):
+            blockers = ', '.join(f[0] for f in failing_filters(d) if f[0] != 'Passes all filters')
+            blocker_str = f'  [{blockers}]'
+
+        print(f"  {t:6}  {sig_str:8}  {price_str:10}  {grade:3}{ma_str}{blocker_str}")
+
+    def _rank_key(item):
+        """Sort bull signals: grade → 87w ext → proximity to 10w MA."""
+        d, m = item[1], item[3]
+        g = {'A+': 0, 'A': 1, 'B': 2}.get(quality_grade(d) if (d and passes_quality_filter(d)) else '–', 3)
+        ext  = m['ext87']  if m and m.get('ext87')  is not None else 999
+        prox = abs(m['vs_10w']) if m and m.get('vs_10w') is not None else 999
+        return (g, ext, prox)
+
+    import re as _re
+
+    # --signal TICKER [TICKER ...]
     if len(sys.argv) > 1 and sys.argv[1] == '--signal':
         tickers = [t.upper() for t in sys.argv[2:]]
         if not tickers:
@@ -1038,20 +1123,58 @@ if __name__ == '__main__':
         with ThreadPoolExecutor(max_workers=8) as ex:
             funds = list(ex.map(get_fundamentals, tickers))
             sigs  = list(ex.map(get_tech_signal,  tickers))
-        for t, d, s in zip(tickers, funds, sigs):
-            if s:
-                arrow  = '⬆' if s[0] == 'bull' else '⬇'
-                sig_str = f'{arrow} {s[0]:4}  {s[1]}'
-            else:
-                sig_str = '—'
+            mads  = list(ex.map(get_ma_detail,    tickers))
+        for t, d, s, m in zip(tickers, funds, sigs, mads):
             if d:
-                grade   = quality_grade(d) if passes_quality_filter(d) else '–'
-                blocker = ''
-                if not passes_quality_filter(d):
-                    blocker = '  blockers: ' + ', '.join(f[0] for f in failing_filters(d) if f[0] != 'Passes all filters')
-                print(f"  {t:6}  signal: {sig_str:20}  ${d['price']}  grade: {grade}{blocker}")
+                _fmt_signal_row(t, d, s, m)
             else:
                 print(f"  {t:6}  no data")
+        print()
+        sys.exit(0)
+
+    # --top N  (UNIVERSE bull signals, ranked)
+    # --mega N (UNIVERSE + WATCHLIST bull signals, ranked)
+    _top_m  = _re.match(r'^--top(\d*)$',  sys.argv[1]) if len(sys.argv) > 1 else None
+    _mega_m = _re.match(r'^--mega(\d*)$', sys.argv[1]) if len(sys.argv) > 1 else None
+    if _top_m or _mega_m:
+        _match = _top_m or _mega_m
+        _mode  = 'top' if _top_m else 'mega'
+        # N from suffix (--top10) or next arg (--top 10), default 10
+        _n_str = _match.group(1)
+        if _n_str:
+            _n = int(_n_str)
+        elif len(sys.argv) > 2 and sys.argv[2].isdigit():
+            _n = int(sys.argv[2])
+        else:
+            _n = 10
+
+        if _mode == 'top':
+            _pool  = list(dict.fromkeys(UNIVERSE))
+            _label = f'UNIVERSE ({len(_pool)} tickers)'
+        else:
+            _pool  = list(dict.fromkeys(UNIVERSE + list(WATCHLIST)))
+            _label = f'UNIVERSE + WATCHLIST ({len(_pool)} tickers)'
+
+        print(f"\n  Scanning {_label} for bull signals ...\n", flush=True)
+        with ThreadPoolExecutor(max_workers=12) as ex:
+            _funds = list(ex.map(get_fundamentals, _pool))
+            _sigs  = list(ex.map(get_tech_signal,  _pool))
+            _mads  = list(ex.map(get_ma_detail,    _pool))
+
+        _hits = [
+            (t, d, s, m)
+            for t, d, s, m in zip(_pool, _funds, _sigs, _mads)
+            if s and s[0] == 'bull' and d is not None
+        ]
+        _hits.sort(key=_rank_key)
+
+        if not _hits:
+            print("  No bull signals found.")
+        else:
+            print(f"  Top {_n} bull signals — ranked by grade → ext → proximity to 10w MA\n")
+            for t, d, s, m in _hits[:_n]:
+                _fmt_signal_row(t, d, s, m, show_blockers=False)
+
         print()
         sys.exit(0)
 
