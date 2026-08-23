@@ -1267,16 +1267,24 @@ if __name__ == '__main__':
             _label = f'UNIVERSE + WATCHLIST ({len(_pool)} tickers)'
 
         print(f"\n  Scanning {_label} for bull signals ...\n", flush=True)
+        _disk_cache = _load_screener_cache()
+        def _get_funds_cached(t):
+            d = get_fundamentals(t)
+            return d if d is not None else _disk_cache.get(t)
+
         with ThreadPoolExecutor(max_workers=6) as ex:
-            _funds    = list(ex.map(get_fundamentals,  _pool))
+            _funds    = list(ex.map(_get_funds_cached,  _pool))
             _sig_mads = list(ex.map(get_signal_detail, _pool))
         _sigs = [x[0] for x in _sig_mads]
         _mads = [x[1] for x in _sig_mads]
+        _none_count = sum(1 for d in _funds if d is None)
+        if _none_count:
+            print(f"  ⚠ {_none_count} tickers skipped — rate-limited and not in cache\n", flush=True)
 
         _hits = [
             (t, d, s, m)
             for t, d, s, m in zip(_pool, _funds, _sigs, _mads)
-            if s and s[0] == 'bull' and d is not None
+            if s and s[0] in ('BullDiv', 'Trend') and d is not None
         ]
         _hits.sort(key=_rank_key)
 
