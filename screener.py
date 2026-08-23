@@ -268,7 +268,23 @@ def get_signal_detail(ticker):
             idx      = histo.index
             macd_sig = _div(histo.values, highs.loc[idx].values, lows.loc[idx].values, len(histo))
 
-        signal = (rsi_sig, 'RSI+MACD') if rsi_sig and macd_sig and rsi_sig == macd_sig else None
+        # BullDiv / BearDiv — RSI+MACD both agree on divergence
+        div_signal = None
+        if rsi_sig and macd_sig and rsi_sig == macd_sig:
+            div_signal = ('BullDiv' if rsi_sig == 'bull' else 'BearDiv', 'RSI+MACD')
+
+        # Trend — uptrend pullback to 10w MA
+        # align 3/4 or 4/4, price within -8% to +3% of 10w MA, slope ≥ 0, RSI 35–65
+        trend_signal = None
+        vs_10w = ma_detail.get('vs_10w')
+        if (align >= 3
+                and slope is not None and slope >= 0
+                and vs_10w is not None and -8 <= vs_10w <= 5
+                and 35 <= rsi_v <= 65):
+            trend_signal = ('Trend', 'MA+slope')
+
+        # BullDiv/BearDiv takes priority; Trend is secondary
+        signal = div_signal or trend_signal
         return signal, ma_detail
 
     except Exception:
@@ -1164,7 +1180,7 @@ if __name__ == '__main__':
     # ── Signal CLI helpers ────────────────────────────────────────────────────
     def _fmt_signal_row(t, d, s, m, show_blockers=True):
         if s:
-            arrow   = '⬆' if s[0] == 'bull' else '⬇'
+            arrow   = '⬇' if s[0] == 'BearDiv' else '⬆'
             sig_str = f'{arrow} {s[0]}'
         else:
             sig_str = '—'
@@ -1190,11 +1206,11 @@ if __name__ == '__main__':
             blockers = ', '.join(f[0] for f in failing_filters(d) if f[0] != 'Passes all filters')
             blocker_str = f'  [{blockers}]'
 
-        print(f"  {t:6}  {sig_str:8}  {price_str:10}  {grade:3}{ma_str}{blocker_str}")
+        print(f"  {t:6}  {sig_str:9}  {price_str:10}  {grade:3}{ma_str}{blocker_str}")
 
     def _print_signal_header():
-        print(f"  {'ticker':<6}  {'signal':<8}  {'price':<10}  {'grd':<3}  {'align':<5}  {'vs 10w':<9}  {'slope':<8}  {'RSI':<6}  ext87w")
-        print(f"  {'──────':<6}  {'────────':<8}  {'──────────':<10}  {'───':<3}  {'─────':<5}  {'─────────':<9}  {'────────':<8}  {'──────':<6}  ──────")
+        print(f"  {'ticker':<6}  {'signal':<9}  {'price':<10}  {'grd':<3}  {'align':<5}  {'vs 10w':<9}  {'slope':<8}  {'RSI':<6}  ext87w")
+        print(f"  {'──────':<6}  {'─────────':<9}  {'──────────':<10}  {'───':<3}  {'─────':<5}  {'─────────':<9}  {'────────':<8}  {'──────':<6}  ──────")
 
     def _rank_key(item):
         """Sort bull signals: grade → 87w ext → proximity to 10w MA."""
