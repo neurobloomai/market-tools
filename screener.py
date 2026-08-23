@@ -187,6 +187,94 @@ def get_ma_detail(ticker):
     except Exception:
         return None
 
+
+def get_signal_detail(ticker):
+    """Single 2y weekly fetch → (signal, ma_detail). Avoids the double yfinance call
+    that get_tech_signal + get_ma_detail would require separately."""
+    try:
+        hist = yf.Ticker(ticker).history(period='2y', interval='1wk')
+        if len(hist) < 35:
+            return None, None
+        closes = hist['Close'].dropna()
+        highs  = hist['High'].reindex(closes.index)
+        lows   = hist['Low'].reindex(closes.index)
+        n      = len(closes)
+        p      = closes.iloc[-1]
+
+        # MA structure
+        def _ma(w):
+            return closes.tail(w).mean() if n >= w else None
+        ma10, ma20, ma43, ma87 = _ma(10), _ma(20), _ma(43), _ma(87)
+
+        slope = None
+        if n >= 11 and ma10 is not None:
+            prev_ma10 = closes.iloc[-11:-1].mean()
+            slope = (ma10 - prev_ma10) / prev_ma10 * 100
+
+        d14   = closes.diff().dropna()
+        gain  = d14.clip(lower=0).tail(14).mean()
+        loss  = (-d14.clip(upper=0)).tail(14).mean()
+        rsi_v = 100 - 100 / (1 + (gain / loss if loss else 999))
+
+        mas   = [m for m in [ma10, ma20, ma43, ma87] if m is not None]
+        align = sum(1 for m in mas if p > m)
+
+        ma_detail = {
+            'align':  align,
+            'total':  len(mas),
+            'vs_10w': (p - ma10) / ma10 * 100 if ma10 else None,
+            'slope':  slope,
+            'rsi':    rsi_v,
+            'ext87':  (p - ma87) / ma87 * 100 if ma87 else None,
+            'ma10': ma10, 'ma20': ma20, 'ma43': ma43, 'ma87': ma87,
+        }
+
+        # RSI+MACD divergence signal
+        RECENCY   = 4
+        MIN_SWING = 0.0075
+        MAX_SWING = 0.15
+
+        def _swings(arr, mode='high'):
+            if mode == 'high':
+                return [i for i in range(1, len(arr)-1) if arr[i] >= arr[i-1] and arr[i] >= arr[i+1]]
+            return [i for i in range(1, len(arr)-1) if arr[i] <= arr[i-1] and arr[i] <= arr[i+1]]
+
+        def _div(indicator_vals, ph, pl, m):
+            sh = _swings(ph, 'high')
+            if len(sh) >= 2:
+                i2, i1 = sh[-1], sh[-2]
+                if (m-1-i2) <= RECENCY and ph[i2] > ph[i1] and indicator_vals[i2] < indicator_vals[i1]:
+                    if MIN_SWING <= (ph[i2] - ph[i1]) / ph[i1] <= MAX_SWING:
+                        return 'bear'
+            sl = _swings(pl, 'low')
+            if len(sl) >= 2:
+                i2, i1 = sl[-1], sl[-2]
+                if (m-1-i2) <= RECENCY and pl[i2] < pl[i1] and indicator_vals[i2] > indicator_vals[i1]:
+                    if MIN_SWING <= (pl[i1] - pl[i2]) / pl[i1] <= MAX_SWING:
+                        return 'bull'
+            return None
+
+        rsi_s  = calc_rsi(closes, 14).dropna()
+        rsi_sig = None
+        if len(rsi_s) >= 5:
+            idx     = rsi_s.index
+            rsi_sig = _div(rsi_s.values, highs.loc[idx].values, lows.loc[idx].values, len(rsi_s))
+
+        ema12    = closes.ewm(span=12, adjust=False).mean()
+        ema26    = closes.ewm(span=26, adjust=False).mean()
+        histo    = (ema12 - ema26 - (ema12 - ema26).ewm(span=9, adjust=False).mean()).dropna()
+        macd_sig = None
+        if len(histo) >= 5:
+            idx      = histo.index
+            macd_sig = _div(histo.values, highs.loc[idx].values, lows.loc[idx].values, len(histo))
+
+        signal = (rsi_sig, 'RSI+MACD') if rsi_sig and macd_sig and rsi_sig == macd_sig else None
+        return signal, ma_detail
+
+    except Exception:
+        return None, None
+
+
 # Broad universe — S&P 500 quality names worth screening
 UNIVERSE = [
     'AAPL','MSFT','META','NVDA','GOOGL','V','MA','UNH','LLY','JPM',
@@ -1069,7 +1157,8 @@ def build_html(results, watchlist=None, universe_failing=None):
 </html>"""
 
 if __name__ == '__main__':
-    import sys
+    import sys, socket as _socket
+    _socket.setdefaulttimeout(15)  # prevent yfinance from hanging indefinitely in --top/--mega scans
     _SCREENER_CACHE = {}  # force fresh yfinance fetches; aligned_screener reads the populated file cache afterward
 
     # ── Signal CLI helpers ────────────────────────────────────────────────────
@@ -1103,6 +1192,10 @@ if __name__ == '__main__':
 
         print(f"  {t:6}  {sig_str:8}  {price_str:10}  {grade:3}{ma_str}{blocker_str}")
 
+    def _print_signal_header():
+        print(f"  {'ticker':<6}  {'signal':<8}  {'price':<10}  {'grd':<3}  {'align':<5}  {'vs 10w':<9}  {'slope':<8}  {'RSI':<6}  ext87w")
+        print(f"  {'──────':<6}  {'────────':<8}  {'──────────':<10}  {'───':<3}  {'─────':<5}  {'─────────':<9}  {'────────':<8}  {'──────':<6}  ──────")
+
     def _rank_key(item):
         """Sort bull signals: grade → 87w ext → proximity to 10w MA."""
         d, m = item[1], item[3]
@@ -1120,10 +1213,12 @@ if __name__ == '__main__':
             print("Usage: python screener.py --signal TICKER [TICKER ...]")
             sys.exit(1)
         print()
-        with ThreadPoolExecutor(max_workers=8) as ex:
-            funds = list(ex.map(get_fundamentals, tickers))
-            sigs  = list(ex.map(get_tech_signal,  tickers))
-            mads  = list(ex.map(get_ma_detail,    tickers))
+        with ThreadPoolExecutor(max_workers=6) as ex:
+            funds    = list(ex.map(get_fundamentals,  tickers))
+            sig_mads = list(ex.map(get_signal_detail, tickers))
+        sigs = [x[0] for x in sig_mads]
+        mads = [x[1] for x in sig_mads]
+        _print_signal_header()
         for t, d, s, m in zip(tickers, funds, sigs, mads):
             if d:
                 _fmt_signal_row(t, d, s, m)
@@ -1156,10 +1251,11 @@ if __name__ == '__main__':
             _label = f'UNIVERSE + WATCHLIST ({len(_pool)} tickers)'
 
         print(f"\n  Scanning {_label} for bull signals ...\n", flush=True)
-        with ThreadPoolExecutor(max_workers=12) as ex:
-            _funds = list(ex.map(get_fundamentals, _pool))
-            _sigs  = list(ex.map(get_tech_signal,  _pool))
-            _mads  = list(ex.map(get_ma_detail,    _pool))
+        with ThreadPoolExecutor(max_workers=6) as ex:
+            _funds    = list(ex.map(get_fundamentals,  _pool))
+            _sig_mads = list(ex.map(get_signal_detail, _pool))
+        _sigs = [x[0] for x in _sig_mads]
+        _mads = [x[1] for x in _sig_mads]
 
         _hits = [
             (t, d, s, m)
@@ -1172,6 +1268,7 @@ if __name__ == '__main__':
             print("  No bull signals found.")
         else:
             print(f"  Top {_n} bull signals — ranked by grade → ext → proximity to 10w MA\n")
+            _print_signal_header()
             for t, d, s, m in _hits[:_n]:
                 _fmt_signal_row(t, d, s, m, show_blockers=False)
 
