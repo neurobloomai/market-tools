@@ -1274,7 +1274,11 @@ if __name__ == '__main__':
                 funds = list(ex.map(get_fundamentals, tickers))
             for t, d in zip(tickers, funds):
                 if d is not None: _f_cache[t] = d
-        sig_mads = [_get_signal_cached(t) for t in tickers]
+        if _is_wknd:
+            sig_mads = [_get_signal_cached(t) for t in tickers]
+        else:
+            with ThreadPoolExecutor(max_workers=6) as ex:
+                sig_mads = list(ex.map(_get_signal_cached, tickers))
         _save_sig_cache(_sig_cache)
         sigs = [x[0] for x in sig_mads]
         mads = [x[1] for x in sig_mads]
@@ -1325,7 +1329,11 @@ if __name__ == '__main__':
             with ThreadPoolExecutor(max_workers=6) as ex:
                 _funds = list(ex.map(_get_funds_cached, _pool))
 
-        _sig_mads = [_get_signal_cached(t) for t in _pool]
+        if _is_wknd:
+            _sig_mads = [_get_signal_cached(t) for t in _pool]
+        else:
+            with ThreadPoolExecutor(max_workers=6) as ex:
+                _sig_mads = list(ex.map(_get_signal_cached, _pool))
         _save_sig_cache(_sig_cache)
         _sigs = [x[0] for x in _sig_mads]
         _mads = [x[1] for x in _sig_mads]
@@ -1439,3 +1447,17 @@ if __name__ == '__main__':
         print(f"  Pushed → GitHub  ({commit_msg})")
     except subprocess.CalledProcessError as e:
         print(f"  Git push skipped: {e.stderr.decode() if e.stderr else e}")
+
+    # Seed signal cache after every weekday run so weekends are fully pre-populated
+    if not _is_wknd:
+        _all_tickers = list(dict.fromkeys(UNIVERSE + list(WATCHLIST)))
+        _stale = [t for t in _all_tickers if _sig_cache.get(t, {}).get('week') != _trade_week]
+        if _stale:
+            print(f"\n  Seeding signal cache ({len(_stale)} tickers) ...", flush=True)
+            with ThreadPoolExecutor(max_workers=6) as ex:
+                _seed = list(ex.map(get_signal_detail, _stale))
+            for t, (sig, ma) in zip(_stale, _seed):
+                if ma is not None:
+                    _sig_cache[t] = {'signal': list(sig) if sig else None, 'ma_detail': ma, 'week': _trade_week}
+            _save_sig_cache(_sig_cache)
+            print(f"  Signal cache → {sum(1 for v in _sig_cache.values() if v.get('ma_detail'))} tickers cached")
