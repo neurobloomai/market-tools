@@ -138,7 +138,7 @@
     "roa": 19.1,
     "pe": 31.6,
     "pe_is_forward": false,
-    "fwd_pe": 24.8,
+    "fwd_pe": 24.7,
     "pb": 19.7,
     "fcf_yield": 2.9,
     "rev_growth": 14.4,
@@ -2985,7 +2985,7 @@
     "roa": 13.8,
     "pe": 28.9,
     "pe_is_forward": false,
-    "fwd_pe": 27.7,
+    "fwd_pe": 26.8,
     "pb": 12.2,
     "fcf_yield": 2.8,
     "rev_growth": 13.3,
@@ -6447,7 +6447,7 @@
     "fy1_growth": 16.9,
     "price_vs_ma200": 9.3,
     "short_pct_float": 13.4,
-    "days_to_cover": 3.8
+    "days_to_cover": 3.7
   },
   "CRWD": {
     "ticker": "CRWD",
@@ -8171,8 +8171,8 @@
     "pb": 2.4,
     "fcf_yield": 3.1,
     "rev_growth": 15.5,
-    "fy0_growth": null,
-    "fy1_growth": null,
+    "fy0_growth": 7.1,
+    "fy1_growth": 2.2,
     "price_vs_ma200": -0.5,
     "short_pct_float": 10.1,
     "days_to_cover": 6.0
@@ -8195,8 +8195,8 @@
     "pb": 2.4,
     "fcf_yield": 3.9,
     "rev_growth": 9.9,
-    "fy0_growth": null,
-    "fy1_growth": null,
+    "fy0_growth": 7.6,
+    "fy1_growth": 7.8,
     "price_vs_ma200": 4.0,
     "short_pct_float": 1.4,
     "days_to_cover": 2.0
@@ -8219,8 +8219,8 @@
     "pb": 1.7,
     "fcf_yield": 4.0,
     "rev_growth": 3.4,
-    "fy0_growth": null,
-    "fy1_growth": null,
+    "fy0_growth": -18.8,
+    "fy1_growth": 33.2,
     "price_vs_ma200": 15.3,
     "short_pct_float": 4.1,
     "days_to_cover": 5.2
@@ -9063,7 +9063,7 @@
     "fy1_growth": 15.6,
     "price_vs_ma200": 25.0,
     "short_pct_float": 19.2,
-    "days_to_cover": 7.5
+    "days_to_cover": 7.4
   },
   "SMCI": {
     "ticker": "SMCI",
