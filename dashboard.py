@@ -55,6 +55,8 @@ def market_status():
 CACHE_FILE = os.path.expanduser('~/.dashboard_cache.json')
 CACHE_TTL  = 900  # 15 minutes
 
+_spy_wdf = None  # SPY weekly closes, set once before thread pool — shared read-only
+
 TICKERS = [
     'NLR','GRID','COPX','CIBR',
     'SMH','IGV','WCLD',
@@ -152,15 +154,34 @@ def get_data(ticker):
         ma_dist = (price - ma20) / ma20 * 100
 
         d_above   = price > ma50
-        w_above   = above_ma(ticker, '1wk', '2y', 20)
         m10_above = above_ma(ticker, '1mo', '5y', 10)
         m20_above = above_ma(ticker, '1mo', '5y', 20)
+
+        # Single weekly fetch covers: 20w MA position, 87w extension, RS vs SPY
+        w_above  = None
+        vs_ma87  = None
+        rs_spy   = None
+        try:
+            wdf   = fetch(ticker, '2y', '1wk')
+            wc    = wdf['Close'].dropna()
+            nw    = len(wc)
+            w_above  = bool(float(wc.iloc[-1]) > float(wc.rolling(20).mean().iloc[-1])) if nw >= 20 else None
+            ma87_val = float(wc.rolling(87).mean().iloc[-1]) if nw >= 87 else None
+            vs_ma87  = (price - ma87_val) / ma87_val * 100 if ma87_val else None
+            if nw >= 14 and _spy_wdf is not None and len(_spy_wdf) >= 14:
+                sc   = _spy_wdf['Close'].dropna()
+                t13  = float(wc.iloc[-1])  / float(wc.iloc[-14])  - 1
+                s13  = float(sc.iloc[-1])  / float(sc.iloc[-14])  - 1
+                rs_spy = (t13 - s13) * 100
+        except Exception:
+            pass
 
         return dict(
             ticker=ticker, theme=THEMES[ticker], price=price,
             day_chg=day_chg, vol_rat=vol_rat, vol_lbl=vol_lbl,
             trend=trend, ma_dist=ma_dist,
             d=d_above, w=w_above, m10=m10_above, m20=m20_above,
+            vs_ma87=vs_ma87, rs_spy=rs_spy,
         )
     except Exception as e:
         print(f"  ⚠ {ticker}: {e}")
@@ -356,10 +377,10 @@ def _clr(plain, color):
 
 def print_dashboard(data, is_open, status_msg, yld=None):
     now = datetime.now().strftime('%b %d %Y  %H:%M')
-    w   = 100
+    w   = 115
     hdr = (
         f"  {'TICKER':<6}  {'THEME':<16}  {'PRICE':>9}  {'DAY%':>7}  {'VOL/AVG':>9}"
-        f"  {'5D':>2}  {'vs20D':>7}  {'D·W·M·M':<7}  {'MOM':<5}  SIGNAL"
+        f"  {'5D':>2}  {'vs20D':>7}  {'D·W·M·M':<7}  {'MOM':<5}  {'vs87w':>7}  {'RS/SPY':>7}  SIGNAL"
     )
     sep = '─' * w
     print()
@@ -411,9 +432,17 @@ def print_dashboard(data, is_open, status_msg, yld=None):
             score_v = f"[{score}/4]"
             score_s = _clr(score_v, G if score >= 3 else (Y if score == 2 else R))
 
+            v87 = d.get('vs_ma87')
+            vs87_v = f"{v87:>+6.1f}%" if v87 is not None else "      —"
+            vs87_s = _clr(vs87_v, G if (v87 or 0) > 0 else R) if v87 is not None else vs87_v
+
+            rs = d.get('rs_spy')
+            rs_v = f"{rs:>+5.1f}pp" if rs is not None else "     —"
+            rs_s = _clr(rs_v, G if (rs or 0) > 0 else R) if rs is not None else rs_v
+
             print(
                 f"  {d['ticker']:<6}  {theme_s}  {price_s}  {day_s}  {vol_s}"
-                f"  {trend_s}   {ma_s}  {mas_s}     {score_s}  {signal(d)}"
+                f"  {trend_s}   {ma_s}  {mas_s}     {score_s}  {vs87_s}  {rs_s}  {signal(d)}"
             )
 
     print()
@@ -435,6 +464,10 @@ if __name__ == '__main__':
         data = cache
     else:
         print("\n  Loading", end='', flush=True)
+        try:
+            _spy_wdf = fetch('SPY', '2y', '1wk')
+        except Exception:
+            pass
         data = {}
         with ThreadPoolExecutor(max_workers=11) as ex:
             futures = {ex.submit(get_data, t): t for t in TICKERS}
