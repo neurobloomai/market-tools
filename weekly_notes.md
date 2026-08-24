@@ -7,16 +7,16 @@ Run `python weekly_snapshot.py` each week to refresh. History is in git.
 
 ## Week of Aug 24 2026
 
-### 4/4 Aligned — 145 names
+### 4/4 Aligned — 144 names
 
-**Universe (102):** A, AAMI, ABBV, ABNB, ABT, ACAD, ACGL, ADP, ALL, AMZN, ANET, AON, AWI, AYI, BKNG, BLK, BMRN, BX, CBOE, CDE, CF, CHD, CHRD, CME, CTAS, DHR, DVN, DXCM, ECL, ETN, EW, EXPD, EXPE, FAST, FCX, FHI, GD, GEHC, GLBE, HAE, HEI, HL, HOOD, IBKR, ICE, ILMN, INCY, ITW, JKHY, JNJ, JPM, LITE, LLY, LMT, MA, MANH, MATX, MCO, MEDP, MMM, MRK, MRVL, MSFT, MTD, MU, NDAQ, NEM, NTAP, NVDA, PANW, PAYC, PAYX, PLTR, QLYS, QRVO, REGN, RELY, RLI, ROST, RRC, RTX, SCHW, SHOP, SHW, STE, TILE, TMO, TRU, TRV, USLM, V, VCTR, VEEV, VIRT, VRSN, VRTX, WPM, WSM, WST, WTW, ZBRA, ZM
+**Universe (101):** AAMI, ABBV, ABNB, ABT, ACAD, ACGL, ADP, ALL, AMZN, ANET, AON, AWI, AYI, BKNG, BLK, BMRN, BX, CBOE, CDE, CF, CHD, CHRD, CME, CTAS, DHR, DVN, DXCM, ECL, ETN, EW, EXPD, EXPE, FAST, FCX, FHI, GD, GEHC, GLBE, HAE, HEI, HL, HOOD, IBKR, ICE, ILMN, INCY, ITW, JKHY, JNJ, JPM, LITE, LLY, LMT, MA, MANH, MATX, MCO, MEDP, MMM, MRK, MRVL, MSFT, MTD, MU, NDAQ, NEM, NTAP, NVDA, PANW, PAYC, PAYX, PLTR, QLYS, QRVO, REGN, RELY, RLI, ROST, RRC, RTX, SCHW, SHOP, SHW, STE, TILE, TMO, TRU, TRV, USLM, V, VCTR, VEEV, VIRT, VRSN, VRTX, WPM, WSM, WST, WTW, ZBRA, ZM
 
 **Watchlist (43):** APD, APO, AXON, BIIB, BIO, BMY, COO, COPX, CPAY, DELL, DRI, DT, ETSY, FERG, FROG, GCT, GLD, GTLB, GWRE, IOT, JLL, LNG, MDB, MDT, NET, NTRS, P, PGY, QCRH, RJF, RPRX, RVTY, S, SMCI, SNOW, SSNC, TEAM, TGTX, TOST, URGN, W, WAT, ZBH
 
 
-### 3/4 Near-Aligned — 65 names
+### 3/4 Near-Aligned — 64 names
 
-AAOI, AAPL, ADBE, AJG, AMD, AMG, APH, ARES, ASML, BILL, BR, BRK-B, CB, CL, CMG, CNC, COR, CRDO, CRM, CRWD, DDOG, DFIN, DLB, DUOL, EFX, EVTC, EXEL, FDS, FFIV, FTNT, GE, GIS, GWW, HIG, HSY, HWM, IT, JBHT, KKR, KNSL, KRYS, LGND, LRCX, MELI, MKTX, MORN, NOW, ONTO, OUST, PCTY, PGR, PINS, PRGS, PYPL, RMD, ROP, SLAB, SLV, STX, TOL, TRI, TSM, UBER, URI, WDAY
+AAOI, AAPL, ADBE, AJG, AMD, AMG, APH, ARES, ASML, BILL, BR, BRK-B, CB, CL, CMG, CNC, COR, CRDO, CRM, CRWD, DDOG, DFIN, DLB, DUOL, EFX, EVTC, EXEL, FDS, FFIV, FTNT, GE, GIS, GWW, HIG, HSY, HWM, IT, JBHT, KNSL, KRYS, LGND, LRCX, MELI, MKTX, MORN, NOW, ONTO, OUST, PCTY, PGR, PINS, PRGS, PYPL, RMD, ROP, SLAB, SLV, STX, TOL, TRI, TSM, UBER, URI, WDAY
 
 
 ### Tightest Coils — FullCoil ≤ 5%
@@ -54,9 +54,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 
 ### Tier Movements — Week over Week
 
-↑ **Improved:** **APD** (◇ Trend Intact → ✦ Fully Stacked), **S** (◇ Trend Intact → ✦ Fully Stacked), **CHD** (MA100+MA200 → ◇ Trend Intact), **ROST** (MA200 only → ◇ Trend Intact), **HEI** (MA100+MA200 → ◇ Trend Intact), **IBKR** (MA20 only → ◇ Trend Intact), **TGTX** (MA20 only → ◇ Trend Intact), **BILL** (MA100+MA200 → ◈ Intermediate), **PGY** (MA100+MA200 → ◈ Intermediate), **CME** (MA50+100 → All4 (unordered)), **CBOE** (MA50 → All4 (unordered)), **HOOD** (MA20 only → All4 (unordered)), **FICO** (MA20 only → MA50+100), **SLV** (MA50 → MA50+100), **ORCL** (Below all → MA50), **LEN** (MA20 only → MA50), **NLR** (Below all → MA50), **CAVA** (MA20 only → MA50), **LRCX** (MA200 only → MA20 only), **EXEL** (MA100+MA200 → MA20 only), **LIN** (MA200 only → MA20 only), **KRYS** (MA100+MA200 → MA20 only), **TSM** (MA100+MA200 → MA20 only), **FVRR** (Below all → MA20 only), **TOL** (MA200 only → MA100+MA200), **VRSN** (MA200 only → MA100+MA200), **AXP** (Below all → MA100+MA200), **AVGO** (Below all → MA200 only)
-
-↓ **Dropped:** **AAPL** (◇ Trend Intact → MA20 only), **HLT** (◇ Trend Intact → MA20 only), **TER** (◇ Trend Intact → MA200 only), **TREX** (◇ Trend Intact → MA100+MA200), **CHKP** (MA50+100 → MA20 only), **PEGA** (MA50+100 → MA50), **AAOI** (MA50 → MA200 only), **VICI** (MA50 → MA20 only), **MSCI** (MA20 only → Below all), **COCO** (MA20 only → MA200 only), **UTHR** (MA20 only → Below all), **WEC** (MA20 only → Below all), **XEL** (MA20 only → Below all), **ONTO** (MA20 only → MA100+MA200), **DY** (MA200 only → Below all)
+_No tier changes this week._
 
 
 ### Watchlist Status
@@ -115,7 +113,6 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **DDOG** | $235.62 | 3/4 | A | Op Margin 0.7% / Net Margin 4.5% / ROE/ROA ROE 4.7% / ROA 0.2% | Datadog — cloud observability + security platform (infrastructure moni… |
 | **DFIN** | $48.23 | 3/4 | A | Net Margin 4.5% / ROE/ROA ROE 8.6% / ROA 11.3% | Donnelley Financial Solutions — regulatory compliance SaaS for capital… |
 | **EVTC** | $29.89 | 3/4 | B | Debt/EV 0.453 | EVERTEC — dominant payment processing network in Puerto Rico (~75% mar… |
-| **KKR** | $108.48 | 3/4 | B | Debt/EV 0.356 / ROE/ROA ROE 7.3% / ROA 1.4% / FCF Yield missing (no data relief) | KKR & Co. — ~$600B+ AUM across PE, credit, infrastructure, real assets… |
 | **MELI** | $1922.73 | 3/4 | B | Op Margin 6.7% | — |
 | **ONTO** | $293.33 | 3/4 | A | ROE/ROA ROE 6.8% / ROA 4.8% | Onto Innovation — advanced packaging inspection/metrology; HBM + chipl… |
 | **OUST** | $38.42 | 3/4 | B | Op Margin -46.6% / Net Margin -26.0% / ROE/ROA ROE -18.0% / ROA -10.7% / FCF Yield -2.1% | Ouster Inc. — digital LiDAR sensors (post-merger with Velodyne 2023); … |
@@ -177,6 +174,7 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **FIG** | — | — | B | Op Margin -31.7% / Net Margin -123.1% / ROE/ROA ROE -108.6% / ROA -45.2% | Figma — design collaboration SaaS; 79.8% gross margin, FCF 8.6%, 46.1%… |
 | **FLUT** | $102.61 | 0/4 | B | Debt/EV 0.428 / Op Margin -3.3% / Net Margin -4.4% / ROE/ROA ROE -7.9% / ROA -0.2% / FCF Yield -5.6% | Flutter Entertainment — global online sports betting; FanDuel #1 US (~… |
 | **FVRR** | $9.21 | 0/4 | B | Op Margin 6.0% / ROE/ROA ROE 7.1% / ROA 2.8% | Fiverr — two-sided freelance marketplace (Fiverr Business, Pro, Seller… |
+| **KKR** | — | — | B | Debt/EV 0.356 / ROE/ROA ROE 7.3% / ROA 1.4% / FCF Yield missing (no data relief) | KKR & Co. — ~$600B+ AUM across PE, credit, infrastructure, real assets… |
 | **LHX** | $266.73 | 0/4 | B | Op Margin 9.7% / ROE/ROA ROE None% / ROA None% | L3Harris Technologies — defense electronics prime (EW/jamming, SIGINT/… |
 | **MKL** | $1795.62 | 0/4 | B | Debt/EV 0.205 / FCF Yield -7.7% | Markel Group — "baby Berkshire"; specialty insurance float funds a div… |
 | **NRG** | $113.11 | 0/4 | B | Debt/EV 0.492 / Net Margin 2.6% | NRG Energy — de-lever play; LS Power acq doubled fleet+debt, targeting… |
