@@ -523,17 +523,15 @@ if __name__ == '__main__':
     out_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'market_briefing.html')
     is_ci    = os.environ.get('CI') == 'true'
 
-    with open(out_path, 'w') as f:
-        f.write(html)
-    print(f"  Saved → {out_path}")
     if browser and not is_ci:
         webbrowser.open(f'file://{out_path}')
 
     try:
         repo       = os.path.dirname(out_path)
         commit_msg = f'market_briefing: {now}'
-        subprocess.run(['git', 'checkout', '--', 'market_briefing.html'], cwd=repo, capture_output=True)
-        subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'],     cwd=repo, check=True, capture_output=True)
+        subprocess.run(['git', 'stash', '--include-untracked'], cwd=repo, capture_output=True)
+        subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'], cwd=repo, check=True, capture_output=True)
+        subprocess.run(['git', 'stash', 'pop'], cwd=repo, capture_output=True)
         with open(out_path, 'w') as f:
             f.write(html)
         subprocess.run(['git', 'add',    'market_briefing.html'], cwd=repo, check=True, capture_output=True)
@@ -542,3 +540,8 @@ if __name__ == '__main__':
         print(f"  Pushed → GitHub  ({commit_msg})")
     except subprocess.CalledProcessError as e:
         print(f"  Git push skipped: {e.stderr.decode() if e.stderr else e}")
+
+    # Always write the latest HTML locally — regardless of git outcome
+    with open(out_path, 'w') as f:
+        f.write(html)
+    print(f"  Saved → {out_path}")
