@@ -1314,5 +1314,25 @@
   "VBK": {
     "date": null,
     "fetched": "2026-08-23"
+  },
+  "DLX": {
+    "date": "2026-11-04",
+    "fetched": "2026-08-23"
+  },
+  "NWPX": {
+    "date": "2026-10-28",
+    "fetched": "2026-08-23"
+  },
+  "RSP": {
+    "date": null,
+    "fetched": "2026-08-23"
+  },
+  "METU": {
+    "date": null,
+    "fetched": "2026-08-23"
+  },
+  "AMBQ": {
+    "date": "2026-11-05",
+    "fetched": "2026-08-24"
   }
 }

@@ -21,10 +21,16 @@ import sys
 from datetime import date
 from pathlib import Path
 
-APP_KEY      = os.environ.get('SCHWAB_APP_KEY',    'your_app_key_here')
-APP_SECRET   = os.environ.get('SCHWAB_APP_SECRET', 'your_app_secret_here')
-CALLBACK_URL = 'https://127.0.0.1'
-TOKEN_PATH   = Path.home() / '.schwab_token.json'
+try:
+    from schwab_creds import APP_KEY as _CREDS_KEY, APP_SECRET as _CREDS_SECRET, CALLBACK_URL, TOKEN_PATH as _CREDS_TOKEN_PATH
+    APP_KEY    = os.environ.get('SCHWAB_APP_KEY')    or _CREDS_KEY
+    APP_SECRET = os.environ.get('SCHWAB_APP_SECRET') or _CREDS_SECRET
+    TOKEN_PATH = Path(_CREDS_TOKEN_PATH)
+except ImportError:
+    APP_KEY    = os.environ.get('SCHWAB_APP_KEY',    'your_app_key_here')
+    APP_SECRET = os.environ.get('SCHWAB_APP_SECRET', 'your_app_secret_here')
+    CALLBACK_URL = 'https://127.0.0.1'
+    TOKEN_PATH   = Path.home() / '.schwab_token.json'
 
 
 def _sym(ticker):
