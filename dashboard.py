@@ -265,15 +265,28 @@ def ma_html(v):
     c = '#3fb950' if v > 0 else '#f85149'
     return f'<span style="color:{c}">{v:+.1f}%</span>'
 
+def vs87w_html(ticker, v):
+    if v is None: return '<span style="color:#484f58">—</span>'
+    if ticker in _ETF_SET:
+        c = '#f85149' if v > 50 else ('#e3b341' if v > 25 else ('#3fb950' if v >= 0 else ('#e3b341' if v > -15 else '#f85149')))
+    else:
+        c = '#f85149' if v > 80 else ('#e3b341' if v > 50 else ('#3fb950' if v >= 0 else ('#e3b341' if v > -20 else '#f85149')))
+    return f'<span style="color:{c}">{v:+.1f}%</span>'
+
+def rs_spy_html(v):
+    if v is None: return '<span style="color:#484f58">—</span>'
+    c = '#3fb950' if v > 0 else '#f85149'
+    return f'<span style="color:{c}">{v:+.1f}pp</span>'
+
 def build_html(data, is_open=True, status_msg='', yld=None):
     now  = datetime.now().strftime('%B %d, %Y  %H:%M')
     rows = ''
     for group, tickers in GROUPS:
-        rows += f'<tr><td colspan="13" style="padding:14px 10px 4px;color:#8b949e;font-size:10px;text-transform:uppercase;letter-spacing:.08em;border-bottom:none">{group}</td></tr>'
+        rows += f'<tr><td colspan="15" style="padding:14px 10px 4px;color:#8b949e;font-size:10px;text-transform:uppercase;letter-spacing:.08em;border-bottom:none">{group}</td></tr>'
         for t in tickers:
             d = data.get(t)
             if not d:
-                rows += f'<tr><td class="ticker">{t}</td><td colspan="12" style="color:#484f58">— no data</td></tr>'
+                rows += f'<tr><td class="ticker">{t}</td><td colspan="14" style="color:#484f58">— no data</td></tr>'
                 continue
             rows += f"""<tr>
               <td class="ticker">{d['ticker']}</td>
@@ -288,6 +301,8 @@ def build_html(data, is_open=True, status_msg='', yld=None):
               <td>{tf_html(d['m10'])}</td>
               <td>{tf_html(d['m20'])}</td>
               <td>{score_html(momentum_score(d))}</td>
+              <td>{vs87w_html(d['ticker'], d.get('vs_ma87'))}</td>
+              <td>{rs_spy_html(d.get('rs_spy'))}</td>
               <td>{signal_html(d)}</td>
             </tr>"""
 
@@ -322,13 +337,14 @@ def build_html(data, is_open=True, status_msg='', yld=None):
     <tr>
       <th>Ticker</th><th>Theme</th><th>Price</th><th>Day%</th><th>Vol/Avg</th>
       <th>5D</th><th>vs20D</th><th>50D</th><th>20W</th><th>10M</th><th>20M</th>
-      <th>Mom</th><th>Signal</th>
+      <th>Mom</th><th>vs87w</th><th>RS/SPY</th><th>Signal</th>
     </tr>
   </thead>
   <tbody>{rows}</tbody>
 </table>
 <div class="legend">
   ▲ above MA &nbsp;▼ below MA &nbsp;|&nbsp; 50D=50-day MA &nbsp;20W=20-week MA &nbsp;10M=10-month MA &nbsp;20M=20-month MA &nbsp;|&nbsp; Vol: T=today P=prev session<br>
+  vs87w = price vs 87-week MA (extension/compression gauge) &nbsp;|&nbsp; RS/SPY = 13-week return vs SPY in percentage points<br>
   Signals: ALIGNED=all 4 MAs bullish &nbsp;PULLBACK=long-term up, short-term dip &nbsp;AVOID=below long-term MAs
 </div>
 <div class="disclaimer">
