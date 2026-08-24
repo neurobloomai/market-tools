@@ -804,6 +804,8 @@ python india_screener.py
 
 Both dashboards output a CLI table and save an HTML file locally (`~/market_briefing.html` and `~/india_briefing.html`). Browser launch is opt-in via `--browser`.
 
+`--refresh` forces a fresh data fetch and clears the 15-minute cache. Use it when the output shows blank rows or "no data" — that means the cache was written empty. After `--refresh`, all rows repopulate from live data.
+
 ## Screener — Quality Filters
 
 ### US (`screener.py`)
@@ -834,15 +836,18 @@ Not a buy/sell signal. The framework provides context — you compose the read. 
 
 ### Weekly Signal Column — `Signal (wk)`
 
-Shown only for A and A+ names. Fires only when **both** RSI-14 divergence and MACD(12,26,9) histogram divergence agree on the same direction — on weekly bars, over 1 year of history.
+Shown only for A and A+ names. Three signal types, evaluated on weekly bars over 1 year of history.
 
-| Signal | Meaning |
-|---|---|
-| `⬆ bull · RSI+MACD` | Price made a lower low, both RSI and MACD histogram made a higher low — momentum recovering ahead of price |
-| `⬇ bear · RSI+MACD` | Price made a higher high, both RSI and MACD histogram made a lower high — momentum fading into the extension |
-| `—` | No confirmed signal, or B grade (not evaluated) |
+| Signal | Condition | Meaning |
+|---|---|---|
+| `BullDiv` | Price lower low + both RSI-14 and MACD(12,26,9) histogram higher low | Momentum recovering ahead of price — divergence at a low |
+| `BearDiv` | Price higher high + both RSI-14 and MACD(12,26,9) histogram lower high | Momentum fading into an extension — divergence at a high |
+| `Trend` | Price above rising 10w MA + positive weekly slope + RSI > 50 | Uptrend pullback to the 10w MA — structure intact, momentum behind it |
+| `—` | No confirmed signal, or B grade (not evaluated) | |
 
-Single-indicator signals are silenced. Contradictions (RSI says bull, MACD says bear) are silenced. Near-flat swing pairs (< 0.75% price move between swing points) are silenced. What remains is a narrow, high-conviction read on weekly structure — not a trade trigger, but a directional bias on quality names worth attention.
+**Priority:** `BullDiv`/`BearDiv` take precedence over `Trend` when both conditions are present.
+
+Single-indicator divergence signals are silenced. Contradictions (RSI says bull, MACD says bear) are silenced. Near-flat swing pairs (< 0.75% price move between swing points) are silenced. What remains is a narrow, high-conviction read on weekly structure — not a trade trigger, but a directional bias on quality names worth attention.
 
 ### India (`india_screener.py`)
 - Debt/EV ≤ 0.20 · Operating margin ≥ 8% · Net margin ≥ 5%
@@ -871,6 +876,25 @@ Single-indicator signals are silenced. Contradictions (RSI says bull, MACD says 
 - **AVOID** — below long-term structure
 
 Volume shown as `x(C)` = closed-day vs 20-day avg · `x(P)` = partial intraday
+
+### vs87w Column
+
+Price vs the 87-week MA, expressed as a percentage. Same metric as `ext87` in the extension scan — how far above or below the long-cycle structural mean. Positive = above, negative = below.
+
+Color thresholds are context-aware by asset type:
+
+| Asset type | Green (at/near) | Yellow (caution) | Red (extreme) |
+|---|---|---|---|
+| **ETFs** (NLR, GRID, COPX, SMH, IGV, IWM, etc.) | 0% to +25% | +25% to +50% or −1% to −15% | > +50% or < −15% |
+| **Individual names** (metals, equities) | 0% to +50% | +50% to +80% or −1% to −20% | > +80% or < −20% |
+
+ETFs dampen swings by construction — a +30% ETF extension is already stretched. Individual commodity names (FCX, WPM) can sustain wider extensions through cycle runs before mean-reverting.
+
+### RS/SPY Column
+
+13-week relative strength vs SPY, in percentage points. Ticker's 13-week return minus SPY's 13-week return. Positive = outperforming SPY over the past quarter, negative = underperforming.
+
+Green when positive, red when negative. The magnitude matters: +15pp means the name returned 15 percentage points more than SPY over 13 weeks — sector leadership confirmed. −10pp means the name lagged SPY by 10pp — sector headwind visible.
 
 ## A Personal Note
 
