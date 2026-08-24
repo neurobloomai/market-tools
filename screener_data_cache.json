@@ -8171,8 +8171,8 @@
     "pb": 2.4,
     "fcf_yield": 3.1,
     "rev_growth": 15.5,
-    "fy0_growth": 7.1,
-    "fy1_growth": 2.2,
+    "fy0_growth": null,
+    "fy1_growth": null,
     "price_vs_ma200": -0.5,
     "short_pct_float": 10.1,
     "days_to_cover": 6.0
@@ -8195,8 +8195,8 @@
     "pb": 2.4,
     "fcf_yield": 3.9,
     "rev_growth": 9.9,
-    "fy0_growth": 7.6,
-    "fy1_growth": 7.8,
+    "fy0_growth": null,
+    "fy1_growth": null,
     "price_vs_ma200": 4.0,
     "short_pct_float": 1.4,
     "days_to_cover": 2.0
@@ -8219,8 +8219,8 @@
     "pb": 1.7,
     "fcf_yield": 4.0,
     "rev_growth": 3.4,
-    "fy0_growth": -18.8,
-    "fy1_growth": 33.2,
+    "fy0_growth": null,
+    "fy1_growth": null,
     "price_vs_ma200": 15.3,
     "short_pct_float": 4.1,
     "days_to_cover": 5.2
@@ -9280,5 +9280,29 @@
     "price_vs_ma200": 72.4,
     "short_pct_float": 9.6,
     "days_to_cover": 5.1
+  },
+  "AMBQ": {
+    "ticker": "AMBQ",
+    "name": "Ambiq Micro, Inc.",
+    "sector": "Technology",
+    "price": 59.02,
+    "market_cap_b": 1.4,
+    "debt_to_ev": 0.004,
+    "gross_margin": 43.6,
+    "operating_margin": -25.7,
+    "net_margin": -37.8,
+    "roe": -15.5,
+    "roa": -10.1,
+    "pe": null,
+    "pe_is_forward": false,
+    "fwd_pe": null,
+    "pb": 3.5,
+    "fcf_yield": -2.0,
+    "rev_growth": 89.7,
+    "fy0_growth": 79.6,
+    "fy1_growth": 56.7,
+    "price_vs_ma200": 28.1,
+    "short_pct_float": 7.7,
+    "days_to_cover": 2.7
   }
 }
