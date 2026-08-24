@@ -350,17 +350,25 @@ def yield_html(y):
   {alert}
 </div>"""
 
+def _clr(plain, color):
+    """Wrap a pre-padded plain string in an ANSI color, then reset."""
+    return f"{color}{plain}{RS}" if color else plain
+
 def print_dashboard(data, is_open, status_msg, yld=None):
     now = datetime.now().strftime('%b %d %Y  %H:%M')
-    w   = 95
-    hdr = f"  {'TICKER':<6}  {'THEME':<10}  {'PRICE':>7}  {'DAY%':>8}  {'VOL/AVG':>10}  {'5D':>2}  {'vs20D':>6}   50D  20W  10M  20M   MOM   SIGNAL"
+    w   = 100
+    hdr = (
+        f"  {'TICKER':<6}  {'THEME':<16}  {'PRICE':>9}  {'DAY%':>7}  {'VOL/AVG':>9}"
+        f"  {'5D':>2}  {'vs20D':>7}  {'D·W·M·M':<7}  {'MOM':<5}  SIGNAL"
+    )
+    sep = '─' * w
     print()
     print(f"  {B}MARKET SELECTIVE BRIEFING  —  {now}{RS}")
     if not is_open:
         print(f"  {Y}⚠  {status_msg} — showing last available data{RS}")
-    print('─' * w)
+    print(sep)
     print_yield(yld)
-    print('─' * w)
+    print(sep)
     print(hdr)
 
     for group, tickers in GROUPS:
@@ -370,22 +378,47 @@ def print_dashboard(data, is_open, status_msg, yld=None):
             if not d:
                 print(f"  {t:<6}  — no data")
                 continue
+
+            # Pad plain values first, then colorize — ANSI codes break f-string width
+            theme_s = f"{d['theme'][:16]:<16}"
+            price_s = f"${d['price']:>8.2f}"
+
+            day_v = f"{d['day_chg']:>+6.2f}%"
+            day_s = _clr(day_v, G if d['day_chg'] > 0 else R)
+
+            if d['vol_rat'] is not None:
+                vol_v = f"{d['vol_rat']:.2f}x({d['vol_lbl']})"
+                vol_v = f"{vol_v:>9}"
+                vol_c = Y if d['vol_rat'] > 1.5 else (GR if d['vol_rat'] < 0.5 else '')
+                vol_s = _clr(vol_v, vol_c)
+            else:
+                vol_s = f"{'—':>9}"
+
+            trend_v = {'up': '▲', 'dn': '▼', 'flat': '→'}[d['trend']]
+            trend_c = {'up': G,   'dn': R,    'flat': ''}[d['trend']]
+            trend_s = _clr(trend_v, trend_c)
+
+            ma_v = f"{d['ma_dist']:>+6.1f}%"
+            ma_s = _clr(ma_v, G if d['ma_dist'] > 0 else R)
+
+            # 4 MA timeframes: D(50d) · W(20w) · M(10mo) · M(20mo), no spacing between
+            def _tf_sym(above):
+                if above is None: return _clr('?', GR)
+                return _clr('▲', G) if above else _clr('▼', R)
+            mas_s = _tf_sym(d['d']) + _tf_sym(d['w']) + _tf_sym(d['m10']) + _tf_sym(d['m20'])
+
+            score   = momentum_score(d)
+            score_v = f"[{score}/4]"
+            score_s = _clr(score_v, G if score >= 3 else (Y if score == 2 else R))
+
             print(
-                f"  {d['ticker']:<6}  "
-                f"{d['theme']:<10}  "
-                f"${d['price']:>7.2f}  "
-                f"{fmt_chg(d['day_chg']):>8}  "
-                f"{fmt_vol(d['vol_rat'], d['vol_lbl']):>10}  "
-                f"{(G+'▲'+RS) if d['trend']=='up' else ((R+'▼'+RS) if d['trend']=='dn' else '→'):>2}  "
-                f"{fmt_ma(d['ma_dist']):>6}   "
-                f"{fmt_tf(d['d'])} {fmt_tf(d['w'])} {fmt_tf(d['m10'])} {fmt_tf(d['m20'])}   "
-                f"{fmt_score(momentum_score(d))}  "
-                f"{signal(d)}"
+                f"  {d['ticker']:<6}  {theme_s}  {price_s}  {day_s}  {vol_s}"
+                f"  {trend_s}   {ma_s}  {mas_s}     {score_s}  {signal(d)}"
             )
 
     print()
-    print('─' * w)
-    print(f"  {GR}▲/▼ = above/below MA  |  50D 20W 10M 20M = moving average timeframes  |  Vol: T=today P=prev{RS}")
+    print(sep)
+    print(f"  {GR}D·W·M·M = 50-day · 20-week · 10-month · 20-month MAs  |  Vol: T=today close P=prev session{RS}")
     print(f"  {GR}For informational purposes only — not financial advice.{RS}")
     print()
 
