@@ -57,6 +57,26 @@ CACHE_TTL  = 900  # 15 minutes
 
 _spy_wdf = None  # SPY weekly closes, set once before thread pool — shared read-only
 
+# ETFs are diversified — extension dampened vs individual stocks
+_ETF_SET    = {'NLR','GRID','COPX','CIBR','SMH','IGV','WCLD','BOTZ','QTUM','ARKQ','IWM','IWR','TOPT'}
+_METAL_SET  = {'FCX','HBM','B','WPM'}
+
+def _vs87_color(ticker, v):
+    """Context-aware extension color: thresholds differ for ETFs vs individual stocks."""
+    if v is None: return ''
+    if ticker in _ETF_SET:
+        if   v >  50: return R   # extreme for a diversified ETF
+        elif v >  25: return Y   # elevated, watch zone
+        elif v >= 0:  return G   # healthy above 87w
+        elif v > -15: return Y   # mild compression — not alarm
+        else:         return R   # well below 87w
+    else:  # individual stocks (metals etc.) have wider swings
+        if   v >  80: return R   # extreme for commodity stock
+        elif v >  50: return Y   # elevated
+        elif v >= 0:  return G   # healthy above 87w
+        elif v > -20: return Y   # mild compression
+        else:         return R   # well below 87w
+
 TICKERS = [
     'NLR','GRID','COPX','CIBR',
     'SMH','IGV','WCLD',
@@ -434,7 +454,7 @@ def print_dashboard(data, is_open, status_msg, yld=None):
 
             v87 = d.get('vs_ma87')
             vs87_v = f"{v87:>+6.1f}%" if v87 is not None else "      —"
-            vs87_s = _clr(vs87_v, G if (v87 or 0) > 0 else R) if v87 is not None else vs87_v
+            vs87_s = _clr(vs87_v, _vs87_color(d['ticker'], v87)) if v87 is not None else vs87_v
 
             rs = d.get('rs_spy')
             rs_v = f"{rs:>+5.1f}pp" if rs is not None else "     —"
