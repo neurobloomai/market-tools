@@ -64,6 +64,48 @@ def _candles_to_df(candles):
     return df[['Open', 'High', 'Low', 'Close', 'Volume']]
 
 
+def _patch_schwab_live(df, ticker):
+    """
+    get_price_history only returns completed daily bars — today's intraday bar is absent.
+    Append a today-row using the live quote so MAs and extension use the current price.
+    Silently no-ops if the quote call fails (weekend, auth issue, etc.).
+    """
+    try:
+        from schwab_client import get_quote
+        q = get_quote(ticker)
+        # Response key matches the Schwab symbol (BRK/B, not BRK-B); try both
+        schwab_sym = ticker.replace('-', '/')
+        quote_data = (
+            (q.get(ticker) or q.get(schwab_sym) or {}).get('quote', {})
+        )
+        live_price = quote_data.get('lastPrice') or quote_data.get('mark')
+        if not live_price or df.empty:
+            return df
+
+        today_ts = pd.Timestamp.now('UTC').normalize()
+        last_ts  = df.index[-1].normalize()
+
+        if last_ts >= today_ts:
+            # Today's bar already present (e.g. post-close run) — just update Close
+            df = df.copy()
+            df.iloc[-1, df.columns.get_loc('Close')] = live_price
+        else:
+            # During today's session: append a partial bar
+            open_p = quote_data.get('openPrice', live_price)
+            high_p = quote_data.get('highPrice', live_price)
+            low_p  = quote_data.get('lowPrice',  live_price)
+            vol    = quote_data.get('totalVolume', 0)
+            new_row = pd.DataFrame(
+                [[open_p, high_p, low_p, live_price, vol]],
+                columns=['Open', 'High', 'Low', 'Close', 'Volume'],
+                index=[today_ts],
+            )
+            df = pd.concat([df, new_row])
+    except Exception:
+        pass
+    return df
+
+
 def fetch_daily(ticker, months=3, force_yf=False):
     """
     Return daily OHLCV DataFrame.
@@ -74,7 +116,8 @@ def fetch_daily(ticker, months=3, force_yf=False):
         from schwab_client import get_price_history
         period = '3m' if months <= 3 else ('6m' if months <= 6 else '1y')
         candles = get_price_history(ticker, period=period, bar='daily')
-        return _candles_to_df(candles)
+        df = _candles_to_df(candles)
+        return _patch_schwab_live(df, ticker)
 
     path   = _cache_path(ticker, 'daily', f'{months}mo')
     cached = _read_cache(path, _TTL_DAILY)
@@ -98,7 +141,8 @@ def fetch_weekly(ticker, years=2, force_yf=False):
         from schwab_client import get_price_history
         period = '2y' if years >= 2 else '1y'
         candles = get_price_history(ticker, period=period, bar='weekly')
-        return _candles_to_df(candles)
+        df = _candles_to_df(candles)
+        return _patch_schwab_live(df, ticker)
 
     path   = _cache_path(ticker, 'weekly', f'{years}y')
     cached = _read_cache(path, _TTL_WEEKLY)
