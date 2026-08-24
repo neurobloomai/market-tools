@@ -45,7 +45,7 @@
       ],
       [
         "P/E",
-        "118.8x",
+        "123.0x",
         "\u2264 100x"
       ]
     ],
@@ -56,22 +56,22 @@
     "fails": [
       [
         "Debt/EV",
-        "0.422",
+        "0.47",
         "\u2264 0.20"
       ],
       [
         "Op Margin",
-        "1.1%",
+        "9.7%",
         "\u2265 10%"
       ],
       [
         "Net Margin",
-        "0.0%",
+        "-0.7%",
         "\u2265 5%"
       ],
       [
         "ROE/ROA",
-        "ROE 0.0% / ROA -0.3%",
+        "ROE -0.3% / ROA 0.1%",
         "\u2265 10% / \u2265 15%"
       ]
     ],
@@ -97,7 +97,7 @@
       ],
       [
         "P/E",
-        "121.7x",
+        "122.5x",
         "\u2264 100x"
       ]
     ],
@@ -219,7 +219,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.242",
+        "0.246",
         "\u2264 0.20"
       ]
     ],
@@ -230,7 +230,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.318",
+        "0.315",
         "\u2264 0.20"
       ]
     ],
@@ -263,7 +263,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.287",
+        "0.297",
         "\u2264 0.20"
       ]
     ],
@@ -300,7 +300,7 @@
       ],
       [
         "FCF Yield",
-        "-8.1%",
+        "-8.4%",
         "> 0%"
       ]
     ],
@@ -401,7 +401,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.81",
+        "0.812",
         "\u2264 0.20"
       ]
     ],
@@ -412,7 +412,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.25",
+        "0.255",
         "\u2264 0.20"
       ],
       [
@@ -460,7 +460,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.421",
+        "0.427",
         "\u2264 0.20"
       ],
       [
@@ -491,12 +491,12 @@
       ],
       [
         "ROE/ROA",
-        "ROE -14.4% / ROA -2.1%",
+        "ROE -14.4% / ROA -2.0%",
         "\u2265 10% / \u2265 15%"
       ],
       [
         "P/E",
-        "167.7x",
+        "175.4x",
         "\u2264 100x"
       ]
     ],
@@ -507,7 +507,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.571",
+        "0.575",
         "\u2264 0.20"
       ],
       [
@@ -571,7 +571,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.214",
+        "0.206",
         "\u2264 0.20"
       ],
       [
@@ -603,7 +603,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.238",
+        "0.236",
         "\u2264 0.20"
       ]
     ],
@@ -614,7 +614,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.763",
+        "0.757",
         "\u2264 0.20"
       ],
       [
@@ -709,7 +709,7 @@
     "fails": [
       [
         "Debt/EV",
-        "1.543",
+        "1.547",
         "\u2264 0.20"
       ]
     ],
@@ -720,7 +720,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.31",
+        "0.304",
         "\u2264 0.20"
       ]
     ],
@@ -811,7 +811,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.398",
+        "0.407",
         "\u2264 0.20"
       ]
     ],
@@ -822,12 +822,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.37",
+        "0.376",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-10.0%",
+        "-10.2%",
         "> 0%"
       ]
     ],
@@ -838,7 +838,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.38",
+        "0.378",
         "\u2264 0.20"
       ],
       [
@@ -854,12 +854,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.39",
+        "0.397",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-6.7%",
+        "-6.8%",
         "> 0%"
       ]
     ],
@@ -870,12 +870,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.4",
+        "0.408",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-6.3%",
+        "-6.5%",
         "> 0%"
       ]
     ],
@@ -886,7 +886,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.467",
+        "0.477",
         "\u2264 0.20"
       ],
       [
@@ -896,7 +896,7 @@
       ],
       [
         "FCF Yield",
-        "-16.0%",
+        "-16.6%",
         "> 0%"
       ]
     ],
@@ -912,13 +912,13 @@
       ]
     ],
     "note": "Affiliated Managers Group \u2014 multi-boutique AM (AQR, Tweedy Browne etc.); owns fee economics in independent boutiques, asset-light; OM 22.1%, NM 35.5%, ROE 21.8%, FCF 2.6%, fwd P/E 8.5x; D/EV 0.245 only blocker (structural debt to buy stakes, paying down with FCF); grade A",
-    "grade": "A"
+    "grade": "A+"
   },
   "NTRS": {
     "fails": [
       [
         "Debt/EV",
-        "0.397",
+        "0.4",
         "\u2264 0.20"
       ],
       [
@@ -950,7 +950,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.244",
+        "0.243",
         "\u2264 0.20"
       ]
     ],
@@ -961,7 +961,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.476",
+        "0.492",
         "\u2264 0.20"
       ],
       [
@@ -977,7 +977,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.386",
+        "0.392",
         "\u2264 0.20"
       ],
       [
@@ -1003,7 +1003,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.291",
+        "0.3",
         "\u2264 0.20"
       ]
     ],
@@ -1014,7 +1014,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.315",
+        "0.313",
         "\u2264 0.20"
       ]
     ],
@@ -1025,7 +1025,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.271",
+        "0.278",
         "\u2264 0.20"
       ]
     ],
@@ -1083,7 +1083,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.437",
+        "0.428",
         "\u2264 0.20"
       ],
       [
@@ -1103,7 +1103,7 @@
       ],
       [
         "FCF Yield",
-        "-5.7%",
+        "-5.6%",
         "> 0%"
       ]
     ],
@@ -1114,7 +1114,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.643",
+        "0.6",
         "\u2264 0.20"
       ]
     ],
@@ -1125,7 +1125,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.447",
+        "0.452",
         "\u2264 0.20"
       ]
     ],
@@ -1147,7 +1147,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.439",
+        "0.436",
         "\u2264 0.20"
       ]
     ],
@@ -1158,7 +1158,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.291",
+        "0.289",
         "\u2264 0.20"
       ]
     ],
@@ -1201,7 +1201,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.262",
+        "0.264",
         "\u2264 0.20"
       ]
     ],
@@ -1234,7 +1234,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.207",
+        "0.208",
         "\u2264 0.20"
       ],
       [
@@ -1250,7 +1250,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.21",
+        "0.214",
         "\u2264 0.20"
       ],
       [
@@ -1293,7 +1293,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.34",
+        "0.345",
         "\u2264 0.20"
       ],
       [
@@ -1351,7 +1351,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.209",
+        "0.208",
         "\u2264 0.20"
       ],
       [
@@ -1377,7 +1377,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.257",
+        "0.256",
         "\u2264 0.20"
       ]
     ],
@@ -1388,7 +1388,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.454",
+        "0.453",
         "\u2264 0.20"
       ]
     ],
@@ -1452,7 +1452,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.206",
+        "0.21",
         "\u2264 0.20"
       ],
       [
@@ -1591,7 +1591,7 @@
       ],
       [
         "FCF Yield",
-        "-1.2%",
+        "-1.1%",
         "> 0%"
       ]
     ],
@@ -1723,13 +1723,13 @@
       ]
     ],
     "note": "Fiverr \u2014 two-sided freelance marketplace (Fiverr Business, Pro, Seller Plus); GrossM 82%, FCF 23.7% (exceptional for marketplace \u2014 structural cash generation), NM 7.2%, D/EV 0.026; OM 6.0% (needs 10%) + ROE 7.1% (needs 10%) + RevG -10.0% (declining \u2014 AI reducing demand for some commodity freelance categories) all blocking; the FCF at 23.7% is the honest signal \u2014 the business is generating real cash even while revenue contracts; gate: RevG stabilizing/turning positive as higher-value professional services replace commodity gigs + OM \u2265 10% as take-rate expands on Fiverr Business tier; added 2026-08-05",
-    "grade": "A"
+    "grade": "B"
   },
   "ETSY": {
     "fails": [
       [
         "Debt/EV",
-        "0.329",
+        "0.328",
         "\u2264 0.20"
       ],
       [
@@ -1745,7 +1745,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.205",
+        "0.216",
         "\u2264 0.20"
       ],
       [
@@ -1771,7 +1771,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.377",
+        "0.38",
         "\u2264 0.20"
       ],
       [
@@ -1803,7 +1803,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.232",
+        "0.234",
         "\u2264 0.20"
       ],
       [
@@ -1839,7 +1839,7 @@
       ],
       [
         "P/E",
-        "160.8x",
+        "154.0x",
         "\u2264 100x"
       ]
     ],
@@ -1850,11 +1850,211 @@
     "fails": [
       [
         "Debt/EV",
-        "0.255",
+        "0.266",
         "\u2264 0.20"
       ]
     ],
     "note": "GigaCloud Technology \u2014 B2B marketplace for large-parcel goods (furniture, appliances, fitness equipment, home d\u00e9cor); connects Chinese manufacturers to overseas resellers/retailers; marketplace model with logistics integration (handles warehousing + last-mile for oversized goods) = not pure software; GrossM 23.4% (structural \u2014 physical logistics drag, not a SaaS platform), OM 11.8%, NM 10.8%, ROE 32.1% (exceptional), D/EV 0.262, FCF 4.2%, RevG 32.2%; 5/7 gates, grade \u2014; blockers: GrossM 23.4% (structural, marketplace with logistics overhead vs 40% gate) + D/EV 0.262 (above 0.20 \u2014 debt vs EV); caution: currently +44.8% above 10w MA \u2014 very extended, not an entry, monitor for base; gate to UNIVERSE: GrossM approaching 30%+ as take-rate improves + D/EV \u2264 0.20 via FCF deleveraging; added 2026-08-06",
+    "grade": "B"
+  },
+  "SMCI": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.323",
+        "\u2264 0.20"
+      ],
+      [
+        "FCF Yield",
+        "-34.2%",
+        "> 0%"
+      ]
+    ],
+    "note": "Super Micro Computer \u2014 high-density AI GPU server systems integrator; auto-promoted from FUTURE_RADAR 2026-08-20 [grade B, blocking: Debt/EV 0.327, FCF Yield -34.9%]",
+    "grade": "B"
+  },
+  "APO": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.443",
+        "\u2264 0.20"
+      ],
+      [
+        "FCF Yield",
+        "missing (no data relief)",
+        "> 0% or rev>50%+margin>10%"
+      ]
+    ],
+    "note": "Apollo Global Management \u2014 ~$700B+ AUM across PE, credit, real assets, infrastructure; GP franchise + Athene Holdings (2022 merger, ~$250B life insurance/annuity reserves) \u2014 permanent capital moat: Athene reserves must be invested, and they flow into Apollo credit strategies, making Apollo both the GP and the structural LP (ARES/BX cannot replicate this); OM 21.9%, NM 5.3%, ROE 11.4%; D/EV 45.1% + FCF None both yfinance artifacts from Athene insurance consolidation (same read as AXP/VIRT \u2014 financial firm D/EV is not corporate debt risk); RevG 63.8% (Athene premium revenue in consolidated headline \u2014 fee-based AUM growth is the cleaner signal); fwdPE 12.1x cheap for the GP franchise; structural risks: (1) credit cycle \u2014 Athene invests in credit, marks down in a credit downturn unlike pure GPs; (2) insurance regulatory leash \u2014 RBC requirements constrain Athene's investment flexibility; (3) complexity \u2014 consolidated vs segment financials diverge, harder to model than BX/ARES; gate: fee-based revenue growth re-accelerating above 20% as AUM compounds + yfinance D/EV/FCF normalizing on segment basis; added WATCHLIST 2026-08-21",
+    "grade": "B"
+  },
+  "KKR": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.356",
+        "\u2264 0.20"
+      ],
+      [
+        "ROE/ROA",
+        "ROE 7.3% / ROA 1.4%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "missing (no data relief)",
+        "> 0% or rev>50%+margin>10%"
+      ]
+    ],
+    "note": "KKR & Co. \u2014 ~$600B+ AUM across PE, credit, infrastructure, real assets; leading PE franchise (KKR buyout vintages among best-performing in industry) + Global Atlantic (2021 insurance acquisition, ~$160B reserves, same permanent capital thesis as APO/Athene but smaller relative scale); OM 20.7%, NM 12.2%, GrossM 54.8% \u2014 fee income economics clean; ROE 7.3% \u274c (below 10% gate \u2014 Global Atlantic insurance equity base compressing ROE, same artifact as ARES) + D/EV 35.9% \u274c (insurance liabilities, not corporate debt deterioration) + FCF None \u274c (financial firm artifact); RevG 7.8% (headline slow \u2014 Global Atlantic mix; AUM-driven fee RevG runs faster); fwdPE 14.5x; differentiated from APO: KKR Infrastructure is one of the most respected infra platforms globally (energy transition, digital infra, transport) \u2014 fee-based infrastructure AUM compounds at lower volatility than PE carry; gate: ROE crossing 10% as Global Atlantic equity base stabilizes + fee-based RevG re-accelerating above 15% + yfinance data normalizing; added WATCHLIST 2026-08-21",
+    "grade": "B"
+  },
+  "AROC": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.297",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "Archrock \u2014 largest US natural gas compression services provider; owns + operates compression equipment at wellsites and midstream facilities under multi-year service contracts \u2014 does not sell equipment, collects monthly service fees; compression non-optional: reservoir pressure depletes over a well's life, compression maintains gas flow \u2014 once placed, a unit generates recurring fees for 7-15+ years; moat = scale + replacement cost: 4M+ horsepower fleet takes years and billions to replicate; midstream infrastructure growth (nat gas as bridge fuel + LNG export buildout) = structural demand floor; GrossM 67.3% \u2713, OM 35.9% \u2713, NM 21.8% \u2713, ROE 22.2% \u2713, FCF 4.3% \u2713; D/EV 29.4% \u274c (equipment financing \u2014 structural for asset-intensive services, FCF 4.3% is the paydown engine); RevG -3.1% \u274c (nat gas cycle softness \u2014 E&P capex cuts flow through with lag); fwdPE 14.1x; gate: D/EV \u2264 0.20 as FCF deleverages + RevG turning positive as nat gas cycle recovers; added WATCHLIST 2026-08-21",
+    "grade": "A+"
+  },
+  "VIAV": {
+    "fails": [
+      [
+        "Net Margin",
+        "-2.0%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -2.7% / ROA 4.6%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Viavi Solutions \u2014 network test + measurement + optical security; two durable segments: (1) Network & Service Enablement: fiber optic test equipment (OTDR, optical power meters, spectrum analyzers) used by every telco/cable operator to verify fiber connections \u2014 5G densification + BEAD broadband buildout = every new fiber strand needs testing, Viavi is the field standard; (2) Optical Security Products: diffractive optical elements (holograms, color-shifting features) on banknotes, passports, ID documents for ~50 central banks and government mints globally \u2014 government clients with multi-decade relationships, impossible to lose mid-contract; GrossM 60.9% \u2713, OM 14.3% \u2713, D/EV 7.3% \u2713, RevG 52.5% \u2713; NM -2.0% \u274c + ROE -2.7% \u274c (restructuring charges, transitional) + FCF 1.7% \u274c; fwdPE 19.9x; gate: NM turning consistently positive as restructuring completes + FCF \u2265 3% as 5G/fiber test volume scales; added WATCHLIST 2026-08-21",
+    "grade": "B"
+  },
+  "OUST": {
+    "fails": [
+      [
+        "Op Margin",
+        "-46.6%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-26.0%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -18.0% / ROA -10.7%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "-2.1%",
+        "> 0%"
+      ]
+    ],
+    "note": "Ouster Inc. \u2014 digital LiDAR sensors (post-merger with Velodyne 2023); 3D perception for autonomous vehicles, mobile robotics, intelligent transportation, and industrial automation; digital ASIC-based architecture enables software-upgradeable firmware in the field + commoditization-resistant manufacturing roadmap; GrossM 46.6%, D/EV 3.1% (near-zero debt), RevG 62.8% \u2014 real industrial demand scaling; OM -26.0%, NM -26.0%, ROE -18.0%, FCF negative \u2014 deep investment phase, unit economics improving as ASIC cost curve runs; 3 blockers; gate: OM inflecting toward 0% as ASIC roadmap drives GrossM above 55% + FCF turning positive as robotics/AV volume scales; added WATCHLIST 2026-08-23",
+    "grade": "B"
+  },
+  "AIP": {
+    "fails": [
+      [
+        "Op Margin",
+        "-48.5%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-46.7%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -131.4% / ROA -14.2%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "P/E",
+        "193.7x",
+        "\u2264 100x"
+      ]
+    ],
+    "note": "Arteris Inc. \u2014 Network-on-Chip (NoC) semiconductor IP licensing; designs the internal communication fabric connecting CPU/GPU cores, AI accelerators, memory controllers, and peripherals on complex SoCs; every AI chip embedding Arteris NoC pays recurring royalty + design license \u2014 IP model, no manufacturing risk; AI chip complexity explosion (chiplets, heterogeneous compute) = NoC value grows as designs scale; GrossM 87.6% (near-royalty IP economics), D/EV 8.74% clean; OM -46.7%, NM -46.7%, ROE -131.4% (R&D-heavy investment in new IP cores, not structural losses); RevG 33.8%; gate: OM inflecting toward 0% as royalty stack compounds on expanding customer base without proportional opex growth; added WATCHLIST 2026-08-23",
+    "grade": "B"
+  },
+  "QCRH": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.41",
+        "\u2264 0.20"
+      ],
+      [
+        "FCF Yield",
+        "missing (no data relief)",
+        "> 0% or rev>50%+margin>10%"
+      ]
+    ],
+    "note": "QCR Holdings \u2014 Midwest community bank holding company (Quad Cities IA/IL + St. Louis + Denver + Milwaukee markets); commercial banking + m2 Lease Funds (equipment leasing arm adds asset-light recurring fee income); community bank structural advantage: relationship lending + local credit underwriting = lower default rates in Midwest markets vs national peers; OM 37.5% (top-quartile community bank efficiency), NM 37.5%, ROE 12.9% \u2713, RevG 17.5% \u2713; D/EV and FCF screen as blockers (bank artifacts \u2014 deposits are liabilities by structure, bank FCF is not comparable to industrial FCF; same lens as NTRS/SCHW/IBKR); judge by: NIM trend + non-performing loans + tangible book value per share growth; gate: ROE consistently above 15% across a full rate cycle + RevG sustained above 10%; added WATCHLIST 2026-08-23",
+    "grade": "A"
+  },
+  "AMBQ": {
+    "fails": [
+      [
+        "Op Margin",
+        "-25.7%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-37.8%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -15.5% / ROA -10.1%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "-2.0%",
+        "> 0%"
+      ]
+    ],
+    "note": "Ambiq Micro Inc. \u2014 ultra-low-power ARM Cortex-M MCU specialist; Apollo MCU series is the lowest-power ARM microcontroller on the market \u2014 battery life is the binding constraint in wearables/hearables/IoT, Ambiq wins on that axis; design wins include Samsung Galaxy Watch + hearing aid OEMs + always-on AI edge inferencing (keyword spotting, gesture recognition at \u00b5W power budgets); IPO Jul 2025, small float 21.7M shares (thin \u2014 explains $22\u2192$92\u2192$59 volatility); GrossM 43.6% TTM \u2192 45.0% MRQ (trending up), OM -37.8% TTM \u2192 -20.9% MRQ (biggest signal: operating leverage visible, nearly halved loss margin in one quarter), RevG TTM +31.9%; ROE -15.5%, FCF negative \u2014 investment phase; gate: OM inflecting toward 0% as Samsung/hearable design wins scale royalty stack over fixed R&D + ROE turning positive; added WATCHLIST 2026-08-23",
+    "grade": "B"
+  },
+  "URGN": {
+    "fails": [
+      [
+        "Op Margin",
+        "0.2%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-51.7%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE None% / ROA -18.1%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "-4.7%",
+        "> 0%"
+      ]
+    ],
+    "note": "UroGen Pharma \u2014 specialty urology pharma; Jelmyto (mitomycin gel, FDA-cleared for low-grade upper tract urothelial carcinoma \u2014 segment with no alternative drug, historically required nephroureterectomy; Jelmyto enables kidney preservation) + UGN-301 (intravesical for NMIBC, second indication); GrossM 90.8% (drug economics solid), RevG 100.3% (commercial launch ramp \u2014 absolute revenue doubling, not a base effect); OM -51.7% (MRQ improving to -19.8%), losses from sales force build + physician education in commercial launch phase; D/Capital 304% = negative book equity from accumulated losses (standard pharma, not leverage risk); gate: OM inflecting toward 0% as Jelmyto revenue covers fixed sales force cost + UGN-301 approval expanding second indication revenue; added WATCHLIST 2026-08-23",
     "grade": "B"
   }
 }
