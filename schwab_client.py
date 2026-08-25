@@ -343,6 +343,45 @@ def place_spread(account_hash, ticker, long_symbol, short_symbol, quantity, net_
     return r
 
 
+def place_bear_put_spread(account_hash, ticker, long_symbol, short_symbol, quantity, net_debit):
+    """
+    Place a bear put debit spread as a single NET_DEBIT order.
+    long_symbol: higher-strike put (buy), short_symbol: lower-strike put (sell).
+    """
+    c = get_client()
+    order = (
+        schwab.orders.options.bear_put_vertical_open(
+            long_put_symbol  = long_symbol,
+            short_put_symbol = short_symbol,
+            quantity         = quantity,
+            net_debit        = net_debit,
+        )
+    )
+    r = c.place_order(account_hash, order)
+    return r
+
+
+def get_order(account_hash: str, order_id: str) -> dict:
+    """Fetch a single order by ID. Returns the raw Schwab order JSON."""
+    c = get_client()
+    r = c.get_order(int(order_id), account_hash)
+    return r.json()
+
+
+def get_orders_for_account(account_hash: str, max_results: int = 50) -> list:
+    """Return recent orders for an account (working + terminal states)."""
+    c = get_client()
+    r = c.get_orders_for_account(account_hash, max_results=max_results)
+    return r.json()
+
+
+def cancel_order(account_hash: str, order_id: str) -> bool:
+    """Cancel a working order. Returns True if accepted (200/204)."""
+    c = get_client()
+    r = c.cancel_order(int(order_id), account_hash)
+    return r.status_code in (200, 204)
+
+
 if __name__ == '__main__':
     if '--auth' in sys.argv:
         print('\n  Opening browser for Schwab OAuth login ...')
