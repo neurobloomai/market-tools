@@ -404,8 +404,17 @@ def get_order(account_hash: str, order_id: str) -> dict:
 
 def get_orders_for_account(account_hash: str, max_results: int = 50) -> list:
     """Return recent orders for an account (working + terminal states)."""
+    import datetime
+    utc = datetime.timezone.utc
+    now  = datetime.datetime.now(utc)
+    from_ = now - datetime.timedelta(days=60)
     c = get_client()
-    r = c.get_orders_for_account(account_hash, max_results=max_results)
+    r = c.get_orders_for_account(
+        account_hash,
+        max_results=max_results,
+        from_entered_datetime=from_,
+        to_entered_datetime=now,
+    )
     return r.json()
 
 
