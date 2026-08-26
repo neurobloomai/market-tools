@@ -366,13 +366,14 @@ def place_closing_bull_call(account_hash, long_sym, short_sym, qty, net_credit):
     Place a GTC closing order for a bull call spread (SELL long, BUY short = net credit).
     net_credit: limit price per share (e.g. 3.50 for a $350 credit per contract).
     """
+    from schwab.orders.common import Duration
     c = get_client()
-    order = schwab.orders.options.bull_call_vertical_close(
+    order = (schwab.orders.options.bull_call_vertical_close(
         long_call_symbol  = long_sym,
         short_call_symbol = short_sym,
         quantity          = qty,
         net_credit        = net_credit,
-    )
+    ).set_duration(Duration.GOOD_TILL_CANCEL))
     r = c.place_order(account_hash, order)
     return r
 
@@ -384,13 +385,14 @@ def place_closing_bear_put(account_hash, long_sym, short_sym, qty, net_credit):
     short_sym: lower-strike put (was sold at open).
     net_credit: limit price per share.
     """
+    from schwab.orders.common import Duration
     c = get_client()
-    order = schwab.orders.options.bear_put_vertical_close(
+    order = (schwab.orders.options.bear_put_vertical_close(
         short_put_symbol = short_sym,
         long_put_symbol  = long_sym,
         quantity         = qty,
         net_credit       = net_credit,
-    )
+    ).set_duration(Duration.GOOD_TILL_CANCEL))
     r = c.place_order(account_hash, order)
     return r
 
