@@ -2,6 +2,14 @@
 
 Free, open-source market dashboards and quality stock screeners powered by Yahoo Finance.
 
+## Open Source · Commercial Services
+
+The tools, screeners, and frameworks in this repository are **free and open-sourced** — clone them, fork them, adapt them.
+
+**Future premium features, managed services, and neurobloom.ai platform offerings are not free.** Open-source tooling and paid services built on top of it are separate things. If and when services like personalized risk profiling, automated execution, or portfolio construction layers are built and offered — they will be offered commercially.
+
+Open-source is the foundation. It is not a commitment that everything built on that foundation will also be free.
+
 ## The Idea
 
 Two filters before touching anything.
