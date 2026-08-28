@@ -669,6 +669,8 @@ python3 pop_scan.py --ext-st                  # universe + watchlist
 python3 pop_scan.py MSFT NVDA AMD --ext-st    # specific tickers
 ```
 
+**Gate:** only names where price is above the 20d MA, weekly slope is positive, and weekly CMF ≥ 0 are shown. Below-MA or negative-flow names are silently excluded — the ceiling is irrelevant when the trend is contracting, and showing it creates false comfort. The footer line reports how many were excluded.
+
 Where the weekly extension scan (`extension_scan.py`) answers **how far a name is extended on the multi-week timeframe**, `--ext-st` answers the same question on the **daily timeframe**:
 
 | Dimension | MT (weekly extension scan) | ST (`--ext-st`) |
@@ -696,6 +698,8 @@ The ceiling asks: *has this name been elevated long enough for the new level to 
 | **Ceiling/Blown** | Implied ceiling price + upside remaining, or `↑ blown +N%` if past ceiling |
 | **Runway bar** | Visual fill — full bar = lots of room, empty = at or past ceiling |
 | **Runway%** | Remaining fraction of the 90th-pct ceiling that is still unused |
+| **WkCMF** | Weekly Chaikin Money Flow — the gate signal, shown for confirmation |
+| **WkSlp** | Weekly 10w MA slope — the gate signal, shown for confirmation |
 
 ## IV Rank and IV/HV
 

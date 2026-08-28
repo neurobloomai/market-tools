@@ -629,44 +629,75 @@ def run_top10(n=10, tickers_override=None):
 
 
 def run_ext_st(tickers, label):
-    """ST extension scan: daily 20d MA extension vs 1-year 90th-pct ceiling."""
+    """ST extension scan: daily 20d MA extension vs 1-year 90th-pct ceiling.
+
+    Gate: only shows names where price > 20d MA, weekly slope > 0, weekly CMF >= 0.
+    Below-MA or negative-flow names are excluded — the ceiling is irrelevant when
+    the trend is contracting.
+    """
+    import math
     from functools import partial
 
     now = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
     print(f'\n  {_BLD}ST EXTENSION — {label}{_RST}  {_DIM}{now}{_RST}')
-    print(f'  {_DIM}Daily 20d MA · 1yr 90th-pct ceiling · faster recalibration than weekly{_RST}\n')
+    print(f'  {_DIM}Daily 20d MA · 1yr 90th-pct ceiling · gate: above MA + slope > 0 + CMF ≥ 0{_RST}\n')
     print(f'  Scanning {len(tickers)} tickers ...', flush=True)
 
-    _fetch = partial(get_st_extension, force_yf=True)
+    _fetch_st  = partial(get_st_extension, force_yf=True)
+    _fetch_pop = partial(get_daily_ma_pos, force_yf=True)
     with ThreadPoolExecutor(max_workers=12) as ex:
-        results = list(ex.map(_fetch, tickers))
+        st_results  = list(ex.map(_fetch_st,  tickers))
+        pop_results = list(ex.map(_fetch_pop, tickers))
 
-    valid   = [r for r in results if r is not None]
-    no_data = [tickers[i] for i, r in enumerate(results) if r is None]
+    pop_map = {r['ticker']: r for r in pop_results if r is not None}
 
-    if not valid:
-        print(f'  {_R}No data returned.{_RST}\n')
+    def _nan(v):
+        return v is None or (isinstance(v, float) and math.isnan(v))
+
+    qualified = []
+    excluded  = 0
+    no_data   = []
+
+    for r in st_results:
+        if r is None:
+            no_data.append(tickers[st_results.index(r)])
+            continue
+        pop = pop_map.get(r['ticker'], {})
+        slope = pop.get('wk_slope')
+        cmf   = pop.get('wk_cmf')
+        above_ma   = r['ext_now'] > 0
+        slope_ok   = not _nan(slope) and slope > 0
+        cmf_ok     = not _nan(cmf)   and cmf >= 0
+        if above_ma and slope_ok and cmf_ok:
+            qualified.append((r, pop))
+        else:
+            excluded += 1
+
+    if not qualified:
+        msg = f'  {_DIM}No names pass the gate (above 20d MA + slope > 0 + CMF ≥ 0). '
+        msg += f'{excluded} excluded.{_RST}\n'
+        print(msg)
         return
 
-    valid.sort(key=lambda r: r['runway'])   # blown first, then least runway
+    qualified.sort(key=lambda x: x[0]['runway'])   # blown first, then least runway
 
     BAR_W = 10
-    W = {'tk': 6, 'zn': 8, 'pr': 9, 'ma': 9, 'ex': 7, 'cl': 21}
+    W = {'tk': 6, 'zn': 8, 'pr': 9, 'ma': 9, 'ex': 7, 'cl': 21, 'cmf': 7, 'slp': 7}
 
     hdr = (f"  {'TICKER':<{W['tk']}}  {'ZONE':<{W['zn']}}  {'PRICE':>{W['pr']}}"
            f"  {'20dMA':>{W['ma']}}  {'EXT':>{W['ex']}}  {'CEILING/BLOWN':<{W['cl']}}"
-           f"  {'':>{BAR_W}}  {'RUNWAY':>6}")
+           f"  {'':>{BAR_W}}  {'RUNWAY':>6}  {'WkCMF':>{W['cmf']}}  {'WkSlp':>{W['slp']}}")
     print(f'\n{_DIM}{hdr}{_RST}')
     print(f'{_DIM}  {"─" * (len(hdr) - 2)}{_RST}')
 
-    for r in valid:
+    for r, pop in qualified:
         runway  = r['runway']
         ext_now = r['ext_now']
         ext_90p = r['ext_90p']
+        cmf     = pop.get('wk_cmf')
+        slope   = pop.get('wk_slope')
 
-        if ext_now <= 0:
-            zone, zc = '⬇ below', _DIM
-        elif ext_now > ext_90p:
+        if ext_now > ext_90p:
             zone, zc = '✕ blown', '\033[31m'
         elif runway < 34:
             zone, zc = '⬡ near  ', '\033[33m'
@@ -685,20 +716,24 @@ def run_ext_st(tickers, label):
         bar_fill = max(0, min(BAR_W, round(runway / 100 * BAR_W)))
         bar = '\033[34m' + '█' * bar_fill + _DIM + '░' * (BAR_W - bar_fill) + _RST
 
-        ext_c    = _G if ext_now >= 0 else _R
         ticker_s = f'{_BLD}{r["ticker"]:<{W["tk"]}}{_RST}'
         zone_s   = f'{zc}{zone.ljust(W["zn"])}{_RST}'
         price_s  = f'${r["price"]:>{W["pr"]-1}.2f}'
         ma_s     = f'{_DIM}${r["ma20"]:>{W["ma"]-1}.2f}{_RST}'
-        ext_s    = f'{ext_c}{ext_now:>+{W["ex"]-1}.1f}%{_RST}'
+        ext_s    = f'{_G}{ext_now:>+{W["ex"]-1}.1f}%{_RST}'
         ceil_pad = _rpad(ceil_s, W['cl'])
         rn_s     = f'{runway:>5.0f}%'
+        cmf_s    = _lpad(_cli_cmf(cmf),   W['cmf'])
+        slp_s    = _lpad(_cli_slope(slope), W['slp'])
 
-        print(f'  {ticker_s}  {zone_s}  {price_s}  {ma_s}  {ext_s}  {ceil_pad}  {bar}  {rn_s}')
+        print(f'  {ticker_s}  {zone_s}  {price_s}  {ma_s}  {ext_s}  {ceil_pad}  {bar}  {rn_s}  {cmf_s}  {slp_s}')
 
+    footer_parts = ['Ceiling = 90th-pct of last 252 daily bars']
+    if excluded:
+        footer_parts.append(f'{excluded} name{"s" if excluded != 1 else ""} excluded (below MA / negative flow / slope)')
     if no_data:
-        print(f'\n  {_DIM}No data: {", ".join(no_data)}{_RST}')
-    print(f'\n  {_DIM}Ceiling = 90th-pct of last 252 daily (price/20dMA−1) readings · blown = past daily ceiling{_RST}')
+        footer_parts.append(f'no data: {", ".join(no_data)}')
+    print(f'\n  {_DIM}{" · ".join(footer_parts)}{_RST}')
     print()
 
 
