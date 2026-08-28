@@ -138,7 +138,10 @@ def get_earnings_batch(tickers, max_workers=4):
 def earnings_risk(earnings_date):
     """
     Returns (days, level) or (None, None).
-    level: 'HIGH' ≤7d · 'WARN' 8-14d · 'NEAR' 15-30d · None >30d
+    level: 'HIGH' ≤7d · 'WARN' 8-14d · 'NEAR' 15-30d · 'WATCH' 31-45d · None >45d
+
+    Threshold is 45d (not 30d) to cover the full 30-45 DTE spread holding window —
+    earnings at day 33 falls squarely inside a position entered today at 45 DTE.
     """
     if earnings_date is None:
         return None, None
@@ -152,11 +155,13 @@ def earnings_risk(earnings_date):
         return days, 'WARN'
     if days <= 30:
         return days, 'NEAR'
+    if days <= 45:
+        return days, 'WATCH'
     return days, None
 
 
 def earnings_cli(earnings_date):
-    """ANSI CLI string for ER column. Empty string if >30d or unknown."""
+    """ANSI CLI string for ER column. Empty string if >45d or unknown."""
     days, level = earnings_risk(earnings_date)
     if level == 'HIGH':
         return f'{_R}⚠{days}d{_RST}'
@@ -164,6 +169,8 @@ def earnings_cli(earnings_date):
         return f'{_ORG}~{days}d{_RST}'
     if level == 'NEAR':
         return f'{_DIM}{days}d{_RST}'
+    if level == 'WATCH':
+        return f'{_DIM}{days}d?{_RST}'
     return ''
 
 
@@ -176,4 +183,6 @@ def earnings_html_badge(earnings_date):
         return f'<span class="er-warn" title="Earnings in {days} days">ER {days}d</span>'
     if level == 'NEAR':
         return f'<span class="er-near" title="Earnings in {days} days">ER {days}d</span>'
+    if level == 'WATCH':
+        return f'<span class="er-near" title="Earnings in {days} days">ER {days}d?</span>'
     return ''
