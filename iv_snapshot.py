@@ -70,7 +70,9 @@ def get_atm_iv(ticker):
         puts['dist']  = abs(puts['strike']  - price)
         c_iv = calls.loc[calls['dist'].idxmin(), 'impliedVolatility']
         p_iv = puts.loc[puts['dist'].idxmin(),  'impliedVolatility']
-        if c_iv <= 0 or p_iv <= 0:
+        # < 0.01 (1% annualized) catches stale after-hours yfinance returns that
+        # are near-zero but not exactly 0 — those slip past the <= 0 check
+        if c_iv < 0.01 or p_iv < 0.01:
             return None, None
         atm_iv = round((c_iv + p_iv) / 2 * 100, 2)
         return atm_iv, round(float(price), 2)
