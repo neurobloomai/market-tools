@@ -517,7 +517,22 @@ Most people go the other way — build from charts, add a quality layer as an af
 
 ## Dividend Universe
 
-`dividend_plays_for_longterm.py` is a curated list of dividend-paying names filtered for quality: payout ratio, FCF yield, net margin, ROE, debt/EV. Each entry is annotated with the thesis — why it belongs, what the moat is, what to watch. Sectors: financials, energy, industrials, consumer, healthcare, precious metals.
+`dividend_plays_for_longterm.py` is a curated list of dividend-paying names filtered for quality: payout ratio, FCF yield, net margin, ROE, debt/EV. Each entry is annotated with the thesis — why it belongs, what the moat is, what to watch. Sectors: financials, energy, industrials, consumer, healthcare, precious metals, real estate (REITs).
+
+### REITs in the dividend universe
+
+Standard quality filters (OM, D/EV, ROE) don't apply cleanly to REIT structure — depreciation inflates the expense line, infrastructure debt is structural not deteriorating, and GAAP earnings understate cash generation. Judge REITs by **AFFO coverage**, **occupancy trend**, and **dividend growth history** instead.
+
+| Name | What it is | Rate sensitivity | Economy sensitivity |
+|---|---|---|---|
+| **VICI** | Gaming/experiential REIT — Caesars/MGM landlord, 15-20yr triple-net leases with CPI escalators | Rate-sensitive (yield competes with T-bills) | Resilient — gaming tenants can't relocate (license tied to location), no defaults since 2017 IPO |
+| **EPR** | Experiential net-lease REIT — theaters, ski resorts, early childhood education | Rate-sensitive | Consumer spending dependent — theaters recovered post-COVID but remain occupancy-watch names |
+| **AMT** | Cell tower REIT — 220,000+ towers globally, multi-tenant model | Rate-sensitive | Near-immune to economic cycle — wireless carriers pay regardless; 5G densification is secular |
+| **STAG** | Industrial REIT — ~570 single-tenant warehouses/distribution centers across 41 US states; monthly dividend | Rate-sensitive; sweet spot is low/falling rates + moderate growth | E-commerce/last-mile demand supports occupancy (~98%); single-tenant risk: vacancy goes 100%→0% overnight — more cycle-sensitive than PLD |
+
+**STAG vs PLD:** PLD (Prologis, in SIP list) is the institutional-grade version — prime locations, multi-tenant, Amazon/FedEx/DHL, secondary markets rare. STAG is the higher-yield, higher-risk complement — secondary markets, smaller buildings, single-tenant concentration. Same industrial tailwind, different risk profile. STAG's monthly dividend is the income differentiator; PLD is the compounder.
+
+**Rate environment read for all four:** Low rates → cap rates compress, REIT prices rise, yield spread over T-bills attractive. High rates → yield competes with risk-free alternatives, REIT prices get pressured until the spread reopens. STAG and EPR are the most rate-sensitive of the four (higher single-name and sector-specific risk); AMT is the most rate-insensitive operationally (carrier contracts don't change with rates).
 
 Run the extension scan on this universe directly:
 
