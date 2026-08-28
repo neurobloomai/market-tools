@@ -1126,6 +1126,17 @@ if __name__ == '__main__':
     elif args == ['--dividend']:
         from dividend_plays_for_longterm import UNIVERSE as DIVIDEND_UNIVERSE
         run(list(dict.fromkeys(DIVIDEND_UNIVERSE)), 'Dividend')
+    elif '--ext-st' in args:
+        rest      = [a.upper() for a in args if a != '--ext-st' and not a.startswith('--')]
+        mega_flag = any(a.startswith('--mega') for a in args)
+        if rest:
+            run_ext_st(rest, ', '.join(rest))
+        elif mega_flag:
+            run_ext_st(list(dict.fromkeys(MEGA_CAP)), 'Mega-Cap Pulse')
+        else:
+            tkrs = list(dict.fromkeys(UNIVERSE))
+            tkrs += [t for t in WATCHLIST if t not in tkrs]
+            run_ext_st(tkrs, 'Universe + Watchlist')
     elif args[0].startswith('--top'):
         suffix = args[0][5:]
         n = int(suffix) if suffix.isdigit() else (int(args[1]) if len(args) > 1 and args[1].isdigit() else 10)
@@ -1134,14 +1145,6 @@ if __name__ == '__main__':
         suffix = args[0][6:]
         n = int(suffix) if suffix.isdigit() else (int(args[1]) if len(args) > 1 and args[1].isdigit() else 10)
         run_top10(n, tickers_override=MEGA_CAP)
-    elif '--ext-st' in args:
-        rest = [a.upper() for a in args if a != '--ext-st' and not a.startswith('--')]
-        if rest:
-            run_ext_st(rest, ', '.join(rest))
-        else:
-            tkrs = list(dict.fromkeys(UNIVERSE))
-            tkrs += [t for t in WATCHLIST if t not in tkrs]
-            run_ext_st(tkrs, 'Universe + Watchlist')
     else:
         tickers = [t.upper() for t in args if not t.startswith('--')]
         run(tickers, ', '.join(tickers), cli_only=True)
