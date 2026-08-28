@@ -29,7 +29,7 @@ import yfinance as yf
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
 from regime import get_regime, regime_html, REGIME_CSS
-from event_risk import get_earnings_batch, earnings_html_badge, EVENT_CSS
+from event_risk import get_earnings_batch, earnings_risk, earnings_html_badge, EVENT_CSS
 
 warnings.filterwarnings('ignore')
 sys.modules.setdefault('_yf_cache', types.ModuleType('_yf_cache'))
@@ -605,6 +605,20 @@ def run(tickers, label, cli_only=False):
 
     print(f'  ▓ {len(fresh)} fresh  ·  ▒ {len(midway)} midway  ·  ░ {len(extended)} extended  ·  ✕ {len(ceiling)} ceiling  ·  {len(below)} below  ·  {len(no_data)} no data')
 
+    # Earnings risk line — fetch for all valid tickers, show any within 45d
+    valid_tickers = [r['ticker'] for r in valid]
+    earnings_map  = get_earnings_batch(valid_tickers) if valid_tickers else {}
+    _ER_C = {'HIGH': '\033[91m', 'WARN': '\033[33m', 'NEAR': '\033[2m', 'WATCH': '\033[2m'}
+    er_parts = []
+    for t in valid_tickers:
+        days, level = earnings_risk(earnings_map.get(t))
+        if level:
+            c   = _ER_C.get(level, '\033[2m')
+            sfx = '?' if level == 'WATCH' else ''
+            er_parts.append(f'{c}{t} {earnings_map[t].strftime("%b %d")} ({days}d{sfx})\033[0m')
+    if er_parts:
+        print(f'\n  \033[1mEarnings:\033[0m  {" · ".join(er_parts)}')
+
     if cli_only:
         _cli_header()
         for r in fresh + midway + extended + ceiling + below:
@@ -616,8 +630,6 @@ def run(tickers, label, cli_only=False):
 
     now    = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
     regime = get_regime()
-    above_tickers = [r['ticker'] for r in fresh + midway + extended + ceiling]
-    earnings_map  = get_earnings_batch(above_tickers) if above_tickers else {}
     html   = build_html(fresh, midway, extended, ceiling, below, no_data, now, label,
                         regime=regime, earnings_map=earnings_map, index_pulse=idx_pairs)
 
