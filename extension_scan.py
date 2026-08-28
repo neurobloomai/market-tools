@@ -16,6 +16,7 @@ Usage:
   python3 extension_scan.py NVDA AAPL     # specific tickers (CLI only)
   python3 extension_scan.py --watchlist   # watchlist only
   python3 extension_scan.py --dividend    # dividend universe
+  python3 extension_scan.py --mega10      # 31-name mega-cap pulse list (same as pop_scan --mega10)
 """
 
 import os
@@ -656,6 +657,10 @@ if __name__ == '__main__':
         from india_screener import WATCHLIST as IND_W
         tickers = [t for t in dict.fromkeys(IND_W) if '&' not in t]
         label = 'India Watchlist'
+    elif args == ['--mega10'] or args == ['--mega']:
+        from pop_scan import MEGA_CAP
+        tickers = list(dict.fromkeys(MEGA_CAP))
+        label = 'Mega-Cap Pulse'
     else:
         tickers = [t.upper() for t in args if not t.startswith('--')]
         label = ', '.join(tickers)
