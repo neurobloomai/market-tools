@@ -13,6 +13,8 @@ Usage:
   python pop_scan.py --top20       # top 20 setups (any N works: --top5, --top15 ...)
   python pop_scan.py --mega10      # top 10 from mega-cap list only (~30s, more reliable)
   python pop_scan.py --mega20      # top 20 from mega-cap list
+  python pop_scan.py --ext-st      # ST extension view: daily 20d MA vs 1yr 90th-pct ceiling
+  python pop_scan.py MSFT NVDA --ext-st  # ST extension for specific tickers
 """
 
 import json
@@ -180,6 +182,42 @@ def get_hourly_stack(ticker):
         return price > ma10 and price > ma20 and price > ma50
     except Exception:
         return False
+
+def get_st_extension(ticker, force_yf=False):
+    """Daily 20d MA extension vs 1-year 90th-pct ceiling (ST analog of weekly extension scan)."""
+    try:
+        from market_data import fetch_daily
+        hist = fetch_daily(ticker, months=14, force_yf=force_yf)
+        if hist is None or len(hist) < 60:
+            return None
+        close = hist['Close'].dropna()
+        if len(close) < 60:
+            return None
+        price = float(close.iloc[-1])
+        ma20  = float(close.rolling(20).mean().iloc[-1])
+        ext_series = ((close / close.rolling(20).mean()) - 1) * 100
+        ext_valid  = ext_series.dropna().iloc[-252:]   # last 1yr of daily readings
+        ext_90p    = float(ext_valid.quantile(0.90))
+        ext_now    = (price / ma20 - 1) * 100
+        if ext_90p > 0 and ext_now > 0:
+            runway = max(0.0, (ext_90p - ext_now) / ext_90p * 100)
+        elif ext_now <= 0:
+            runway = 100.0
+        else:
+            runway = 0.0
+        ceiling_90 = ma20 * (1 + ext_90p / 100)
+        return {
+            'ticker':     ticker,
+            'price':      round(price, 2),
+            'ma20':       round(ma20, 2),
+            'ext_now':    round(ext_now, 1),
+            'ext_90p':    round(ext_90p, 1),
+            'runway':     round(runway, 1),
+            'ceiling_90': round(ceiling_90, 2),
+        }
+    except Exception:
+        return None
+
 
 def _pct_cell(pct):
     color = '#3fb950' if pct > 0 else '#f85149'
@@ -590,6 +628,80 @@ def run_top10(n=10, tickers_override=None):
     print()
 
 
+def run_ext_st(tickers, label):
+    """ST extension scan: daily 20d MA extension vs 1-year 90th-pct ceiling."""
+    from functools import partial
+
+    now = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
+    print(f'\n  {_BLD}ST EXTENSION — {label}{_RST}  {_DIM}{now}{_RST}')
+    print(f'  {_DIM}Daily 20d MA · 1yr 90th-pct ceiling · faster recalibration than weekly{_RST}\n')
+    print(f'  Scanning {len(tickers)} tickers ...', flush=True)
+
+    _fetch = partial(get_st_extension, force_yf=True)
+    with ThreadPoolExecutor(max_workers=12) as ex:
+        results = list(ex.map(_fetch, tickers))
+
+    valid   = [r for r in results if r is not None]
+    no_data = [tickers[i] for i, r in enumerate(results) if r is None]
+
+    if not valid:
+        print(f'  {_R}No data returned.{_RST}\n')
+        return
+
+    valid.sort(key=lambda r: r['runway'])   # blown first, then least runway
+
+    BAR_W = 10
+    W = {'tk': 6, 'zn': 8, 'pr': 9, 'ma': 9, 'ex': 7, 'cl': 21}
+
+    hdr = (f"  {'TICKER':<{W['tk']}}  {'ZONE':<{W['zn']}}  {'PRICE':>{W['pr']}}"
+           f"  {'20dMA':>{W['ma']}}  {'EXT':>{W['ex']}}  {'CEILING/BLOWN':<{W['cl']}}"
+           f"  {'':>{BAR_W}}  {'RUNWAY':>6}")
+    print(f'\n{_DIM}{hdr}{_RST}')
+    print(f'{_DIM}  {"─" * (len(hdr) - 2)}{_RST}')
+
+    for r in valid:
+        runway  = r['runway']
+        ext_now = r['ext_now']
+        ext_90p = r['ext_90p']
+
+        if ext_now <= 0:
+            zone, zc = '⬇ below', _DIM
+        elif ext_now > ext_90p:
+            zone, zc = '✕ blown', '\033[31m'
+        elif runway < 34:
+            zone, zc = '⬡ near  ', '\033[33m'
+        elif runway < 67:
+            zone, zc = '▒ midway', '\033[32m'
+        else:
+            zone, zc = '▓ fresh ', _G
+
+        if ext_now > ext_90p:
+            overshoot = ext_now - ext_90p
+            ceil_s = f'\033[31m↑ blown +{overshoot:.1f}%{_RST}'
+        else:
+            upside = (r['ceiling_90'] - r['price']) / r['price'] * 100
+            ceil_s = f'${r["ceiling_90"]:.2f} ({upside:+.1f}%)'
+
+        bar_fill = max(0, min(BAR_W, round(runway / 100 * BAR_W)))
+        bar = '\033[34m' + '█' * bar_fill + _DIM + '░' * (BAR_W - bar_fill) + _RST
+
+        ext_c    = _G if ext_now >= 0 else _R
+        ticker_s = f'{_BLD}{r["ticker"]:<{W["tk"]}}{_RST}'
+        zone_s   = f'{zc}{zone.ljust(W["zn"])}{_RST}'
+        price_s  = f'${r["price"]:>{W["pr"]-1}.2f}'
+        ma_s     = f'{_DIM}${r["ma20"]:>{W["ma"]-1}.2f}{_RST}'
+        ext_s    = f'{ext_c}{ext_now:>+{W["ex"]-1}.1f}%{_RST}'
+        ceil_pad = _rpad(ceil_s, W['cl'])
+        rn_s     = f'{runway:>5.0f}%'
+
+        print(f'  {ticker_s}  {zone_s}  {price_s}  {ma_s}  {ext_s}  {ceil_pad}  {bar}  {rn_s}')
+
+    if no_data:
+        print(f'\n  {_DIM}No data: {", ".join(no_data)}{_RST}')
+    print(f'\n  {_DIM}Ceiling = 90th-pct of last 252 daily (price/20dMA−1) readings · blown = past daily ceiling{_RST}')
+    print()
+
+
 def _index_pulse_html(pairs):
     import math
     def _pct(v):
@@ -987,6 +1099,14 @@ if __name__ == '__main__':
         suffix = args[0][6:]
         n = int(suffix) if suffix.isdigit() else (int(args[1]) if len(args) > 1 and args[1].isdigit() else 10)
         run_top10(n, tickers_override=MEGA_CAP)
+    elif '--ext-st' in args:
+        rest = [a.upper() for a in args if a != '--ext-st' and not a.startswith('--')]
+        if rest:
+            run_ext_st(rest, ', '.join(rest))
+        else:
+            tkrs = list(dict.fromkeys(UNIVERSE))
+            tkrs += [t for t in WATCHLIST if t not in tkrs]
+            run_ext_st(tkrs, 'Universe + Watchlist')
     else:
         tickers = [t.upper() for t in args if not t.startswith('--')]
         run(tickers, ', '.join(tickers), cli_only=True)

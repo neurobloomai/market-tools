@@ -43,7 +43,7 @@ The rest of this README is the manual for how those two filters are built and ap
 | `top_setups.py` | 🇺🇸 US | Convergence drill — reads last-run HTML outputs, scores every name across quality + RS + CMF + A/D + OBV, fetches monthly MA distance for top 20, prints ranked table in seconds |
 | `india_top_setups.py` | 🇮🇳 India | Same convergence drill for India �� reads `india_screener.html` + `india_aligned_screener.html`, adds sector column (India setups are sector-wave driven), RS vs NIFTY |
 | `monthly_ma_gate.py` | 🇺🇸🇮🇳 Both | Pre-recovery Monthly MA Gate — names within ±2% (Tier 1, on the gate) or ±5% (Tier 2, in the zone) of their 10-month or 20-month SMA · sorted by span (sum of both MA distances) so names sandwiched between both MAs surface first · on-demand only |
-| `pop_scan.py` | 🇺🇸 US | Daily Pop Scanner — price vs 10d/20d/50d MAs · ranked setup modes (`--top10` / `--mega10`) score the full 366-name universe or 32-name pulse list · regime gate + VIX sizing signal + event risk calendar on every ranked run · gold/green/amber range bands · ◎ coiling setups · on-demand |
+| `pop_scan.py` | 🇺🇸 US | Daily Pop Scanner — price vs 10d/20d/50d MAs · ranked setup modes (`--top10` / `--mega10`) score the full 366-name universe or 32-name pulse list · regime gate + VIX sizing signal + event risk calendar on every ranked run · gold/green/amber range bands · ◎ coiling setups · `--ext-st` ST extension view (daily 20d MA vs 1yr 90th-pct ceiling) · on-demand |
 | `extension_scan.py` | 🇺🇸🇮🇳 Both | Weekly MA Extension + Projection Scanner — for each ticker above its 10w MA, shows current extension vs historical 90th-pct ceiling, runway remaining before ceiling, implied ceiling price, weekly RSI and 10w slope · answers "how much further can this go?" · flags blown-ceiling names in red · supports `--universe`, `--watchlist`, `--dividend`, `--india`, `--india --universe`, `--india --watchlist`, or explicit tickers (CLI-only) · on-demand |
 | `iv_snapshot.py` | 🇺🇸 US | Daily IV + HV30 snapshot — captures implied volatility and 30-day historical volatility for all `SPREAD_UNIVERSE` names · appends one row per name to `iv_data.json` · run by GitHub Actions after market close (Tue–Sat) · run locally anytime: `python3 iv_snapshot.py` |
 | `iv_rank.py` | 🇺🇸 US | IV Rank reader — reads `iv_data.json`, computes IV Rank (position of today's IV within the 30-day range) and IV/HV ratio for each `SPREAD_UNIVERSE` name · requires ≥30 days of data for a valid signal · at depth==30 prints self-announcement banner with next-step reminder |
@@ -661,6 +661,41 @@ SPY QQQ IWM                          — structure read (grade skipped — ETF)
 ```
 
 Pulse list runs in ~30s vs ~90s for the full universe and is more reliable on rate-limited sessions. Use `--mega10` first to read market conditions; use `--top10` for universe-wide setup discovery.
+
+### ST Extension (`--ext-st`)
+
+```bash
+python3 pop_scan.py --ext-st                  # universe + watchlist
+python3 pop_scan.py MSFT NVDA AMD --ext-st    # specific tickers
+```
+
+Where the weekly extension scan (`extension_scan.py`) answers **how far a name is extended on the multi-week timeframe**, `--ext-st` answers the same question on the **daily timeframe**:
+
+| Dimension | MT (weekly extension scan) | ST (`--ext-st`) |
+|---|---|---|
+| Reference MA | 10-week | 20-day |
+| History window | 3 years · 156 weekly bars | 1 year · 252 daily bars |
+| Ceiling | 90th-pct of weekly extensions | 90th-pct of daily extensions |
+| Recalibration speed | 2–3 months shifts ~5–8% of sample | 2–3 months shifts ~17–24% of sample |
+
+**The key read: MT blown ≠ ST blown.** A name can be structurally stretched on the weekly timeframe (above its 3-year 90th-pct ceiling) while still trading within normal range on the daily (below its 1-year daily ceiling). That combination means: long-term caution warranted, but daily momentum is intact and the entry is not at a daily exhaustion point.
+
+**The recalibration principle.** The ST ceiling is not static — it recalibrates automatically as new daily readings enter the 252-bar window:
+
+- **Grind up** (gradual, MA following the price): each day adds a new elevated-extension reading, replacing an older lower reading. After 40–60 days (~20% of the sample replaced), the 90th percentile shifts meaningfully upward. The ceiling follows the trend.
+- **Spike up** (price runs far ahead of MA): the new readings are outliers, representing a small fraction of the distribution. The 90th percentile barely moves. Blown signal persists — correctly, because the elevation hasn't been earned by sustained price behavior.
+
+The ceiling asks: *has this name been elevated long enough for the new level to become its normal?* Gradual says yes. Spike says not yet.
+
+**Output columns:**
+
+| Column | What it means |
+|---|---|
+| **Zone** | ▓ fresh (≥67% runway) · ▒ midway (34–67%) · ⬡ near (0–34%) · ✕ blown (past ceiling) |
+| **EXT** | Current % above 20d MA |
+| **Ceiling/Blown** | Implied ceiling price + upside remaining, or `↑ blown +N%` if past ceiling |
+| **Runway bar** | Visual fill — full bar = lots of room, empty = at or past ceiling |
+| **Runway%** | Remaining fraction of the 90th-pct ceiling that is still unused |
 
 ## IV Rank and IV/HV
 
