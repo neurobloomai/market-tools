@@ -27,13 +27,18 @@ Auto: daily_screener.yml runs this after market close (Tue–Sat 9:30pm UTC)
 """
 
 import json
+import os
 import numpy as np
 import warnings
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date as _date
 from pathlib import Path
 
 import yfinance as yf
 warnings.filterwarnings('ignore')
+
+
+def _use_schwab():
+    return os.getenv('SCHWAB_DATA', '').strip() == '1'
 
 DATA_FILE = Path(__file__).parent / 'iv_data.json'
 
@@ -51,8 +56,44 @@ TIERS = {
 }
 
 
+def get_atm_iv_schwab(ticker):
+    """ATM IV via Schwab option chain — volatility field is already %, no conversion needed."""
+    try:
+        from schwab_client import get_option_chain
+        data = get_option_chain(ticker, strikes=3)
+        if 'error' in data or data.get('status') == 'FAILED':
+            return None, None
+        underlying = data.get('underlyingPrice')
+        if not underlying:
+            return None, None
+        target  = _date.today() + timedelta(days=30)
+        all_exp = sorted(set(
+            list(data.get('callExpDateMap', {}).keys()) +
+            list(data.get('putExpDateMap',  {}).keys())
+        ))
+        if not all_exp:
+            return None, None
+        exp = min(all_exp, key=lambda x: abs((_date.fromisoformat(x.split(':')[0]) - target).days))
+        calls = data.get('callExpDateMap', {}).get(exp, {})
+        puts  = data.get('putExpDateMap',  {}).get(exp, {})
+        all_strikes = sorted(set(list(calls.keys()) + list(puts.keys())), key=float)
+        if not all_strikes:
+            return None, None
+        atm   = min(all_strikes, key=lambda s: abs(float(s) - underlying))
+        c_iv  = (calls.get(atm) or [{}])[0].get('volatility', 0)
+        p_iv  = (puts.get(atm)  or [{}])[0].get('volatility', 0)
+        if c_iv < 1.0 or p_iv < 1.0:   # Schwab volatility is already %; < 1% = bad data
+            return None, None
+        return round((c_iv + p_iv) / 2, 2), round(float(underlying), 2)
+    except Exception:
+        return None, None
+
+
 def get_atm_iv(ticker):
-    """ATM IV from nearest ~30-day expiry (avg of call + put ATM). Returns % or None."""
+    """ATM IV from nearest ~30-day expiry. Routes through Schwab when SCHWAB_DATA=1."""
+    if _use_schwab():
+        return get_atm_iv_schwab(ticker)
+    # yfinance path
     try:
         stock = yf.Ticker(ticker)
         exps = stock.options
