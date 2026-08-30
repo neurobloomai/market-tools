@@ -186,3 +186,22 @@ def earnings_html_badge(earnings_date):
     if level == 'WATCH':
         return f'<span class="er-near" title="Earnings in {days} days">ER {days}d?</span>'
     return ''
+
+
+if __name__ == '__main__':
+    import sys
+    tickers = [t.upper() for t in sys.argv[1:]] if len(sys.argv) > 1 else []
+    if not tickers:
+        print('Usage: python event_risk.py TICKER [TICKER ...]')
+        sys.exit(1)
+    dates = get_earnings_batch(tickers)
+    for ticker in tickers:
+        ed = dates.get(ticker)
+        days, level = earnings_risk(ed)
+        if ed is None:
+            print(f'  {ticker}: no earnings date found')
+        elif level is None:
+            print(f'  {ticker}: {ed}  ({days}d out — beyond 45d window, clear)')
+        else:
+            flag = {'HIGH': '⚠ HIGH', 'WARN': '~ WARN', 'NEAR': 'NEAR', 'WATCH': 'WATCH?'}.get(level, level)
+            print(f'  {ticker}: {ed}  ({days}d)  {flag}')
