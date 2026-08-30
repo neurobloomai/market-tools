@@ -362,21 +362,23 @@ def run_schwab_score(tickers):
     # sort by score descending
     ordered = sorted(tickers, key=lambda t: all_data[t][0] or 0, reverse=True)
 
-    BAR = 10
-    COL = 22
-    W   = 22 + COL * len(ordered)
+    BAR  = 10
+    COL  = 22          # chars per data column including 2-space prefix
+    LBL  = 24          # label column width (2 prefix + 22 content)
+    W    = LBL + COL * len(ordered)
     def pct(v):  return f'{v*100:+.1f}%' if isinstance(v, (int, float)) else '—'
     def raw(v):  return f'{v:.1f}'       if isinstance(v, (int, float)) else '—'
+    def col(s):  return f'  {s:<{COL-2}}'   # pad any string to one full column
 
     print(f'\n  FUNDAMENTALS SCORE — Side by Side (Schwab)')
     print(f'  {"═"*W}')
-    print(f'  {"":22}' + ''.join(f'  {t:<{COL-2}}' for t in ordered))
+    print(f'  {"":22}' + ''.join(col(t) for t in ordered))
     print(f'  {"─"*W}')
 
-    # composite row
+    # composite row — format score+band into exactly COL-2 chars
     print(f'  {"COMPOSITE":22}' + ''.join(
-        f'  {all_data[t][0]:>3}/100  {score_band(all_data[t][0]):<{COL-10}}'
-        if all_data[t][0] is not None else f'  {"—":<{COL-2}}'
+        col(f'{all_data[t][0]}/100  {score_band(all_data[t][0])}')
+        if all_data[t][0] is not None else col('—')
         for t in ordered))
     print(f'  {"─"*W}')
 
@@ -386,12 +388,12 @@ def run_schwab_score(tickers):
         for t in ordered:
             bd = all_data[t][1]
             if not bd:
-                row += f'  {"—":<{COL-2}}'
+                row += col('—')
                 continue
             s      = bd[key]['score']
             filled = round(s / mx * BAR)
             bar    = '█' * filled + '░' * (BAR - filled)
-            row   += f'  {s:>2}/{mx:<2} {bar}'
+            row   += col(f'{s:>2}/{mx:<2} {bar}')
         print(row)
 
     print(f'  {"─"*W}')
@@ -412,7 +414,7 @@ def run_schwab_score(tickers):
         row = f'  {label:<22}'
         for t in ordered:
             val = fn(all_data[t][2]) if all_data[t][2] else '—'
-            row += f'  {val:<{COL-2}}'
+            row += col(val)
         print(row)
 
     print(f'  {"═"*W}\n')
