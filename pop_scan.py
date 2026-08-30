@@ -643,8 +643,8 @@ def run_ext_st(tickers, label):
     print(f'  {_DIM}Daily 20d MA · 1yr 90th-pct ceiling · gate: above MA + slope > 0 + CMF ≥ 0{_RST}\n')
     print(f'  Scanning {len(tickers)} tickers ...', flush=True)
 
-    _fetch_st  = partial(get_st_extension, force_yf=True)
-    _fetch_pop = partial(get_daily_ma_pos, force_yf=True)
+    _fetch_st  = partial(get_st_extension)
+    _fetch_pop = partial(get_daily_ma_pos)
     with ThreadPoolExecutor(max_workers=12) as ex:
         st_results  = list(ex.map(_fetch_st,  tickers))
         pop_results = list(ex.map(_fetch_pop, tickers))
