@@ -312,9 +312,8 @@ def run(ticker):
         print(f'  {line}')
     print(f'\n  {"═"*W}\n')
 
-def run_schwab_score(ticker):
-    """0-100 composite fundamentals score using Schwab API data."""
-    W = 52
+def run_schwab_score(tickers):
+    """0-100 composite fundamentals score using Schwab API data. Single or multi-ticker."""
     try:
         from schwab_client import get_fundamentals as schwab_fundamentals
         from internal_fundamentals_score import score_fundamentals_schwab, score_band
@@ -322,50 +321,114 @@ def run_schwab_score(ticker):
         print(f'\n  Cannot load Schwab scorer: {e}\n')
         return
 
-    print(f'\n  {"═"*W}')
-    print(f'  FUNDAMENTALS SCORE (Schwab) — {ticker}')
-    print(f'  {"═"*W}')
-
-    d = schwab_fundamentals(ticker)
-    if d is None:
-        print(f'\n  No Schwab fundamental data for {ticker}\n')
+    if len(tickers) == 1:
+        # ── single ticker: vertical view ─────────────────────────────────────
+        ticker = tickers[0]
+        W = 52
+        print(f'\n  {"═"*W}')
+        print(f'  FUNDAMENTALS SCORE (Schwab) — {ticker}')
+        print(f'  {"═"*W}')
+        d = schwab_fundamentals(ticker)
+        if d is None:
+            print(f'\n  No Schwab fundamental data for {ticker}\n')
+            return
+        score, breakdown = score_fundamentals_schwab(d)
+        cap = d.get('marketCap')
+        cap_str = (f'${cap/1e12:.2f}T' if cap and cap >= 1e12
+                   else f'${cap/1e9:.1f}B' if cap and cap >= 1e9 else '—')
+        print(f'\n  {ticker}  ·  Cap {cap_str}  ·  Beta {d.get("beta") or "—"}\n')
+        BAR = 10
+        for key, label, mx in [('profitability','Profitability',35),('growth','Growth',20),
+                                ('valuation','Valuation',20),('balance_sheet','Balance Sheet',25)]:
+            s = breakdown[key]['score']
+            bar = '█' * round(s/mx*BAR) + '░' * (BAR - round(s/mx*BAR))
+            print(f'  {label:<16}  {s:>2}/{mx:<2}  {round(s/mx*100):>3}%  {bar}')
+        print(f'\n  {"─"*W}')
+        print(f'  COMPOSITE SCORE   {score:>3} / 100  —  {score_band(score)}')
+        print(f'  {"═"*W}\n')
         return
 
-    score, breakdown = score_fundamentals_schwab(d)
+    # ── multi-ticker: side-by-side table ─────────────────────────────────────
+    from concurrent.futures import ThreadPoolExecutor
+    print(f'\n  Fetching Schwab fundamentals for {len(tickers)} tickers ...', flush=True)
+    with ThreadPoolExecutor(max_workers=6) as ex:
+        raw_data = list(ex.map(schwab_fundamentals, tickers))
 
-    cap = d.get('marketCap')
-    cap_str = (f'${cap/1e12:.2f}T' if cap and cap >= 1e12
-               else f'${cap/1e9:.1f}B' if cap and cap >= 1e9
-               else '—')
-    print(f'\n  {ticker}  ·  Cap {cap_str}  ·  Beta {d.get("beta") or "—"}\n')
+    all_data = {}
+    for t, d in zip(tickers, raw_data):
+        score, breakdown = score_fundamentals_schwab(d) if d else (None, {})
+        all_data[t] = (score, breakdown, d or {})
+
+    # sort by score descending
+    ordered = sorted(tickers, key=lambda t: all_data[t][0] or 0, reverse=True)
 
     BAR = 10
-    labels = {
-        'profitability': 'Profitability',
-        'growth':        'Growth',
-        'valuation':     'Valuation',
-        'balance_sheet': 'Balance Sheet',
-    }
-    for key, label in labels.items():
-        p  = breakdown[key]
-        s, mx = p['score'], p['max']
-        filled = round(s / mx * BAR)
-        bar    = '█' * filled + '░' * (BAR - filled)
-        pct    = round(s / mx * 100)
-        print(f'  {label:<16}  {s:>2}/{mx:<2}  {pct:>3}%  {bar}')
+    COL = 22
+    W   = 22 + COL * len(ordered)
+    def pct(v):  return f'{v*100:+.1f}%' if isinstance(v, (int, float)) else '—'
+    def raw(v):  return f'{v:.1f}'       if isinstance(v, (int, float)) else '—'
 
-    print(f'\n  {"─"*W}')
-    band = score_band(score)
-    print(f'  COMPOSITE SCORE   {score:>3} / 100  —  {band}')
+    print(f'\n  FUNDAMENTALS SCORE — Side by Side (Schwab)')
+    print(f'  {"═"*W}')
+    print(f'  {"":22}' + ''.join(f'  {t:<{COL-2}}' for t in ordered))
+    print(f'  {"─"*W}')
+
+    # composite row
+    print(f'  {"COMPOSITE":22}' + ''.join(
+        f'  {all_data[t][0]:>3}/100  {score_band(all_data[t][0]):<{COL-10}}'
+        if all_data[t][0] is not None else f'  {"—":<{COL-2}}'
+        for t in ordered))
+    print(f'  {"─"*W}')
+
+    for key, label, mx in [('profitability','Profitability',35),('growth','Growth',20),
+                            ('valuation','Valuation',20),('balance_sheet','Balance Sheet',25)]:
+        row = f'  {label:<22}'
+        for t in ordered:
+            bd = all_data[t][1]
+            if not bd:
+                row += f'  {"—":<{COL-2}}'
+                continue
+            s      = bd[key]['score']
+            filled = round(s / mx * BAR)
+            bar    = '█' * filled + '░' * (BAR - filled)
+            row   += f'  {s:>2}/{mx:<2} {bar}'
+        print(row)
+
+    print(f'  {"─"*W}')
+
+    for label, fn in [
+        ('Gross Margin',   lambda d: pct(d.get('grossMargins'))),
+        ('Op Margin',      lambda d: pct(d.get('operatingMargins'))),
+        ('Net Margin',     lambda d: pct(d.get('profitMargins'))),
+        ('ROE',            lambda d: pct(d.get('returnOnEquity'))),
+        ('Rev Growth TTM', lambda d: pct(d.get('revenueGrowthTTM'))),
+        ('EPS Growth TTM', lambda d: pct(d.get('epsGrowthTTM'))),
+        ('PEG',            lambda d: raw(d.get('pegRatio'))),
+        ('P/E',            lambda d: raw(d.get('trailingPE'))),
+        ('P/CF',           lambda d: raw(d.get('pcfRatio'))),
+        ('D/E (%)',        lambda d: raw(d.get('totalDebtToEquity'))),
+        ('Current Ratio',  lambda d: raw(d.get('currentRatio'))),
+    ]:
+        row = f'  {label:<22}'
+        for t in ordered:
+            val = fn(all_data[t][2]) if all_data[t][2] else '—'
+            row += f'  {val:<{COL-2}}'
+        print(row)
+
     print(f'  {"═"*W}\n')
 
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print('\n  Usage: python ticker_score.py TICKER [--schwab]\n')
+    args    = sys.argv[1:]
+    flags   = [a for a in args if a.startswith('--')]
+    tickers = [a.upper() for a in args if not a.startswith('--')]
+    if not tickers:
+        print('\n  Usage: python ticker_score.py TICKER [TICKER ...] [--schwab]\n')
         sys.exit(1)
-    ticker = sys.argv[1].upper()
-    if '--schwab' in sys.argv:
-        run_schwab_score(ticker)
+    if '--schwab' in flags:
+        run_schwab_score(tickers)
+    elif len(tickers) == 1:
+        run(tickers[0])
     else:
-        run(ticker)
+        for t in tickers:
+            run(t)
