@@ -41,3 +41,4 @@ schwab_creds.py
 !iv_data.json
 !grade_cache.json
 !earnings_cache.json
+!positions.json

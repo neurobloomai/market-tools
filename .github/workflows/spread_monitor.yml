@@ -1,0 +1,37 @@
+name: Spread Monitor — Exit Signals
+
+on:
+  schedule:
+    - cron: '0 19 * * 1-5'  # Mon–Fri 7pm UTC = 3pm ET (1hr before close, liquid prices)
+  workflow_dispatch:
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v7.0.0
+
+      - uses: actions/setup-python@v6.3.0
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install yfinance
+
+      - name: Configure git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Run spread monitor
+        run: python spread_monitor.py
+
+      - name: Commit position status
+        run: |
+          git add positions.json
+          git diff --staged --quiet || git commit -m "spread_monitor: $(date -u +'%Y-%m-%d') status update"
+          git pull --rebase origin main || true
+          git push || (sleep 10 && git pull --rebase origin main && git push)

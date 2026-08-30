@@ -1,0 +1,11 @@
+{
+  "_schema": {
+    "type":         "bull_put or bull_call",
+    "short_strike": "the strike you SOLD",
+    "long_strike":  "the strike you BOUGHT",
+    "entry_value":  "credit received (bull_put) or debit paid (bull_call) — per share, e.g. 0.28",
+    "contracts":    "number of contracts (1 = 100 shares)",
+    "status":       "open or closed"
+  },
+  "spreads": []
+}
