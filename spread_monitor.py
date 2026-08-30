@@ -19,7 +19,11 @@ Execution hook: future Schwab auto-close layer goes in execute_close() below.
 """
 
 import json
+import os
+import re
+import sys
 import warnings
+from collections import defaultdict
 from datetime import date, datetime
 from pathlib import Path
 
@@ -35,6 +39,10 @@ DTE_FLOOR           = 1      # close if ≤ 1 DTE
 
 # ── Data fetchers ─────────────────────────────────────────────────────────────
 
+def _use_schwab():
+    return os.getenv('SCHWAB_DATA', '').strip() == '1'
+
+
 def get_vix():
     try:
         info = yf.Ticker("^VIX").fast_info
@@ -44,8 +52,33 @@ def get_vix():
         return None
 
 
+def get_option_mid_schwab(ticker, expiry, strike, option_type):
+    """Bid/ask mid via Schwab option chain. Reliable during and after market hours."""
+    try:
+        from schwab_client import get_option_chain
+        data = get_option_chain(ticker, expiry_date=expiry, strikes=20)
+        if 'error' in data or data.get('status') == 'FAILED':
+            return None
+        map_key  = 'callExpDateMap' if option_type == 'calls' else 'putExpDateMap'
+        exp_map  = data.get(map_key, {})
+        exp_key  = next((k for k in exp_map if k.startswith(expiry)), None)
+        if not exp_key:
+            return None
+        smap     = exp_map[exp_key]
+        nearest  = min(smap.keys(), key=lambda s: abs(float(s) - float(strike)))
+        opt      = (smap.get(nearest) or [{}])[0]
+        bid, ask = opt.get('bid', 0), opt.get('ask', 0)
+        if bid <= 0 and ask <= 0:
+            return None
+        return round((ask if bid <= 0 else (bid + ask) / 2), 3)
+    except Exception:
+        return None
+
+
 def get_option_mid(ticker, expiry, strike, option_type):
-    """Bid/ask mid for a specific strike. option_type: 'calls' or 'puts'."""
+    """Bid/ask mid for a specific strike. Routes through Schwab when SCHWAB_DATA=1."""
+    if _use_schwab():
+        return get_option_mid_schwab(ticker, expiry, strike, option_type)
     try:
         df = getattr(yf.Ticker(ticker).option_chain(expiry), option_type).copy()
         df['_d'] = (df['strike'] - float(strike)).abs()
@@ -113,6 +146,118 @@ def exit_signals(pos, current_value, vix, dte):
                 signals.append(f'Loss limit — down ${loss:.2f}/sh (> {LOSS_LIMIT_MULTIPLE:.0f}× debit) — EXIT')
 
     return signals
+
+
+# ── Schwab position import ────────────────────────────────────────────────────
+
+def _parse_occ(symbol):
+    """Parse OCC option symbol → {ticker, expiry, put_call, strike}."""
+    s = re.sub(r'\s+', '', symbol)
+    m = re.match(r'^([A-Z]+)(\d{6})([CP])(\d{8})$', s)
+    if not m:
+        return None
+    ticker, ds, pc, ss = m.groups()
+    return {
+        'ticker':   ticker,
+        'expiry':   f'20{ds[:2]}-{ds[2:4]}-{ds[4:]}',
+        'put_call': pc,
+        'strike':   int(ss) / 1000,
+    }
+
+
+def import_schwab_positions():
+    """Read Schwab account, detect spread pairs, return list of position dicts."""
+    from schwab_client import get_positions
+    raw = get_positions()
+    discovered = []
+
+    for acct_num, acct_data in raw.items():
+        positions = acct_data.get('securitiesAccount', {}).get('positions', [])
+        options   = []
+        for p in positions:
+            inst = p.get('instrument', {})
+            if inst.get('assetType') != 'OPTION':
+                continue
+            parsed = _parse_occ(inst.get('symbol', ''))
+            if not parsed:
+                continue
+            parsed['long_qty']  = int(p.get('longQuantity', 0))
+            parsed['short_qty'] = int(p.get('shortQuantity', 0))
+            parsed['avg_price'] = float(p.get('averagePrice', 0))
+            options.append(parsed)
+
+        groups = defaultdict(list)
+        for o in options:
+            groups[(o['ticker'], o['expiry'], o['put_call'])].append(o)
+
+        for (ticker, expiry, pc), legs in groups.items():
+            longs  = sorted([l for l in legs if l['long_qty']  > 0], key=lambda x: x['strike'])
+            shorts = sorted([l for l in legs if l['short_qty'] > 0], key=lambda x: x['strike'])
+            n = min(len(longs), len(shorts))
+            if n == 0:
+                continue
+
+            for i in range(n):
+                ll, sl  = longs[i], shorts[i]
+                if pc == 'C':
+                    spread_type  = 'bull_call'
+                    long_strike  = ll['strike']
+                    short_strike = sl['strike']
+                    entry_value  = round(ll['avg_price'] - sl['avg_price'], 4)
+                else:
+                    spread_type  = 'bull_put'
+                    long_strike  = ll['strike']
+                    short_strike = sl['strike']
+                    entry_value  = round(sl['avg_price'] - ll['avg_price'], 4)
+
+                pos_id = (f'{ticker}-{expiry}-{spread_type}'
+                          f'-{int(long_strike)}-{int(short_strike)}')
+                discovered.append({
+                    'id':           pos_id,
+                    'ticker':       ticker,
+                    'type':         spread_type,
+                    'short_strike': short_strike,
+                    'long_strike':  long_strike,
+                    'expiry':       expiry,
+                    'dte_at_entry': None,
+                    'entry_date':   None,
+                    'contracts':    min(ll['long_qty'], sl['short_qty']),
+                    'entry_value':  entry_value,
+                    'status':       'open',
+                    'source':       f'schwab:{acct_num}',
+                })
+
+    return discovered
+
+
+def sync_from_schwab():
+    """Import Schwab positions → positions.json (skips existing IDs)."""
+    discovered = import_schwab_positions()
+    if not discovered:
+        print('No spread pairs detected in Schwab accounts.')
+        return
+
+    if POSITIONS_FILE.exists():
+        with open(POSITIONS_FILE) as f:
+            all_data = json.load(f)
+    else:
+        all_data = {'_schema': {}, 'spreads': []}
+
+    existing_ids = {p['id'] for p in all_data.get('spreads', [])}
+    added = 0
+    for pos in discovered:
+        if pos['id'] not in existing_ids:
+            all_data.setdefault('spreads', []).append(pos)
+            added += 1
+            print(f'  + imported: {pos["ticker"]} {pos["type"]} '
+                  f'{int(pos["long_strike"])}/{int(pos["short_strike"])} '
+                  f'exp {pos["expiry"]}  entry ${pos["entry_value"]:.2f}')
+        else:
+            print(f'  ~ skipped (already tracked): {pos["id"]}')
+
+    with open(POSITIONS_FILE, 'w') as f:
+        json.dump(all_data, f, indent=2)
+    print(f'\nDone — {added} new position(s) added to positions.json.')
 
 
 # ── Execution hook (future Schwab layer) ──────────────────────────────────────
@@ -221,4 +366,8 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    if '--import-schwab' in sys.argv:
+        print('Importing spread positions from Schwab...')
+        sync_from_schwab()
+    else:
+        main()

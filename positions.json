@@ -1,11 +1,72 @@
 {
   "_schema": {
-    "type":         "bull_put or bull_call",
+    "type": "bull_put or bull_call",
     "short_strike": "the strike you SOLD",
-    "long_strike":  "the strike you BOUGHT",
-    "entry_value":  "credit received (bull_put) or debit paid (bull_call) — per share, e.g. 0.28",
-    "contracts":    "number of contracts (1 = 100 shares)",
-    "status":       "open or closed"
+    "long_strike": "the strike you BOUGHT",
+    "entry_value": "credit received (bull_put) or debit paid (bull_call) \u2014 per share, e.g. 0.28",
+    "contracts": "number of contracts (1 = 100 shares)",
+    "status": "open or closed"
   },
-  "spreads": []
+  "spreads": [
+    {
+      "id": "AAPL-2026-09-25-bull_call-310-335",
+      "ticker": "AAPL",
+      "type": "bull_call",
+      "short_strike": 335.0,
+      "long_strike": 310.0,
+      "expiry": "2026-09-25",
+      "dte_at_entry": null,
+      "entry_date": null,
+      "contracts": 1,
+      "entry_value": 7.6832,
+      "status": "open",
+      "source": "schwab:30447081",
+      "last_checked": "2026-08-30 13:49 UTC",
+      "last_vix": 14.430000305175781,
+      "last_value": 11.725,
+      "last_pnl_pct": 23.3,
+      "exit_flagged": false,
+      "exit_reasons": []
+    },
+    {
+      "id": "AAPL-2026-09-25-bull_call-315-340",
+      "ticker": "AAPL",
+      "type": "bull_call",
+      "short_strike": 340.0,
+      "long_strike": 315.0,
+      "expiry": "2026-09-25",
+      "dte_at_entry": null,
+      "entry_date": null,
+      "contracts": 1,
+      "entry_value": 6.6632,
+      "status": "open",
+      "source": "schwab:30447081",
+      "last_checked": "2026-08-30 13:49 UTC",
+      "last_vix": 14.430000305175781,
+      "last_value": 9.42,
+      "last_pnl_pct": 15.0,
+      "exit_flagged": false,
+      "exit_reasons": []
+    },
+    {
+      "id": "MSFT-2026-09-25-bull_call-495-520",
+      "ticker": "MSFT",
+      "type": "bull_call",
+      "short_strike": 520.0,
+      "long_strike": 495.0,
+      "expiry": "2026-09-25",
+      "dte_at_entry": null,
+      "entry_date": null,
+      "contracts": 1,
+      "entry_value": 9.6133,
+      "status": "open",
+      "source": "schwab:30447081",
+      "last_checked": "2026-08-30 13:49 UTC",
+      "last_vix": 14.430000305175781,
+      "last_value": 14.925,
+      "last_pnl_pct": 34.5,
+      "exit_flagged": false,
+      "exit_reasons": []
+    }
+  ]
 }
