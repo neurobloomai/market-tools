@@ -312,8 +312,60 @@ def run(ticker):
         print(f'  {line}')
     print(f'\n  {"═"*W}\n')
 
+def run_schwab_score(ticker):
+    """0-100 composite fundamentals score using Schwab API data."""
+    W = 52
+    try:
+        from schwab_client import get_fundamentals as schwab_fundamentals
+        from internal_fundamentals_score import score_fundamentals_schwab, score_band
+    except ImportError as e:
+        print(f'\n  Cannot load Schwab scorer: {e}\n')
+        return
+
+    print(f'\n  {"═"*W}')
+    print(f'  FUNDAMENTALS SCORE (Schwab) — {ticker}')
+    print(f'  {"═"*W}')
+
+    d = schwab_fundamentals(ticker)
+    if d is None:
+        print(f'\n  No Schwab fundamental data for {ticker}\n')
+        return
+
+    score, breakdown = score_fundamentals_schwab(d)
+
+    cap = d.get('marketCap')
+    cap_str = (f'${cap/1e12:.2f}T' if cap and cap >= 1e12
+               else f'${cap/1e9:.1f}B' if cap and cap >= 1e9
+               else '—')
+    print(f'\n  {ticker}  ·  Cap {cap_str}  ·  Beta {d.get("beta") or "—"}\n')
+
+    BAR = 10
+    labels = {
+        'profitability': 'Profitability',
+        'growth':        'Growth',
+        'valuation':     'Valuation',
+        'balance_sheet': 'Balance Sheet',
+    }
+    for key, label in labels.items():
+        p  = breakdown[key]
+        s, mx = p['score'], p['max']
+        filled = round(s / mx * BAR)
+        bar    = '█' * filled + '░' * (BAR - filled)
+        pct    = round(s / mx * 100)
+        print(f'  {label:<16}  {s:>2}/{mx:<2}  {pct:>3}%  {bar}')
+
+    print(f'\n  {"─"*W}')
+    band = score_band(score)
+    print(f'  COMPOSITE SCORE   {score:>3} / 100  —  {band}')
+    print(f'  {"═"*W}\n')
+
+
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print('\n  Usage: python ticker_score.py TICKER\n')
+        print('\n  Usage: python ticker_score.py TICKER [--schwab]\n')
         sys.exit(1)
-    run(sys.argv[1].upper())
+    ticker = sys.argv[1].upper()
+    if '--schwab' in sys.argv:
+        run_schwab_score(ticker)
+    else:
+        run(ticker)
