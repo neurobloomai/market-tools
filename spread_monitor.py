@@ -7,10 +7,14 @@ Does NOT execute trades — signals are advisory. Execute manually on Fidelity/S
 then set status to "closed" in positions.json.
 
 Exit rules (checked in priority order):
-  1. VIX ≥ 28          → EXIT ALL   (regime shifts to DEFENSE — vol expansion kills credit spreads)
-  2. DTE ≤ 1           → EXIT       (pin risk + potential assignment)
-  3. P&L ≥ 50% target  → EXIT       (spread clock — theta edge is captured, don't give it back)
-  4. Loss ≥ 2× credit  → EXIT       (stop loss — a loser should not become a disaster)
+  1. VIX ≥ 28                        → EXIT ALL   (regime shifts to DEFENSE)
+  2. DTE ≤ 1                         → EXIT       (pin risk + potential assignment)
+  3. Short leg Δ ≥ 0.25              → EXIT       (approaching ATM — structural risk)
+  4. P&L ≥ dynamic target            → EXIT       (50% default; 70% if Δ<0.10 + DTE>5; let expire if Δ<0.05 + DTE≤3)
+  5. Loss ≥ 2× credit                → EXIT       (stop loss — a loser should not become a disaster)
+
+  Warn (advisory, no immediate close):
+  W1. Short leg Δ 0.15–0.25          → WATCH      (delta elevated, monitor closely)
 
 Run:  python spread_monitor.py
 Auto: spread_monitor.yml runs weekdays 7pm UTC (3pm ET) — 1hr before close, liquid prices
@@ -32,9 +36,11 @@ warnings.filterwarnings('ignore')
 
 POSITIONS_FILE      = Path(__file__).parent / 'positions.json'
 VIX_EXIT_THRESHOLD  = 28.0   # DEFENSE regime boundary
-PROFIT_TARGET_PCT   = 0.50   # close at 50% of max profit
+PROFIT_TARGET_PCT   = 0.50   # default profit target (50% of max)
 LOSS_LIMIT_MULTIPLE = 2.0    # close if loss exceeds 2× the credit/debit
 DTE_FLOOR           = 1      # close if ≤ 1 DTE
+DELTA_EXIT_THRESHOLD = 0.25  # short leg abs(delta) — approaching ATM, exit
+DELTA_WARN_THRESHOLD = 0.15  # elevated delta — advisory watch
 
 
 # ── Data fetchers ─────────────────────────────────────────────────────────────
@@ -93,6 +99,35 @@ def get_option_mid(ticker, expiry, strike, option_type):
         return None
 
 
+def get_short_delta(pos):
+    """
+    Abs(delta) of the short leg via Schwab option chain.
+    Puts have negative delta — abs() normalises both legs to 0.0–0.50 range.
+    Returns None in yfinance mode (Greeks not available without Schwab).
+    """
+    if not _use_schwab():
+        return None
+    try:
+        from schwab_client import get_option_chain
+        t, exp, st = pos['ticker'], pos['expiry'], pos['short_strike']
+        opt_type = 'puts' if pos['type'] == 'bull_put' else 'calls'
+        data     = get_option_chain(t, expiry_date=exp, strikes=20)
+        if 'error' in data or data.get('status') == 'FAILED':
+            return None
+        map_key  = 'callExpDateMap' if opt_type == 'calls' else 'putExpDateMap'
+        exp_map  = data.get(map_key, {})
+        exp_key  = next((k for k in exp_map if k.startswith(exp)), None)
+        if not exp_key:
+            return None
+        smap     = exp_map[exp_key]
+        nearest  = min(smap.keys(), key=lambda s: abs(float(s) - float(st)))
+        opt      = (smap.get(nearest) or [{}])[0]
+        d        = opt.get('delta')
+        return abs(float(d)) if d is not None else None
+    except Exception:
+        return None
+
+
 def get_spread_value(pos):
     """Current mark-to-market value of the spread (per share)."""
     t, exp, st, lt = pos['ticker'], pos['expiry'], pos['short_strike'], pos['long_strike']
@@ -118,15 +153,41 @@ def compute_pnl(pos, current_value):
     return round(current_value - ev, 3), round(width - ev, 3)
 
 
-def exit_signals(pos, current_value, vix, dte):
-    """Returns list of triggered exit reason strings."""
-    signals = []
+def _profit_target_pct(short_delta, dte):
+    """
+    Dynamic profit target based on how far OTM and time remaining.
+    Returns None = let expire (commission cost not worth closing).
+      Δ < 0.05 + DTE ≤ 3  → None  (expiry imminent, position effectively dead)
+      Δ < 0.10 + DTE > 5   → 0.70  (far OTM, theta still working — hold to 70%)
+      default               → 0.50  (standard spread clock)
+    """
+    if short_delta is not None:
+        if short_delta < 0.05 and dte <= 3:
+            return None
+        if short_delta < 0.10 and dte > 5:
+            return 0.70
+    return PROFIT_TARGET_PCT
+
+
+def exit_signals(pos, current_value, vix, dte, short_delta=None):
+    """
+    Returns (exits, warns):
+      exits — immediate close required
+      warns — advisory flags, no forced action
+    """
+    exits, warns = [], []
 
     if vix and vix >= VIX_EXIT_THRESHOLD:
-        signals.append(f'VIX {vix:.1f} ≥ {VIX_EXIT_THRESHOLD:.0f} — regime shift to DEFENSE, EXIT ALL')
+        exits.append(f'VIX {vix:.1f} ≥ {VIX_EXIT_THRESHOLD:.0f} — regime shift to DEFENSE, EXIT ALL')
 
     if dte <= DTE_FLOOR:
-        signals.append(f'DTE {dte} — pin/assignment risk, EXIT')
+        exits.append(f'DTE {dte} — pin/assignment risk, EXIT')
+
+    if short_delta is not None:
+        if short_delta >= DELTA_EXIT_THRESHOLD:
+            exits.append(f'Short Δ {short_delta:.2f} ≥ {DELTA_EXIT_THRESHOLD} — approaching ATM, EXIT')
+        elif short_delta >= DELTA_WARN_THRESHOLD:
+            warns.append(f'Short Δ {short_delta:.2f} ≥ {DELTA_WARN_THRESHOLD} — delta elevated, WATCH')
 
     if current_value is not None:
         pnl, max_profit = compute_pnl(pos, current_value)
@@ -134,18 +195,25 @@ def exit_signals(pos, current_value, vix, dte):
 
         if max_profit > 0:
             pnl_pct = pnl / max_profit * 100
-            if pnl_pct >= PROFIT_TARGET_PCT * 100:
-                signals.append(f'{pnl_pct:.0f}% of max profit captured (${pnl:.2f}/sh) — CLOSE')
+            target  = _profit_target_pct(short_delta, dte)
+            if target is None:
+                warns.append(
+                    f'{pnl_pct:.0f}% profit — Δ<0.05 + DTE≤3, let expire (skip commission cost)'
+                )
+            elif pnl_pct >= target * 100:
+                exits.append(
+                    f'{pnl_pct:.0f}% of max profit captured (${pnl:.2f}/sh) — CLOSE (target {int(target*100)}%)'
+                )
 
         if pos['type'] == 'bull_put':
             if current_value > ev * (1 + LOSS_LIMIT_MULTIPLE):
-                signals.append(f'Loss limit — spread ${current_value:.2f} vs ${ev:.2f} entry, > {LOSS_LIMIT_MULTIPLE:.0f}× credit — EXIT')
+                exits.append(f'Loss limit — spread ${current_value:.2f} vs ${ev:.2f} entry, > {LOSS_LIMIT_MULTIPLE:.0f}× credit — EXIT')
         else:
             loss = ev - current_value if current_value < ev else 0
             if loss >= ev * LOSS_LIMIT_MULTIPLE:
-                signals.append(f'Loss limit — down ${loss:.2f}/sh (> {LOSS_LIMIT_MULTIPLE:.0f}× debit) — EXIT')
+                exits.append(f'Loss limit — down ${loss:.2f}/sh (> {LOSS_LIMIT_MULTIPLE:.0f}× debit) — EXIT')
 
-    return signals
+    return exits, warns
 
 
 # ── Schwab position import ────────────────────────────────────────────────────
@@ -310,48 +378,58 @@ def main():
 
     print()
     print(f'{"TICKER":<7} {"TYPE":<10} {"EXPIRY":<12} {"DTE":>4}  '
-          f'{"ENTRY":>7} {"CURR":>7} {"P&L/SH":>8} {"P&L%":>7}  STATUS')
-    print('─' * 92)
+          f'{"ENTRY":>7} {"CURR":>7} {"P&L/SH":>8} {"P&L%":>7}  {"Δ SHORT":>7}  STATUS')
+    print('─' * 100)
 
     exit_count = 0
     updates    = {}
 
     for pos in open_pos:
-        dte  = dte_of(pos['expiry'])
-        curr = get_spread_value(pos)
+        dte         = dte_of(pos['expiry'])
+        curr        = get_spread_value(pos)
+        short_delta = get_short_delta(pos)
 
         pnl, max_profit = compute_pnl(pos, curr) if curr is not None else (None, None)
         pnl_pct = (pnl / max_profit * 100) if (pnl is not None and max_profit and max_profit > 0) else None
 
-        signals = exit_signals(pos, curr, vix, dte)
-        flag    = '⚑ EXIT' if signals else '✓ hold'
-        if signals:
+        exits, warns = exit_signals(pos, curr, vix, dte, short_delta)
+        if exits:
+            flag = '⚑ EXIT'
             exit_count += 1
+        elif warns:
+            flag = '⚠ WATCH'
+        else:
+            flag = '✓ hold'
 
         curr_str    = f'${curr:>5.2f}' if curr is not None else '    —  '
         pnl_str     = f'${pnl:>+5.2f}' if pnl is not None else '    —  '
         pnl_pct_str = f'{pnl_pct:>+5.0f}%' if pnl_pct is not None else '    —  '
+        delta_str   = f'{short_delta:.2f}' if short_delta is not None else '   —  '
 
         print(f'{pos["ticker"]:<7} {pos["type"]:<10} {pos["expiry"]:<12} {dte:>4}  '
-              f'${pos["entry_value"]:>5.2f}  {curr_str} {pnl_str} {pnl_pct_str}  {flag}')
+              f'${pos["entry_value"]:>5.2f}  {curr_str} {pnl_str} {pnl_pct_str}  {delta_str:>7}  {flag}')
 
-        for s in signals:
-            print(f'         → {s}')
+        for s in exits:
+            print(f'         ⚑ {s}')
+        for s in warns:
+            print(f'         ⚠ {s}')
 
         updates[pos['id']] = {
-            'last_checked': now_str,
-            'last_vix':     vix,
-            'last_value':   curr,
-            'last_pnl_pct': round(pnl_pct, 1) if pnl_pct is not None else None,
-            'exit_flagged': bool(signals),
-            'exit_reasons': signals,
+            'last_checked':  now_str,
+            'last_vix':      vix,
+            'last_value':    curr,
+            'last_pnl_pct':  round(pnl_pct, 1) if pnl_pct is not None else None,
+            'last_delta':    round(short_delta, 3) if short_delta is not None else None,
+            'exit_flagged':  bool(exits),
+            'exit_reasons':  exits,
+            'warn_reasons':  warns,
         }
 
-    print('─' * 92)
+    print('─' * 100)
 
     if exit_count:
         print(f'\n{exit_count} EXIT signal(s) fired.')
-        print('Execute manually on Fidelity/Schwab, then set status → "closed" in positions.json.')
+        print('Execute manually on Schwab, then set status → "closed" in positions.json.')
     else:
         print('\nAll positions within hold range.')
 
