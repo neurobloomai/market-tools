@@ -446,7 +446,7 @@ def run_full_score(tickers):
                                                   cap_tier, cap_str, risk_adjusted_score)
         from internal_technical_score import (score_technical, tech_score_band,
                                                sizing_weight, regime_multiplier,
-                                               event_multiplier)
+                                               event_multiplier, compute_slope_curvature)
         from pop_scan import get_daily_ma_pos
         from extension_scan import get_extension_data
         from regime import get_regime
@@ -459,9 +459,15 @@ def run_full_score(tickers):
 
     print(f'\n  Fetching data for {len(tickers)} ticker(s) ...', flush=True)
     with ThreadPoolExecutor(max_workers=8) as ex:
-        fund_raw  = list(ex.map(schwab_fundamentals, tickers))
-        pop_raw   = list(ex.map(get_daily_ma_pos,    tickers))
-        ext_raw   = list(ex.map(get_extension_data,  tickers))
+        fund_raw  = list(ex.map(schwab_fundamentals,     tickers))
+        pop_raw   = list(ex.map(get_daily_ma_pos,        tickers))
+        ext_raw   = list(ex.map(get_extension_data,      tickers))
+        curv_raw  = list(ex.map(compute_slope_curvature, tickers))
+
+    # Inject curvature into ext dicts — _score_slope picks up ext.get('curvature')
+    for ext, (_, curv) in zip(ext_raw, curv_raw):
+        if ext is not None and curv is not None:
+            ext['curvature'] = curv
 
     regime   = get_regime()
     vix      = regime.get('vix')
@@ -625,10 +631,17 @@ def _print_full_table(ordered, all_data, vix, reg_lbl, reg_mult):
     print(f'  {"─"*W}')
 
     # raw technical values
+    def _curv_str(t):
+        c = all_data[t][8].get('curvature')
+        if c is None: return '—'
+        tag = '↑accel' if c > 0.03 else ('↑' if c > 0 else ('↓decel' if c < -0.03 else '→flat'))
+        return f'{c:+.3f} {tag}'
+
     for label, fn in [
         ('MA above (0-3)', lambda t: str(all_data[t][7].get('above', '—'))),
         ('CMF-20',         lambda t: f'{all_data[t][8].get("cmf"):+.3f}' if all_data[t][8].get("cmf") is not None else '—'),
         ('Slope 10w %',    lambda t: f'{all_data[t][8].get("slope"):+.1f}%' if all_data[t][8].get("slope") is not None else '—'),
+        ('Curvature',      _curv_str),
         ('RSI-14 (wkly)',  lambda t: f'{all_data[t][8].get("rsi"):.0f}' if all_data[t][8].get("rsi") is not None else '—'),
         ('Runway %',       lambda t: f'{all_data[t][8].get("runway"):.0f}%' if all_data[t][8].get("runway") is not None else '—'),
     ]:
