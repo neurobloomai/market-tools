@@ -445,10 +445,12 @@ def run_full_score(tickers):
         from internal_fundamentals_score import (score_fundamentals_schwab, score_band,
                                                   cap_tier, cap_str, risk_adjusted_score)
         from internal_technical_score import (score_technical, tech_score_band,
-                                               sizing_weight, regime_multiplier)
+                                               sizing_weight, regime_multiplier,
+                                               event_multiplier)
         from pop_scan import get_daily_ma_pos
         from extension_scan import get_extension_data
         from regime import get_regime
+        from event_risk import get_earnings_batch, earnings_risk
     except ImportError as e:
         print(f'\n  Cannot load scorer: {e}\n')
         return
@@ -461,19 +463,24 @@ def run_full_score(tickers):
         pop_raw   = list(ex.map(get_daily_ma_pos,    tickers))
         ext_raw   = list(ex.map(get_extension_data,  tickers))
 
-    regime  = get_regime()
-    vix     = regime.get('vix')
-    reg_lbl = regime.get('label', 'UNKNOWN')
+    regime   = get_regime()
+    vix      = regime.get('vix')
+    reg_lbl  = regime.get('label', 'UNKNOWN')
     reg_mult = regime_multiplier(vix)
+
+    er_dates = get_earnings_batch(tickers)
 
     all_data = {}
     for t, fd, pop, ext in zip(tickers, fund_raw, pop_raw, ext_raw):
         f_score, f_bd = score_fundamentals_schwab(fd) if fd else (None, {})
-        mcap   = (fd or {}).get('marketCap')
-        f_adj  = risk_adjusted_score(f_score, mcap)
+        mcap    = (fd or {}).get('marketCap')
+        f_adj   = risk_adjusted_score(f_score, mcap)
         t_score, t_bd = score_technical(pop, ext)
-        sw     = sizing_weight(f_adj, t_score, vix)
-        all_data[t] = (f_score, f_bd, fd or {}, mcap, f_adj, t_score, t_bd, pop or {}, ext or {}, sw)
+        er_days, er_level = earnings_risk(er_dates.get(t))
+        sw = sizing_weight(f_adj, t_score, vix, er_level)
+        all_data[t] = (f_score, f_bd, fd or {}, mcap, f_adj,
+                       t_score, t_bd, pop or {}, ext or {}, sw,
+                       er_days, er_level, er_dates.get(t))
 
     if len(tickers) == 1:
         _print_full_single(tickers[0], all_data[tickers[0]], vix, reg_lbl, reg_mult)
@@ -486,18 +493,20 @@ def _print_full_single(ticker, data, vix, reg_lbl, reg_mult):
     from internal_fundamentals_score import score_band, cap_tier, cap_str
     from internal_technical_score import tech_score_band
 
-    f_score, f_bd, fd, mcap, f_adj, t_score, t_bd, pop, ext, sw = data
+    f_score, f_bd, fd, mcap, f_adj, t_score, t_bd, pop, ext, sw, er_days, er_level, er_date = data
+    from internal_technical_score import event_multiplier
     tier_lbl, mult = cap_tier(mcap)
-    cstr = cap_str(mcap)
-    BAR  = 10
-    W    = 64
+    cstr    = cap_str(mcap)
+    ev_mult = event_multiplier(er_level)
+    BAR     = 10
+    W       = 64
 
     def bar(s, mx):
         f = round(s / mx * BAR)
         return '█' * f + '░' * (BAR - f)
 
-    print(f'\n  {"═"*W}')
     vix_hdr = f'{vix:.1f}' if vix else '—'
+    print(f'\n  {"═"*W}')
     print(f'  FULL SCORE — {ticker}  ·  {cstr}  ·  Regime {reg_lbl}  VIX {vix_hdr}')
     print(f'  {"═"*W}')
 
@@ -517,14 +526,12 @@ def _print_full_single(ticker, data, vix, reg_lbl, reg_mult):
             fcol = f'  {flbl:<16} {fs:>2}/{fmx:<2} {bar(fs, fmx)}'
         else:
             fcol = f'  {"":16} {"":>2} {"":3} {"":10}'
-
         if i < len(t_pillars) and t_bd:
             tlbl, tmx = t_pillars[i]
             ts = t_bd[tkeys[i]]['score']
             tcol = f'  {tlbl:<14} {ts:>2}/{tmx:<2} {bar(ts, tmx)}'
         else:
             tcol = ''
-
         print(fcol + tcol)
 
     print(f'\n  {"─"*W}')
@@ -537,11 +544,21 @@ def _print_full_single(ticker, data, vix, reg_lbl, reg_mult):
     print(f'  {"Risk-Adj Score":<20} {(str(f_adj)+"/100"):>7}  {score_band(f_adj):<12}'
           f'  {"Regime mult":<16} {f"×{reg_mult:.2f}":>7}')
 
+    # event risk line — only shown when relevant
+    if er_level:
+        er_date_str = er_date.strftime('%b %d') if er_date else '—'
+        er_flag = {'HIGH': '⚠ HIGH', 'WARN': '~ WARN', 'NEAR': 'NEAR', 'WATCH': 'WATCH'}.get(er_level, er_level)
+        print(f'  {"Event Risk":<20} {"ER "+er_date_str:>7}  {er_days}d  {er_flag:<8}'
+              f'  {"ER mult":<16} {f"×{ev_mult:.2f}":>7}')
+
     print(f'\n  {"═"*W}')
     sw_bar = '█' * round((sw or 0) * 10) + '░' * (10 - round((sw or 0) * 10)) if sw is not None else '—'
-    print(f'  SIZING WEIGHT   {sw:.3f}  {sw_bar}   '
-          f'({f_adj}/100 fund × {t_score}/100 tech × ×{reg_mult:.2f} regime)' if sw is not None
-          else f'  SIZING WEIGHT   — (insufficient data)')
+    if sw is not None:
+        formula = f'({f_adj}% fund × {t_score}% tech × ×{reg_mult:.2f} regime'
+        formula += f' × ×{ev_mult:.2f} ER)' if er_level else ')'
+        print(f'  SIZING WEIGHT   {sw:.3f}  {sw_bar}   {formula}')
+    else:
+        print(f'  SIZING WEIGHT   — (insufficient data)')
     print(f'  {"═"*W}\n')
 
 
@@ -618,13 +635,31 @@ def _print_full_table(ordered, all_data, vix, reg_lbl, reg_mult):
         print(f'  {label:<22}' + ''.join(col(fn(t)) for t in ordered))
 
     print(f'  {"─"*W}')
+
+    # event risk block
+    from internal_technical_score import event_multiplier
+    print(f'  {"— EVENT RISK —":22}')
+
+    def er_str(t):
+        er_days, er_level, er_date = all_data[t][10], all_data[t][11], all_data[t][12]
+        if not er_level:
+            return 'clear' if er_days is not None else '—'
+        date_s = er_date.strftime('%b %d') if er_date else '—'
+        flag   = {'HIGH': '⚠ HIGH', 'WARN': '~ WARN', 'NEAR': 'NEAR', 'WATCH': 'WATCH?'}.get(er_level, er_level)
+        return f'{flag} {date_s} ({er_days}d)'
+
+    print(f'  {"Earnings":22}' + ''.join(col(er_str(t)) for t in ordered))
+    print(f'  {"ER mult":22}' + ''.join(
+        col(f'×{event_multiplier(all_data[t][11]):.2f}') for t in ordered))
+
+    print(f'  {"─"*W}')
     print(f'  {"═"*W}')
     sw_bar = lambda sw: ('█' * round(sw * 8) + '░' * (8 - round(sw * 8))) if sw is not None else '—'
     print(f'  {"SIZING WEIGHT":22}' + ''.join(
         col(f'{all_data[t][9]:.3f}  {sw_bar(all_data[t][9])}') if all_data[t][9] is not None else col('—')
         for t in ordered))
-    print(f'  {"(fund×tech×regime)":22}' + ''.join(
-        col(f'({all_data[t][4]}×{all_data[t][5]}×{reg_mult:.2f})')
+    print(f'  {"(×regime ×ER)":22}' + ''.join(
+        col(f'(×{reg_mult:.2f} ×{event_multiplier(all_data[t][11]):.2f})')
         for t in ordered))
     print(f'  {"═"*W}\n')
 
