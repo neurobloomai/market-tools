@@ -1,7 +1,5 @@
 {
   "setups": {
-    "NVDA": "IN",
-    "MSFT": "IN",
     "AAPL": "IN"
   },
   "watchlist": {
@@ -47,6 +45,7 @@
     "CRCL": 1,
     "FN": 1,
     "TPL": 1,
-    "GCT": 1
+    "GCT": 1,
+    "AROC": 1
   }
 }
