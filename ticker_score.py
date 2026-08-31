@@ -316,7 +316,8 @@ def run_schwab_score(tickers):
     """0-100 composite fundamentals score using Schwab API data. Single or multi-ticker."""
     try:
         from schwab_client import get_fundamentals as schwab_fundamentals
-        from internal_fundamentals_score import score_fundamentals_schwab, score_band
+        from internal_fundamentals_score import (score_fundamentals_schwab, score_band,
+                                                 cap_tier, cap_str, risk_adjusted_score)
     except ImportError as e:
         print(f'\n  Cannot load Schwab scorer: {e}\n')
         return
@@ -333,10 +334,11 @@ def run_schwab_score(tickers):
             print(f'\n  No Schwab fundamental data for {ticker}\n')
             return
         score, breakdown = score_fundamentals_schwab(d)
-        cap = d.get('marketCap')
-        cap_str = (f'${cap/1e12:.2f}T' if cap and cap >= 1e12
-                   else f'${cap/1e9:.1f}B' if cap and cap >= 1e9 else '—')
-        print(f'\n  {ticker}  ·  Cap {cap_str}  ·  Beta {d.get("beta") or "—"}\n')
+        mcap = d.get('marketCap')
+        tier_label, mult = cap_tier(mcap)
+        adj   = risk_adjusted_score(score, mcap)
+        cstr  = cap_str(mcap)
+        print(f'\n  {ticker}  ·  Cap {cstr}  ·  Beta {d.get("beta") or "—"}\n')
         BAR = 10
         for key, label, mx in [('profitability','Profitability',35),('growth','Growth',20),
                                 ('valuation','Valuation',20),('balance_sheet','Balance Sheet',25)]:
@@ -345,6 +347,8 @@ def run_schwab_score(tickers):
             print(f'  {label:<16}  {s:>2}/{mx:<2}  {round(s/mx*100):>3}%  {bar}')
         print(f'\n  {"─"*W}')
         print(f'  COMPOSITE SCORE   {score:>3} / 100  —  {score_band(score)}')
+        print(f'  Cap Tier          {tier_label}  ({cstr})  ×{mult:.2f}')
+        print(f'  RISK-ADJ SCORE    {adj:>3} / 100  —  {score_band(adj)}')
         print(f'  {"═"*W}\n')
         return
 
@@ -357,10 +361,12 @@ def run_schwab_score(tickers):
     all_data = {}
     for t, d in zip(tickers, raw_data):
         score, breakdown = score_fundamentals_schwab(d) if d else (None, {})
-        all_data[t] = (score, breakdown, d or {})
+        mcap = (d or {}).get('marketCap')
+        adj  = risk_adjusted_score(score, mcap)
+        all_data[t] = (score, breakdown, d or {}, mcap, adj)
 
-    # sort by score descending
-    ordered = sorted(tickers, key=lambda t: all_data[t][0] or 0, reverse=True)
+    # sort by risk-adjusted score descending
+    ordered = sorted(tickers, key=lambda t: all_data[t][4] or 0, reverse=True)
 
     BAR  = 10
     COL  = 22          # chars per data column including 2-space prefix
@@ -375,10 +381,19 @@ def run_schwab_score(tickers):
     print(f'  {"":22}' + ''.join(col(t) for t in ordered))
     print(f'  {"─"*W}')
 
-    # composite row — format score+band into exactly COL-2 chars
+    # composite row
     print(f'  {"COMPOSITE":22}' + ''.join(
         col(f'{all_data[t][0]}/100  {score_band(all_data[t][0])}')
         if all_data[t][0] is not None else col('—')
+        for t in ordered))
+
+    # cap tier + risk-adjusted score rows
+    print(f'  {"Cap Tier":22}' + ''.join(
+        col(f'{cap_tier(all_data[t][3])[0]}  ×{cap_tier(all_data[t][3])[1]:.2f}')
+        for t in ordered))
+    print(f'  {"Risk-Adj Score":22}' + ''.join(
+        col(f'{all_data[t][4]}/100  {score_band(all_data[t][4])}')
+        if all_data[t][4] is not None else col('—')
         for t in ordered))
     print(f'  {"─"*W}')
 
