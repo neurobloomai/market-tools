@@ -435,14 +435,210 @@ def run_schwab_score(tickers):
     print(f'  {"═"*W}\n')
 
 
+def run_full_score(tickers):
+    """
+    Combined fundamentals + technical score with sizing weight.
+    Requires both --schwab and --technical flags.
+    """
+    try:
+        from schwab_client import get_fundamentals as schwab_fundamentals
+        from internal_fundamentals_score import (score_fundamentals_schwab, score_band,
+                                                  cap_tier, cap_str, risk_adjusted_score)
+        from internal_technical_score import (score_technical, tech_score_band,
+                                               sizing_weight, regime_multiplier)
+        from pop_scan import get_daily_ma_pos
+        from extension_scan import get_extension_data
+        from regime import get_regime
+    except ImportError as e:
+        print(f'\n  Cannot load scorer: {e}\n')
+        return
+
+    from concurrent.futures import ThreadPoolExecutor
+
+    print(f'\n  Fetching data for {len(tickers)} ticker(s) ...', flush=True)
+    with ThreadPoolExecutor(max_workers=8) as ex:
+        fund_raw  = list(ex.map(schwab_fundamentals, tickers))
+        pop_raw   = list(ex.map(get_daily_ma_pos,    tickers))
+        ext_raw   = list(ex.map(get_extension_data,  tickers))
+
+    regime  = get_regime()
+    vix     = regime.get('vix')
+    reg_lbl = regime.get('label', 'UNKNOWN')
+    reg_mult = regime_multiplier(vix)
+
+    all_data = {}
+    for t, fd, pop, ext in zip(tickers, fund_raw, pop_raw, ext_raw):
+        f_score, f_bd = score_fundamentals_schwab(fd) if fd else (None, {})
+        mcap   = (fd or {}).get('marketCap')
+        f_adj  = risk_adjusted_score(f_score, mcap)
+        t_score, t_bd = score_technical(pop, ext)
+        sw     = sizing_weight(f_adj, t_score, vix)
+        all_data[t] = (f_score, f_bd, fd or {}, mcap, f_adj, t_score, t_bd, pop or {}, ext or {}, sw)
+
+    if len(tickers) == 1:
+        _print_full_single(tickers[0], all_data[tickers[0]], vix, reg_lbl, reg_mult)
+    else:
+        ordered = sorted(tickers, key=lambda t: all_data[t][9] or 0, reverse=True)
+        _print_full_table(ordered, all_data, vix, reg_lbl, reg_mult)
+
+
+def _print_full_single(ticker, data, vix, reg_lbl, reg_mult):
+    from internal_fundamentals_score import score_band, cap_tier, cap_str
+    from internal_technical_score import tech_score_band
+
+    f_score, f_bd, fd, mcap, f_adj, t_score, t_bd, pop, ext, sw = data
+    tier_lbl, mult = cap_tier(mcap)
+    cstr = cap_str(mcap)
+    BAR  = 10
+    W    = 64
+
+    def bar(s, mx):
+        f = round(s / mx * BAR)
+        return '█' * f + '░' * (BAR - f)
+
+    print(f'\n  {"═"*W}')
+    vix_hdr = f'{vix:.1f}' if vix else '—'
+    print(f'  FULL SCORE — {ticker}  ·  {cstr}  ·  Regime {reg_lbl}  VIX {vix_hdr}')
+    print(f'  {"═"*W}')
+
+    # side-by-side header
+    print(f'\n  {"FUNDAMENTALS (Schwab)":<32}  {"TECHNICAL (Live)":<30}')
+    print(f'  {"─"*30}  {"─"*30}')
+
+    f_pillars = [('Profitability', 35), ('Growth', 20), ('Valuation', 20), ('Balance Sheet', 25)]
+    t_pillars = [('MA Structure', 25), ('CMF', 25), ('Slope', 20), ('RSI Zone', 15), ('Runway', 15)]
+    fkeys     = ['profitability', 'growth', 'valuation', 'balance_sheet']
+    tkeys     = ['ma_structure', 'cmf', 'slope', 'rsi', 'runway']
+
+    for i in range(max(len(f_pillars), len(t_pillars))):
+        if i < len(f_pillars) and f_bd:
+            flbl, fmx = f_pillars[i]
+            fs = f_bd[fkeys[i]]['score']
+            fcol = f'  {flbl:<16} {fs:>2}/{fmx:<2} {bar(fs, fmx)}'
+        else:
+            fcol = f'  {"":16} {"":>2} {"":3} {"":10}'
+
+        if i < len(t_pillars) and t_bd:
+            tlbl, tmx = t_pillars[i]
+            ts = t_bd[tkeys[i]]['score']
+            tcol = f'  {tlbl:<14} {ts:>2}/{tmx:<2} {bar(ts, tmx)}'
+        else:
+            tcol = ''
+
+        print(fcol + tcol)
+
+    print(f'\n  {"─"*W}')
+
+    vix_str = f'{vix:.1f}' if vix else '—'
+    print(f'  {"COMPOSITE":<20} {(str(f_score)+"/100"):>7}  {score_band(f_score):<12}'
+          f'  {"TECHNICAL":<16} {(str(t_score)+"/100"):>7}  {tech_score_band(t_score)}')
+    print(f'  {"Cap Tier":<20} {tier_lbl+" ×"+f"{mult:.2f}":>7}  {cstr:<12}'
+          f'  {"Regime":<16} {reg_lbl:>7}  VIX {vix_str}')
+    print(f'  {"Risk-Adj Score":<20} {(str(f_adj)+"/100"):>7}  {score_band(f_adj):<12}'
+          f'  {"Regime mult":<16} {f"×{reg_mult:.2f}":>7}')
+
+    print(f'\n  {"═"*W}')
+    sw_bar = '█' * round((sw or 0) * 10) + '░' * (10 - round((sw or 0) * 10)) if sw is not None else '—'
+    print(f'  SIZING WEIGHT   {sw:.3f}  {sw_bar}   '
+          f'({f_adj}/100 fund × {t_score}/100 tech × ×{reg_mult:.2f} regime)' if sw is not None
+          else f'  SIZING WEIGHT   — (insufficient data)')
+    print(f'  {"═"*W}\n')
+
+
+def _print_full_table(ordered, all_data, vix, reg_lbl, reg_mult):
+    from internal_fundamentals_score import score_band, cap_tier, cap_str
+    from internal_technical_score import tech_score_band
+
+    BAR = 8
+    COL = 22
+    LBL = 24
+    W   = LBL + COL * len(ordered)
+
+    def col(s): return f'  {s:<{COL-2}}'
+    def bar(s, mx):
+        f = round(s / mx * BAR)
+        return '█' * f + '░' * (BAR - f)
+
+    vix_str = f'{vix:.1f}' if vix else '—'
+    print(f'\n  FULL SCORE — Fundamentals + Technical  ·  Regime {reg_lbl}  VIX {vix_str}')
+    print(f'  {"═"*W}')
+    print(f'  {"":22}' + ''.join(col(t) for t in ordered))
+    print(f'  {"─"*W}')
+
+    # ── fundamentals block ────────────────────────────────────────────────────
+    def fcol(t, key):
+        bd = all_data[t][1]
+        if not bd: return col('—')
+        s, mx = bd[key]['score'], bd[key]['max']
+        return col(f'{s:>2}/{mx:<2} {bar(s, mx)}')
+
+    def tcol(t, key):
+        bd = all_data[t][6]
+        if not bd: return col('—')
+        s, mx = bd[key]['score'], bd[key]['max']
+        return col(f'{s:>2}/{mx:<2} {bar(s, mx)}')
+
+    print(f'  {"— FUNDAMENTALS —":22}')
+    print(f'  {"COMPOSITE":22}' + ''.join(
+        col(f'{all_data[t][0]}/100  {score_band(all_data[t][0])}') if all_data[t][0] is not None else col('—')
+        for t in ordered))
+    print(f'  {"Cap Tier":22}' + ''.join(
+        col(f'{cap_tier(all_data[t][3])[0]}  ×{cap_tier(all_data[t][3])[1]:.2f}')
+        for t in ordered))
+    print(f'  {"Risk-Adj Score":22}' + ''.join(
+        col(f'{all_data[t][4]}/100  {score_band(all_data[t][4])}') if all_data[t][4] is not None else col('—')
+        for t in ordered))
+    print(f'  {"─"*W}')
+
+    for key, label in [('profitability','Profitability'),('growth','Growth'),
+                       ('valuation','Valuation'),('balance_sheet','Balance Sheet')]:
+        print(f'  {label:<22}' + ''.join(fcol(t, key) for t in ordered))
+
+    print(f'  {"─"*W}')
+    print(f'  {"— TECHNICAL —":22}')
+    print(f'  {"TECHNICAL":22}' + ''.join(
+        col(f'{all_data[t][5]}/100  {tech_score_band(all_data[t][5])}') if all_data[t][5] is not None else col('—')
+        for t in ordered))
+    print(f'  {"─"*W}')
+
+    for key, label in [('ma_structure','MA Structure'),('cmf','CMF'),
+                       ('slope','Slope'),('rsi','RSI Zone'),('runway','Runway')]:
+        print(f'  {label:<22}' + ''.join(tcol(t, key) for t in ordered))
+
+    print(f'  {"─"*W}')
+
+    # raw technical values
+    for label, fn in [
+        ('MA above (0-3)', lambda t: str(all_data[t][7].get('above', '—'))),
+        ('CMF-20',         lambda t: f'{all_data[t][8].get("cmf"):+.3f}' if all_data[t][8].get("cmf") is not None else '—'),
+        ('Slope 10w %',    lambda t: f'{all_data[t][8].get("slope"):+.1f}%' if all_data[t][8].get("slope") is not None else '—'),
+        ('RSI-14 (wkly)',  lambda t: f'{all_data[t][8].get("rsi"):.0f}' if all_data[t][8].get("rsi") is not None else '—'),
+        ('Runway %',       lambda t: f'{all_data[t][8].get("runway"):.0f}%' if all_data[t][8].get("runway") is not None else '—'),
+    ]:
+        print(f'  {label:<22}' + ''.join(col(fn(t)) for t in ordered))
+
+    print(f'  {"─"*W}')
+    print(f'  {"═"*W}')
+    sw_bar = lambda sw: ('█' * round(sw * 8) + '░' * (8 - round(sw * 8))) if sw is not None else '—'
+    print(f'  {"SIZING WEIGHT":22}' + ''.join(
+        col(f'{all_data[t][9]:.3f}  {sw_bar(all_data[t][9])}') if all_data[t][9] is not None else col('—')
+        for t in ordered))
+    print(f'  {"(fund×tech×regime)":22}' + ''.join(
+        col(f'({all_data[t][4]}×{all_data[t][5]}×{reg_mult:.2f})')
+        for t in ordered))
+    print(f'  {"═"*W}\n')
+
+
 if __name__ == '__main__':
     args    = sys.argv[1:]
     flags   = [a for a in args if a.startswith('--')]
     tickers = [a.upper() for a in args if not a.startswith('--')]
     if not tickers:
-        print('\n  Usage: python ticker_score.py TICKER [TICKER ...] [--schwab]\n')
+        print('\n  Usage: python ticker_score.py TICKER [TICKER ...] [--schwab] [--technical]\n')
         sys.exit(1)
-    if '--schwab' in flags:
+    if '--schwab' in flags and '--technical' in flags:
+        run_full_score(tickers)
+    elif '--schwab' in flags:
         run_schwab_score(tickers)
     elif len(tickers) == 1:
         run(tickers[0])
