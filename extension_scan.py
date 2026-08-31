@@ -153,8 +153,11 @@ def get_extension_data(ticker, force_yf=False):
             high_s   = hist['High'].reindex(close.index)
             low_s    = hist['Low'].reindex(close.index)
             vol_s    = hist['Volume'].reindex(close.index)
-            hl_range = (high_s - low_s).replace(0, float('nan'))
-            mfm      = ((close - low_s) - (high_s - close)) / hl_range
+            import pandas as _pd
+            hl_range = (high_s - low_s)
+            mfm      = _pd.Series(0.0, index=close.index)
+            _valid   = hl_range > 0
+            mfm[_valid] = ((close[_valid] - low_s[_valid]) - (high_s[_valid] - close[_valid])) / hl_range[_valid]
             mfv      = mfm * vol_s
             cmf      = round(float(mfv.rolling(20).sum().iloc[-1] / vol_s.rolling(20).sum().iloc[-1]), 3)
         except Exception:

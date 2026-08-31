@@ -91,9 +91,9 @@ def _patch_schwab_live(df, ticker):
             df.iloc[-1, df.columns.get_loc('Close')] = live_price
         else:
             # During today's session: append a partial bar
-            open_p = quote_data.get('openPrice', live_price)
-            high_p = quote_data.get('highPrice', live_price)
-            low_p  = quote_data.get('lowPrice',  live_price)
+            open_p = quote_data.get('openPrice', live_price) or live_price
+            high_p = quote_data.get('highPrice', live_price) or live_price
+            low_p  = quote_data.get('lowPrice',  live_price) or live_price
             vol    = quote_data.get('totalVolume', 0)
             new_row = pd.DataFrame(
                 [[open_p, high_p, low_p, live_price, vol]],
@@ -142,7 +142,7 @@ def fetch_weekly(ticker, years=2, force_yf=False):
         period = '2y' if years >= 2 else '1y'
         candles = get_price_history(ticker, period=period, bar='weekly')
         df = _candles_to_df(candles)
-        return _patch_schwab_live(df, ticker)
+        return df  # no live patch — current-week bar handled by _build_current_week_bar in extension_scan
 
     path   = _cache_path(ticker, 'weekly', f'{years}y')
     cached = _read_cache(path, _TTL_WEEKLY)

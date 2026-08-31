@@ -120,8 +120,14 @@ def _setup_score(r, grades):
 
 def _weekly_cmf(hist_w, period=10):
     try:
-        hl = (hist_w['High'] - hist_w['Low']).replace(0, float('nan'))
-        mfm = ((hist_w['Close'] - hist_w['Low']) - (hist_w['High'] - hist_w['Close'])) / hl
+        import pandas as _pd
+        hl  = hist_w['High'] - hist_w['Low']
+        mfm = _pd.Series(0.0, index=hist_w.index)
+        valid = hl > 0
+        mfm[valid] = (
+            ((hist_w['Close'][valid] - hist_w['Low'][valid]) - (hist_w['High'][valid] - hist_w['Close'][valid]))
+            / hl[valid]
+        )
         mfv = mfm * hist_w['Volume']
         vol_sum = hist_w['Volume'].rolling(period).sum().iloc[-1]
         if not vol_sum or vol_sum == 0:
