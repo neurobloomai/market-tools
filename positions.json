@@ -21,12 +21,14 @@
       "entry_value": 7.6832,
       "status": "open",
       "source": "schwab:30447081",
-      "last_checked": "2026-08-30 13:49 UTC",
-      "last_vix": 14.430000305175781,
-      "last_value": 11.725,
-      "last_pnl_pct": 23.3,
+      "last_checked": "2026-08-31 23:04 UTC",
+      "last_vix": 14.920000076293945,
+      "last_value": 10.36,
+      "last_pnl_pct": 15.5,
       "exit_flagged": false,
-      "exit_reasons": []
+      "exit_reasons": [],
+      "last_delta": null,
+      "warn_reasons": []
     },
     {
       "id": "AAPL-2026-09-25-bull_call-315-340",
@@ -41,12 +43,14 @@
       "entry_value": 6.6632,
       "status": "open",
       "source": "schwab:30447081",
-      "last_checked": "2026-08-30 13:49 UTC",
-      "last_vix": 14.430000305175781,
-      "last_value": 9.42,
-      "last_pnl_pct": 15.0,
+      "last_checked": "2026-08-31 23:04 UTC",
+      "last_vix": 14.920000076293945,
+      "last_value": 8.255,
+      "last_pnl_pct": 8.7,
       "exit_flagged": false,
-      "exit_reasons": []
+      "exit_reasons": [],
+      "last_delta": null,
+      "warn_reasons": []
     },
     {
       "id": "MSFT-2026-09-25-bull_call-495-520",
@@ -61,12 +65,14 @@
       "entry_value": 9.6133,
       "status": "open",
       "source": "schwab:30447081",
-      "last_checked": "2026-08-30 13:49 UTC",
-      "last_vix": 14.430000305175781,
-      "last_value": 14.925,
-      "last_pnl_pct": 34.5,
+      "last_checked": "2026-08-31 23:04 UTC",
+      "last_vix": 14.920000076293945,
+      "last_value": 13.05,
+      "last_pnl_pct": 22.3,
       "exit_flagged": false,
-      "exit_reasons": []
+      "exit_reasons": [],
+      "last_delta": null,
+      "warn_reasons": []
     }
   ]
 }
