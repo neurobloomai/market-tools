@@ -5,6 +5,9 @@
 
 cd /Users/amarnath/neurobloomai/market-tools
 
+# Suppress browser opens — webbrowser module respects BROWSER env var
+export BROWSER=echo
+
 # US
 /Library/Developer/CommandLineTools/usr/bin/python3 dashboard.py              >> /tmp/aligned_cron.log 2>&1
 /Library/Developer/CommandLineTools/usr/bin/python3 screener.py               >> /tmp/aligned_cron.log 2>&1
