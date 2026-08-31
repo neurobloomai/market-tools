@@ -54,100 +54,98 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 
 ### Tier Movements — Week over Week
 
-↑ **Improved:** **JPM** (◇ Trend Intact → ✦ Fully Stacked), **FTNT** (MA100+MA200 → ✦ Fully Stacked), **PANW** (◇ Trend Intact → ✦ Fully Stacked), **FDS** (◈ Intermediate → ✦ Fully Stacked), **NDAQ** (◈ Intermediate → ✦ Fully Stacked), **ADP** (◈ Intermediate → ✦ Fully Stacked), **MANH** (◈ Intermediate → ✦ Fully Stacked), **CHD** (◇ Trend Intact → ✦ Fully Stacked), **CF** (All4 (unordered) → ✦ Fully Stacked), **ANET** (◇ Trend Intact → ✦ Fully Stacked), **IBKR** (◇ Trend Intact → ✦ Fully Stacked), **VIRT** (◇ Trend Intact → ✦ Fully Stacked), **CRWD** (MA100+MA200 → ✦ Fully Stacked), **RJF** (◇ Trend Intact → ✦ Fully Stacked), **GTLB** (◈ Intermediate → ✦ Fully Stacked), **AMG** (MA100+MA200 → ✦ Fully Stacked), **ETSY** (◇ Trend Intact → ✦ Fully Stacked), **AAPL** (MA20 only → ◇ Trend Intact), **PGR** (All4 (unordered) → ◇ Trend Intact), **AON** (MA100+MA200 → ◇ Trend Intact), **SCHW** (◈ Intermediate → ◇ Trend Intact), **KRYS** (MA20 only → ◇ Trend Intact), **MMM** (MA100+MA200 → ◇ Trend Intact), **SLAB** (MA100+MA200 → ◇ Trend Intact), **MSFT** (MA100+MA200 → ◈ Intermediate), **CRM** (All4 (unordered) → ◈ Intermediate), **TYL** (MA50+100 → ◈ Intermediate), **SPGI** (All4 (unordered) → ◈ Intermediate), **IT** (All4 (unordered) → ◈ Intermediate), **ADBE** (All4 (unordered) → ◈ Intermediate), **RMD** (All4 (unordered) → ◈ Intermediate), **DPZ** (Below all → ◈ Intermediate), **AMZN** (MA100+MA200 → All4 (unordered)), **VRSN** (MA100+MA200 → All4 (unordered)), **TW** (MA50+100 → All4 (unordered)), **CHKP** (MA20 only → MA50+100), **VRSK** (Below all → MA50+100), **NFLX** (MA50 → MA50+100), **EQT** (MA50 → MA50+100), **CEG** (MA50 → MA50+100), **PEGA** (MA50 → MA50+100), **CHTR** (Below all → MA50+100), **SNPS** (Below all → MA50), **LRN** (MA20 only → MA50), **UPWK** (Below all → MA50), **FISV** (Below all → MA50), **META** (Below all → MA20 only), **CDNS** (Below all → MA20 only), **PODD** (Below all → MA20 only), **MSCI** (Below all → MA20 only), **GWW** (MA100+MA200 → MA20 only), **SEZL** (MA200 only → MA20 only), **CINF** (MA200 only → MA100+MA200), **VCYT** (Below all → MA200 only)
-
-↓ **Dropped:** **LLY** (✦ Fully Stacked → MA100+MA200), **EW** (✦ Fully Stacked → ◇ Trend Intact), **WST** (✦ Fully Stacked → MA100+MA200), **FAST** (✦ Fully Stacked → ◇ Trend Intact), **BMRN** (✦ Fully Stacked → ◇ Trend Intact), **ZBRA** (✦ Fully Stacked → ◇ Trend Intact), **NTAP** (✦ Fully Stacked → ◇ Trend Intact), **SNOW** (✦ Fully Stacked → ◇ Trend Intact), **P** (✦ Fully Stacked → ◇ Trend Intact), **CPAY** (✦ Fully Stacked → ◇ Trend Intact), **DRI** (✦ Fully Stacked → ◇ Trend Intact), **S** (✦ Fully Stacked → ◇ Trend Intact), **URGN** (✦ Fully Stacked → ◇ Trend Intact), **NVDA** (◇ Trend Intact → MA100+MA200), **MU** (◇ Trend Intact → MA100+MA200), **MRVL** (◇ Trend Intact → MA100+MA200), **ITW** (◇ Trend Intact → MA100+MA200), **ACGL** (◇ Trend Intact → MA100+MA200), **ROST** (◇ Trend Intact → MA200 only), **ETN** (◇ Trend Intact → MA200 only), **HEI** (◇ Trend Intact → MA100+MA200), **RLI** (◈ Intermediate → MA100+MA200), **GEHC** (◈ Intermediate → Below all), **REGN** (◈ Intermediate → MA100+MA200), **BKNG** (◈ Intermediate → MA100+MA200), **STE** (◈ Intermediate → MA100+MA200), **AXON** (◈ Intermediate → MA100+MA200), **COO** (◈ Intermediate → Below all), **PYPL** (◈ Intermediate → MA100+MA200), **TOST** (◈ Intermediate → MA100+MA200), **ZM** (All4 (unordered) → MA100+MA200), **DLB** (All4 (unordered) → MA100+MA200), **GLD** (All4 (unordered) → MA50+100), **FICO** (MA50+100 → MA20 only), **HSY** (MA50+100 → Below all), **ALC** (MA50+100 → Below all), **TMDX** (MA50+100 → Below all), **SLV** (MA50+100 → MA50), **LDOS** (MA50+100 → Below all), **BSX** (MA50 → Below all), **LEN** (MA50 → Below all), **SAM** (MA50 → Below all), **NLR** (MA50 → Below all), **CAVA** (MA50 → Below all), **QCOM** (MA20 only → Below all), **LRCX** (MA20 only → MA200 only), **NVO** (MA20 only → MA100+MA200), **ISRG** (MA20 only → Below all), **JBHT** (MA20 only → MA200 only), **DHI** (MA20 only → Below all), **HLT** (MA20 only → MA200 only), **TSM** (MA20 only → MA100+MA200), **ASML** (MA20 only → MA100+MA200), **VICI** (MA20 only → Below all), **HWM** (MA100+MA200 → MA200 only), **AXP** (MA100+MA200 → Below all), **AMD** (MA100+MA200 → MA200 only), **URI** (MA100+MA200 → MA200 only), **FERG** (MA100+MA200 → Below all), **ONTO** (MA100+MA200 → MA200 only), **OUST** (MA100+MA200 → MA200 only), **XPO** (MA200 only → Below all), **RL** (MA200 only → Below all), **ZWS** (MA200 only → Below all), **MTSI** (MA200 only → Below all), **CIEN** (MA200 only → Below all), **MKSI** (MA200 only → Below all), **FORM** (MA200 only → Below all), **AKAM** (MA200 only → Below all), **AIP** (MA200 only → Below all)
+_No tier changes this week._
 
 
 ### Watchlist Status
 
 | Ticker | Price | MA | Grade | Blockers | Thesis |
 |:-------|------:|:--:|:-----:|:---------|:-------|
-| **AMG** | $370.87 | 4/4 | A+ | Debt/EV 0.245 | Affiliated Managers Group — multi-boutique AM (AQR, Tweedy Browne etc.… |
-| **APD** | $308.09 | 4/4 | B | Debt/EV 0.208 / Net Margin -0.4% / ROE/ROA ROE 0.0% / ROA 4.7% / FCF Yield -2.2% | Air Products — industrial gases, green/blue hydrogen megaproject bet (… |
-| **APO** | $135.04 | 4/4 | B | Debt/EV 0.443 / FCF Yield missing (no data relief) | Apollo Global Management — ~$700B+ AUM across PE, credit, real assets,… |
+| **AMG** | $370.87 | 4/4 | A | Debt/EV 0.238 | Affiliated Managers Group — multi-boutique AM (AQR, Tweedy Browne etc.… |
+| **APD** | $308.09 | 4/4 | B | Debt/EV 0.206 / Net Margin -0.4% / ROE/ROA ROE 0.0% / ROA 4.7% / FCF Yield -2.2% | Air Products — industrial gases, green/blue hydrogen megaproject bet (… |
+| **APO** | $135.04 | 4/4 | B | Debt/EV 0.437 / FCF Yield missing (no data relief) | Apollo Global Management — ~$700B+ AUM across PE, credit, real assets,… |
 | **AXON** | $600.73 | 4/4 | B | Op Margin 5.2% / ROE/ROA ROE 6.2% / ROA 0.5% | — |
-| **BIIB** | $218.50 | 4/4 | A | Debt/EV 0.214 / ROE/ROA ROE 4.6% / ROA 5.2% | Biogen — neuroscience pure-play; Leqembi (lecanemab, w/ Eisai) first a… |
-| **BILL** | $50.31 | 4/4 | B | Debt/EV 0.47 / Op Margin 9.7% / Net Margin -0.7% / ROE/ROA ROE -0.3% / ROA 0.1% | — |
+| **BIIB** | $218.50 | 4/4 | A | Debt/EV 0.212 / ROE/ROA ROE 4.6% / ROA 5.2% | Biogen — neuroscience pure-play; Leqembi (lecanemab, w/ Eisai) first a… |
+| **BILL** | $50.31 | 4/4 | B | Debt/EV 0.446 / Op Margin 9.7% / Net Margin -0.7% / ROE/ROA ROE -0.3% / ROA 0.1% | — |
 | **BIO** | $387.70 | 4/4 | B | ROE/ROA ROE 3.1% / ROA 1.7% | Bio-Rad Laboratories — PCR/qPCR instruments, gel electrophoresis, west… |
-| **BMY** | $66.58 | 4/4 | A+ | Debt/EV 0.264 | Bristol-Myers Squibb — de-lever + profit growth play; Celgene debt pay… |
+| **BMY** | $66.58 | 4/4 | A+ | Debt/EV 0.265 | Bristol-Myers Squibb — de-lever + profit growth play; Celgene debt pay… |
 | **COPX** | $94.42 | 4/4 | ETF | — | Global X Copper Miners ETF — AUM $8.0B; copper = AI datacenter + grid … |
-| **CPAY** | $407.88 | 4/4 | A+ | Debt/EV 0.304 | Corpay (formerly FleetCor) — V/MA-like toll economics on corporate pay… |
-| **CRWD** | $218.40 | 4/4 | B | Op Margin -2.2% / Net Margin -0.6% / ROE/ROA ROE -0.2% / ROA -1.0% / P/E 121.3x | CrowdStrike — cloud-native endpoint + identity + cloud security platfo… |
+| **CPAY** | $407.88 | 4/4 | A+ | Debt/EV 0.31 | Corpay (formerly FleetCor) — V/MA-like toll economics on corporate pay… |
+| **CRWD** | $218.40 | 4/4 | B | Op Margin -2.3% / Net Margin 0.8% / ROE/ROA ROE 1.5% / ROA -0.8% / P/E 131.9x | CrowdStrike — cloud-native endpoint + identity + cloud security platfo… |
 | **DELL** | $456.24 | 4/4 | B | Op Margin 8.9% / ROE/ROA ROE None% / ROA 7.0% | Dell Technologies — largest US server + PC + storage vendor; ISG (Infr… |
-| **DRI** | $215.63 | 4/4 | B | Debt/EV 0.243 | Darden Restaurants — Olive Garden + LongHorn + Fine Dining (Capital Gr… |
+| **DRI** | $215.63 | 4/4 | B | Debt/EV 0.248 | Darden Restaurants — Olive Garden + LongHorn + Fine Dining (Capital Gr… |
 | **DT** | $53.67 | 4/4 | A | ROE/ROA ROE 5.9% / ROA 4.2% | Dynatrace — AI-powered observability platform (infrastructure + APM + … |
-| **ETSY** | $83.59 | 4/4 | B | Debt/EV 0.328 / ROE/ROA ROE None% / ROA 10.5% | Etsy — handmade/vintage marketplace; pure two-sided marketplace (no in… |
+| **ETSY** | $83.59 | 4/4 | B | Debt/EV 0.32 / ROE/ROA ROE None% / ROA 10.5% | Etsy — handmade/vintage marketplace; pure two-sided marketplace (no in… |
 | **FROG** | $98.74 | 4/4 | B | Op Margin -7.1% / Net Margin -7.3% / ROE/ROA ROE -4.9% / ROA -2.9% | JFrog — universal artifact repository (Artifactory) + software supply … |
-| **GCT** | $52.95 | 4/4 | B | Debt/EV 0.266 | GigaCloud Technology — B2B marketplace for large-parcel goods (furnitu… |
+| **GCT** | $52.95 | 4/4 | B | Debt/EV 0.251 | GigaCloud Technology — B2B marketplace for large-parcel goods (furnitu… |
 | **GTLB** | $44.87 | 4/4 | B | Op Margin -6.0% / Net Margin -2.5% / ROE/ROA ROE -3.0% / ROA -1.9% | GitLab — complete DevSecOps platform (source control + CI/CD + securit… |
 | **GWRE** | $205.85 | 4/4 | B | Op Margin 8.2% | Guidewire — insurance core system software (PolicyCenter/BillingCenter… |
 | **IOT** | $41.16 | 4/4 | A | Op Margin 1.5% / Net Margin 3.3% / ROE/ROA ROE 4.4% / ROA -0.3% | Samsara — fleet/IoT SaaS, GM 76%, zero debt, 30% RevG, FCF just turned… |
 | **JLL** | $378.01 | 4/4 | B | Op Margin 4.6% / Net Margin 3.6% | Jones Lang LaSalle — global #1 commercial real estate services (leasin… |
-| **LNG** | $282.33 | 4/4 | A | Debt/EV 0.313 | Cheniere Energy — largest US LNG export terminal operator (Sabine Pass… |
+| **LNG** | $282.33 | 4/4 | A | Debt/EV 0.309 | Cheniere Energy — largest US LNG export terminal operator (Sabine Pass… |
 | **MDB** | $446.62 | 4/4 | B | Op Margin -3.6% / Net Margin -1.1% / ROE/ROA ROE -1.0% / ROA -1.8% | — |
-| **MDT** | $91.23 | 4/4 | A | Debt/EV 0.208 / ROE/ROA ROE 9.8% / ROA 4.9% | Medtronic — largest pure-play medtech (cardiac rhythm mgmt, spine/neur… |
-| **NET** | $299.84 | 4/4 | B | Op Margin -7.9% / Net Margin -8.2% / ROE/ROA ROE -14.4% / ROA -2.0% / P/E 170.3x | Cloudflare — global network infrastructure platform; CDN + DDoS protec… |
-| **NTRS** | $186.79 | 4/4 | A | Debt/EV 0.4 / FCF Yield missing (no data relief) | Northern Trust — UHNW wealth management + global asset servicing (cust… |
-| **P** | $93.40 | 4/4 | B | Op Margin -18.5% | Everpure (formerly Pure Storage / PSTG) — all-flash storage platform f… |
-| **PGY** | $21.98 | 4/4 | A | Debt/EV 0.6 | Pagaya Technologies — AI-powered credit underwriting network; embeds i… |
-| **QCRH** | $100.63 | 4/4 | A | Debt/EV 0.41 / FCF Yield missing (no data relief) | QCR Holdings — Midwest community bank holding company (Quad Cities IA/… |
-| **RJF** | $179.36 | 4/4 | A | Debt/EV 0.255 / FCF Yield missing (no data relief) | Raymond James Financial — independent full-service wealth management +… |
-| **RPRX** | $60.85 | 4/4 | B | Debt/EV 0.234 / FCF Yield -3.4% | Royalty Pharma — largest pharma royalty acquirer; owns royalty rights … |
-| **RVTY** | $128.80 | 4/4 | B | Debt/EV 0.206 / ROE/ROA ROE 3.2% / ROA 2.4% | Revvity (formerly PerkinElmer) — life sciences instruments + diagnosti… |
-| **S** | $21.54 | 4/4 | B | Op Margin -28.8% / Net Margin -30.4% / ROE/ROA ROE -21.4% / ROA -7.9% | SentinelOne — AI-native cybersecurity platform, direct CrowdStrike com… |
+| **MDT** | $91.23 | 4/4 | A | Debt/EV 0.212 / ROE/ROA ROE 9.8% / ROA 4.9% | Medtronic — largest pure-play medtech (cardiac rhythm mgmt, spine/neur… |
+| **NET** | $299.84 | 4/4 | B | Op Margin -7.6% / Net Margin -8.2% / ROE/ROA ROE -14.4% / ROA -2.0% / P/E 179.4x | Cloudflare — global network infrastructure platform; CDN + DDoS protec… |
+| **NTRS** | $186.79 | 4/4 | A | Debt/EV 0.395 / FCF Yield missing (no data relief) | Northern Trust — UHNW wealth management + global asset servicing (cust… |
+| **P** | $93.40 | 4/4 | B | Op Margin -18.5% / FCF Yield -0.4% | Everpure (formerly Pure Storage / PSTG) — all-flash storage platform f… |
+| **PGY** | $21.98 | 4/4 | A | Debt/EV 0.591 | Pagaya Technologies — AI-powered credit underwriting network; embeds i… |
+| **QCRH** | $100.63 | 4/4 | A | Debt/EV 0.412 / FCF Yield missing (no data relief) | QCR Holdings — Midwest community bank holding company (Quad Cities IA/… |
+| **RJF** | $179.36 | 4/4 | A | Debt/EV 0.247 / FCF Yield missing (no data relief) | Raymond James Financial — independent full-service wealth management +… |
+| **RPRX** | $60.85 | 4/4 | B | Debt/EV 0.235 / FCF Yield -3.4% | Royalty Pharma — largest pharma royalty acquirer; owns royalty rights … |
+| **RVTY** | $128.80 | 4/4 | B | ROE/ROA ROE 3.2% / ROA 2.4% | Revvity (formerly PerkinElmer) — life sciences instruments + diagnosti… |
+| **S** | $21.54 | 4/4 | B | Op Margin -21.6% / Net Margin -31.0% / ROE/ROA ROE -23.0% / ROA -7.5% | SentinelOne — AI-native cybersecurity platform, direct CrowdStrike com… |
 | **SLAB** | $218.54 | 4/4 | B | Op Margin -4.7% / Net Margin -4.6% / ROE/ROA ROE -3.6% / ROA -2.2% / FCF Yield -0.2% | Silicon Laboratories — pure-play IoT wireless MCU maker; divested infr… |
-| **SMCI** | $37.08 | 4/4 | B | Debt/EV 0.323 / FCF Yield -36.8% | Super Micro Computer — high-density AI GPU server systems integrator; … |
-| **SNOW** | $328.00 | 4/4 | B | Op Margin -22.2% / Net Margin -23.8% / ROE/ROA ROE -54.9% / ROA -9.7% / P/E 120.6x | — |
-| **SSNC** | $83.42 | 4/4 | A | Debt/EV 0.289 | SS&C Technologies — fund admin infra, $1.28B FCF, extreme switching co… |
+| **SMCI** | $37.08 | 4/4 | B | Debt/EV 0.324 / FCF Yield -34.3% | Super Micro Computer — high-density AI GPU server systems integrator; … |
+| **SNOW** | $328.00 | 4/4 | B | Op Margin -22.2% / Net Margin -23.8% / ROE/ROA ROE -54.9% / ROA -9.7% / P/E 121.2x | — |
+| **SSNC** | $83.42 | 4/4 | A | Debt/EV 0.288 | SS&C Technologies — fund admin infra, $1.28B FCF, extreme switching co… |
 | **TEAM** | $190.41 | 4/4 | A | Net Margin -0.8% / ROE/ROA ROE -4.5% / ROA 3.0% | — |
 | **TGTX** | $53.93 | 4/4 | A | Op Margin 9.0% | TG Therapeutics — Briumvi (ublituximab, anti-CD20 MS); faster infusion… |
-| **TOST** | $35.15 | 4/4 | A | Op Margin 8.0% | Toast — restaurant POS/payments platform; ROE 22.5%, FCF 4%, rev growt… |
-| **URGN** | $43.62 | 4/4 | B | Op Margin 0.2% / Net Margin -51.7% / ROE/ROA ROE None% / ROA -18.1% / FCF Yield -4.8% | UroGen Pharma — specialty urology pharma; Jelmyto (mitomycin gel, FDA-… |
-| **W** | $103.76 | 4/4 | B | Debt/EV 0.216 / Op Margin 3.0% / Net Margin -2.5% / ROE/ROA ROE None% / ROA 5.3% | Wayfair — online furniture/home goods marketplace; largest pure-play e… |
-| **WAT** | $414.69 | 4/4 | B | Op Margin 9.4% / Net Margin 3.6% / ROE/ROA ROE 1.9% / ROA 3.6% / FCF Yield -0.4% | Waters Corporation — premium HPLC + mass spectrometry instruments for … |
+| **TOST** | $35.15 | 4/4 | A | Op Margin 7.4% | Toast — restaurant POS/payments platform; ROE 22.5%, FCF 4%, rev growt… |
+| **URGN** | $43.62 | 4/4 | B | Op Margin 0.2% / Net Margin -51.7% / ROE/ROA ROE None% / ROA -18.1% / FCF Yield -5.0% | UroGen Pharma — specialty urology pharma; Jelmyto (mitomycin gel, FDA-… |
+| **W** | $103.76 | 4/4 | B | Debt/EV 0.212 / Op Margin 3.0% / Net Margin -2.5% / ROE/ROA ROE None% / ROA 5.3% | Wayfair — online furniture/home goods marketplace; largest pure-play e… |
+| **WAT** | $414.69 | 4/4 | B | Op Margin 9.4% / Net Margin 3.6% / ROE/ROA ROE 1.9% / ROA 3.6% / FCF Yield -0.3% | Waters Corporation — premium HPLC + mass spectrometry instruments for … |
 | **ZBH** | $100.91 | 4/4 | B | Debt/EV 0.288 / ROE/ROA ROE 6.4% / ROA 4.0% | Zimmer Biomet — orthopedic implants (knee/hip replacement systems) + s… |
-| **CNC** | $64.75 | 3/4 | B | Debt/EV 0.757 / Op Margin 3.8% / Net Margin -2.8% / ROE/ROA ROE -20.4% / ROA 2.5% | Centene Corporation — #2 US Medicaid managed care (behind UNH); govnt-… |
+| **CNC** | $64.75 | 3/4 | B | Debt/EV 0.762 / Op Margin 3.8% / Net Margin -2.8% / ROE/ROA ROE -20.4% / ROA 2.5% | Centene Corporation — #2 US Medicaid managed care (behind UNH); govnt-… |
 | **COR** | $322.03 | 3/4 | B | Op Margin 1.4% / Net Margin 0.8% | Cencora (fmr AmerisourceBergen) — #2 US pharmaceutical distributor (Mc… |
 | **DDOG** | $236.98 | 3/4 | A | Op Margin 0.7% / Net Margin 4.5% / ROE/ROA ROE 4.7% / ROA 0.2% | Datadog — cloud observability + security platform (infrastructure moni… |
 | **DFIN** | $48.32 | 3/4 | A | Net Margin 4.5% / ROE/ROA ROE 8.6% / ROA 11.3% | Donnelley Financial Solutions — regulatory compliance SaaS for capital… |
-| **EVTC** | $29.98 | 3/4 | B | Debt/EV 0.453 | EVERTEC — dominant payment processing network in Puerto Rico (~75% mar… |
+| **EVTC** | $29.98 | 3/4 | B | Debt/EV 0.452 | EVERTEC — dominant payment processing network in Puerto Rico (~75% mar… |
 | **GLD** | $408.89 | 3/4 | ETF | — | SPDR Gold ETF — AUM $150B, gold price proxy; 25% off 6mo highs ($496),… |
-| **KKR** | $108.68 | 3/4 | B | Debt/EV 0.356 / ROE/ROA ROE 7.3% / ROA 1.4% / FCF Yield missing (no data relief) | KKR & Co. — ~$600B+ AUM across PE, credit, infrastructure, real assets… |
+| **KKR** | $108.68 | 3/4 | B | Debt/EV 0.355 / ROE/ROA ROE 7.3% / ROA 1.4% / FCF Yield missing (no data relief) | KKR & Co. — ~$600B+ AUM across PE, credit, infrastructure, real assets… |
 | **MELI** | $1966.25 | 3/4 | B | Op Margin 6.7% | — |
 | **MNDY** | $100.71 | 3/4 | A | Op Margin 5.5% | Monday.com — work OS (project mgmt + CRM + dev + marketing) built on a… |
 | **PINS** | $23.19 | 3/4 | B | Op Margin -3.5% / ROE/ROA ROE 6.5% / ROA 3.5% | Pinterest — visual discovery + social commerce platform; 570M+ MAU, st… |
-| **PRGS** | $44.76 | 3/4 | B | Debt/EV 0.436 | Progress Software — serial acquirer of mature enterprise software: Ope… |
+| **PRGS** | $44.76 | 3/4 | B | Debt/EV 0.434 | Progress Software — serial acquirer of mature enterprise software: Ope… |
 | **ZS** | $184.23 | 3/4 | B | Op Margin -3.3% / Net Margin -2.4% / ROE/ROA ROE -3.7% / ROA -1.4% | Zscaler — zero-trust network security (ZIA + ZPA + ZDX); every enterpr… |
 | **AAOI** | $106.23 | 2/4 | B | Op Margin -12.9% / Net Margin -9.6% / ROE/ROA ROE -5.4% / ROA -2.7% / FCF Yield -9.8% | Applied Optoelectronics — fiber-optic transceiver maker for AI datacen… |
 | **ALB** | $137.36 | 2/4 | A | Net Margin 3.8% / ROE/ROA ROE 2.6% / ROA 3.2% | Albemarle — largest lithium producer (Chile/Australia mines); OM 24.8%… |
 | **ALC** | $72.01 | 2/4 | B | ROE/ROA ROE 2.9% / ROA 2.8% | Alcon — global #1 in surgical eye care (cataract IOLs, vitreoretinal s… |
 | **CELH** | $32.98 | 2/4 | B | Net Margin 4.2% / ROE/ROA ROE 5.1% / ROA 9.0% | Celsius Holdings — energy drink challenger (PepsiCo distribution deal … |
-| **CHTR** | $153.62 | 2/4 | A | Debt/EV 0.812 | Charter Communications — #2 US cable/broadband (Spectrum brand, ~32M p… |
+| **CHTR** | $153.62 | 2/4 | A | Debt/EV 0.809 | Charter Communications — #2 US cable/broadband (Spectrum brand, ~32M p… |
 | **COHR** | $279.20 | 2/4 | B | ROE/ROA ROE 8.0% / ROA 3.4% / FCF Yield -1.2% | Coherent Corp — optical components (800G/1.6T datacenter interconnect … |
 | **COIN** | $178.64 | 2/4 | B | Op Margin -13.9% / Net Margin -16.3% / ROE/ROA ROE -7.8% / ROA 1.1% | Coinbase — digital asset exchange, crypto theme proxy; 85.5% gross mar… |
-| **DPZ** | $350.00 | 2/4 | B | Debt/EV 0.315 | — |
+| **DPZ** | $350.00 | 2/4 | B | Debt/EV 0.31 | — |
 | **ESE** | $276.96 | 2/4 | A | ROE/ROA ROE 9.5% / ROA 5.1% | ESCO Technologies — niche industrials: RF/EMC test chambers (ETS-Lindg… |
 | **GEV** | $911.93 | 2/4 | A+ | Op Margin 7.5% | GE Vernova — picks-and-shovels for entire energy transition; supplies … |
 | **HUBS** | $260.68 | 2/4 | A | Op Margin 4.9% / Net Margin 4.3% / ROE/ROA ROE 7.9% / ROA 2.4% | — |
 | **INTC** | $89.47 | 2/4 | B | Net Margin -19.8% / ROE/ROA ROE -10.7% / ROA 1.4% | Intel — x86 architect in foundry transition (Intel 18A); OM/NM/ROE all… |
-| **LDOS** | $140.66 | 2/4 | B | Debt/EV 0.278 | Leidos — #1 US defense IT services company; Defense & Intelligence (Do… |
+| **LDOS** | $140.66 | 2/4 | B | Debt/EV 0.28 | Leidos — #1 US defense IT services company; Defense & Intelligence (Do… |
 | **LSCC** | $114.40 | 2/4 | A | ROE/ROA ROE 4.9% / ROA 3.9% | Lattice Semiconductor — low-power FPGAs, 60%+ gross margin, zero debt;… |
 | **MKC** | $55.33 | 2/4 | A | Debt/EV 0.246 | — |
 | **MXL** | $61.73 | 2/4 | B | Op Margin -2.4% / Net Margin -18.2% / ROE/ROA ROE -21.3% / ROA -4.9% | MaxLinear — high-speed analog/mixed-signal semiconductors; PAM4 DSPs f… |
 | **NLR** | $118.12 | 2/4 | ETF | — | VanEck Uranium & Nuclear ETF — AUM $4.87B; AI datacenter baseload + ur… |
 | **ONTO** | $270.79 | 2/4 | A | ROE/ROA ROE 6.8% / ROA 4.8% | Onto Innovation — advanced packaging inspection/metrology; HBM + chipl… |
-| **OUST** | $34.62 | 2/4 | B | Op Margin -46.6% / Net Margin -26.0% / ROE/ROA ROE -18.0% / ROA -10.7% / FCF Yield -2.2% | Ouster Inc. — digital LiDAR sensors (post-merger with Velodyne 2023); … |
+| **OUST** | $34.62 | 2/4 | B | Op Margin -46.6% / Net Margin -26.0% / ROE/ROA ROE -18.0% / ROA -10.7% / FCF Yield -2.3% | Ouster Inc. — digital LiDAR sensors (post-merger with Velodyne 2023); … |
 | **PWR** | $602.70 | 2/4 | B | Op Margin 7.2% / Net Margin 4.0% | Quanta Services — dominant grid/electrical infrastructure contractor; … |
-| **PYPL** | $53.66 | 2/4 | A | Debt/EV 0.256 | PayPal — OM 18%, NM 15%, ROE 25%, FCF 11%, P/E 7.8x; D/EV 0.30 only bl… |
+| **PYPL** | $53.66 | 2/4 | A | Debt/EV 0.291 | PayPal — OM 18%, NM 15%, ROE 25%, FCF 11%, P/E 7.8x; D/EV 0.30 only bl… |
 | **SITM** | $557.86 | 2/4 | B | Net Margin 3.0% / ROE/ROA ROE 1.3% / ROA -0.0% | SiTime — MEMS-based silicon timing near-monopoly (~70% share) displaci… |
 | **SLV** | $60.02 | 2/4 | ETF | — | iShares Silver ETF — AUM $37B, silver price proxy; 49% off 6mo highs (… |
-| **TMDX** | $88.43 | 2/4 | B | Debt/EV 0.236 | TransMedics Group — Organ Care System (OCS): normothermic machine perf… |
+| **TMDX** | $88.43 | 2/4 | B | Debt/EV 0.251 | TransMedics Group — Organ Care System (OCS): normothermic machine perf… |
 | **VCYT** | $43.34 | 2/4 | A+ | ROE/ROA ROE 8.8% / ROA 4.1% | Veracyte — genomic diagnostics; moat = guideline inclusion (NCCN/medic… |
 | **VIAV** | $36.54 | 2/4 | B | Net Margin -2.0% / ROE/ROA ROE -2.7% / ROA 4.6% | Viavi Solutions — network test + measurement + optical security; two d… |
-| **AIP** | $22.01 | 1/4 | B | Op Margin -48.5% / Net Margin -46.7% / ROE/ROA ROE -131.4% / ROA -14.2% / P/E 183.8x | Arteris Inc. — Network-on-Chip (NoC) semiconductor IP licensing; desig… |
-| **AKAM** | $107.47 | 1/4 | B | Debt/EV 0.427 / Op Margin 7.6% / ROE/ROA ROE 8.9% / ROA 2.5% | Akamai — original CDN pioneer (4,000+ global PoPs, deeply embedded in … |
-| **AROC** | $31.24 | 1/4 | A+ | Debt/EV 0.297 | Archrock — largest US natural gas compression services provider; owns … |
+| **AIP** | $22.01 | 1/4 | B | Op Margin -48.5% / Net Margin -46.7% / ROE/ROA ROE -131.4% / ROA -14.2% / P/E 178.5x | Arteris Inc. — Network-on-Chip (NoC) semiconductor IP licensing; desig… |
+| **AKAM** | $107.47 | 1/4 | B | Debt/EV 0.436 / Op Margin 7.6% / ROE/ROA ROE 8.9% / ROA 2.5% | Akamai — original CDN pioneer (4,000+ global PoPs, deeply embedded in … |
+| **AROC** | $31.24 | 1/4 | A+ | Debt/EV 0.301 | Archrock — largest US natural gas compression services provider; owns … |
 | **CLS** | $298.70 | 1/4 | A | Op Margin 9.8% | Celestica — AI infra contract manufacturer (servers, networking), ROE … |
 | **COO** | $71.17 | 1/4 | B | Op Margin -2.9% / ROE/ROA ROE 2.9% / ROA 2.5% | Cooper Companies — #2 global contact lens maker (CooperVision: Biofini… |
 | **COST** | $945.47 | 1/4 | A | Op Margin 3.7% / Net Margin 3.0% | Costco — membership moat, not a margin story; OM ~3% by design (mercha… |
@@ -156,40 +154,40 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **FN** | $414.36 | 1/4 | A | FCF Yield -0.4% | Fabrinet — precision optical/photonic contract manufacturer (clean-roo… |
 | **GFS** | $44.76 | 1/4 | B | Op Margin 9.7% / ROE/ROA ROE 6.2% / ROA 3.0% | GlobalFoundries — specialty foundry (RF, automotive, IoT); 5/6 filters… |
 | **LNT** | $68.03 | 1/4 | B | Debt/EV 0.408 / FCF Yield -6.5% | Alliant Energy — regulated Midwest utility (Iowa/Wisconsin); OM 21%, N… |
-| **MOD** | $177.63 | 1/4 | B | Op Margin 9.0% / Net Margin 4.3% / FCF Yield -0.7% | Modine Manufacturing — AI datacenter thermal/cooling (heat exchangers,… |
-| **NEE** | $81.84 | 1/4 | A | Debt/EV 0.376 / FCF Yield -10.2% | NextEra — world's largest renewable platform (wind/solar/battery) + FP… |
+| **MOD** | $177.63 | 1/4 | B | Op Margin 9.0% / Net Margin 4.3% / FCF Yield -0.8% | Modine Manufacturing — AI datacenter thermal/cooling (heat exchangers,… |
+| **NEE** | $81.84 | 1/4 | A | Debt/EV 0.381 / FCF Yield -10.4% | NextEra — world's largest renewable platform (wind/solar/battery) + FP… |
 | **ON** | $72.61 | 1/4 | B | ROE/ROA ROE 8.3% / ROA 6.8% | ON Semiconductor — SiC (silicon carbide) power semiconductors for EV i… |
-| **UPWK** | $9.02 | 1/4 | A | Debt/EV 0.452 | Upwork — freelance marketplace; D/EV 0.44 (converts) only blocker, mar… |
+| **UPWK** | $9.02 | 1/4 | A | Debt/EV 0.426 | Upwork — freelance marketplace; D/EV 0.44 (converts) only blocker, mar… |
 | **WEC** | $106.22 | 1/4 | B | Debt/EV 0.397 / FCF Yield -6.8% | WEC Energy Group — regulated Midwest utility (Wisconsin/Illinois/Michi… |
-| **XEL** | $76.45 | 1/4 | B | Debt/EV 0.477 / ROE/ROA ROE 9.9% / ROA 2.4% / FCF Yield -16.5% | Xcel Energy — regulated electric/gas utility (MN, CO, TX Panhandle, NM… |
-| **AMBQ** | — | — | B | Op Margin -25.7% / Net Margin -37.8% / ROE/ROA ROE -15.5% / ROA -10.1% / FCF Yield -2.1% | Ambiq Micro Inc. — ultra-low-power ARM Cortex-M MCU specialist; Apollo… |
-| **AMSC** | $28.49 | 0/4 | A | Op Margin 1.8% | American Superconductor — power electronics, grid/defense; OpM 5.1%, o… |
-| **APTV** | $45.75 | 0/4 | B | Debt/EV 0.38 / Net Margin 1.1% / ROE/ROA ROE 5.2% / ROA 6.7% | Aptiv — vehicle electrical architecture + ADAS components; makes the w… |
+| **XEL** | $76.45 | 1/4 | B | Debt/EV 0.477 / ROE/ROA ROE 9.9% / ROA 2.4% / FCF Yield -16.6% | Xcel Energy — regulated electric/gas utility (MN, CO, TX Panhandle, NM… |
+| **AMBQ** | — | — | B | Op Margin -25.7% / Net Margin -37.8% / ROE/ROA ROE -15.5% / ROA -10.1% / FCF Yield -2.0% | Ambiq Micro Inc. — ultra-low-power ARM Cortex-M MCU specialist; Apollo… |
+| **AMSC** | $28.49 | 0/4 | A | Op Margin 2.6% | American Superconductor — power electronics, grid/defense; OpM 5.1%, o… |
+| **APTV** | $45.75 | 0/4 | B | Debt/EV 0.394 / Net Margin 1.1% / ROE/ROA ROE 5.2% / ROA 6.7% | Aptiv — vehicle electrical architecture + ADAS components; makes the w… |
 | **AVAV** | $147.94 | 0/4 | B | Op Margin 2.8% / Net Margin -13.4% / ROE/ROA ROE -10.0% / ROA -1.3% / FCF Yield -3.3% | AeroVironment — defense drones (Switchblade loitering munition, Puma I… |
 | **CAVA** | $66.94 | 0/4 | B | Op Margin 7.6% / Net Margin 4.8% / ROE/ROA ROE 8.3% / ROA 3.5% | CAVA Group — Mediterranean fast-casual (hummus/pita/bowls); the CMG an… |
-| **CBRS** | — | — | B | Op Margin -265.0% / Net Margin -75.3% / ROE/ROA ROE None% / ROA None% / FCF Yield missing (no data relief) / P/E 146.7x | Cerebras Systems — Wafer-Scale Engine (WSE-3): entire silicon wafer as… |
+| **CBRS** | — | — | B | Op Margin -265.0% / Net Margin -75.3% / ROE/ROA ROE None% / ROA None% / FCF Yield missing (no data relief) / P/E 140.6x | Cerebras Systems — Wafer-Scale Engine (WSE-3): entire silicon wafer as… |
 | **CRCL** | — | — | B | Op Margin 4.9% | Circle Internet Group — USDC stablecoin issuer; revenue model = intere… |
-| **CRH** | $95.86 | 0/4 | B | Debt/EV 0.243 | CRH plc — largest building materials company globally (aggregates, cem… |
-| **DY** | $294.34 | 0/4 | B | Debt/EV 0.21 / Op Margin 7.3% | Dycom Industries — dominant specialty telecom contractor (fiber optic … |
+| **CRH** | $95.86 | 0/4 | B | Debt/EV 0.241 | CRH plc — largest building materials company globally (aggregates, cem… |
+| **DY** | $294.34 | 0/4 | B | Debt/EV 0.263 / Op Margin 9.6% / Net Margin 4.8% | Dycom Industries — dominant specialty telecom contractor (fiber optic … |
 | **FIG** | — | — | B | Op Margin -31.7% / Net Margin -123.1% / ROE/ROA ROE -108.6% / ROA -45.2% | Figma — design collaboration SaaS; 79.8% gross margin, FCF 8.6%, 46.1%… |
-| **FLUT** | $101.78 | 0/4 | B | Debt/EV 0.428 / Op Margin -3.3% / Net Margin -4.4% / ROE/ROA ROE -7.9% / ROA -0.2% / FCF Yield -5.5% | Flutter Entertainment — global online sports betting; FanDuel #1 US (~… |
-| **FVRR** | $9.47 | 0/4 | B | Op Margin 6.0% / ROE/ROA ROE 7.1% / ROA 2.8% | Fiverr — two-sided freelance marketplace (Fiverr Business, Pro, Seller… |
+| **FLUT** | $101.78 | 0/4 | B | Debt/EV 0.43 / Op Margin -3.3% / Net Margin -4.4% / ROE/ROA ROE -7.9% / ROA -0.2% / FCF Yield -5.6% | Flutter Entertainment — global online sports betting; FanDuel #1 US (~… |
+| **FVRR** | $9.47 | 0/4 | A | Op Margin 6.0% / ROE/ROA ROE 7.1% / ROA 2.8% | Fiverr — two-sided freelance marketplace (Fiverr Business, Pro, Seller… |
 | **KTOS** | $52.00 | 0/4 | B | Op Margin -0.2% / Net Margin 2.0% / ROE/ROA ROE 1.1% / ROA 0.4% / FCF Yield -1.2% | Kratos — drone/defense tech; margins thin now, scaling with DoD contra… |
 | **LHX** | $262.82 | 0/4 | B | Op Margin 9.7% / ROE/ROA ROE None% / ROA None% | L3Harris Technologies — defense electronics prime (EW/jamming, SIGINT/… |
-| **MKL** | $1818.69 | 0/4 | B | Debt/EV 0.205 / FCF Yield -7.6% | Markel Group — "baby Berkshire"; specialty insurance float funds a div… |
-| **NRG** | $111.12 | 0/4 | B | Debt/EV 0.492 / Net Margin 2.6% | NRG Energy — de-lever play; LS Power acq doubled fleet+debt, targeting… |
+| **MKL** | $1818.69 | 0/4 | B | Debt/EV 0.202 / FCF Yield -7.6% | Markel Group — "baby Berkshire"; specialty insurance float funds a div… |
+| **NRG** | $111.12 | 0/4 | B | Debt/EV 0.496 / Net Margin 2.6% | NRG Energy — de-lever play; LS Power acq doubled fleet+debt, targeting… |
 | **ORLY** | $88.50 | 0/4 | B | ROE/ROA ROE None% / ROA 13.7% | O'Reilly Auto Parts — Akre compounder; 18% OM, 14% NM, ROA 13.8% (ROE … |
-| **PEG** | $73.19 | 0/4 | B | Debt/EV 0.407 | PSEG — integrated NJ utility + nuclear operator (Salem 1&2 + Hope Cree… |
+| **PEG** | $73.19 | 0/4 | B | Debt/EV 0.405 | PSEG — integrated NJ utility + nuclear operator (Salem 1&2 + Hope Cree… |
 | **SAM** | $183.13 | 0/4 | B | Op Margin 9.3% / Net Margin -3.6% / ROE/ROA ROE -8.6% / ROA 5.4% | Boston Beer Company — craft + flavored malt beverage portfolio: Samuel… |
-| **STNE** | $9.70 | 0/4 | A+ | Debt/EV 1.547 | StoneCo — Brazilian SMB payments + credit platform; V/MA-like toll on … |
+| **STNE** | $9.70 | 0/4 | A+ | Debt/EV 1.536 | StoneCo — Brazilian SMB payments + credit platform; V/MA-like toll on … |
 | **SYM** | $39.88 | 0/4 | B | Op Margin 4.6% / Net Margin 0.3% / ROE/ROA ROE 4.4% / ROA 0.3% | Symbotic — warehouse AI robotics, Walmart-backed; revenue scaling, mar… |
-| **TDG** | $1185.97 | 0/4 | A | Debt/EV 0.345 / ROE/ROA ROE None% / ROA 11.8% | TransDigm — aerospace parts monopolist, 47% OM, 22% NM; D/EV 0.325 str… |
-| **TLN** | $296.11 | 0/4 | B | Debt/EV 0.392 / Op Margin -4.8% / Net Margin -4.9% / ROE/ROA ROE -12.8% / ROA 0.9% | Talen Energy — independent power producer; Susquehanna nuclear (2.5GW,… |
+| **TDG** | $1185.97 | 0/4 | A | Debt/EV 0.348 / ROE/ROA ROE None% / ROA 11.8% | TransDigm — aerospace parts monopolist, 47% OM, 22% NM; D/EV 0.325 str… |
+| **TLN** | $296.11 | 0/4 | B | Debt/EV 0.406 / Op Margin -4.8% / Net Margin -4.9% / ROE/ROA ROE -12.8% / ROA 0.9% | Talen Energy — independent power producer; Susquehanna nuclear (2.5GW,… |
 | **TPL** | $364.38 | 0/4 | A+ | FCF Yield -0.1% | Texas Pacific Land — largest private landowner in Permian Basin (~880K… |
-| **TREE** | $28.96 | 0/4 | A | Debt/EV 0.575 / Op Margin 7.8% | LendingTree — online financial marketplace connecting consumers with l… |
-| **VICI** | $25.87 | 0/4 | A | Debt/EV 0.378 / ROE/ROA ROE 9.8% / ROA 4.8% | VICI Properties — largest gaming/experiential REIT; triple-net leases … |
-| **VST** | $137.09 | 0/4 | B | Debt/EV 0.3 | Vistra — deregulated nuclear+gas (Energy Harbor acq), Texas/ERCOT expo… |
-| **WING** | $113.58 | 0/4 | A | Debt/EV 0.297 | Wingstop — asset-light franchise QSR (owns ~1% of restaurants, earns r… |
+| **TREE** | $28.96 | 0/4 | A | Debt/EV 0.596 / Op Margin 7.8% | LendingTree — online financial marketplace connecting consumers with l… |
+| **VICI** | $25.87 | 0/4 | A | Debt/EV 0.384 / ROE/ROA ROE 9.8% / ROA 4.8% | VICI Properties — largest gaming/experiential REIT; triple-net leases … |
+| **VST** | $137.09 | 0/4 | B | Debt/EV 0.299 | Vistra — deregulated nuclear+gas (Energy Harbor acq), Texas/ERCOT expo… |
+| **WING** | $113.58 | 0/4 | A | Debt/EV 0.3 | Wingstop — asset-light franchise QSR (owns ~1% of restaurants, earns r… |
 
 ### Liquid Names — Status Panel
 
