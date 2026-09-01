@@ -147,8 +147,8 @@ def earnings_risk(earnings_date):
         return None, None
     today = datetime.now(timezone.utc).date()
     days  = (earnings_date - today).days
-    if days <= 0:
-        return None, None   # ER date is today or past — binary event resolved
+    if days < 0:
+        return None, None   # ER date is past — binary event resolved
     if days <= 7:
         return days, 'HIGH'
     if days <= 14:
@@ -190,10 +190,23 @@ def earnings_html_badge(earnings_date):
 
 if __name__ == '__main__':
     import sys
-    tickers = [t.upper() for t in sys.argv[1:]] if len(sys.argv) > 1 else []
+    args    = sys.argv[1:]
+    tickers = [a.upper() for a in args if not a.startswith('--')]
     if not tickers:
-        print('Usage: python event_risk.py TICKER [TICKER ...]')
+        print('Usage: python event_risk.py TICKER [TICKER ...]  [--clear-er]')
+        print('       --clear-er : remove ticker(s) from cache so next run re-fetches')
         sys.exit(1)
+
+    if '--clear-er' in args:
+        cache = _load_cache()
+        for t in tickers:
+            removed = cache.pop(t, None)
+            print(f'  {"cleared" if removed else "not in cache"}: {t}')
+        with open(_CACHE_FILE, 'w') as f:
+            json.dump(cache, f, indent=2)
+        print('Cache updated — next run will re-fetch earnings dates.')
+        sys.exit(0)
+
     dates = get_earnings_batch(tickers)
     for ticker in tickers:
         ed = dates.get(ticker)
