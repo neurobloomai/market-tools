@@ -30,6 +30,7 @@ dashboard-env/
 venv/
 .DS_Store
 internal_*.py
+internal_*.md
 schwab_auth.py
 schwab_creds.py
 .schwab_token.json
