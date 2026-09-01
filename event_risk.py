@@ -147,8 +147,8 @@ def earnings_risk(earnings_date):
         return None, None
     today = datetime.now(timezone.utc).date()
     days  = (earnings_date - today).days
-    if days < 0:
-        return None, None
+    if days <= 0:
+        return None, None   # ER date is today or past — binary event resolved
     if days <= 7:
         return days, 'HIGH'
     if days <= 14:
