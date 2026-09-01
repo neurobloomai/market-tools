@@ -588,6 +588,14 @@ def _print_full_table(ordered, all_data, vix, reg_lbl, reg_mult):
     print(f'  {"":22}' + ''.join(col(t) for t in ordered))
     print(f'  {"─"*W}')
 
+    # price row — daily price from pop, fallback to weekly from ext
+    def _price(t):
+        p = (all_data[t][7] or {}).get('price') or (all_data[t][8] or {}).get('price')
+        return f'${p:,.2f}' if p is not None else '—'
+
+    print(f'  {"Price":22}' + ''.join(col(_price(t)) for t in ordered))
+    print(f'  {"─"*W}')
+
     # ── fundamentals block ────────────────────────────────────────────────────
     def fcol(t, key):
         bd = all_data[t][1]
