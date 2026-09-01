@@ -27,7 +27,7 @@ BUCKET_LABEL = {
     'ma20_50_100':  'MA20+50+100',
     'ma20_50':      'MA20+50',
     'ma20_only':    'MA20 only',
-    'ma100_200':    'MA100+MA200 only',
+    'ma100_200':    'MA100+MA200 (MA50 lagging)',
     'ma200_pullbk': 'MA200 only',
     'none':         'Below all',
 }
@@ -37,9 +37,9 @@ def _assign_bucket(a20, a50, a100, a200):
     if a20 and a50 and a100 and a200: return 'all4'
     if a20 and a50 and a100:          return 'ma20_50_100'
     if a20 and a50:                   return 'ma20_50'
-    if a20:                           return 'ma20_only'
-    if a100 and a200:                 return 'ma100_200'
+    if a100 and a200:                 return 'ma100_200'   # check mid/long-term before MA20-only
     if a200:                          return 'ma200_pullbk'
+    if a20:                           return 'ma20_only'   # truly above MA20 only
     return 'none'
 
 def compute_breadth(tickers):
@@ -70,7 +70,7 @@ def compute_breadth(tickers):
         stacked = (all([ma20, ma50, ma100, ma200]) and
                    price > ma20 > ma50 > ma100 > ma200)
         stacked_100 = (all([ma20, ma50, ma100]) and
-                       price > ma20 > ma50 > ma100 and not stacked)
+                       price > ma20 > ma50 > ma100 and not a200)
         stacked_50 = (all([ma50, ma100, ma200]) and
                       price > ma50 > ma100 > ma200 and not stacked)
 
@@ -295,7 +295,7 @@ def build_html(b):
   {bucket_block('ma20_50_100',  'Above MA20 + MA50 + MA100 only — MAs out of order')}
   {bucket_block('ma20_50',      'Above MA20 + MA50 only — short-term momentum')}
   {bucket_block('ma20_only',    'Above MA20 only — early lift')}
-  {bucket_block('ma100_200',    'Above MA100+MA200 only — mid-term intact, short-term weak')}
+  {bucket_block('ma100_200',    'Above MA100+MA200 — mid-term intact, MA50 still overhead')}
   {bucket_block('ma200_pullbk', 'Above MA200 only — long-term floor, short/mid-term broken')}
   {bucket_block('none',         'Below all MAs — downtrend')}
 </div>
