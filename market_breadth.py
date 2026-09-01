@@ -74,7 +74,7 @@ def compute_breadth(tickers):
                    price > ma20 > ma50 > ma100 > ma200)
         # intermediate stack: price > MA20 > MA50 > MA100, not yet through MA200
         stacked_100 = (all([ma20, ma50, ma100]) and
-                       price > ma20 > ma50 > ma100 and not stacked)
+                       price > ma20 > ma50 > ma100 and not a200)
         # trend intact: price > MA50 > MA100 > MA200, MA20 position irrelevant
         # catches names that dipped below MA20 but long-term structure is holding
         stacked_50 = (all([ma50, ma100, ma200]) and
