@@ -143,8 +143,8 @@ if __name__ == '__main__':
             fails    = failing_filters(f)
             blockers = ' / '.join(f"{n} {v}" for n, v, _ in fails) if fails else '—'
         else:
-            grade    = 'ETF'
-            blockers = '—'
+            grade    = '—'
+            blockers = 'no data'
         thesis = notes.get(t, '—')
         thesis_md = (thesis[:70] + '…') if len(thesis) > 70 else thesis
         lines.append(f"| **{disp(t)}** | {price_str} | {ma_str} | {grade} | {blockers} | {thesis_md} |")
