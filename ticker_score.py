@@ -464,10 +464,19 @@ def run_full_score(tickers):
         ext_raw   = list(ex.map(get_extension_data,      tickers))
         curv_raw  = list(ex.map(compute_slope_curvature, tickers))
 
-    # Inject curvature into ext dicts — _score_slope picks up ext.get('curvature')
-    for ext, (_, curv) in zip(ext_raw, curv_raw):
+    # Inject curvature + smoothness into ext dicts
+    for ext, curv_tuple, pop in zip(ext_raw, curv_raw, pop_raw):
+        _, curv, ma10w = curv_tuple
         if ext is not None and curv is not None:
             ext['curvature'] = curv
+        if ext is not None and ma10w is not None and pop is not None:
+            price = pop.get('price')
+            pct50 = pop.get('pct50')
+            if price and pct50 is not None:
+                denom = 1 + pct50 / 100
+                if denom > 0:
+                    ma50d = price / denom
+                    ext['smoothness'] = round((ma10w - ma50d) / ma50d * 100, 3)
 
     regime   = get_regime()
     vix      = regime.get('vix')
@@ -521,9 +530,10 @@ def _print_full_single(ticker, data, vix, reg_lbl, reg_mult):
     print(f'  {"─"*30}  {"─"*30}')
 
     f_pillars = [('Profitability', 35), ('Growth', 20), ('Valuation', 20), ('Balance Sheet', 25)]
-    t_pillars = [('MA Structure', 25), ('CMF', 25), ('Slope', 20), ('RSI Zone', 15), ('Runway', 15)]
+    t_pillars = [('MA Structure', 25), ('CMF', 25), ('Slope', 15), ('RSI Zone', 15),
+                 ('Runway', 10), ('Smoothness', 10)]
     fkeys     = ['profitability', 'growth', 'valuation', 'balance_sheet']
-    tkeys     = ['ma_structure', 'cmf', 'slope', 'rsi', 'runway']
+    tkeys     = ['ma_structure', 'cmf', 'slope', 'rsi', 'runway', 'smoothness']
 
     for i in range(max(len(f_pillars), len(t_pillars))):
         if i < len(f_pillars) and f_bd:
@@ -633,7 +643,8 @@ def _print_full_table(ordered, all_data, vix, reg_lbl, reg_mult):
     print(f'  {"─"*W}')
 
     for key, label in [('ma_structure','MA Structure'),('cmf','CMF'),
-                       ('slope','Slope'),('rsi','RSI Zone'),('runway','Runway')]:
+                       ('slope','Slope'),('rsi','RSI Zone'),
+                       ('runway','Runway'),('smoothness','Smoothness')]:
         print(f'  {label:<22}' + ''.join(tcol(t, key) for t in ordered))
 
     print(f'  {"─"*W}')
@@ -645,6 +656,12 @@ def _print_full_table(ordered, all_data, vix, reg_lbl, reg_mult):
         tag = '↑accel' if c > 0.03 else ('↑' if c > 0 else ('↓decel' if c < -0.03 else '→flat'))
         return f'{c:+.3f} {tag}'
 
+    def _smooth_str(t):
+        s = all_data[t][8].get('smoothness')
+        if s is None: return '—'
+        tag = 'smooth' if s > 0.5 else ('choppy' if s < -0.5 else 'neutral')
+        return f'{s:+.2f}% {tag}'
+
     for label, fn in [
         ('MA above (0-3)', lambda t: str(all_data[t][7].get('above', '—'))),
         ('CMF-20',         lambda t: f'{all_data[t][8].get("cmf"):+.3f}' if all_data[t][8].get("cmf") is not None else '—'),
@@ -652,6 +669,7 @@ def _print_full_table(ordered, all_data, vix, reg_lbl, reg_mult):
         ('Curvature',      _curv_str),
         ('RSI-14 (wkly)',  lambda t: f'{all_data[t][8].get("rsi"):.0f}' if all_data[t][8].get("rsi") is not None else '—'),
         ('Runway %',       lambda t: f'{all_data[t][8].get("runway"):.0f}%' if all_data[t][8].get("runway") is not None else '—'),
+        ('Smoothness',     _smooth_str),
     ]:
         print(f'  {label:<22}' + ''.join(col(fn(t)) for t in ordered))
 
