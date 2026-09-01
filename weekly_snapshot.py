@@ -40,7 +40,7 @@ def _tier(price, ma4, ma10, ma20, ma40):
         return 'fully_stacked'
     if price > ma10 > ma20 > ma40:
         return 'trend_intact'
-    if price > ma4 > ma10 > ma20:
+    if price > ma4 > ma10 > ma20 and not (price > ma40):  # not yet above MA200d equiv
         return 'stacked_100'
     if price > ma4 and price > ma10 and price > ma20 and price > ma40:
         return 'all4_up'
@@ -48,12 +48,12 @@ def _tier(price, ma4, ma10, ma20, ma40):
         return 'ma20_50_100'
     if price > ma4 and price > ma10:
         return 'ma20_50'
-    if price > ma4:
-        return 'ma20_only'
-    if price > ma20 and price > ma40:   # ma20 here = ma20w ≈ MA100d
+    if price > ma20 and price > ma40:   # check mid/long-term before MA20-only
         return 'ma100_200'
     if price > ma40:
         return 'ma200_pullbk'
+    if price > ma4:                     # truly above MA20 only
+        return 'ma20_only'
     return 'none'
 
 sys.path.insert(0, '.')
