@@ -218,6 +218,19 @@ def exit_signals(pos, current_value, vix, dte, short_delta=None):
 
 # ── Schwab position import ────────────────────────────────────────────────────
 
+def _build_occ(ticker, expiry_str, pc, strike):
+    """
+    Build OCC option symbol from position fields.
+      expiry_str : 'YYYY-MM-DD'
+      pc         : 'C' or 'P'
+      strike     : float — e.g. 335.0 → '00335000'
+    Example: AAPL, '2026-09-25', 'C', 335.0 → 'AAPL260925C00335000'
+    """
+    date_part  = expiry_str.replace('-', '')[2:]       # '20260925' → '260925'
+    strike_int = int(round(strike * 1000))
+    return f'{ticker}{date_part}{pc}{strike_int:08d}'
+
+
 def _parse_occ(symbol):
     """Parse OCC option symbol → {ticker, expiry, put_call, strike}."""
     s = re.sub(r'\s+', '', symbol)
@@ -330,9 +343,46 @@ def sync_from_schwab():
 
 # ── Execution hook (future Schwab layer) ──────────────────────────────────────
 
-def execute_close(pos):
-    """Placeholder for Schwab auto-close. Wire when execution stack is ready."""
-    raise NotImplementedError('Schwab auto-close not yet wired — execute manually on Fidelity/Schwab')
+def execute_close(pos, current_val=None):
+    """
+    Place a GTC closing order for pos via Schwab and return the response.
+    current_val: current spread mid-price; fetched live if None.
+
+    bull_call: SELL long call (lower strike) + BUY short call (higher strike) → net credit
+    bull_put:  BUY short put (higher strike) + SELL long put (lower strike)  → net debit
+    """
+    from schwab_client import (get_accounts, place_closing_bull_call,
+                                place_closing_bull_put)
+
+    val = current_val if current_val is not None else get_spread_value(pos)
+    if val is None:
+        raise RuntimeError(f'Cannot price spread {pos["id"]} — no market data')
+
+    accounts = get_accounts()
+    if not accounts:
+        raise RuntimeError('No Schwab accounts returned')
+    account_hash = accounts[0]['hashValue']
+
+    t, exp    = pos['ticker'], pos['expiry']
+    ls, ss    = pos['long_strike'], pos['short_strike']
+    qty       = pos['contracts']
+    val_round = round(val, 2)
+
+    if pos['type'] == 'bull_call':
+        long_sym  = _build_occ(t, exp, 'C', ls)   # lower-strike call (long leg)
+        short_sym = _build_occ(t, exp, 'C', ss)   # higher-strike call (short leg)
+        r = place_closing_bull_call(account_hash, long_sym, short_sym, qty, val_round)
+    elif pos['type'] == 'bull_put':
+        long_sym  = _build_occ(t, exp, 'P', ls)   # lower-strike put (protection leg)
+        short_sym = _build_occ(t, exp, 'P', ss)   # higher-strike put (premium leg)
+        r = place_closing_bull_put(account_hash, long_sym, short_sym, qty, val_round)
+    else:
+        raise ValueError(f'Unknown spread type: {pos["type"]}')
+
+    if r.status_code not in (200, 201):
+        raise RuntimeError(f'Schwab rejected order: HTTP {r.status_code} — {r.text[:200]}')
+
+    return r
 
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -414,6 +464,8 @@ def main():
         for s in warns:
             print(f'         ⚠ {s}')
 
+        updates[pos['id']]['_auto_close'] = bool(exits)
+
         updates[pos['id']] = {
             'last_checked':  now_str,
             'last_vix':      vix,
@@ -427,16 +479,45 @@ def main():
 
     print('─' * 100)
 
+    auto_close = '--auto-close' in sys.argv
+
     if exit_count:
         print(f'\n{exit_count} EXIT signal(s) fired.')
-        print('Execute manually on Schwab, then set status → "closed" in positions.json.')
+        if auto_close:
+            print('AUTO-CLOSE enabled — placing GTC closing orders via Schwab ...')
+        else:
+            print('Run with --auto-close to place closing orders automatically.')
+            print('Or execute manually on Schwab, then set status → "closed" in positions.json.')
     else:
         print('\nAll positions within hold range.')
 
-    # Write last_checked status back
+    # Write last_checked status back + optionally auto-close
     for pos in all_data.get('spreads', []):
-        if pos.get('id') in updates:
-            pos.update(updates[pos['id']])
+        uid = pos.get('id')
+        if uid not in updates:
+            continue
+        upd = updates[uid]
+        should_close = upd.pop('_auto_close', False)
+        pos.update(upd)
+
+        if auto_close and should_close and pos.get('status') == 'open':
+            curr = upd.get('last_value')
+            try:
+                r = execute_close(pos, current_val=curr)
+                order_id = None
+                try:
+                    loc = r.headers.get('Location', '')
+                    order_id = loc.rstrip('/').split('/')[-1] if loc else None
+                except Exception:
+                    pass
+                pos['status']         = 'close_pending'
+                pos['close_order_id'] = order_id
+                pos['close_time']     = now_str
+                print(f'  ✓ {pos["ticker"]} {pos["type"]} — GTC close order placed'
+                      + (f'  (order {order_id})' if order_id else ''))
+            except Exception as e:
+                print(f'  ✗ {pos["ticker"]} {pos["type"]} — auto-close FAILED: {e}')
+
     with open(POSITIONS_FILE, 'w') as f:
         json.dump(all_data, f, indent=2)
 
@@ -448,4 +529,5 @@ if __name__ == '__main__':
         print('Importing spread positions from Schwab...')
         sync_from_schwab()
     else:
+        # --auto-close: place GTC closing orders via Schwab for all EXIT-flagged positions
         main()

@@ -397,6 +397,25 @@ def place_closing_bear_put(account_hash, long_sym, short_sym, qty, net_credit):
     return r
 
 
+def place_closing_bull_put(account_hash, long_sym, short_sym, qty, net_debit):
+    """
+    Place a GTC closing order for a bull put credit spread.
+    long_sym:  lower-strike put (was bought as protection at open).
+    short_sym: higher-strike put (was sold for premium at open).
+    net_debit: current spread value — what we pay to close (e.g. 0.30 to close a 0.60 credit).
+    """
+    from schwab.orders.common import Duration
+    c = get_client()
+    order = (schwab.orders.options.bull_put_vertical_close(
+        long_put_symbol  = long_sym,
+        short_put_symbol = short_sym,
+        quantity         = qty,
+        net_debit        = net_debit,
+    ).set_duration(Duration.GOOD_TILL_CANCEL))
+    r = c.place_order(account_hash, order)
+    return r
+
+
 def get_order(account_hash: str, order_id: str) -> dict:
     """Fetch a single order by ID. Returns the raw Schwab order JSON."""
     c = get_client()
