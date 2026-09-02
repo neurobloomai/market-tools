@@ -1382,6 +1382,74 @@ if __name__ == '__main__':
         print()
         sys.exit(0)
 
+    # --technical-mega [N]  (top N universe + watchlist tickers by technical score, default 20)
+    _tech_mega_m = _re.match(r'^--technical-mega(\d*)$', sys.argv[1]) if len(sys.argv) > 1 else None
+    if _tech_mega_m:
+        _n_str = _tech_mega_m.group(1)
+        if _n_str:
+            _n = int(_n_str)
+        elif len(sys.argv) > 2 and sys.argv[2].isdigit():
+            _n = int(sys.argv[2])
+        else:
+            _n = 20
+        try:
+            from pop_scan import get_daily_ma_pos
+            from extension_scan import get_extension_data
+            from internal_technical_score import (score_technical, tech_score_band,
+                                                   compute_slope_curvature)
+        except ImportError as _e:
+            print(f'\n  --technical-mega requires internal_technical_score: {_e}\n')
+            sys.exit(1)
+
+        _ALL      = list(dict.fromkeys(UNIVERSE + WATCHLIST))
+        _WL_ONLY  = set(WATCHLIST) - set(UNIVERSE)
+
+        print(f'\n  Fetching technical data for {len(_ALL)} tickers (universe + watchlist) ...', flush=True)
+        with ThreadPoolExecutor(max_workers=20) as _ex:
+            _pop_raw  = list(_ex.map(get_daily_ma_pos,        _ALL))
+            _ext_raw  = list(_ex.map(get_extension_data,       _ALL))
+            _curv_raw = list(_ex.map(compute_slope_curvature,  _ALL))
+
+        _tech_results = []
+        for _t, _pop, _ext, _ct in zip(_ALL, _pop_raw, _ext_raw, _curv_raw):
+            _, _curv, _ma10w = _ct
+            if _ext is not None and _curv is not None:
+                _ext['curvature'] = _curv
+            if _ext is not None and _ma10w is not None and _pop is not None:
+                _pr = _pop.get('price'); _p50 = _pop.get('pct50')
+                if _pr and _p50 is not None:
+                    _den = 1 + _p50 / 100
+                    if _den > 0:
+                        _ext['smoothness'] = round((_ma10w - _pr / _den) / (_pr / _den) * 100, 3)
+            _sc, _bd = score_technical(_pop, _ext)
+            if _sc is not None:
+                _price = (_pop or {}).get('price') or (_ext or {}).get('price')
+                _tag   = '[W]' if _t in _WL_ONLY else '   '
+                _tech_results.append((_t, _sc, _bd, _price, _tag))
+
+        _tech_results.sort(key=lambda x: x[1], reverse=True)
+
+        _W = 76
+        print(f'\n  TOP {_n} TECHNICAL SETUPS — Universe + Watchlist ({len(_tech_results)} scored)')
+        print(f'  {"═"*_W}')
+        print(f'  {"Ticker":<8} {"":3} {"Score":>5}  {"Band":<10}  {"MA":>5}  {"CMF":>5}  {"Slope":>5}  {"Smooth":>6}  {"RSI":>5}  Price')
+        print(f'  {"─"*_W}')
+        for _t, _sc, _bd, _price, _tag in _tech_results[:_n]:
+            _p_str = f'${_price:,.2f}' if _price else '—'
+            print(
+                f'  {_t:<8} {_tag}  {_sc:>5}  {tech_score_band(_sc):<10}'
+                f'  {_bd.get("ma_structure",{}).get("score",0):>2}/25'
+                f'  {_bd.get("cmf",{}).get("score",0):>2}/25'
+                f'  {_bd.get("slope",{}).get("score",0):>2}/15'
+                f'  {_bd.get("smoothness",{}).get("score",0):>3}/10'
+                f'  {_bd.get("rsi",{}).get("score",0):>2}/15'
+                f'  {_p_str}'
+            )
+        print(f'  {"═"*_W}')
+        print(f'  [W] = Watchlist only  (not in Universe)')
+        print()
+        sys.exit(0)
+
     # --top N  (UNIVERSE bull signals, ranked)
     # --mega N (UNIVERSE + WATCHLIST bull signals, ranked)
     _top_m  = _re.match(r'^--top(\d*)$',  sys.argv[1]) if len(sys.argv) > 1 else None
