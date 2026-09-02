@@ -448,11 +448,22 @@ def cancel_order(account_hash: str, order_id: str) -> bool:
 
 if __name__ == '__main__':
     if '--auth' in sys.argv:
-        print('\n  Opening browser for Schwab OAuth login ...')
-        print('  Log in with your actual Schwab trading account credentials.')
+        import builtins
+        import schwab.auth as _auth
+        _auth.prompt = builtins.input   # avoid prompt_toolkit requiring real TTY
+        if TOKEN_PATH.exists():
+            TOKEN_PATH.unlink()         # force fresh flow — don't reuse stale token
+        print('\n  Schwab OAuth — fresh login flow')
+        print('  Log in with your Schwab trading account credentials.')
+        print('  Paste the full redirect URL when prompted.')
         print(f'  Token will be saved to {TOKEN_PATH}\n')
-        get_client()
-        print('\n  Auth complete. Token saved.\n')
+        schwab.auth.client_from_manual_flow(
+            api_key      = APP_KEY,
+            app_secret   = APP_SECRET,
+            callback_url = CALLBACK_URL,
+            token_path   = str(TOKEN_PATH),
+        )
+        print(f'\n  Auth complete. Token saved to {TOKEN_PATH}\n')
 
     elif '--accounts' in sys.argv:
         print(json.dumps(get_accounts(), indent=2))
