@@ -497,85 +497,9 @@ def run_full_score(tickers):
                        t_score, t_bd, pop or {}, ext or {}, sw,
                        er_days, er_level, er_dates.get(t))
 
-    if len(tickers) == 1:
-        _print_full_single(tickers[0], all_data[tickers[0]], vix, reg_lbl, reg_mult)
-    else:
-        ordered = sorted(tickers, key=lambda t: all_data[t][9] or 0, reverse=True)
-        _print_full_table(ordered, all_data, vix, reg_lbl, reg_mult)
+    ordered = sorted(tickers, key=lambda t: all_data[t][9] or 0, reverse=True)
+    _print_full_table(ordered, all_data, vix, reg_lbl, reg_mult)
 
-
-def _print_full_single(ticker, data, vix, reg_lbl, reg_mult):
-    from internal_fundamentals_score import score_band, cap_tier, cap_str
-    from internal_technical_score import tech_score_band
-
-    f_score, f_bd, fd, mcap, f_adj, t_score, t_bd, pop, ext, sw, er_days, er_level, er_date = data
-    from internal_technical_score import event_multiplier
-    tier_lbl, mult = cap_tier(mcap)
-    cstr    = cap_str(mcap)
-    ev_mult = event_multiplier(er_level)
-    BAR     = 10
-    W       = 64
-
-    def bar(s, mx):
-        f = round(s / mx * BAR)
-        return '█' * f + '░' * (BAR - f)
-
-    vix_hdr = f'{vix:.1f}' if vix else '—'
-    print(f'\n  {"═"*W}')
-    print(f'  FULL SCORE — {ticker}  ·  {cstr}  ·  Regime {reg_lbl}  VIX {vix_hdr}')
-    print(f'  {"═"*W}')
-
-    # side-by-side header
-    print(f'\n  {"FUNDAMENTALS (Schwab)":<32}  {"TECHNICAL (Live)":<30}')
-    print(f'  {"─"*30}  {"─"*30}')
-
-    f_pillars = [('Profitability', 35), ('Growth', 20), ('Valuation', 20), ('Balance Sheet', 25)]
-    t_pillars = [('MA Structure', 25), ('CMF', 25), ('Slope', 15), ('RSI Zone', 15),
-                 ('Runway', 10), ('Smoothness', 10)]
-    fkeys     = ['profitability', 'growth', 'valuation', 'balance_sheet']
-    tkeys     = ['ma_structure', 'cmf', 'slope', 'rsi', 'runway', 'smoothness']
-
-    for i in range(max(len(f_pillars), len(t_pillars))):
-        if i < len(f_pillars) and f_bd:
-            flbl, fmx = f_pillars[i]
-            fs = f_bd[fkeys[i]]['score']
-            fcol = f'  {flbl:<16} {fs:>2}/{fmx:<2} {bar(fs, fmx)}'
-        else:
-            fcol = f'  {"":16} {"":>2} {"":3} {"":10}'
-        if i < len(t_pillars) and t_bd:
-            tlbl, tmx = t_pillars[i]
-            ts = t_bd[tkeys[i]]['score']
-            tcol = f'  {tlbl:<14} {ts:>2}/{tmx:<2} {bar(ts, tmx)}'
-        else:
-            tcol = ''
-        print(fcol + tcol)
-
-    print(f'\n  {"─"*W}')
-
-    vix_str = f'{vix:.1f}' if vix else '—'
-    print(f'  {"COMPOSITE":<20} {(str(f_score)+"/100"):>7}  {score_band(f_score):<12}'
-          f'  {"TECHNICAL":<16} {(str(t_score)+"/100"):>7}  {tech_score_band(t_score)}')
-    print(f'  {"Cap Tier":<20} {tier_lbl+" ×"+f"{mult:.2f}":>7}  {cstr:<12}'
-          f'  {"Regime":<16} {reg_lbl:>7}  VIX {vix_str}')
-    print(f'  {"Risk-Adj Score":<20} {(str(f_adj)+"/100"):>7}  {score_band(f_adj):<12}'
-          f'  {"Regime mult":<16} {f"×{reg_mult:.2f}":>7}')
-
-    # event risk line — only shown when relevant
-    if er_level:
-        er_date_str = er_date.strftime('%b %d') if er_date else '—'
-        er_flag = {'HIGH': '⚠ HIGH', 'WARN': '~ WARN', 'NEAR': 'NEAR', 'WATCH': 'WATCH'}.get(er_level, er_level)
-        print(f'  {"Event Risk":<20} {"ER "+er_date_str:>7}  {er_days}d  {er_flag:<8}'
-              f'  {"ER mult":<16} {f"×{ev_mult:.2f}":>7}')
-
-    print(f'\n  {"═"*W}')
-    sw_bar = '█' * round((sw or 0) * 10) + '░' * (10 - round((sw or 0) * 10)) if sw is not None else '—'
-    if sw is not None:
-        formula = f'({f_adj}% fund × {t_score}% tech × ×{reg_mult:.2f} regime'
-        formula += f' × ×{ev_mult:.2f} ER)' if er_level else ')'
-        print(f'  SIZING WEIGHT   {sw:.3f}  {sw_bar}   {formula}')
-    else:
-        print(f'  SIZING WEIGHT   — (insufficient data)')
-    print(f'  {"═"*W}\n')
 
 
 def _print_full_table(ordered, all_data, vix, reg_lbl, reg_mult):
@@ -585,7 +509,7 @@ def _print_full_table(ordered, all_data, vix, reg_lbl, reg_mult):
     BAR = 8
     COL = 22
     LBL = 24
-    W   = LBL + COL * len(ordered)
+    W   = max(LBL + COL * len(ordered), 68)
 
     def col(s): return f'  {s:<{COL-2}}'
     def bar(s, mx):
