@@ -654,12 +654,10 @@ if __name__ == '__main__':
             print(row_str(t, p, ma, d, g, ok))
 
     if below:
-        print(f'\n\n  BELOW STRUCTURE — {len(below)} names')
+        tickers_below = ', '.join(t for t, *_ in below)
+        print(f'\n\n  BELOW STRUCTURE — {len(below)} names (see HTML)')
         print(f'  {"─"*65}')
-        print(HDR)
-        print(DIV)
-        for t, p, ma, d, g, ok in below:
-            print(row_str(t, p, ma, d, g, ok))
+        print(f'  {tickers_below}')
 
     # Summary
     passing_4 = [t for t, p, ma, d, g, ok in aligned_4 if ok]
