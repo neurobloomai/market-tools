@@ -45,7 +45,7 @@
       ],
       [
         "P/E",
-        "120.6x",
+        "121.2x",
         "\u2264 100x"
       ]
     ],
@@ -56,7 +56,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.47",
+        "0.446",
         "\u2264 0.20"
       ],
       [
@@ -82,22 +82,22 @@
     "fails": [
       [
         "Op Margin",
-        "-2.2%",
+        "-2.3%",
         "\u2265 10%"
       ],
       [
         "Net Margin",
-        "-0.6%",
+        "0.8%",
         "\u2265 5%"
       ],
       [
         "ROE/ROA",
-        "ROE -0.2% / ROA -1.0%",
+        "ROE 1.5% / ROA -0.8%",
         "\u2265 10% / \u2265 15%"
       ],
       [
         "P/E",
-        "121.3x",
+        "131.9x",
         "\u2264 100x"
       ]
     ],
@@ -230,7 +230,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.315",
+        "0.31",
         "\u2264 0.20"
       ]
     ],
@@ -263,7 +263,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.297",
+        "0.3",
         "\u2264 0.20"
       ]
     ],
@@ -360,6 +360,11 @@
         "Op Margin",
         "-18.5%",
         "\u2265 10%"
+      ],
+      [
+        "FCF Yield",
+        "-0.4%",
+        "> 0%"
       ]
     ],
     "note": "Everpure (formerly Pure Storage / PSTG) \u2014 all-flash storage platform for enterprise + AI workloads; AI training/inference data lives on flash, not spinning disk = durable demand floor as AI scales; GrossM 70.2% (software-like storage economics), ROE 16.8%, D/EV 0.031 (nearly debt-free), FCF 0.9%; OM -18.5% GAAP blocker (stock-comp heavy, same structural pattern as NET/MNDY \u2014 non-GAAP OM meaningfully better); NM 5.7% > OM = non-operating income offsetting GAAP drag; RevG 0% \u2014 transition year or data gap from ticker/name change; 4/4 MA aligned, RSI 62.2; gate: OM crossing 0% GAAP sustained + RevG re-accelerating as AI storage demand ramps; added WATCHLIST 2026-08-08",
@@ -401,7 +406,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.812",
+        "0.809",
         "\u2264 0.20"
       ]
     ],
@@ -412,7 +417,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.255",
+        "0.247",
         "\u2264 0.20"
       ],
       [
@@ -444,7 +449,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.205",
+        "0.202",
         "\u2264 0.20"
       ],
       [
@@ -460,7 +465,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.427",
+        "0.436",
         "\u2264 0.20"
       ],
       [
@@ -481,7 +486,7 @@
     "fails": [
       [
         "Op Margin",
-        "-7.9%",
+        "-7.6%",
         "\u2265 10%"
       ],
       [
@@ -496,7 +501,7 @@
       ],
       [
         "P/E",
-        "170.3x",
+        "179.4x",
         "\u2264 100x"
       ]
     ],
@@ -507,7 +512,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.575",
+        "0.596",
         "\u2264 0.20"
       ],
       [
@@ -549,7 +554,7 @@
       ],
       [
         "FCF Yield",
-        "-0.4%",
+        "-0.3%",
         "> 0%"
       ]
     ],
@@ -569,11 +574,6 @@
   },
   "RVTY": {
     "fails": [
-      [
-        "Debt/EV",
-        "0.206",
-        "\u2264 0.20"
-      ],
       [
         "ROE/ROA",
         "ROE 3.2% / ROA 2.4%",
@@ -603,7 +603,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.236",
+        "0.251",
         "\u2264 0.20"
       ]
     ],
@@ -614,7 +614,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.757",
+        "0.762",
         "\u2264 0.20"
       ],
       [
@@ -709,7 +709,7 @@
     "fails": [
       [
         "Debt/EV",
-        "1.547",
+        "1.536",
         "\u2264 0.20"
       ]
     ],
@@ -720,7 +720,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.304",
+        "0.31",
         "\u2264 0.20"
       ]
     ],
@@ -731,7 +731,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.243",
+        "0.248",
         "\u2264 0.20"
       ]
     ],
@@ -811,7 +811,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.407",
+        "0.405",
         "\u2264 0.20"
       ]
     ],
@@ -822,12 +822,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.376",
+        "0.381",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-10.2%",
+        "-10.4%",
         "> 0%"
       ]
     ],
@@ -838,7 +838,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.378",
+        "0.384",
         "\u2264 0.20"
       ],
       [
@@ -896,7 +896,7 @@
       ],
       [
         "FCF Yield",
-        "-16.5%",
+        "-16.6%",
         "> 0%"
       ]
     ],
@@ -907,18 +907,18 @@
     "fails": [
       [
         "Debt/EV",
-        "0.245",
+        "0.238",
         "\u2264 0.20"
       ]
     ],
     "note": "Affiliated Managers Group \u2014 multi-boutique AM (AQR, Tweedy Browne etc.); owns fee economics in independent boutiques, asset-light; OM 22.1%, NM 35.5%, ROE 21.8%, FCF 2.6%, fwd P/E 8.5x; D/EV 0.245 only blocker (structural debt to buy stakes, paying down with FCF); grade A",
-    "grade": "A+"
+    "grade": "A"
   },
   "NTRS": {
     "fails": [
       [
         "Debt/EV",
-        "0.4",
+        "0.395",
         "\u2264 0.20"
       ],
       [
@@ -950,7 +950,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.243",
+        "0.241",
         "\u2264 0.20"
       ]
     ],
@@ -961,7 +961,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.492",
+        "0.496",
         "\u2264 0.20"
       ],
       [
@@ -977,7 +977,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.392",
+        "0.406",
         "\u2264 0.20"
       ],
       [
@@ -1003,7 +1003,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.3",
+        "0.299",
         "\u2264 0.20"
       ]
     ],
@@ -1014,7 +1014,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.313",
+        "0.309",
         "\u2264 0.20"
       ]
     ],
@@ -1025,7 +1025,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.278",
+        "0.28",
         "\u2264 0.20"
       ]
     ],
@@ -1046,7 +1046,7 @@
       ],
       [
         "FCF Yield",
-        "-0.7%",
+        "-0.8%",
         "> 0%"
       ]
     ],
@@ -1083,7 +1083,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.428",
+        "0.43",
         "\u2264 0.20"
       ],
       [
@@ -1103,7 +1103,7 @@
       ],
       [
         "FCF Yield",
-        "-5.5%",
+        "-5.6%",
         "> 0%"
       ]
     ],
@@ -1114,7 +1114,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.6",
+        "0.591",
         "\u2264 0.20"
       ]
     ],
@@ -1125,7 +1125,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.452",
+        "0.426",
         "\u2264 0.20"
       ]
     ],
@@ -1147,7 +1147,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.436",
+        "0.434",
         "\u2264 0.20"
       ]
     ],
@@ -1158,7 +1158,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.289",
+        "0.288",
         "\u2264 0.20"
       ]
     ],
@@ -1190,7 +1190,7 @@
     "fails": [
       [
         "Op Margin",
-        "1.8%",
+        "2.6%",
         "\u2265 10%"
       ]
     ],
@@ -1201,7 +1201,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.264",
+        "0.265",
         "\u2264 0.20"
       ]
     ],
@@ -1234,7 +1234,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.208",
+        "0.212",
         "\u2264 0.20"
       ],
       [
@@ -1250,7 +1250,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.214",
+        "0.212",
         "\u2264 0.20"
       ],
       [
@@ -1293,7 +1293,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.345",
+        "0.348",
         "\u2264 0.20"
       ],
       [
@@ -1351,7 +1351,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.208",
+        "0.206",
         "\u2264 0.20"
       ],
       [
@@ -1377,7 +1377,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.256",
+        "0.291",
         "\u2264 0.20"
       ]
     ],
@@ -1388,7 +1388,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.453",
+        "0.452",
         "\u2264 0.20"
       ]
     ],
@@ -1452,13 +1452,18 @@
     "fails": [
       [
         "Debt/EV",
-        "0.21",
+        "0.263",
         "\u2264 0.20"
       ],
       [
         "Op Margin",
-        "7.3%",
+        "9.6%",
         "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "4.8%",
+        "\u2265 5%"
       ]
     ],
     "note": "Dycom Industries \u2014 dominant specialty telecom contractor (fiber optic cable installation, aerial/underground construction); primary customers AT&T/Comcast/Verizon/Charter; BEAD program ($42.5B federal rural broadband funding) = multi-year contracted backlog; RevG 56.1% shows demand surge is real; OM 7.3% + GrossM 20.5% structural contractor ceilings (same archetype as PWR \u2014 labor-intensive, margin expansion is the gate); D/EV 0.204 hairline above gate; ROE 19.7%, FCF 2.0%; 4/7; 2/4 MA; gate: OM crossing 10% as BEAD project mix + crew utilization improves; added WATCHLIST 2026-08-08",
@@ -1522,7 +1527,7 @@
     "fails": [
       [
         "Op Margin",
-        "8.0%",
+        "7.4%",
         "\u2265 10%"
       ]
     ],
@@ -1655,17 +1660,17 @@
     "fails": [
       [
         "Op Margin",
-        "-28.8%",
+        "-21.6%",
         "\u2265 10%"
       ],
       [
         "Net Margin",
-        "-30.4%",
+        "-31.0%",
         "\u2265 5%"
       ],
       [
         "ROE/ROA",
-        "ROE -21.4% / ROA -7.9%",
+        "ROE -23.0% / ROA -7.5%",
         "\u2265 10% / \u2265 15%"
       ]
     ],
@@ -1723,13 +1728,13 @@
       ]
     ],
     "note": "Fiverr \u2014 two-sided freelance marketplace (Fiverr Business, Pro, Seller Plus); GrossM 82%, FCF 23.7% (exceptional for marketplace \u2014 structural cash generation), NM 7.2%, D/EV 0.026; OM 6.0% (needs 10%) + ROE 7.1% (needs 10%) + RevG -10.0% (declining \u2014 AI reducing demand for some commodity freelance categories) all blocking; the FCF at 23.7% is the honest signal \u2014 the business is generating real cash even while revenue contracts; gate: RevG stabilizing/turning positive as higher-value professional services replace commodity gigs + OM \u2265 10% as take-rate expands on Fiverr Business tier; added 2026-08-05",
-    "grade": "B"
+    "grade": "A"
   },
   "ETSY": {
     "fails": [
       [
         "Debt/EV",
-        "0.328",
+        "0.32",
         "\u2264 0.20"
       ],
       [
@@ -1745,7 +1750,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.216",
+        "0.212",
         "\u2264 0.20"
       ],
       [
@@ -1771,7 +1776,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.38",
+        "0.394",
         "\u2264 0.20"
       ],
       [
@@ -1803,7 +1808,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.234",
+        "0.235",
         "\u2264 0.20"
       ],
       [
@@ -1839,7 +1844,7 @@
       ],
       [
         "P/E",
-        "146.7x",
+        "140.6x",
         "\u2264 100x"
       ]
     ],
@@ -1850,7 +1855,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.266",
+        "0.251",
         "\u2264 0.20"
       ]
     ],
@@ -1861,12 +1866,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.323",
+        "0.324",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-36.8%",
+        "-34.3%",
         "> 0%"
       ]
     ],
@@ -1877,7 +1882,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.443",
+        "0.437",
         "\u2264 0.20"
       ],
       [
@@ -1893,7 +1898,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.356",
+        "0.355",
         "\u2264 0.20"
       ],
       [
@@ -1914,7 +1919,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.297",
+        "0.301",
         "\u2264 0.20"
       ]
     ],
@@ -1956,7 +1961,7 @@
       ],
       [
         "FCF Yield",
-        "-2.2%",
+        "-2.3%",
         "> 0%"
       ]
     ],
@@ -1982,7 +1987,7 @@
       ],
       [
         "P/E",
-        "183.8x",
+        "178.5x",
         "\u2264 100x"
       ]
     ],
@@ -1993,7 +1998,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.41",
+        "0.412",
         "\u2264 0.20"
       ],
       [
@@ -2024,7 +2029,7 @@
       ],
       [
         "FCF Yield",
-        "-2.1%",
+        "-2.0%",
         "> 0%"
       ]
     ],
@@ -2050,7 +2055,7 @@
       ],
       [
         "FCF Yield",
-        "-4.8%",
+        "-5.0%",
         "> 0%"
       ]
     ],
