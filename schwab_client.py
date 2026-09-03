@@ -38,6 +38,32 @@ def _sym(ticker):
     return ticker.replace('-', '/')
 
 
+def check_token():
+    """
+    Check whether the Schwab refresh token is still valid.
+    Returns (ok: bool, hours_remaining: float | None, message: str).
+    Refresh token lifetime: 7 days from creation_timestamp in token file.
+    """
+    import time, json
+    if not TOKEN_PATH.exists():
+        return False, None, f'Token file missing: {TOKEN_PATH} — run: python schwab_client.py --auth'
+    try:
+        data = json.loads(TOKEN_PATH.read_text())
+        created = data.get('creation_timestamp')
+        if created is None:
+            return False, None, 'Token file malformed — missing creation_timestamp'
+        refresh_ttl   = 7 * 24 * 3600          # Schwab refresh token = 7 days
+        expires_at    = created + refresh_ttl
+        hours_left    = (expires_at - time.time()) / 3600
+        if hours_left <= 0:
+            return False, hours_left, f'Refresh token EXPIRED {abs(hours_left):.1f}h ago — run: python schwab_client.py --auth'
+        if hours_left < 24:
+            return True, hours_left, f'WARNING: refresh token expires in {hours_left:.1f}h — reauth soon'
+        return True, hours_left, f'Token OK — {hours_left:.1f}h remaining'
+    except Exception as e:
+        return False, None, f'Token check error: {e}'
+
+
 def get_client():
     if TOKEN_PATH.exists():
         return schwab.auth.client_from_token_file(
@@ -447,7 +473,12 @@ def cancel_order(account_hash: str, order_id: str) -> bool:
 
 
 if __name__ == '__main__':
-    if '--auth' in sys.argv:
+    if '--check' in sys.argv:
+        ok, hours, msg = check_token()
+        print(f'\n  Schwab token: {msg}\n')
+        sys.exit(0 if ok else 1)
+
+    elif '--auth' in sys.argv:
         import builtins
         import schwab.auth as _auth
         _auth.prompt = builtins.input   # avoid prompt_toolkit requiring real TTY

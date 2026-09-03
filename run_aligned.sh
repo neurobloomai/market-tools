@@ -8,6 +8,13 @@ cd /Users/amarnath/neurobloomai/market-tools
 # Suppress browser opens — webbrowser module respects BROWSER env var
 export BROWSER=echo
 
+# Schwab token preflight — abort entire run if refresh token expired
+/Users/amarnath/neurobloomai/market-tools/.venv/bin/python schwab_client.py --check >> /tmp/aligned_cron.log 2>&1
+if [ $? -ne 0 ]; then
+    echo "$(date): ABORT — Schwab token expired or missing. Run: python schwab_client.py --auth" >> /tmp/aligned_cron.log
+    exit 1
+fi
+
 # US
 /Library/Developer/CommandLineTools/usr/bin/python3 dashboard.py              >> /tmp/aligned_cron.log 2>&1
 /Library/Developer/CommandLineTools/usr/bin/python3 screener.py               >> /tmp/aligned_cron.log 2>&1
