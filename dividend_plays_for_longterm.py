@@ -570,7 +570,7 @@ def build_dividend_html(rows, aligned_4, aligned_3, below, now):
 if __name__ == '__main__':
     now = datetime.now().strftime('%b %d %Y  %H:%M')
 
-    print(f'\n  Fetching MA alignment for {len(UNIVERSE)} tickers ...', flush=True)
+    print(f'  Fetching MA alignment for {len(UNIVERSE)} tickers ...', flush=True)
     with ThreadPoolExecutor(max_workers=6) as ex:
         ma_results = list(ex.map(ma_score, UNIVERSE))
 
@@ -680,10 +680,11 @@ if __name__ == '__main__':
     # Git push
     try:
         repo = os.path.dirname(os.path.abspath(__file__))
-        subprocess.run(['git', 'add', 'dividend_screener.html', 'dividend_data_cache.json'], cwd=repo, check=True)
-        subprocess.run(['git', 'commit', '-m', f'dividend_screener: {now} UTC'], cwd=repo, check=True)
-        subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'], cwd=repo, check=True)
-        subprocess.run(['git', 'push', 'origin', 'main'], cwd=repo, check=True)
+        subprocess.run(['git', 'add', 'dividend_screener.html', 'dividend_data_cache.json'], cwd=repo, check=True, capture_output=True)
+        subprocess.run(['git', 'commit', '-m', f'dividend_screener: {now} UTC'], cwd=repo, check=True, capture_output=True)
+        subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'], cwd=repo, check=True, capture_output=True)
+        subprocess.run(['git', 'push', 'origin', 'main'], cwd=repo, check=True, capture_output=True)
         print('  Pushed → GitHub')
     except subprocess.CalledProcessError as e:
-        print(f'  Git push skipped: {e}')
+        msg = e.stderr.decode().strip() if e.stderr else str(e)
+        print(f'  Git push skipped: {msg or "nothing new to commit"}')
