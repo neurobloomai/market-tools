@@ -8,11 +8,21 @@ cd /Users/amarnath/neurobloomai/market-tools
 # Suppress browser opens — webbrowser module respects BROWSER env var
 export BROWSER=echo
 
-# Schwab token preflight — abort entire run if refresh token expired
-/Users/amarnath/neurobloomai/market-tools/.venv/bin/python schwab_client.py --check >> /tmp/aligned_cron.log 2>&1
-if [ $? -ne 0 ]; then
-    echo "$(date): ABORT — Schwab token expired or missing. Run: python schwab_client.py --auth" >> /tmp/aligned_cron.log
+# Schwab token preflight — abort if expired, notify if expiring soon
+TOKEN_STATUS=$(/Users/amarnath/neurobloomai/market-tools/.venv/bin/python schwab_client.py --check 2>&1)
+TOKEN_EXIT=$?
+echo "$(date): $TOKEN_STATUS" >> /tmp/aligned_cron.log
+
+if [ $TOKEN_EXIT -ne 0 ]; then
+    echo "$(date): ABORT — Schwab token expired. Run: python schwab_client.py --auth" >> /tmp/aligned_cron.log
+    osascript -e 'display notification "Schwab token EXPIRED — run: python schwab_client.py --auth" with title "market-tools ⚠" sound name "Basso"'
     exit 1
+fi
+
+# Notify if token expires within 24h (WARNING in output)
+if echo "$TOKEN_STATUS" | grep -q "WARNING"; then
+    HOURS=$(echo "$TOKEN_STATUS" | grep -oE '[0-9]+\.[0-9]+h')
+    osascript -e "display notification \"Schwab token expires in $HOURS — reauth before next Monday run\" with title \"market-tools\" sound name \"Ping\""
 fi
 
 # US
