@@ -677,6 +677,7 @@ if __name__ == '__main__':
         repo = os.path.dirname(os.path.abspath(__file__))
         subprocess.run(['git', 'add', 'dividend_screener.html', 'dividend_data_cache.json'], cwd=repo, check=True)
         subprocess.run(['git', 'commit', '-m', f'dividend_screener: {now} UTC'], cwd=repo, check=True)
+        subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'], cwd=repo, check=True)
         subprocess.run(['git', 'push', 'origin', 'main'], cwd=repo, check=True)
         print('  Pushed → GitHub')
     except subprocess.CalledProcessError as e:

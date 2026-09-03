@@ -373,6 +373,7 @@ if __name__ == '__main__':
         commit_msg = f'india_marketbreadth: {datetime.now().strftime("%b %d %Y  %H:%M UTC")}'
         subprocess.run(['git', 'add', 'india_marketbreadth.html'], check=True, capture_output=True)
         subprocess.run(['git', 'commit', '-m', commit_msg], check=True, capture_output=True)
+        subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'], check=True, capture_output=True)
         subprocess.run(['git', 'push'], check=True, capture_output=True)
         print(f'  Pushed → GitHub  ({commit_msg})')
     except subprocess.CalledProcessError as e:

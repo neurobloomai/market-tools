@@ -293,6 +293,7 @@ if __name__ == '__main__':
         commit_msg = f'weekly_notes: {label}'
         subprocess.run(['git', 'add', 'weekly_notes.md', 'weekly_notes.html', 'breadth_history.json'], check=True, capture_output=True)
         subprocess.run(['git', 'commit', '-m', commit_msg], check=True, capture_output=True)
+        subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'], check=True, capture_output=True)
         subprocess.run(['git', 'push'], check=True, capture_output=True)
         print(f'  Pushed → GitHub  ({commit_msg})')
     except subprocess.CalledProcessError as e:

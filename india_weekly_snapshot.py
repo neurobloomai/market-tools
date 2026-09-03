@@ -176,8 +176,9 @@ if __name__ == '__main__':
     try:
         commit_msg = f'india_weekly_notes: {label}'
         subprocess.run(['git', 'add', 'india_weekly_notes.md', 'india_weekly_notes.html'], check=True, capture_output=True)
-        subprocess.run(['git', 'commit', '-m', commit_msg],     check=True, capture_output=True)
-        subprocess.run(['git', 'push'],                          check=True, capture_output=True)
+        subprocess.run(['git', 'commit', '-m', commit_msg],                    check=True, capture_output=True)
+        subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'],          check=True, capture_output=True)
+        subprocess.run(['git', 'push'],                                         check=True, capture_output=True)
         print(f'  Pushed → GitHub  ({commit_msg})')
     except subprocess.CalledProcessError as e:
         msg = e.stderr.decode().strip() if e.stderr else str(e)
