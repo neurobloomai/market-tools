@@ -639,19 +639,22 @@ if __name__ == '__main__':
 
     last_grade = None
     for t, p, ma, d, g, ok in aligned_4:
+        if g == '—':
+            continue   # below threshold — skip from full table
         if g != last_grade:
-            label = g if g != '—' else 'Below threshold'
-            print(f'\n  {label}')
+            print(f'\n  {g}')
             last_grade = g
         print(row_str(t, p, ma, d, g, ok))
 
+    below_thresh_4 = [t for t, p, ma, d, g, ok in aligned_4 if g == '—']
+    if below_thresh_4:
+        print(f'\n  Below threshold (4/4): {", ".join(below_thresh_4)}')
+
     if aligned_3:
-        print(f'\n\n  3/4 NEAR-ALIGNED — {len(aligned_3)} names')
+        tickers_3 = ', '.join(t for t, *_ in aligned_3)
+        print(f'\n\n  3/4 NEAR-ALIGNED — {len(aligned_3)} names (see HTML)')
         print(f'  {"─"*65}')
-        print(HDR)
-        print(DIV)
-        for t, p, ma, d, g, ok in aligned_3:
-            print(row_str(t, p, ma, d, g, ok))
+        print(f'  {tickers_3}')
 
     if below:
         tickers_below = ', '.join(t for t, *_ in below)
