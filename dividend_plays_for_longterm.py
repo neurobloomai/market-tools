@@ -16,7 +16,8 @@ from datetime import datetime
 
 warnings.filterwarnings('ignore')
 
-_CACHE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dividend_data_cache.json')
+_CACHE_FILE    = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dividend_data_cache.json')
+_MA_CACHE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'dividend_ma_cache.json')
 
 def _load_cache():
     try:
@@ -28,6 +29,20 @@ def _load_cache():
 def _save_cache(cache):
     try:
         with open(_CACHE_FILE, 'w') as f:
+            json.dump(cache, f, indent=2)
+    except Exception:
+        pass
+
+def _load_ma_cache():
+    try:
+        with open(_MA_CACHE_FILE) as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def _save_ma_cache(cache):
+    try:
+        with open(_MA_CACHE_FILE, 'w') as f:
             json.dump(cache, f, indent=2)
     except Exception:
         pass
@@ -570,11 +585,28 @@ def build_dividend_html(rows, aligned_4, aligned_3, below, now):
 if __name__ == '__main__':
     now = datetime.now().strftime('%b %d %Y  %H:%M')
 
+    ma_cache = _load_ma_cache()
+
     print(f'  Fetching MA alignment for {len(UNIVERSE)} tickers ...', flush=True)
     with ThreadPoolExecutor(max_workers=6) as ex:
         ma_results = list(ex.map(ma_score, UNIVERSE))
 
-    price_map = {t: (p, s) for r in ma_results if r for t, p, s in [r]}
+    price_map = {}
+    for r in ma_results:
+        if r:
+            t, p, s = r
+            price_map[t] = (p, s)
+            ma_cache[t] = {'price': p, 'score': s}
+        # missing tickers handled below via cache fallback
+
+    ma_misses = [t for t in UNIVERSE if t not in price_map]
+    for t in ma_misses:
+        if t in ma_cache:
+            c = ma_cache[t]
+            price_map[t] = (c['price'], c['score'])
+            print(f'  [{t}] MA miss — using cached data', flush=True)
+
+    _save_ma_cache(ma_cache)
 
     cache = _load_cache()
 
@@ -681,7 +713,7 @@ if __name__ == '__main__':
     # Git push
     try:
         repo = os.path.dirname(os.path.abspath(__file__))
-        subprocess.run(['git', 'add', 'dividend_screener.html', 'dividend_data_cache.json'], cwd=repo, check=True, capture_output=True)
+        subprocess.run(['git', 'add', 'dividend_screener.html', 'dividend_data_cache.json', 'dividend_ma_cache.json'], cwd=repo, check=True, capture_output=True)
         subprocess.run(['git', 'commit', '-m', f'dividend_screener: {now} UTC'], cwd=repo, check=True, capture_output=True)
         subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'], cwd=repo, check=True, capture_output=True)
         subprocess.run(['git', 'push', 'origin', 'main'], cwd=repo, check=True, capture_output=True)

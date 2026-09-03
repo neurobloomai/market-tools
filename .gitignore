@@ -37,6 +37,7 @@ schwab_creds.py
 .yf_cache.sqlite
 !dividend_screener.html
 !dividend_data_cache.json
+!dividend_ma_cache.json
 !screener_data_cache.json
 !signal_cache.json
 !iv_data.json
