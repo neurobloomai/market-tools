@@ -376,6 +376,8 @@ if __name__ == '__main__':
             subprocess.run(['git', '-C', repo, 'commit',
                             '-m', f'monthly_ma_gate: {now}'],
                            check=True, stdout=devnull, stderr=devnull)
+            subprocess.run(['git', '-C', repo, 'pull', '--rebase'],
+                           check=True, stdout=devnull, stderr=devnull)
             subprocess.run(['git', '-C', repo, 'push'],
                            check=True, stdout=devnull, stderr=devnull)
             print(f"  Pushed → GitHub  (monthly_ma_gate: {now})")
