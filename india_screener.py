@@ -356,19 +356,6 @@ def pct_color(val, good_above=0):
     c = '#3fb950' if val >= good_above else '#f85149'
     return f'<span style="color:{c}">{val}%</span>'
 
-def get_price_vs_87w(ticker):
-    """Price vs weekly 87w MA — % extension above/below the long-run weekly trend."""
-    try:
-        hist = yf.Ticker(ticker).history(period='2y', interval='1wk')
-        closes = hist['Close'].dropna()
-        if len(closes) < 87:
-            return None
-        ma87 = closes.tail(87).mean()
-        price = closes.iloc[-1]
-        return round((price - ma87) / ma87 * 100, 1) if ma87 else None
-    except Exception:
-        return None
-
 def entry_zone(d):
     """Composite margin-of-safety signal: GREEN / YELLOW / RED."""
     pma200 = d.get('price_vs_ma200')
@@ -419,20 +406,6 @@ def eps_trend_html(d):
                 f' <span style="color:{c1};font-size:10px">/{g1:+.0f}%</span>')
     return f'<span style="color:{c0};font-size:11px">{g0_str}</span>'
 
-def vs87w_html(d):
-    """Color-coded % vs weekly 87w MA — green ≤5%, amber 5-30%, red >30%."""
-    ext = d.get('price_vs_87w')
-    if ext is None:
-        return '<span style="color:#484f58">—</span>'
-    if ext <= 5:
-        color = '#3fb950'
-    elif ext <= 30:
-        color = '#e3b341'
-    else:
-        color = '#f85149'
-    return (f'<span style="color:{color};font-size:11px">{ext:+.0f}%</span>'
-            f'<span style="color:#484f58;font-size:10px"> vs 87w</span>')
-
 def build_watchlist_section(watchlist):
     if not watchlist: return ''
     rows = ''
@@ -456,7 +429,6 @@ def build_watchlist_section(watchlist):
           <td style="color:#e6edf3">{pe_html(d)}</td>
           <td>{eps_trend_html(d)}</td>
           <td>{entry_html(d)}</td>
-          <td>{vs87w_html(d)}</td>
           <td style="font-size:11px">{blockers}</td>
         </tr>"""
     return f"""
@@ -467,7 +439,7 @@ def build_watchlist_section(watchlist):
     <tr>
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th>
       <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th>
-      <th>EPS FY</th><th>Entry</th><th>vs 87w</th><th>Blocking Filters</th>
+      <th>EPS FY</th><th>Entry</th><th>Blocking Filters</th>
     </tr>
   </thead>
   <tbody>{rows}</tbody>
@@ -495,7 +467,6 @@ def build_universe_failing_section(failing):
           <td style="color:#e6edf3">{pe_html(d)}</td>
           <td>{eps_trend_html(d)}</td>
           <td>{entry_html(d)}</td>
-          <td>{vs87w_html(d)}</td>
           <td style="font-size:11px">{blockers}</td>
         </tr>"""
     return f"""
@@ -506,7 +477,7 @@ def build_universe_failing_section(failing):
     <tr>
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th>
       <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th>
-      <th>EPS FY</th><th>Entry</th><th>vs 87w</th><th>Blocking Filters</th>
+      <th>EPS FY</th><th>Entry</th><th>Blocking Filters</th>
     </tr>
   </thead>
   <tbody>{rows}</tbody>
@@ -535,7 +506,6 @@ def build_html(results, watchlist=None, universe_failing=None):
           <td>{pe_html(d)}</td>
           <td>{eps_trend_html(d)}</td>
           <td>{entry_html(d)}</td>
-          <td>{vs87w_html(d)}</td>
         </tr>"""
 
     aplus = sum(1 for d in results if d['grade'] == 'A+')
@@ -599,7 +569,6 @@ def build_html(results, watchlist=None, universe_failing=None):
     <div class="gi"><span class="gi-key">Grade A+/A/B</span><span class="gi-val">Quality score — margins, ROE, FCF, debt. <b>A+</b> = all boxes checked. Start here.</span></div>
     <div class="gi"><span class="gi-key">EPS FY</span><span class="gi-val">Analyst estimate: current FY / next FY EPS growth. <span class="g">+15%</span> = growing. <span class="r">⚠ -8%</span> = declining. — = sparse coverage.</span></div>
     <div class="gi"><span class="gi-key">Entry</span><span class="gi-val"><span class="g">● ZONE</span> = near MA200, good price. <span class="y">● FAIR</span> = moderate. <span class="r">● RICH</span> = extended, thin margin of safety.</span></div>
-    <div class="gi"><span class="gi-key">vs 87w</span><span class="gi-val">Price vs weekly 87-week MA. <span class="g">≤5%</span> = near the long-run trend. <span class="y">5-30%</span> = extended. <span class="r">&gt;30%</span> = stretched.</span></div>
     <div class="gi"><span class="gi-key">Thresholds</span><span class="gi-val">India-calibrated: P/E ≤ 80x (vs 100x US) · OM ≥ 8% · Financials judged on ROE ≥ 15% instead of FCF.</span></div>
     <div class="gi"><span class="gi-key">Best setup</span><span class="gi-val"><b>A+ · ZONE · growing EPS</b> — quality confirmed, price reasonable, earnings trajectory positive.</span></div>
     <div class="gi"><span class="gi-key">Cross-check</span><span class="gi-val">Find the same name in the <a href="india_aligned_screener.html">India Aligned Screener</a> → 4/4 section. Both must say yes.</span></div>
@@ -632,7 +601,7 @@ def build_html(results, watchlist=None, universe_failing=None):
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th><th>Mkt Cap</th>
       <th>Grade</th><th>Debt/EV</th><th>Gross%</th><th>Op%</th><th>Net%</th>
       <th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th>
-      <th>EPS FY</th><th>Entry</th><th>vs 87w</th>
+      <th>EPS FY</th><th>Entry</th>
     </tr>
   </thead>
   <tbody>{rows}</tbody>
@@ -684,13 +653,6 @@ if __name__ == '__main__':
     watch_raw = [d for d in watch_raw if d is not None]
 
     print(f'  👀  {len(watch_raw)} watchlist entries fetched\n')
-
-    # Merge weekly 87w-MA extension (vs 87w column)
-    _all_for_87w = passed + watch_raw + failing
-    with ThreadPoolExecutor(max_workers=10) as ex:
-        _ext87_results = list(ex.map(get_price_vs_87w, [d['ticker'] for d in _all_for_87w]))
-    for d, _ext87 in zip(_all_for_87w, _ext87_results):
-        d['price_vs_87w'] = _ext87
 
     now  = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
     html = build_html(passed, watch_raw, universe_failing=failing)
