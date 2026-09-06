@@ -1,6 +1,6 @@
 """
-Schwab API Client
-=================
+Schwab API Client — read-only market data
+==========================================
 Setup (one-time):
   1. Register an app at https://developer.schwab.com — set callback URL to https://127.0.0.1
   2. Add your credentials to ~/.zshrc (or equivalent):
@@ -12,6 +12,11 @@ Setup (one-time):
        python schwab_client.py --auth
 
 Token file (~/.schwab_token.json) is stored outside the repo — never commit it.
+
+Account access + trade execution (get_accounts, get_positions, place_*, cancel_order)
+live in schwab_execution.py in market-tools-internal (private) — moved there 2026-09-06,
+this file is read-only market data only (quotes, price history, fundamentals, option
+chains), safe to keep public since it can't touch a real account or place an order.
 """
 
 import os
@@ -89,23 +94,6 @@ def get_quotes(tickers):
     c = get_client()
     r = c.get_quotes([_sym(t) for t in tickers])
     return r.json()
-
-
-def get_accounts():
-    c = get_client()
-    r = c.get_account_numbers()
-    return r.json()
-
-
-def get_positions():
-    c = get_client()
-    accounts = c.get_account_numbers().json()
-    results = {}
-    for acct in accounts:
-        hash_val = acct['hashValue']
-        r = c.get_account(hash_val, fields=[c.Account.Fields.POSITIONS])
-        results[acct['accountNumber']] = r.json()
-    return results
 
 
 def get_price_history(ticker, period='3m', bar='daily'):
@@ -350,128 +338,6 @@ def print_chain(ticker, expiry_date=None, strikes=10):
     print()
 
 
-def place_spread(account_hash, ticker, long_symbol, short_symbol, quantity, net_debit):
-    """
-    Place a bull call debit spread as a single NET_DEBIT order.
-    long_symbol / short_symbol: full OCC option symbols
-    e.g. 'MU   260620C01000000'  (ticker + expiry YYMMDD + C/P + 8-digit strike*1000)
-    """
-    c = get_client()
-    order = (
-        schwab.orders.options.bull_call_vertical_open(
-            long_call_symbol  = long_symbol,
-            short_call_symbol = short_symbol,
-            quantity          = quantity,
-            net_debit         = net_debit,
-        )
-    )
-    r = c.place_order(account_hash, order)
-    return r
-
-
-def place_bear_put_spread(account_hash, ticker, long_symbol, short_symbol, quantity, net_debit):
-    """
-    Place a bear put debit spread as a single NET_DEBIT order.
-    long_symbol: higher-strike put (buy), short_symbol: lower-strike put (sell).
-    """
-    c = get_client()
-    order = (
-        schwab.orders.options.bear_put_vertical_open(
-            long_put_symbol  = long_symbol,
-            short_put_symbol = short_symbol,
-            quantity         = quantity,
-            net_debit        = net_debit,
-        )
-    )
-    r = c.place_order(account_hash, order)
-    return r
-
-
-def place_closing_bull_call(account_hash, long_sym, short_sym, qty, net_credit):
-    """
-    Place a GTC closing order for a bull call spread (SELL long, BUY short = net credit).
-    net_credit: limit price per share (e.g. 3.50 for a $350 credit per contract).
-    """
-    from schwab.orders.common import Duration
-    c = get_client()
-    order = (schwab.orders.options.bull_call_vertical_close(
-        long_call_symbol  = long_sym,
-        short_call_symbol = short_sym,
-        quantity          = qty,
-        net_credit        = net_credit,
-    ).set_duration(Duration.GOOD_TILL_CANCEL))
-    r = c.place_order(account_hash, order)
-    return r
-
-
-def place_closing_bear_put(account_hash, long_sym, short_sym, qty, net_credit):
-    """
-    Place a GTC closing order for a bear put spread (SELL long put, BUY short put = net credit).
-    long_sym: higher-strike put (was bought at open).
-    short_sym: lower-strike put (was sold at open).
-    net_credit: limit price per share.
-    """
-    from schwab.orders.common import Duration
-    c = get_client()
-    order = (schwab.orders.options.bear_put_vertical_close(
-        short_put_symbol = short_sym,
-        long_put_symbol  = long_sym,
-        quantity         = qty,
-        net_credit       = net_credit,
-    ).set_duration(Duration.GOOD_TILL_CANCEL))
-    r = c.place_order(account_hash, order)
-    return r
-
-
-def place_closing_bull_put(account_hash, long_sym, short_sym, qty, net_debit):
-    """
-    Place a GTC closing order for a bull put credit spread.
-    long_sym:  lower-strike put (was bought as protection at open).
-    short_sym: higher-strike put (was sold for premium at open).
-    net_debit: current spread value — what we pay to close (e.g. 0.30 to close a 0.60 credit).
-    """
-    from schwab.orders.common import Duration
-    c = get_client()
-    order = (schwab.orders.options.bull_put_vertical_close(
-        long_put_symbol  = long_sym,
-        short_put_symbol = short_sym,
-        quantity         = qty,
-        net_debit        = net_debit,
-    ).set_duration(Duration.GOOD_TILL_CANCEL))
-    r = c.place_order(account_hash, order)
-    return r
-
-
-def get_order(account_hash: str, order_id: str) -> dict:
-    """Fetch a single order by ID. Returns the raw Schwab order JSON."""
-    c = get_client()
-    r = c.get_order(int(order_id), account_hash)
-    return r.json()
-
-
-def get_orders_for_account(account_hash: str, max_results: int = 50) -> list:
-    """Return recent orders for an account (working + terminal states)."""
-    import datetime
-    utc = datetime.timezone.utc
-    now  = datetime.datetime.now(utc)
-    from_ = now - datetime.timedelta(days=60)
-    c = get_client()
-    r = c.get_orders_for_account(
-        account_hash,
-        max_results=max_results,
-        from_entered_datetime=from_,
-        to_entered_datetime=now,
-    )
-    return r.json()
-
-
-def cancel_order(account_hash: str, order_id: str) -> bool:
-    """Cancel a working order. Returns True if accepted (200/204)."""
-    c = get_client()
-    r = c.cancel_order(int(order_id), account_hash)
-    return r.status_code in (200, 204)
-
-
 if __name__ == '__main__':
     if '--check' in sys.argv:
         ok, hours, msg = check_token()
@@ -495,12 +361,6 @@ if __name__ == '__main__':
             token_path   = str(TOKEN_PATH),
         )
         print(f'\n  Auth complete. Token saved to {TOKEN_PATH}\n')
-
-    elif '--accounts' in sys.argv:
-        print(json.dumps(get_accounts(), indent=2))
-
-    elif '--positions' in sys.argv:
-        print(json.dumps(get_positions(), indent=2))
 
     elif '--quote' in sys.argv:
         idx = sys.argv.index('--quote')
@@ -533,8 +393,6 @@ if __name__ == '__main__':
     else:
         print('\n  Usage:')
         print('    python schwab_client.py --auth                      # first-time OAuth login')
-        print('    python schwab_client.py --accounts                  # list accounts')
-        print('    python schwab_client.py --positions                 # current positions')
         print('    python schwab_client.py --quote MU                  # get a quote')
         print('    python schwab_client.py --history MNST              # daily MA summary (3m)')
         print('    python schwab_client.py --history MNST 2y weekly    # 2yr weekly bars')
@@ -543,4 +401,6 @@ if __name__ == '__main__':
         print('    python schwab_client.py --chain MU 2026-07-18 15    # 15 strikes ATM')
         print('    python schwab_client.py --fundamentals NVDA          # fundamentals (margins, ROE, growth)')
         print('    python schwab_client.py --fundamentals NVDA AAPL MU  # multiple tickers')
+        print()
+        print('  Account access + trade execution moved to schwab_execution.py in market-tools-internal.')
         print()
