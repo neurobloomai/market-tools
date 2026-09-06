@@ -977,6 +977,22 @@ def entry_html(d):
             f'<span style="color:#484f58;font-size:10px"> vs MA200</span>')
 
 
+def vs87w_html(d):
+    """Color-coded % vs weekly 87w MA — green ≤5%, amber 5-30%, red >30%. Same semantics as entry_html
+    (extended above the long-run weekly trend, not a buy/sell signal)."""
+    ext = d.get('price_vs_87w')
+    if ext is None:
+        return '<span style="color:#484f58">—</span>'
+    if ext <= 5:
+        color = '#3fb950'
+    elif ext <= 30:
+        color = '#e3b341'
+    else:
+        color = '#f85149'
+    return (f'<span style="color:{color};font-size:11px">{ext:+.0f}%</span>'
+            f'<span style="color:#484f58;font-size:10px"> vs 87w</span>')
+
+
 def eps_trend_html(d):
     g0 = d.get('fy0_growth')
     g1 = d.get('fy1_growth')
@@ -1005,7 +1021,7 @@ def build_watchlist_section(watchlist):
   <thead>
     <tr>
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th>
-      <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>EPS FY</th><th>Entry</th>
+      <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>EPS FY</th><th>Entry</th><th>vs 87w</th>
       <th>Blocking Filters</th>
     </tr>
   </thead>
@@ -1034,6 +1050,7 @@ def build_watchlist_rows(watchlist):
           <td style="color:#e6edf3">{pe_html(d)}</td>
           <td>{eps_trend_html(d)}</td>
           <td>{entry_html(d)}</td>
+          <td>{vs87w_html(d)}</td>
           <td style="font-size:11px">{blockers}</td>
         </tr>"""
     return rows
@@ -1048,7 +1065,7 @@ def build_universe_failing_section(failing):
   <thead>
     <tr>
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th>
-      <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>EPS FY</th><th>Entry</th>
+      <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>EPS FY</th><th>Entry</th><th>vs 87w</th>
       <th>Blocking Filters</th>
     </tr>
   </thead>
@@ -1080,6 +1097,7 @@ def build_html(results, watchlist=None, universe_failing=None):
           <td>{pe_html(d)}</td>
           <td>{eps_trend_html(d)}</td>
           <td>{entry_html(d)}</td>
+          <td>{vs87w_html(d)}</td>
         </tr>"""
 
     aplus = sum(1 for d in results if d['grade'] == 'A+')
@@ -1143,7 +1161,7 @@ def build_html(results, watchlist=None, universe_failing=None):
     <div class="gi"><span class="gi-key">Grade A+/A/B</span><span class="gi-val">Quality score — margins, ROE, FCF, debt. <b>A+</b> = all boxes checked. Start here.</span></div>
     <div class="gi"><span class="gi-key">EPS FY</span><span class="gi-val">Analyst estimate: current FY / next FY EPS growth. <span class="g">+15%</span> = growing. <span class="r">⚠ -8%</span> = declining this year.</span></div>
     <div class="gi"><span class="gi-key">Entry</span><span class="gi-val"><span class="g">● ZONE</span> = near MA200, good price. <span class="y">● FAIR</span> = moderate. <span class="r">● RICH</span> = extended, thin margin of safety.</span></div>
-    <div class="gi"><span class="gi-key">Signal (wk)</span><span class="gi-val">Weekly RSI+MACD dual confirmation. <span class="g">⬆ bull</span> = momentum recovering. <span class="r">⬇ bear</span> = fading. Fires rarely by design.</span></div>
+    <div class="gi"><span class="gi-key">vs 87w</span><span class="gi-val">Price vs weekly 87-week MA. <span class="g">≤5%</span> = near the long-run trend. <span class="y">5-30%</span> = extended. <span class="r">&gt;30%</span> = stretched.</span></div>
     <div class="gi"><span class="gi-key">Debt/EV</span><span class="gi-val">Debt as fraction of enterprise value. ≤ 0.05 = near-zero debt. > 0.20 = filtered out.</span></div>
     <div class="gi"><span class="gi-key">FCF Yld</span><span class="gi-val">Free cash flow yield. Positive = generates real cash. Negative = consumes it.</span></div>
     <div class="gi"><span class="gi-key">Best setup</span><span class="gi-val"><b>A+ · ZONE · growing EPS</b> — quality confirmed, price reasonable, earnings trajectory positive.</span></div>
@@ -1176,7 +1194,7 @@ def build_html(results, watchlist=None, universe_failing=None):
     <tr>
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th><th>Mkt Cap</th>
       <th>Grade</th><th>Debt/EV</th><th>Gross%</th><th>Op%</th><th>Net%</th>
-      <th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>EPS FY</th><th>Entry</th>
+      <th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th><th>EPS FY</th><th>Entry</th><th>vs 87w</th>
     </tr>
   </thead>
   <tbody>{rows}</tbody>
@@ -1590,6 +1608,15 @@ if __name__ == '__main__':
     watch_raw.sort(key=lambda x: -(x['market_cap_b'] or 0))
 
     print(f"  👀  {len(watch_raw)} watchlist entries fetched\n")
+
+    # Merge weekly 87w-MA extension (vs 87w column) — reuses the same cached weekly fetch as --signal
+    _all_for_87w = passed + watch_raw + failing
+    _tickers_87w = [d['ticker'] for d in _all_for_87w]
+    with ThreadPoolExecutor(max_workers=10) as ex:
+        _sig_results = list(ex.map(_get_signal_cached, _tickers_87w))
+    for d, (_sig87, _ma87) in zip(_all_for_87w, _sig_results):
+        d['price_vs_87w'] = round(_ma87['ext87'], 1) if _ma87 and _ma87.get('ext87') is not None else None
+    _save_sig_cache(_sig_cache)
 
     now  = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
     html = build_html(passed, watch_raw, universe_failing=failing)
