@@ -709,8 +709,7 @@ if __name__ == '__main__':
 
     try:
         repo = _os.path.dirname(out_path)
-        subprocess.run(['git', 'stash', '--include-untracked'], cwd=repo, capture_output=True)
-        subprocess.run(['git', 'pull', '--rebase', 'origin', 'main'], cwd=repo, check=True, capture_output=True)
+        subprocess.run(['git', 'pull', '--rebase', '--autostash', 'origin', 'main'], cwd=repo, check=True, capture_output=True)
         with open(out_path, 'w') as f:
             f.write(html)
         subprocess.run(['git', 'add',    'india_screener.html'], cwd=repo, check=True, capture_output=True)
