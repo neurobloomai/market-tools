@@ -67,6 +67,7 @@
       "entry_date": null,
       "contracts": 1,
       "entry_value": 9.6133,
+      "delta_exit_override": 0.30,
       "status": "open",
       "source": "schwab:30447081",
       "last_checked": "2026-09-06 12:26 UTC",

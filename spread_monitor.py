@@ -223,8 +223,9 @@ def exit_signals(pos, current_value, vix, dte, short_delta=None):
         exits.append(f'DTE {dte} — pin/assignment risk, EXIT')
 
     if short_delta is not None:
-        if short_delta >= DELTA_EXIT_THRESHOLD:
-            exits.append(f'Short Δ {short_delta:.2f} ≥ {DELTA_EXIT_THRESHOLD} — approaching ATM, EXIT')
+        delta_exit = pos.get('delta_exit_override', DELTA_EXIT_THRESHOLD)
+        if short_delta >= delta_exit:
+            exits.append(f'Short Δ {short_delta:.2f} ≥ {delta_exit} — approaching ATM, EXIT')
         elif short_delta >= DELTA_WARN_THRESHOLD:
             warns.append(f'Short Δ {short_delta:.2f} ≥ {DELTA_WARN_THRESHOLD} — delta elevated, WATCH')
 
