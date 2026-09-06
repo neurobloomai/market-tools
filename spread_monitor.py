@@ -99,33 +99,72 @@ def get_option_mid(ticker, expiry, strike, option_type):
         return None
 
 
-def get_short_delta(pos):
+def _bs_delta(S, K, T, sigma, r=0.045, option_type='call'):
     """
-    Abs(delta) of the short leg via Schwab option chain.
-    Puts have negative delta — abs() normalises both legs to 0.0–0.50 range.
-    Returns None in yfinance mode (Greeks not available without Schwab).
+    Black-Scholes delta — fallback approximation only, used when Schwab's real
+    Greeks aren't available (e.g. automated CI, where Schwab's OAuth refresh
+    token can't be renewed headlessly — see schwab_auth.py). r is a fixed
+    approximate risk-free rate, not fetched live.
     """
-    if not _use_schwab():
+    import math
+    if T is None or T <= 0 or not sigma or sigma <= 0 or not S or S <= 0 or not K or K <= 0:
         return None
+    d1   = (math.log(S / K) + (r + sigma ** 2 / 2) * T) / (sigma * math.sqrt(T))
+    n_d1 = 0.5 * (1 + math.erf(d1 / math.sqrt(2)))
+    return n_d1 if option_type == 'call' else n_d1 - 1
+
+
+def _short_delta_yf_fallback(pos):
+    """Approximate short-leg delta via yfinance implied vol + Black-Scholes.
+    Less precise than Schwab's real Greeks but real coverage where Schwab
+    is unavailable, instead of silently skipping the delta-based exit rules."""
     try:
-        from schwab_client import get_option_chain
         t, exp, st = pos['ticker'], pos['expiry'], pos['short_strike']
-        opt_type = 'puts' if pos['type'] == 'bull_put' else 'calls'
-        data     = get_option_chain(t, expiry_date=exp, strikes=20)
-        if 'error' in data or data.get('status') == 'FAILED':
+        is_put     = pos['type'] == 'bull_put'
+        tk         = yf.Ticker(t)
+        underlying = tk.fast_info.last_price
+        chain      = tk.option_chain(exp)
+        rows       = chain.puts if is_put else chain.calls
+        row        = rows[rows['strike'] == float(st)]
+        if row.empty or underlying is None:
             return None
-        map_key  = 'callExpDateMap' if opt_type == 'calls' else 'putExpDateMap'
-        exp_map  = data.get(map_key, {})
-        exp_key  = next((k for k in exp_map if k.startswith(exp)), None)
-        if not exp_key:
-            return None
-        smap     = exp_map[exp_key]
-        nearest  = min(smap.keys(), key=lambda s: abs(float(s) - float(st)))
-        opt      = (smap.get(nearest) or [{}])[0]
-        d        = opt.get('delta')
-        return abs(float(d)) if d is not None else None
+        sigma = float(row['impliedVolatility'].iloc[0])
+        dte   = dte_of(exp)
+        T     = max(dte, 1) / 365
+        d     = _bs_delta(underlying, float(st), T, sigma, option_type='put' if is_put else 'call')
+        return abs(d) if d is not None else None
     except Exception:
         return None
+
+
+def get_short_delta(pos):
+    """
+    Abs(delta) of the short leg — prefers Schwab's real Greeks; falls back to
+    a yfinance IV + Black-Scholes estimate when Schwab isn't available (e.g.
+    automated runs, where SCHWAB_DATA isn't set and the Schwab SDK isn't even
+    installed — see .github/workflows/spread_monitor.yml).
+    Puts have negative delta — abs() normalises both legs to 0.0–0.50 range.
+    """
+    if _use_schwab():
+        try:
+            from schwab_client import get_option_chain
+            t, exp, st = pos['ticker'], pos['expiry'], pos['short_strike']
+            opt_type = 'puts' if pos['type'] == 'bull_put' else 'calls'
+            data     = get_option_chain(t, expiry_date=exp, strikes=20)
+            if 'error' not in data and data.get('status') != 'FAILED':
+                map_key  = 'callExpDateMap' if opt_type == 'calls' else 'putExpDateMap'
+                exp_map  = data.get(map_key, {})
+                exp_key  = next((k for k in exp_map if k.startswith(exp)), None)
+                if exp_key:
+                    smap    = exp_map[exp_key]
+                    nearest = min(smap.keys(), key=lambda s: abs(float(s) - float(st)))
+                    opt     = (smap.get(nearest) or [{}])[0]
+                    d       = opt.get('delta')
+                    if d is not None:
+                        return abs(float(d))
+        except Exception:
+            pass
+    return _short_delta_yf_fallback(pos)
 
 
 def get_spread_value(pos):
@@ -464,8 +503,6 @@ def main():
         for s in warns:
             print(f'         ⚠ {s}')
 
-        updates[pos['id']]['_auto_close'] = bool(exits)
-
         updates[pos['id']] = {
             'last_checked':  now_str,
             'last_vix':      vix,
@@ -476,6 +513,7 @@ def main():
             'exit_reasons':  exits,
             'warn_reasons':  warns,
         }
+        updates[pos['id']]['_auto_close'] = bool(exits)
 
     print('─' * 100)
 
