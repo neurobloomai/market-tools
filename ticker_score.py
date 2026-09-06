@@ -446,7 +446,8 @@ def run_full_score(tickers):
                                                   cap_tier, cap_str, risk_adjusted_score)
         from internal_technical_score import (score_technical, tech_score_band,
                                                sizing_weight, regime_multiplier,
-                                               event_multiplier, compute_slope_curvature)
+                                               event_multiplier, compute_slope_curvature,
+                                               get_price_vs_87w_schwab)
         from pop_scan import get_daily_ma_pos
         from extension_scan import get_extension_data
         from regime import get_regime
@@ -463,9 +464,10 @@ def run_full_score(tickers):
         pop_raw   = list(ex.map(get_daily_ma_pos,        tickers))
         ext_raw   = list(ex.map(get_extension_data,      tickers))
         curv_raw  = list(ex.map(compute_slope_curvature, tickers))
+        vs87w_raw = list(ex.map(get_price_vs_87w_schwab, tickers))
 
-    # Inject curvature + smoothness into ext dicts
-    for ext, curv_tuple, pop in zip(ext_raw, curv_raw, pop_raw):
+    # Inject curvature + smoothness + vs-87w into ext dicts
+    for ext, curv_tuple, pop, vs87w in zip(ext_raw, curv_raw, pop_raw, vs87w_raw):
         _, curv, ma10w = curv_tuple
         if ext is not None and curv is not None:
             ext['curvature'] = curv
@@ -477,6 +479,8 @@ def run_full_score(tickers):
                 if denom > 0:
                     ma50d = price / denom
                     ext['smoothness'] = round((ma10w - ma50d) / ma50d * 100, 3)
+        if ext is not None and vs87w is not None:
+            ext['vs_87w'] = vs87w
 
     regime   = get_regime()
     vix      = regime.get('vix')
@@ -586,6 +590,12 @@ def _print_full_table(ordered, all_data, vix, reg_lbl, reg_mult):
         tag = 'smooth' if s > 0.5 else ('choppy' if s < -0.5 else 'neutral')
         return f'{s:+.2f}% {tag}'
 
+    def _vs87w_str(t):
+        v = all_data[t][8].get('vs_87w')
+        if v is None: return '—'
+        tag = 'stretched' if v > 30 else ('extended' if v > 5 else 'near-trend')
+        return f'{v:+.1f}% {tag}'
+
     for label, fn in [
         ('MA above (0-3)', lambda t: str(all_data[t][7].get('above', '—'))),
         ('CMF-20',         lambda t: f'{all_data[t][8].get("cmf"):+.3f}' if all_data[t][8].get("cmf") is not None else '—'),
@@ -594,6 +604,7 @@ def _print_full_table(ordered, all_data, vix, reg_lbl, reg_mult):
         ('RSI-14 (wkly)',  lambda t: f'{all_data[t][8].get("rsi"):.0f}' if all_data[t][8].get("rsi") is not None else '—'),
         ('Runway %',       lambda t: f'{all_data[t][8].get("runway"):.0f}%' if all_data[t][8].get("runway") is not None else '—'),
         ('Smoothness',     _smooth_str),
+        ('vs 87w MA',      _vs87w_str),
     ]:
         print(f'  {label:<22}' + ''.join(col(fn(t)) for t in ordered))
 
