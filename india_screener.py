@@ -356,69 +356,16 @@ def pct_color(val, good_above=0):
     c = '#3fb950' if val >= good_above else '#f85149'
     return f'<span style="color:{c}">{val}%</span>'
 
-def calc_rsi(closes, period=14):
-    delta    = closes.diff()
-    gain     = delta.clip(lower=0)
-    loss     = (-delta).clip(lower=0)
-    avg_gain = gain.ewm(alpha=1/period, min_periods=period, adjust=False).mean()
-    avg_loss = loss.ewm(alpha=1/period, min_periods=period, adjust=False).mean()
-    avg_loss = avg_loss.replace(0, 1e-10)
-    rs       = avg_gain / avg_loss
-    return 100 - (100 / (1 + rs))
-
-def get_tech_signal(ticker):
-    """Weekly dual confirmation: RSI-14 + MACD histogram divergence must agree."""
+def get_price_vs_87w(ticker):
+    """Price vs weekly 87w MA — % extension above/below the long-run weekly trend."""
     try:
-        hist = yf.Ticker(ticker).history(period='1y', interval='1wk')
-        if len(hist) < 35:
-            return None
+        hist = yf.Ticker(ticker).history(period='2y', interval='1wk')
         closes = hist['Close'].dropna()
-        highs  = hist['High'].reindex(closes.index)
-        lows   = hist['Low'].reindex(closes.index)
-        RECENCY = 4
-
-        def _swings(arr, mode='high'):
-            if mode == 'high':
-                return [i for i in range(1, len(arr)-1) if arr[i] >= arr[i-1] and arr[i] >= arr[i+1]]
-            return [i for i in range(1, len(arr)-1) if arr[i] <= arr[i-1] and arr[i] <= arr[i+1]]
-
-        MIN_SWING = 0.0075
-        MAX_SWING = 0.15
-
-        def _divergence(indicator_vals, price_h, price_l, n):
-            sh = _swings(price_h, 'high')
-            if len(sh) >= 2:
-                i2, i1 = sh[-1], sh[-2]
-                if (n-1-i2) <= RECENCY and price_h[i2] > price_h[i1] and indicator_vals[i2] < indicator_vals[i1]:
-                    swing = (price_h[i2] - price_h[i1]) / price_h[i1]
-                    if MIN_SWING <= swing <= MAX_SWING:
-                        return 'bear'
-            sl = _swings(price_l, 'low')
-            if len(sl) >= 2:
-                i2, i1 = sl[-1], sl[-2]
-                if (n-1-i2) <= RECENCY and price_l[i2] < price_l[i1] and indicator_vals[i2] > indicator_vals[i1]:
-                    swing = (price_l[i1] - price_l[i2]) / price_l[i1]
-                    if MIN_SWING <= swing <= MAX_SWING:
-                        return 'bull'
+        if len(closes) < 87:
             return None
-
-        rsi     = calc_rsi(closes, 14).dropna()
-        rsi_sig = None
-        if len(rsi) >= 5:
-            idx     = rsi.index
-            rsi_sig = _divergence(rsi.values, highs.loc[idx].values, lows.loc[idx].values, len(rsi))
-
-        ema12         = closes.ewm(span=12, adjust=False).mean()
-        ema26         = closes.ewm(span=26, adjust=False).mean()
-        histo         = (ema12 - ema26 - (ema12 - ema26).ewm(span=9, adjust=False).mean()).dropna()
-        macd_sig      = None
-        if len(histo) >= 5:
-            idx      = histo.index
-            macd_sig = _divergence(histo.values, highs.loc[idx].values, lows.loc[idx].values, len(histo))
-
-        if rsi_sig and macd_sig and rsi_sig == macd_sig:
-            return (rsi_sig, 'RSI+MACD')
-        return None
+        ma87 = closes.tail(87).mean()
+        price = closes.iloc[-1]
+        return round((price - ma87) / ma87 * 100, 1) if ma87 else None
     except Exception:
         return None
 
@@ -472,13 +419,19 @@ def eps_trend_html(d):
                 f' <span style="color:{c1};font-size:10px">/{g1:+.0f}%</span>')
     return f'<span style="color:{c0};font-size:11px">{g0_str}</span>'
 
-def signal_html(sig):
-    if sig is None: return '<span style="color:#484f58">—</span>'
-    direction, source = sig
-    color = '#3fb950' if direction == 'bull' else '#f85149'
-    arrow = '⬆' if direction == 'bull' else '⬇'
-    return (f'<span style="color:{color};font-weight:700">{arrow} {direction}</span>'
-            f'<span style="color:#484f58;font-size:9px"> {source}</span>')
+def vs87w_html(d):
+    """Color-coded % vs weekly 87w MA — green ≤5%, amber 5-30%, red >30%."""
+    ext = d.get('price_vs_87w')
+    if ext is None:
+        return '<span style="color:#484f58">—</span>'
+    if ext <= 5:
+        color = '#3fb950'
+    elif ext <= 30:
+        color = '#e3b341'
+    else:
+        color = '#f85149'
+    return (f'<span style="color:{color};font-size:11px">{ext:+.0f}%</span>'
+            f'<span style="color:#484f58;font-size:10px"> vs 87w</span>')
 
 def build_watchlist_section(watchlist):
     if not watchlist: return ''
@@ -503,6 +456,7 @@ def build_watchlist_section(watchlist):
           <td style="color:#e6edf3">{pe_html(d)}</td>
           <td>{eps_trend_html(d)}</td>
           <td>{entry_html(d)}</td>
+          <td>{vs87w_html(d)}</td>
           <td style="font-size:11px">{blockers}</td>
         </tr>"""
     return f"""
@@ -513,7 +467,7 @@ def build_watchlist_section(watchlist):
     <tr>
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th>
       <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th>
-      <th>EPS FY</th><th>Entry</th><th>Blocking Filters</th>
+      <th>EPS FY</th><th>Entry</th><th>vs 87w</th><th>Blocking Filters</th>
     </tr>
   </thead>
   <tbody>{rows}</tbody>
@@ -541,6 +495,7 @@ def build_universe_failing_section(failing):
           <td style="color:#e6edf3">{pe_html(d)}</td>
           <td>{eps_trend_html(d)}</td>
           <td>{entry_html(d)}</td>
+          <td>{vs87w_html(d)}</td>
           <td style="font-size:11px">{blockers}</td>
         </tr>"""
     return f"""
@@ -551,7 +506,7 @@ def build_universe_failing_section(failing):
     <tr>
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th>
       <th>Op%</th><th>Net%</th><th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th>
-      <th>EPS FY</th><th>Entry</th><th>Blocking Filters</th>
+      <th>EPS FY</th><th>Entry</th><th>vs 87w</th><th>Blocking Filters</th>
     </tr>
   </thead>
   <tbody>{rows}</tbody>
@@ -580,7 +535,7 @@ def build_html(results, watchlist=None, universe_failing=None):
           <td>{pe_html(d)}</td>
           <td>{eps_trend_html(d)}</td>
           <td>{entry_html(d)}</td>
-          <td>{signal_html(d.get('tech_signal'))}</td>
+          <td>{vs87w_html(d)}</td>
         </tr>"""
 
     aplus = sum(1 for d in results if d['grade'] == 'A+')
@@ -644,7 +599,7 @@ def build_html(results, watchlist=None, universe_failing=None):
     <div class="gi"><span class="gi-key">Grade A+/A/B</span><span class="gi-val">Quality score — margins, ROE, FCF, debt. <b>A+</b> = all boxes checked. Start here.</span></div>
     <div class="gi"><span class="gi-key">EPS FY</span><span class="gi-val">Analyst estimate: current FY / next FY EPS growth. <span class="g">+15%</span> = growing. <span class="r">⚠ -8%</span> = declining. — = sparse coverage.</span></div>
     <div class="gi"><span class="gi-key">Entry</span><span class="gi-val"><span class="g">● ZONE</span> = near MA200, good price. <span class="y">● FAIR</span> = moderate. <span class="r">● RICH</span> = extended, thin margin of safety.</span></div>
-    <div class="gi"><span class="gi-key">Signal (wk)</span><span class="gi-val">Weekly RSI+MACD dual confirmation. <span class="g">⬆ bull</span> = momentum recovering. <span class="r">⬇ bear</span> = fading. Fires rarely by design.</span></div>
+    <div class="gi"><span class="gi-key">vs 87w</span><span class="gi-val">Price vs weekly 87-week MA. <span class="g">≤5%</span> = near the long-run trend. <span class="y">5-30%</span> = extended. <span class="r">&gt;30%</span> = stretched.</span></div>
     <div class="gi"><span class="gi-key">Thresholds</span><span class="gi-val">India-calibrated: P/E ≤ 80x (vs 100x US) · OM ≥ 8% · Financials judged on ROE ≥ 15% instead of FCF.</span></div>
     <div class="gi"><span class="gi-key">Best setup</span><span class="gi-val"><b>A+ · ZONE · growing EPS</b> — quality confirmed, price reasonable, earnings trajectory positive.</span></div>
     <div class="gi"><span class="gi-key">Cross-check</span><span class="gi-val">Find the same name in the <a href="india_aligned_screener.html">India Aligned Screener</a> → 4/4 section. Both must say yes.</span></div>
@@ -677,7 +632,7 @@ def build_html(results, watchlist=None, universe_failing=None):
       <th>Ticker</th><th>Name</th><th>Sector</th><th>Price</th><th>Mkt Cap</th>
       <th>Grade</th><th>Debt/EV</th><th>Gross%</th><th>Op%</th><th>Net%</th>
       <th>ROE%</th><th>FCF Yld</th><th>Rev Grw</th><th>P/E</th>
-      <th>EPS FY</th><th>Entry</th><th>Signal (wk)</th>
+      <th>EPS FY</th><th>Entry</th><th>vs 87w</th>
     </tr>
   </thead>
   <tbody>{rows}</tbody>
@@ -712,14 +667,6 @@ if __name__ == '__main__':
     for d in passed:
         d['grade'] = quality_grade(d)
 
-    # Weekly signal — A/A+ names only (fetch-heavy; skip B)
-    top_grade = [d for d in passed if d['grade'] in ('A+', 'A')]
-    if top_grade:
-        print(f'  Fetching weekly signals for {len(top_grade)} A/A+ names ...', flush=True)
-        with ThreadPoolExecutor(max_workers=8) as ex:
-            sigs = list(ex.map(get_tech_signal, [d['ticker'] for d in top_grade]))
-        for d, sig in zip(top_grade, sigs):
-            d['tech_signal'] = sig
 
     # Sort: grade bucket → declining EPS last within bucket → debt_to_ev
     def _sort_key(x):
@@ -737,6 +684,13 @@ if __name__ == '__main__':
     watch_raw = [d for d in watch_raw if d is not None]
 
     print(f'  👀  {len(watch_raw)} watchlist entries fetched\n')
+
+    # Merge weekly 87w-MA extension (vs 87w column)
+    _all_for_87w = passed + watch_raw + failing
+    with ThreadPoolExecutor(max_workers=10) as ex:
+        _ext87_results = list(ex.map(get_price_vs_87w, [d['ticker'] for d in _all_for_87w]))
+    for d, _ext87 in zip(_all_for_87w, _ext87_results):
+        d['price_vs_87w'] = _ext87
 
     now  = datetime.utcnow().strftime('%b %d %Y  %H:%M UTC')
     html = build_html(passed, watch_raw, universe_failing=failing)
