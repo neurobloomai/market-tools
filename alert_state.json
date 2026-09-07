@@ -1,5 +1,6 @@
 {
   "setups": {
+    "MSFT": "IN",
     "AAPL": "IN"
   },
   "watchlist": {
@@ -11,10 +12,11 @@
     "GWRE": 1,
     "WING": 1,
     "MNDY": 1,
-    "P": 1,
+    "DELL": 1,
     "CHTR": 1,
     "ALC": 1,
     "BIO": 1,
+    "RVTY": 1,
     "TMDX": 1,
     "STNE": 1,
     "CPAY": 1,
@@ -34,7 +36,7 @@
     "AMSC": 1,
     "BMY": 1,
     "TGTX": 1,
-    "VCYT": 1,
+    "MDT": 1,
     "ORLY": 1,
     "ESE": 1,
     "PYPL": 1,
@@ -44,8 +46,15 @@
     "TOST": 1,
     "CRCL": 1,
     "FN": 1,
+    "REPX": 1,
+    "CENX": 1,
     "TPL": 1,
     "GCT": 1,
-    "AROC": 1
+    "AROC": 1,
+    "TXRH": 1,
+    "VNT": 1,
+    "GRBK": 1,
+    "PHM": 1,
+    "BROS": 1
   }
 }
