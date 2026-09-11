@@ -150,6 +150,11 @@ def get_daily_ma_pos(ticker, force_yf=False):
         ma50  = close.iloc[-50:].mean()
         count = sum([price > ma10, price > ma20, price > ma50])
         near  = sum([price >= ma10*0.95, price >= ma20*0.95, price >= ma50*0.95])
+        # Daily RSI-14 — same formula used for weekly RSI elsewhere in this codebase
+        delta = close.diff()
+        gain  = delta.clip(lower=0).rolling(14).mean()
+        loss  = (-delta.clip(upper=0)).rolling(14).mean()
+        rsi   = float((100 - 100 / (1 + gain / loss)).iloc[-1]) if len(close) >= 15 else float('nan')
         # weekly slope: % change in 10wk MA over last 5 weekly bars
         wk_close = hist_w['Close'].dropna() if hist_w is not None and len(hist_w) >= 15 else None
         if wk_close is not None:
@@ -168,6 +173,7 @@ def get_daily_ma_pos(ticker, force_yf=False):
             'above':    count,
             'all3':     count == 3,
             'near':     near,
+            'rsi':      round(rsi, 1) if rsi == rsi else float('nan'),  # NaN-safe (rsi != rsi when NaN)
             'wk_cmf':   wk_cmf,
             'wk_slope': wk_slope,
         }
@@ -945,6 +951,18 @@ def _cli_slope(slope):
     s = f'{slope:+.1f}%'
     return _c(_G, s) if slope > 0 else _c(_R, s)
 
+def _cli_rsi(rsi):
+    """Daily RSI-14. Tiers match the same RSI read used in _top10_score:
+    45-65 sweet spot (momentum without exhaustion), 35-45/65-75 mild caution,
+    <35/>75 stretched either direction."""
+    import math
+    if rsi is None or (isinstance(rsi, float) and math.isnan(rsi)):
+        return f'{_DIM}  —  {_RST}'
+    s = f'{rsi:.0f}'
+    if 45 <= rsi <= 65:            return _c(_G, s)
+    if rsi > 75 or rsi < 35:       return _c(_R, s)
+    return _c(_Y, s)
+
 _REGIME_ANSI = {
     'BULL':    '\033[92m',
     'CAUTION': '\033[93m',
@@ -974,10 +992,11 @@ def print_cli_table(all3, two, tight, misses, no_data, label, grades, hourly, sh
     print()
 
     # column widths (fixed, no ANSI in header)
-    COL = {'tick': 14, 'zone': 10, 'price': 9, 'pct': 8, 'cmf': 9, 'slope': 9}
+    COL = {'tick': 14, 'zone': 10, 'price': 9, 'pct': 8, 'rsi': 5, 'cmf': 9, 'slope': 9}
     hdr = (
         f"  {'TICKER':<{COL['tick']}} {'ZONE':<{COL['zone']}} {'PRICE':>{COL['price']}}"
         f"  {'vs10d':>{COL['pct']}}  {'vs20d':>{COL['pct']}}  {'vs50d':>{COL['pct']}}"
+        f"  {'RSI':>{COL['rsi']}}"
         f"  {'WkCMF':>{COL['cmf']}}  {'WkSlope':>{COL['slope']}}"
     )
     sep = '  ' + '─' * (len(hdr) - 2)
@@ -1008,6 +1027,7 @@ def print_cli_table(all3, two, tight, misses, no_data, label, grades, hourly, sh
             f'  {_lpad(_cli_pct(r["pct10"]),        COL["pct"])}'
             f'  {_lpad(_cli_pct(r["pct20"]),        COL["pct"])}'
             f'  {_lpad(_cli_pct(r["pct50"]),        COL["pct"])}'
+            f'  {_lpad(_cli_rsi(r.get("rsi")),      COL["rsi"])}'
             f'  {_lpad(_cli_cmf(r.get("wk_cmf")),  COL["cmf"])}'
             f'  {_lpad(_cli_slope(r.get("wk_slope")), COL["slope"])}'
         )
