@@ -17,6 +17,26 @@ from ma_scanner import LIQUID_NAMES
 EXCLUDE = set(LIQUID_NAMES)  # NVDA META MSFT AAPL AMZN GOOGL AVGO MU NFLX
 
 
+# ── ANSI helpers (same palette as pop_scan.py) ─────────────────────────────────
+_G   = '\033[92m'   # bright green  — good
+_Y   = '\033[93m'   # bright yellow — slightly good / building
+_R   = '\033[91m'   # bright red    — wary / caution
+_DIM = '\033[2m'     # dim           — okay / below par / structural text
+_RST = '\033[0m'
+
+_ANSI_RE = re.compile(r'\033\[[0-9;]*m')
+
+def _vlen(s):
+    return len(_ANSI_RE.sub('', s))
+
+def _rpad(s, w):
+    """Left-align s in w visible characters (ignores ANSI codes when measuring)."""
+    return s + ' ' * max(0, w - _vlen(s))
+
+def _c(color, text):
+    return f'{color}{text}{_RST}'
+
+
 # ── Parse quality grades ───────────────────────────────────────────────────────
 
 def load_grades(path='quality_screener.html'):
@@ -95,53 +115,69 @@ def score(ticker, grade, sig, is_4of4, is_coil):
     reasons = []
 
     if grade == 'A+':
-        s += 2; reasons.append('A+')
+        s += 2
     elif grade == 'A':
-        s += 1; reasons.append('A')
+        s += 1
 
     if is_4of4:
-        s += 2; reasons.append('4/4 aligned')
+        s += 2; reasons.append(_c(_G, '4/4 aligned'))
     if is_coil:
-        s += 1; reasons.append('coil')
+        s += 1; reasons.append(_c(_Y, 'coil'))
 
     if sig:
         rs = sig.get('rs')
-        if rs and rs >= 1.10:
-            s += 2; reasons.append(f'RS {rs:.2f}x')
-        elif rs and rs >= 1.0:
-            s += 1; reasons.append(f'RS {rs:.2f}x')
+        if rs is not None:
+            color = _G if rs >= 1.10 else _Y if rs >= 1.0 else _DIM
+            reasons.append(_c(color, f'RS {rs:.2f}x'))
+            if rs >= 1.10:
+                s += 2
+            elif rs >= 1.0:
+                s += 1
 
         cmf = sig.get('cmf')
-        if cmf and cmf >= 0.10:
-            s += 2; reasons.append(f'CMF {cmf:+.2f}')
-        elif cmf and cmf > 0:
-            s += 1; reasons.append(f'CMF {cmf:+.2f}')
+        if cmf is not None:
+            color = _G if cmf >= 0.10 else _Y if cmf > 0 else _DIM
+            reasons.append(_c(color, f'CMF {cmf:+.2f}'))
+            if cmf >= 0.10:
+                s += 2
+            elif cmf > 0:
+                s += 1
 
         if sig.get('ad') == '↑':
-            s += 1; reasons.append('A/D ↑')
+            s += 1; reasons.append(_c(_G, 'A/D ↑'))
         if sig.get('obv') == '↑':
-            s += 1; reasons.append('OBV ↑')
+            s += 1; reasons.append(_c(_G, 'OBV ↑'))
         if sig.get('bull'):
-            s += 1; reasons.append('◆ bull div')
+            s += 1
 
-    return s, reasons
+    bull_div = bool(sig and sig.get('bull'))
+    return s, reasons, bull_div
 
 
 # ── Monthly MA distance (fetch only top N) ────────────────────────────────────
 
 def monthly_extension(ticker):
-    """Returns (pct_above_ma10m, pct_above_ma20m) or (None, None) on failure."""
+    """Returns (price, pct_above_ma10m, pct_above_ma20m) or (None, None, None) on failure."""
     try:
         mo    = yf.Ticker(ticker).history(period='5y', interval='1mo', prepost=False)['Close'].dropna()
         dy    = yf.Ticker(ticker).history(period='1y',  interval='1d',  prepost=False)['Close'].dropna()
         if len(mo) < 22 or len(dy) < 2:
-            return None, None
+            return None, None, None
         price = float(dy.iloc[-1])
         m10m  = float(mo.rolling(10).mean().iloc[-2])
         m20m  = float(mo.rolling(20).mean().iloc[-2])
-        return (price / m10m - 1) * 100, (price / m20m - 1) * 100
+        return price, (price / m10m - 1) * 100, (price / m20m - 1) * 100
     except:
-        return None, None
+        return None, None, None
+
+
+PRICE_W = 10
+
+def price_label(price):
+    """Fixed 10-char right-aligned price, e.g. ' $1,016.59' or '         —'."""
+    if price is None:
+        return f'{"—":>{PRICE_W}}'
+    return f'{f"${price:,.2f}":>{PRICE_W}}'
 
 
 def extension_label(pct):
@@ -151,12 +187,12 @@ def extension_label(pct):
     num = f'{pct:+.0f}%'          # e.g. "+70%" or "+102%"
     num6 = f'{num:>6}'            # right-aligned to 6 chars: "  +70%" or " +102%"
     if pct > 50:
-        sym = '⚠ '                # ⚠ + space = 2 chars
+        sym, color = '⚠︎ ', _R    # ⚠ (VS15 = force narrow text glyph) + space = 2 cols — wary
     elif pct > 25:
-        sym = '↑ '                # ↑ + space = 2 chars
+        sym, color = '↑︎ ', _Y    # ↑ (VS15 = force narrow text glyph) + space = 2 cols — building
     else:
-        sym = '  '                # 2 spaces
-    return f'{sym}{num6}'         # always 2 + 6 = 8 code points
+        sym, color = '  ', _G     # 2 spaces — healthy, room to run
+    return _c(color, f'{sym}{num6}')   # always 8 display columns (ANSI + VS15 are zero-width)
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -172,12 +208,13 @@ if __name__ == '__main__':
     for t in all_tickers:
         g   = grades.get(t, '')
         sig = signals.get(t)
-        sc, reasons = score(t, g, sig, t in f4, t in coil)
+        sc, reasons, bull_div = score(t, g, sig, t in f4, t in coil)
         if sc > 0:
-            scored.append((t, sc, g, reasons))
+            scored.append((t, sc, g, reasons, bull_div))
 
     scored.sort(key=lambda x: -x[1])
     top = scored[:20]
+    max_sc = max((sc for _, sc, *_ in top), default=0)
 
     # Fetch monthly extension for top 20 in parallel
     print('  Fetching monthly MA data for top 20 ...', flush=True)
@@ -186,20 +223,36 @@ if __name__ == '__main__':
         ext_results = list(ex.map(monthly_extension, top_tickers))
     ext_map = dict(zip(top_tickers, ext_results))
 
-    W = 84
-    print(f"\n{'─'*W}")
-    print(f"  TOP SETUPS — quality · alignment · volume convergence")
-    print(f"  Excl: {', '.join(sorted(EXCLUDE))}")
-    print(f"{'─'*W}")
-    print(f"  {'Ticker':<8}  {'Sc':>2}  {'Gr':<3}  {'MA10m (mo)':>10}  {'MA20m (mo)':>10}  Signals")
-    print(f"  {'─'*8}  {'─'*2}  {'─'*3}  {'─'*10}  {'─'*10}  {'─'*38}")
-
-    for t, sc, g, reasons in top:
-        p10m, p20m = ext_map.get(t, (None, None))
-        l10 = extension_label(p10m)   # 8 chars, fixed
-        l20 = extension_label(p20m)   # 8 chars, fixed
+    rows = []
+    for t, sc, g, reasons, bull_div in top:
+        price, p10m, p20m = ext_map.get(t, (None, None, None))
+        price_s = price_label(price)  # 10 visible cols, fixed
+        l10 = extension_label(p10m)   # 8 visible cols, fixed
+        l20 = extension_label(p20m)   # 8 visible cols, fixed
         sig_str = ' · '.join(reasons)
-        print(f"  {t:<8}  {sc:>2}  {g:<3}  {l10}    {l20}  {sig_str}")
 
-    print(f"{'─'*W}")
-    print(f"  ⚠ >50% above monthly MA = wary  ·  ↑ 25–50%  ·  {len(scored)} names scored  ·  not financial advice\n")
+        sc_color = _G if sc == max_sc else _Y if sc >= max_sc - 1 else _DIM
+        sc_s = _c(sc_color, f'{sc:>2}')
+
+        g_color = _G if g == 'A+' else _Y if g == 'A' else ''
+        g_s = _c(g_color, f'{g:<3}') if g_color else f'{g:<3}'
+
+        div_str = _c(_G, '◆ bull') if bull_div else ''
+
+        rows.append((t, price_s, sc_s, g_s, l10, l20, sig_str, div_str))
+
+    SIG_W = max((_vlen(r[6]) for r in rows), default=8)
+
+    W = 94
+    print(f"\n{_DIM}{'─'*W}{_RST}")
+    print(f"  {_DIM}TOP SETUPS — quality · alignment · volume convergence{_RST}")
+    print(f"  {_DIM}Excl: {', '.join(sorted(EXCLUDE))}{_RST}")
+    print(f"{_DIM}{'─'*W}{_RST}")
+    print(f"  {_DIM}{'Ticker':<8}  {'Price':>{PRICE_W}}  {'Sc':>2}  {'Gr':<3}  {'MA10m (mo)':>10}  {'MA20m (mo)':>10}  {'Signals':<{SIG_W}}  Div{_RST}")
+    print(f"  {_DIM}{'─'*8}  {'─'*PRICE_W}  {'─'*2}  {'─'*3}  {'─'*10}  {'─'*10}  {'─'*SIG_W}  {'─'*6}{_RST}")
+
+    for t, price_s, sc_s, g_s, l10, l20, sig_str, div_str in rows:
+        print(f"  {t:<8}  {price_s}  {sc_s}  {g_s}  {l10}    {l20}  {_rpad(sig_str, SIG_W)}  {div_str}")
+
+    print(f"{_DIM}{'─'*W}{_RST}")
+    print(f"  {_DIM}⚠ >50% above monthly MA = wary  ·  ↑ 25–50%  ·  {len(scored)} names scored  ·  not financial advice{_RST}\n")

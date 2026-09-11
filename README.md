@@ -1216,7 +1216,7 @@ The Anthropic API + GitHub Actions API is the natural bridge. The `workflow_disp
 
 ## The System vs The Single Trade
 
-The practitioner's answer when asked "what is the one trade you would do if you had only one trade?": sell a naked put on /ES, 45 DTE, 12 delta, take off at 50% profit. Sound strategy. But one literal trade is just an 88/12 coin flip. The system — mechanically repeating that setup across 100 trades — is what generates the edge.
+Tom Sosnoff's answer, echoed across years of tastytrade/tastylive content, when asked "what is the one trade you would do if you had only one trade?": sell a naked put on /ES, 45 DTE, 12 delta, take off at 50% profit. Sound strategy — mechanical, probability-based, defined risk. But one literal trade is just an 88/12 coin flip. The system — mechanically repeating that setup across 100 trades — is what generates the edge. That mechanical, process-over-prediction philosophy (repeatable structure beats any single forecast) is the throughline this whole framework borrows, well beyond just the one trade above — the 50% take-off rule used everywhere in this README traces straight back to it.
 
 We didn't build a system for that trade. We built one for quality, alignment, structure, and timing. It's more sophisticated than one variable repeated mechanically. It has six orthogonal layers that compound.
 

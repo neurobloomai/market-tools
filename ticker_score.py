@@ -154,6 +154,25 @@ def score_weekly_momentum(ticker):
     except Exception:
         return None
 
+def compute_rvol(ticker, hist=None):
+    """
+    Relative volume — today's volume vs the prior 20 sessions' average.
+    Conviction/participation signal, kept separate from any MA/trend score
+    (a volume spike doesn't mean the same thing as price structure).
+    """
+    try:
+        if hist is None:
+            hist = yf.Ticker(ticker).history(period='3mo', interval='1d')
+        vol = hist['Volume'].dropna()
+        if len(vol) < 21:
+            return None
+        vol_today = float(vol.iloc[-1])
+        vol_avg20 = float(vol.iloc[-21:-1].mean())
+        return round(vol_today / vol_avg20, 2) if vol_avg20 > 0 else None
+    except Exception:
+        return None
+
+
 def score_daily_momentum(ticker):
     try:
         hist = yf.Ticker(ticker).history(period='3mo', interval='1d')
@@ -170,14 +189,28 @@ def score_daily_momentum(ticker):
             ('50d', ma50, price > ma50, round((price/ma50-1)*100, 1)),
         ]
         score = sum(1 for _, _, v, _ in checks if v)
-        return {'checks': checks, 'score': score}
+        rvol  = compute_rvol(ticker, hist)
+        return {'checks': checks, 'score': score, 'rvol': rvol}
     except Exception:
         return None
 
+
+def rvol_label(rvol):
+    if rvol is None:
+        return 'no data'
+    if rvol >= 2.0:
+        return f'{rvol}x avg — heavy spike'
+    if rvol >= 1.5:
+        return f'{rvol}x avg — elevated'
+    if rvol >= 0.7:
+        return f'{rvol}x avg — normal'
+    return f'{rvol}x avg — quiet'
+
 # ── verdict ───────────────────────────────────────────────────────────────────
 
-def verdict(f_score, w_score, m_score, d_score):
-    lines = []
+def verdict(f_score, w_score, m_score, d_score, rvol=None):
+    lines  = []
+    issues = []
 
     if f_score is None:
         lines.append('Fundamentals : API error')
@@ -187,6 +220,7 @@ def verdict(f_score, w_score, m_score, d_score):
         lines.append('Fundamentals : mixed — a few blockers, worth watching')
     else:
         lines.append('Fundamentals : not in coverage universe — too many blockers')
+        issues.append('fundamentals')
 
     if w_score is None:
         lines.append('Weekly tech  : API error')
@@ -196,6 +230,7 @@ def verdict(f_score, w_score, m_score, d_score):
         lines.append('Weekly tech  : mixed — partial MA support')
     else:
         lines.append('Weekly tech  : broken structure — below most MAs')
+        issues.append('weekly tech')
 
     if m_score is None:
         lines.append('Wk momentum  : API error')
@@ -205,6 +240,7 @@ def verdict(f_score, w_score, m_score, d_score):
         lines.append('Wk momentum  : neutral — partial momentum signals')
     else:
         lines.append('Wk momentum  : weak — RSI bearish, MACD not confirming')
+        issues.append('weekly momentum')
 
     if d_score is None:
         lines.append('Daily        : API error')
@@ -214,6 +250,16 @@ def verdict(f_score, w_score, m_score, d_score):
         lines.append('Daily        : above 2 of 3 daily MAs')
     else:
         lines.append('Daily        : below daily MAs — no short-term momentum')
+        issues.append('daily')
+
+    if rvol is not None:
+        lines.append(f'Volume       : {rvol_label(rvol)}')
+
+    lines.append('')
+    if issues:
+        lines.append(f'Nothing clean yet — needs attention: {", ".join(issues)}')
+    else:
+        lines.append('Nothing to fix — clean across the board')
 
     return lines
 
@@ -298,17 +344,20 @@ def run(ticker):
     if dm is None:
         print(f'  API error — could not fetch daily history')
         d_score = None
+        rvol = None
     else:
         d_score = dm['score']
+        rvol = dm.get('rvol')
         for label, ma_val, above, pct in dm['checks']:
             sign = '+' if pct >= 0 else ''
             print(f'  {_tick(above)}  vs {label} MA  ${ma_val:.2f}   {sign}{pct}%')
         print(f'\n  Above : {d_score}/3 daily MAs')
+        print(f'  RVOL  : {rvol_label(rvol)}')
 
-    # verdict
-    print(f'\n  VERDICT')
+    # summary
+    print(f'\n  SUMMARY')
     print(f'  {"─"*W}')
-    for line in verdict(f_score, w_score, m_score, d_score):
+    for line in verdict(f_score, w_score, m_score, d_score, rvol):
         print(f'  {line}')
     print(f'\n  {"═"*W}\n')
 
@@ -465,9 +514,12 @@ def run_full_score(tickers):
         ext_raw   = list(ex.map(get_extension_data,      tickers))
         curv_raw  = list(ex.map(compute_slope_curvature, tickers))
         vs87w_raw = list(ex.map(get_price_vs_87w_schwab, tickers))
+        rvol_raw  = list(ex.map(compute_rvol,            tickers))
 
-    # Inject curvature + smoothness + vs-87w into ext dicts
-    for ext, curv_tuple, pop, vs87w in zip(ext_raw, curv_raw, pop_raw, vs87w_raw):
+    # Inject curvature + smoothness + vs-87w + rvol into ext dicts
+    # (rvol is display-only context here — deliberately not fed into
+    # score_technical/sizing_weight, same as the plain report treats it)
+    for ext, curv_tuple, pop, vs87w, rvol in zip(ext_raw, curv_raw, pop_raw, vs87w_raw, rvol_raw):
         _, curv, ma10w = curv_tuple
         if ext is not None and curv is not None:
             ext['curvature'] = curv
@@ -481,6 +533,8 @@ def run_full_score(tickers):
                     ext['smoothness'] = round((ma10w - ma50d) / ma50d * 100, 3)
         if ext is not None and vs87w is not None:
             ext['vs_87w'] = vs87w
+        if ext is not None and rvol is not None:
+            ext['rvol'] = rvol
 
     regime   = get_regime()
     vix      = regime.get('vix')
@@ -605,6 +659,7 @@ def _print_full_table(ordered, all_data, vix, reg_lbl, reg_mult):
         ('Runway %',       lambda t: f'{all_data[t][8].get("runway"):.0f}%' if all_data[t][8].get("runway") is not None else '—'),
         ('Smoothness',     _smooth_str),
         ('vs 87w MA',      _vs87w_str),
+        ('RVOL',           lambda t: rvol_label(all_data[t][8].get('rvol')) if all_data[t][8].get('rvol') is not None else '—'),
     ]:
         print(f'  {label:<22}' + ''.join(col(fn(t)) for t in ordered))
 
