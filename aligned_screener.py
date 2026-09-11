@@ -1189,6 +1189,135 @@ def auto_promote_from_radar(repo_path):
     print(f"  FUTURE_RADAR promotions: {tickers_str}  ({status})")
 
 
+def find_demotion_candidates(repo_path=None):
+    """
+    Pure scan, no side effects — check every UNIVERSE name for real
+    deterioration. Returns a list of (ticker, fails, live_grade,
+    recorded_grade, comment) candidates. Safe to call repeatedly to inspect
+    results before auto_demote_tickers() actually writes/commits anything.
+
+    Deliberately asymmetric with auto_promote_tickers(): that function can
+    safely promote on passes_quality_filter() alone, because cleanly passing
+    is unambiguous good news. This function CANNOT flag on
+    passes_quality_filter() == False alone — dozens of UNIVERSE names are
+    documented, deliberate structural exceptions (banks failing Debt/EV+FCF,
+    REITs failing ROE, franchise models failing Debt/EV, etc.) that fail the
+    blunt 6-gate check by design and correctly belong in UNIVERSE anyway.
+    Confirmed live 2026-09-11: of 53 UNIVERSE names failing at least one
+    gate, 52 were exactly this — documented exceptions, no action needed.
+
+    The actual signal is DRIFT: the grade recorded in a ticker's own
+    UNIVERSE comment is now worse than its live grade, or the ticker has a
+    confirmed bare auto-promotion stub comment (literally starts with
+    "auto-promoted", never given a real write-up) and is currently failing.
+    A ticker with NO comment match at all is NOT treated as a stub — many
+    UNIVERSE mega-caps (AAPL, MSFT, UNH, JPM, ...) are deliberately bundled
+    on a bare multi-ticker line with zero per-ticker comments by design; no
+    regex match there means "no information," not "confirmed empty write-up."
+    Learned this the hard way 2026-09-11: an earlier version treated every
+    non-match as a stub and wrongly flagged 26 well-known blue chips that
+    were never actually reviewed for this at all.
+    """
+    from screener import UNIVERSE, get_fundamentals, passes_quality_filter, failing_filters, quality_grade
+    import re
+    from pathlib import Path
+    from concurrent.futures import ThreadPoolExecutor
+
+    repo_path = repo_path or '.'
+    screener_path = Path(repo_path) / 'screener.py'
+    src = screener_path.read_text()
+    grade_order = {'A+': 4, 'A': 3, 'B': 2, 'C': 1}
+
+    def check(t):
+        try:
+            d = get_fundamentals(t)
+            if d is None or passes_quality_filter(d):
+                return None
+            return (t, failing_filters(d), quality_grade(d))
+        except Exception:
+            return None
+
+    with ThreadPoolExecutor(max_workers=12) as ex:
+        results = list(ex.map(check, UNIVERSE))
+
+    to_demote = []
+    for r in results:
+        if r is None:
+            continue
+        t, fails, live_grade = r
+        m = re.search(rf"^\s+'{re.escape(t)}',[ \t]+#[ \t]+(.+)$", src, re.MULTILINE)
+        if m is None:
+            continue   # no per-ticker comment at all (e.g. bundled bare-list line) — no info, skip
+        comment = m.group(1).strip()
+        gm = re.search(r'grade ([AB]\+?)', comment)
+        recorded_grade = gm.group(1) if gm else None
+        drifted = bool(recorded_grade) and grade_order.get(recorded_grade, 0) > grade_order.get(live_grade, 0)
+        confirmed_stub = comment.startswith('auto-promoted')
+        if drifted or confirmed_stub:
+            to_demote.append((t, fails, live_grade, recorded_grade, comment))
+
+    return to_demote
+
+
+def auto_demote_tickers(repo_path):
+    """
+    Demote UNIVERSE names showing real deterioration (see
+    find_demotion_candidates() for the exact criteria) to WATCHLIST. Edits
+    screener.py in-place, updates in-memory UNIVERSE/WATCHLIST, and commits.
+    """
+    from screener import UNIVERSE, WATCHLIST
+    import re, subprocess
+    from pathlib import Path
+    from datetime import date
+
+    to_demote = find_demotion_candidates(repo_path)
+    if not to_demote:
+        print(f"  UNIVERSE — no deterioration this run")
+        return
+
+    screener_path = Path(repo_path) / 'screener.py'
+    src = screener_path.read_text()
+    today = date.today().strftime('%Y-%m-%d')
+
+    demoted = []
+    for t, fails, live_grade, recorded_grade, old_comment in to_demote:
+        blocker_str = ', '.join(f"{n} {v}" for n, v, _ in fails)
+        drift_note = (f"was grade {recorded_grade}, now {live_grade}" if recorded_grade
+                       else "no prior write-up on record")
+        carry = f"{old_comment}; " if not old_comment.startswith('auto-promoted') else ''
+
+        # Remove from UNIVERSE (own-line entry — confirmed to exist by find_demotion_candidates)
+        src = re.sub(rf"^\s+'{re.escape(t)}',[ \t]*(#[^\n]*)?\n", '', src, flags=re.MULTILINE)
+
+        # Add to WATCHLIST before its closing ] (same anchor auto_promote_from_radar
+        # uses for its WATCHLIST insertion — the FUTURE_RADAR section header right
+        # after WATCHLIST's closing bracket)
+        pad = ' ' * max(1, 8 - len(t))
+        entry = (f"    '{t}',{pad}# {carry}blocking: {blocker_str}; auto-demoted from UNIVERSE "
+                 f"{today} [grade {live_grade}] — {drift_note}\n")
+        src = re.sub(r'(\])\n(\n# Future radar)', rf'{entry}]\n\2', src, count=1)
+
+        if t in UNIVERSE:
+            UNIVERSE.remove(t)
+        if t not in WATCHLIST:
+            WATCHLIST.append(t)
+
+        demoted.append(t)
+        print(f"  AUTO-DEMOTED → WATCHLIST: {t} (grade {live_grade}) — {drift_note}, blocking: {blocker_str}")
+
+    screener_path.write_text(src)
+
+    tickers_str = ', '.join(demoted)
+    commit_msg = (f"screener: auto-demote {tickers_str} to WATCHLIST\n\n"
+                  f"Real deterioration or unreviewed auto-promotion, not a documented "
+                  f"structural exception — see per-ticker drift note in the entry.\n\n"
+                  f"Co-Authored-By: Claude Sonnet 5 <noreply@anthropic.com>")
+    subprocess.run(['git', 'add', 'screener.py'], cwd=repo_path, capture_output=True)
+    result = subprocess.run(['git', 'commit', '-m', commit_msg], cwd=repo_path, capture_output=True, text=True)
+    status = 'committed' if result.returncode == 0 else f'commit failed: {result.stderr.strip()}'
+    print(f"  UNIVERSE demotions: {tickers_str}  ({status})")
+
+
 def sm_signal(rs, mcmf_trend):
     """Signal tag for Special Mention names.
     ◎ base building = MthCMF turning up
@@ -1202,7 +1331,12 @@ def sm_signal(rs, mcmf_trend):
     return '→'
 
 if __name__ == '__main__':
-    import time as _time
+    import sys, time as _time
+    # Console verbosity: default is summary-only (counts + headers); the full
+    # per-name breakdown of every section is still always written to
+    # aligned_screener.html regardless of this flag — --verbose only affects
+    # what prints to the terminal.
+    verbose = '--verbose' in sys.argv
     # Fetch SPY reference once for RS calculation — retry on rate limit
     spy_hist = None
     for _att in range(5):
@@ -1300,22 +1434,25 @@ if __name__ == '__main__':
     print(f"  {'─'*60}")
 
     if aplus:
-        print(f"\n  A+ — structure + quality")
-        for t, p, g in sorted(aplus):
-            src = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
-            print(f"  [{src}]  {t:8}  A+  ${p:>8.2f}   {fmt_rs_hi(t)}")
+        print(f"\n  A+ — structure + quality: {len(aplus)} names" + ('' if verbose else '  (see aligned_screener.html)'))
+        if verbose:
+            for t, p, g in sorted(aplus):
+                src = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+                print(f"  [{src}]  {t:8}  A+  ${p:>8.2f}   {fmt_rs_hi(t)}")
 
     if a:
-        print(f"\n  A  — structure + quality")
-        for t, p, g in sorted(a):
-            src = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
-            print(f"  [{src}]  {t:8}  A   ${p:>8.2f}   {fmt_rs_hi(t)}")
+        print(f"\n  A  — structure + quality: {len(a)} names" + ('' if verbose else '  (see aligned_screener.html)'))
+        if verbose:
+            for t, p, g in sorted(a):
+                src = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+                print(f"  [{src}]  {t:8}  A   ${p:>8.2f}   {fmt_rs_hi(t)}")
 
     if watch:
-        print(f"\n  Watchlist / not yet qualifying")
-        for t, p, g in sorted(watch):
-            src = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
-            print(f"  [{src}]  {t:8}  —   ${p:>8.2f}   {fmt_rs_hi(t)}")
+        print(f"\n  Watchlist / not yet qualifying: {len(watch)} names" + ('' if verbose else '  (see aligned_screener.html)'))
+        if verbose:
+            for t, p, g in sorted(watch):
+                src = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+                print(f"  [{src}]  {t:8}  —   ${p:>8.2f}   {fmt_rs_hi(t)}")
 
     # ── Short Squeeze Watch CLI ──────────────────────────────────────────────
     squeeze_watch = []
@@ -1329,27 +1466,29 @@ if __name__ == '__main__':
     squeeze_watch.sort(key=lambda x: -(x[4] or 0))
 
     if squeeze_watch:
-        print(f"\n  SHORT SQUEEZE WATCH — {len(squeeze_watch)} names (DTC ≥ 3 · CMF > 0 · 4/4 aligned)")
-        print(f"  {'─'*72}")
-        print(f"  {'Ticker':<8} {'Grd':<4} {'Price':>8}  {'Short%':>7}  {'DTC':>5}  {'CMF':>6}  {'RS':>6}  {'offHi':>6}")
-        print(f"  {'─'*8} {'─'*4} {'─'*8}  {'─'*7}  {'─'*5}  {'─'*6}  {'─'*6}  {'─'*6}")
-        for t, p, g, spct, dtc, cmf_v, rs_v, hi_v in squeeze_watch:
-            src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
-            flag  = '⚡' if (dtc or 0) >= 5 else ' '
-            spct_s = f'{spct:.1f}%' if spct is not None else '  —  '
-            dtc_s  = f'{dtc:.1f}d'  if dtc  is not None else '  —'
-            rs_s   = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
-            hi_s   = f'{hi_v:+.1f}%' if hi_v is not None else '  —'
-            print(f"  {flag}[{src}]  {t:8}  {g:<3}  ${p:>8.2f}  {spct_s:>7}  {dtc_s:>5}  {cmf_v:>+6.2f}  {rs_s:>6}  {hi_s:>6}")
-        print(f"  ⚡ DTC ≥ 5 = high squeeze risk &nbsp; Short% ≥ 10% meaningful &nbsp; CMF > 0 = accumulation confirmed")
+        print(f"\n  SHORT SQUEEZE WATCH — {len(squeeze_watch)} names (DTC ≥ 3 · CMF > 0 · 4/4 aligned)" + ('' if verbose else '  (see aligned_screener.html)'))
+        if verbose:
+            print(f"  {'─'*72}")
+            print(f"  {'Ticker':<8} {'Grd':<4} {'Price':>8}  {'Short%':>7}  {'DTC':>5}  {'CMF':>6}  {'RS':>6}  {'offHi':>6}")
+            print(f"  {'─'*8} {'─'*4} {'─'*8}  {'─'*7}  {'─'*5}  {'─'*6}  {'─'*6}  {'─'*6}")
+            for t, p, g, spct, dtc, cmf_v, rs_v, hi_v in squeeze_watch:
+                src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+                flag  = '⚡' if (dtc or 0) >= 5 else ' '
+                spct_s = f'{spct:.1f}%' if spct is not None else '  —  '
+                dtc_s  = f'{dtc:.1f}d'  if dtc  is not None else '  —'
+                rs_s   = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
+                hi_s   = f'{hi_v:+.1f}%' if hi_v is not None else '  —'
+                print(f"  {flag}[{src}]  {t:8}  {g:<3}  ${p:>8.2f}  {spct_s:>7}  {dtc_s:>5}  {cmf_v:>+6.2f}  {rs_s:>6}  {hi_s:>6}")
+            print(f"  ⚡ DTC ≥ 5 = high squeeze risk &nbsp; Short% ≥ 10% meaningful &nbsp; CMF > 0 = accumulation confirmed")
     else:
         print(f"\n  SHORT SQUEEZE WATCH — 0 names (DTC ≥ 3 + CMF > 0 + 4/4 aligned — none this run)")
 
-    print(f"\n  3/4 NEAR-ALIGNED — {len(partial)} names")
-    print(f"  {'─'*60}")
-    for r in partial:
-        src = 'U' if r['t'] in UNIVERSE else ('W' if r['t'] in WATCHLIST else 'X')
-        print(f"  [{src}]  {r['t']:8}       ${r['p']:>8.2f}   {fmt_rs_hi(r['t'])}")
+    print(f"\n  3/4 NEAR-ALIGNED — {len(partial)} names" + ('' if verbose else '  (see aligned_screener.html)'))
+    if verbose:
+        print(f"  {'─'*60}")
+        for r in partial:
+            src = 'U' if r['t'] in UNIVERSE else ('W' if r['t'] in WATCHLIST else 'X')
+            print(f"  [{src}]  {r['t']:8}       ${r['p']:>8.2f}   {fmt_rs_hi(r['t'])}")
 
     # Promotion candidates — watchlist names now passing quality filters
     price_map = {r['t']: r['p'] for r in valid}
@@ -1374,22 +1513,24 @@ if __name__ == '__main__':
     repo_path = os.path.dirname(os.path.abspath(__file__))
     auto_promote_tickers(promos, repo_path)
     auto_promote_from_radar(repo_path)
+    auto_demote_tickers(repo_path)
 
     print(f"\n  WATCHLIST PROMOTION CANDIDATES — {len(promos)} qualifying")
-    print(f"  {'─'*48}")
-    if promos:
+    if promos and verbose:
+        print(f"  {'─'*48}")
         for t, p, g, ma in promos:
             price_str = f'${p:.2f}' if p else '—'
             print(f"  [U]  {t:8}  {g:<3}  {price_str}  [{ma}/4 MA]  ✓ promoted to UNIVERSE")
-    else:
+    elif not promos:
         print(f"  none — all watchlist names below quality threshold")
 
     if near_miss:
-        print(f"\n  NEAR-MISS (≥ 2/4 MA, quality blockers remaining)")
-        print(f"  {'─'*48}")
-        for t, p, g, ma, blockers in near_miss:
-            price_str = f'${p:.2f}' if p else '—'
-            print(f"  [W]  {t:8}  {g:<3}  {price_str}  [{ma}/4 MA]  blocking: {blockers}")
+        print(f"\n  NEAR-MISS (≥ 2/4 MA, quality blockers remaining): {len(near_miss)} names" + ('' if verbose else '  (see aligned_screener.html)'))
+        if verbose:
+            print(f"  {'─'*48}")
+            for t, p, g, ma, blockers in near_miss:
+                price_str = f'${p:.2f}' if p else '—'
+                print(f"  [W]  {t:8}  {g:<3}  {price_str}  [{ma}/4 MA]  blocking: {blockers}")
 
     # ── Auto-detect Special Mention ──────────────────────────────────────────
     # Quality name (A+/A) + structure broken (≤1/4) + far from highs (<-30%)
@@ -1446,45 +1587,47 @@ if __name__ == '__main__':
 
     # ── Special Mention ──────────────────────────────────────────────────────
     sm_data = [(t, note) for t, note in combined_sm_display.items()]
-    print(f"\n  SPECIAL MENTION — Teasing / Puzzling Setups")
-    print(f"  {'─'*60}")
-    print(f"  Structure building or price dislocated — not yet actionable, worth watching closely.\n")
-    for t, note in sm_data:
-        r = next((x for x in valid if x['t'] == t), None)
-        if r:
+    print(f"\n  SPECIAL MENTION — Teasing / Puzzling Setups: {len(sm_data)} names" + ('' if verbose else '  (see aligned_screener.html)'))
+    if verbose:
+        print(f"  {'─'*60}")
+        print(f"  Structure building or price dislocated — not yet actionable, worth watching closely.\n")
+        for t, note in sm_data:
+            r = next((x for x in valid if x['t'] == t), None)
+            if r:
+                rs_val  = rs_map.get(t)
+                hi_val  = hi_map.get(t)
+                cmf_val = cmf_map.get(t, 0.0)
+                mcmf    = m_cmf_map.get(t, (None, None, '→'))
+                rs_s    = f'RS {rs_val:.2f}x' if rs_val is not None else 'RS  —  '
+                hi_s    = f'{hi_val:+.1f}% hi' if hi_val is not None else '—'
+                mcmf_s  = f'MthCMF {mcmf[0]:+.2f}{mcmf[2]}' if mcmf[0] is not None else 'MthCMF —'
+                sig     = sm_signal(rs_val, mcmf[2])
+                ad_s    = r.get('ad_arrow', '→')
+                obv_s   = r.get('obv_arrow', '→')
+                div_s   = ' ◆bull' if r.get('ad_div') == 'bull' else (' ◇bear' if r.get('ad_div') == 'bear' else '')
+                print(f"  {sig}  {t:8}  {r['s']}/4  ${r['p']:>8.2f}   {rs_s}   {hi_s}   CMF {cmf_val:+.2f}   {mcmf_s}   AD:{ad_s} OBV:{obv_s}{div_s}")
+                print(f"           → {note}\n")
+        print(f"  ◎ base building (MthCMF ↑)   ⚠ distributing (MthCMF ↓ + RS < 1.0)   → mixed signals")
+
+    # ── Pullback Watch CLI ───────────────────────────────────────────────────
+    print(f"\n  PULLBACK WATCH — {len(pullback_watch)} A+/A names at 2/4" + ('' if verbose else '  (see aligned_screener.html)'))
+    if verbose:
+        print(f"  {'─'*60}")
+        print(f"  Long-term structure intact (10m/20m holding) · short-term broken · watch 20w reclaim → 3/4\n")
+        for r, g in pullback_watch:
+            t       = r['t']
+            src     = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
             rs_val  = rs_map.get(t)
-            hi_val  = hi_map.get(t)
+            hi_val  = hi_map.get(t, 0.0)
             cmf_val = cmf_map.get(t, 0.0)
-            mcmf    = m_cmf_map.get(t, (None, None, '→'))
-            rs_s    = f'RS {rs_val:.2f}x' if rs_val is not None else 'RS  —  '
-            hi_s    = f'{hi_val:+.1f}% hi' if hi_val is not None else '—'
-            mcmf_s  = f'MthCMF {mcmf[0]:+.2f}{mcmf[2]}' if mcmf[0] is not None else 'MthCMF —'
-            sig     = sm_signal(rs_val, mcmf[2])
             ad_s    = r.get('ad_arrow', '→')
             obv_s   = r.get('obv_arrow', '→')
             div_s   = ' ◆bull' if r.get('ad_div') == 'bull' else (' ◇bear' if r.get('ad_div') == 'bear' else '')
-            print(f"  {sig}  {t:8}  {r['s']}/4  ${r['p']:>8.2f}   {rs_s}   {hi_s}   CMF {cmf_val:+.2f}   {mcmf_s}   AD:{ad_s} OBV:{obv_s}{div_s}")
-            print(f"           → {note}\n")
-    print(f"  ◎ base building (MthCMF ↑)   ⚠ distributing (MthCMF ↓ + RS < 1.0)   → mixed signals")
-
-    # ── Pullback Watch CLI ───────────────────────────────────────────────────
-    print(f"\n  PULLBACK WATCH — {len(pullback_watch)} A+/A names at 2/4")
-    print(f"  {'─'*60}")
-    print(f"  Long-term structure intact (10m/20m holding) · short-term broken · watch 20w reclaim → 3/4\n")
-    for r, g in pullback_watch:
-        t       = r['t']
-        src     = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
-        rs_val  = rs_map.get(t)
-        hi_val  = hi_map.get(t, 0.0)
-        cmf_val = cmf_map.get(t, 0.0)
-        ad_s    = r.get('ad_arrow', '→')
-        obv_s   = r.get('obv_arrow', '→')
-        div_s   = ' ◆bull' if r.get('ad_div') == 'bull' else (' ◇bear' if r.get('ad_div') == 'bear' else '')
-        rs_s    = f'RS {rs_val:.2f}x' if rs_val is not None else 'RS  —  '
-        hi_s    = f'{hi_val:+.1f}% hi' if hi_val is not None else '—'
-        print(f"  [{src}]  {t:8}  {g:<3}  ${r['p']:>8.2f}   {rs_s}   {hi_s}   CMF {cmf_val:+.2f}   AD:{ad_s} OBV:{obv_s}{div_s}   → 20w ${r['ma20w']:,.2f}")
-    if not pullback_watch:
-        print(f"  none — no A+/A names at 2/4 within pullback range (-10% to -28%)")
+            rs_s    = f'RS {rs_val:.2f}x' if rs_val is not None else 'RS  —  '
+            hi_s    = f'{hi_val:+.1f}% hi' if hi_val is not None else '—'
+            print(f"  [{src}]  {t:8}  {g:<3}  ${r['p']:>8.2f}   {rs_s}   {hi_s}   CMF {cmf_val:+.2f}   AD:{ad_s} OBV:{obv_s}{div_s}   → 20w ${r['ma20w']:,.2f}")
+        if not pullback_watch:
+            print(f"  none — no A+/A names at 2/4 within pullback range (-10% to -28%)")
 
     # ── Cycle Watch ──────────────────────────────────────────────────────────
     cycle_watch_data = _build_cycle_watch_rows(valid, rs_map, cmf_map, CYCLICALS, combined_sm)
@@ -1492,12 +1635,13 @@ if __name__ == '__main__':
     cycle_watch_tickers = {r['t'] for r, _ in cycle_watch_data}
     combined_sm_display = {t: note for t, note in combined_sm.items() if t not in cycle_watch_tickers}
 
-    print(f"\n  CYCLE WATCH — {len(cycle_watch_data)} cyclical names at ≤2/4 MA")
-    print(f"  {'─'*72}")
-    print(f"  Semis · Energy · Materials · Industrials — MA structure is lagging here; watch cycle thesis\n")
-    print(f"  {'Ticker':<8} {'MA':<4} {'Price':>8}  {'RS':>6}  {'offHi':>6}  {'CMF':>6}")
-    print(f"  {'─'*8} {'─'*4} {'─'*8}  {'─'*6}  {'─'*6}  {'─'*6}")
-    for r, note in cycle_watch_data:
+    print(f"\n  CYCLE WATCH — {len(cycle_watch_data)} cyclical names at ≤2/4 MA" + ('' if verbose else '  (see aligned_screener.html)'))
+    if verbose:
+        print(f"  {'─'*72}")
+        print(f"  Semis · Energy · Materials · Industrials — MA structure is lagging here; watch cycle thesis\n")
+        print(f"  {'Ticker':<8} {'MA':<4} {'Price':>8}  {'RS':>6}  {'offHi':>6}  {'CMF':>6}")
+        print(f"  {'─'*8} {'─'*4} {'─'*8}  {'─'*6}  {'─'*6}  {'─'*6}")
+    for r, note in (cycle_watch_data if verbose else []):
         t     = r['t']
         src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
         rs_v  = rs_map.get(t)
@@ -1512,18 +1656,19 @@ if __name__ == '__main__':
 
     # ── Weekly Swing Areas ───────────────────────────────────────────────────
     swing_rows = _build_swing_rows(valid, rs_map, cmf_map, UNIVERSE, WATCHLIST)
-    print(f"\n  WEEKLY SWING AREAS — {len(swing_rows)} names")
-    print(f"  {'─'*72}")
-    print(f"  Weekly uptrend (10wSMA > 20wSMA) · at 10w/20w SMA support · pulled back -4% to -25%\n")
-    print(f"  {'Ticker':<8} {'MA':<4} {'Price':>8}  {'RS':>6}  {'offHi':>6}  {'CMF':>6}  {'Support':<8}  {'vs10w':>6} {'vs20w':>6}")
-    print(f"  {'─'*8} {'─'*4} {'─'*8}  {'─'*6}  {'─'*6}  {'─'*6}  {'─'*8}  {'─'*6} {'─'*6}")
-    for r, hi, p10, p20, tag in swing_rows:
-        t     = r['t']
-        src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
-        rs_v  = rs_map.get(t)
-        cmf_v = cmf_map.get(t, 0.0)
-        rs_s  = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
-        print(f"  {t:<8} {r['s']}/4  ${r['p']:>7.2f}  {rs_s:>6}  {hi:>+5.1f}%  {cmf_v:>+6.2f}  {tag:<8}  {p10:>+5.1f}% {p20:>+5.1f}%  [{src}]")
+    print(f"\n  WEEKLY SWING AREAS — {len(swing_rows)} names" + ('' if verbose else '  (see aligned_screener.html)'))
+    if verbose:
+        print(f"  {'─'*72}")
+        print(f"  Weekly uptrend (10wSMA > 20wSMA) · at 10w/20w SMA support · pulled back -4% to -25%\n")
+        print(f"  {'Ticker':<8} {'MA':<4} {'Price':>8}  {'RS':>6}  {'offHi':>6}  {'CMF':>6}  {'Support':<8}  {'vs10w':>6} {'vs20w':>6}")
+        print(f"  {'─'*8} {'─'*4} {'─'*8}  {'─'*6}  {'─'*6}  {'─'*6}  {'─'*8}  {'─'*6} {'─'*6}")
+        for r, hi, p10, p20, tag in swing_rows:
+            t     = r['t']
+            src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+            rs_v  = rs_map.get(t)
+            cmf_v = cmf_map.get(t, 0.0)
+            rs_s  = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
+            print(f"  {t:<8} {r['s']}/4  ${r['p']:>7.2f}  {rs_s:>6}  {hi:>+5.1f}%  {cmf_v:>+6.2f}  {tag:<8}  {p10:>+5.1f}% {p20:>+5.1f}%  [{src}]")
     if not swing_rows:
         print(f"  none")
 
@@ -1539,24 +1684,25 @@ if __name__ == '__main__':
 
     ws_map = {r['t']: r['s'] for r in valid}
 
-    print(f"\n  WEEKLY SQUEEZE — 10w/20w/35w/50w MA compression  ({now})")
-    print(f"  {'─'*84}")
-    print(f"  {'Ticker':<8} {'MA':<4} {'Price':>8}  {'Spread':>7}  {'Slp'}  {'CMF':>6}  {'RS':>6}  {'offHi':>6}  {'10w':>8} {'20w':>8} {'35w':>8} {'50w':>8}")
-    print(f"  {'─'*8} {'─'*4} {'─'*8}  {'─'*7}  {'─'*3}  {'─'*6}  {'─'*6}  {'─'*6}  {'─'*8} {'─'*8} {'─'*8} {'─'*8}")
+    print(f"\n  WEEKLY SQUEEZE — 10w/20w/35w/50w MA compression  ({now})" + ('' if verbose else '  (see aligned_screener.html)'))
+    if verbose:
+        print(f"  {'─'*84}")
+        print(f"  {'Ticker':<8} {'MA':<4} {'Price':>8}  {'Spread':>7}  {'Slp'}  {'CMF':>6}  {'RS':>6}  {'offHi':>6}  {'10w':>8} {'20w':>8} {'35w':>8} {'50w':>8}")
+        print(f"  {'─'*8} {'─'*4} {'─'*8}  {'─'*7}  {'─'*3}  {'─'*6}  {'─'*6}  {'─'*6}  {'─'*8} {'─'*8} {'─'*8} {'─'*8}")
 
-    for r in squeezed[:25]:
-        t     = r['t']
-        src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
-        flag  = '●' if abs(r['w_spread']) < 3.0 else ('○' if abs(r['w_spread']) < 5.0 else ' ')
-        slp_s = '▲' if r.get('slope_up') else '▼'
-        cmf_s = f'{r.get("cmf", 0.0):+.2f}'
-        rs_v  = r.get('rs')
-        rs_s  = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
-        hi_s  = f'{r.get("pct_from_high", 0.0):+.1f}%'
-        print(f"  {t:<8} {r['s']}/4  ${r['p']:>7.2f}  {flag}{r['w_spread']:>+6.1f}%  {slp_s}  {cmf_s:>6}  {rs_s:>6}  {hi_s:>6}"
-              f"  ${r['ma10w']:>7.2f} ${r['ma20w']:>7.2f} ${r['ma35w']:>7.2f} ${r['ma50w']:>7.2f}  [{src}]")
+        for r in squeezed[:25]:
+            t     = r['t']
+            src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+            flag  = '●' if abs(r['w_spread']) < 3.0 else ('○' if abs(r['w_spread']) < 5.0 else ' ')
+            slp_s = '▲' if r.get('slope_up') else '▼'
+            cmf_s = f'{r.get("cmf", 0.0):+.2f}'
+            rs_v  = r.get('rs')
+            rs_s  = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
+            hi_s  = f'{r.get("pct_from_high", 0.0):+.1f}%'
+            print(f"  {t:<8} {r['s']}/4  ${r['p']:>7.2f}  {flag}{r['w_spread']:>+6.1f}%  {slp_s}  {cmf_s:>6}  {rs_s:>6}  {hi_s:>6}"
+                  f"  ${r['ma10w']:>7.2f} ${r['ma20w']:>7.2f} ${r['ma35w']:>7.2f} ${r['ma50w']:>7.2f}  [{src}]")
 
-    print(f"\n  ● |<3%| very tight   ○ |3-5%| building   + = bullish MA order (10w>50w)   - = bearish order   Slp = 10w slope   CMF >+0.10 accum  <-0.10 distrib   RS vs SPY 13w   (top 25 shown)")
+        print(f"\n  ● |<3%| very tight   ○ |3-5%| building   + = bullish MA order (10w>50w)   - = bearish order   Slp = 10w slope   CMF >+0.10 accum  <-0.10 distrib   RS vs SPY 13w   (top 25 shown)")
 
     # ── ST Squeeze Scanner ───────────────────────────────────────────────────
     # 10w/20w convergence only — faster, short-term momentum signal.
@@ -1564,69 +1710,73 @@ if __name__ == '__main__':
     # against w_spread/score before treating it as a structural turn.
     st_squeezed = sorted(valid, key=lambda r: abs(r['st_spread']))
 
-    print(f"\n  ST SQUEEZE — 10w/20w SMA convergence  ({now})")
-    print(f"  {'─'*72}")
-    print(f"  {'Ticker':<8} {'MA':<4} {'Price':>8}  {'Gap':>6}  {'Slp'}  {'CMF':>6}  {'RS':>6}  {'offHi':>6}  {'10w':>8} {'20w':>8}  {'FullCoil':>8}")
-    print(f"  {'─'*8} {'─'*4} {'─'*8}  {'─'*6}  {'─'*3}  {'─'*6}  {'─'*6}  {'─'*6}  {'─'*8} {'─'*8}  {'─'*8}")
+    print(f"\n  ST SQUEEZE — 10w/20w SMA convergence  ({now})" + ('' if verbose else '  (see aligned_screener.html)'))
+    if verbose:
+        print(f"  {'─'*72}")
+        print(f"  {'Ticker':<8} {'MA':<4} {'Price':>8}  {'Gap':>6}  {'Slp'}  {'CMF':>6}  {'RS':>6}  {'offHi':>6}  {'10w':>8} {'20w':>8}  {'FullCoil':>8}")
+        print(f"  {'─'*8} {'─'*4} {'─'*8}  {'─'*6}  {'─'*3}  {'─'*6}  {'─'*6}  {'─'*6}  {'─'*8} {'─'*8}  {'─'*8}")
 
-    for r in st_squeezed[:20]:
-        t     = r['t']
-        src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
-        flag  = '●' if abs(r['st_spread']) < 2.0 else ('○' if abs(r['st_spread']) < 4.0 else ' ')
-        slp_s = '▲' if r.get('slope_up') else '▼'
-        cmf_s = f'{r.get("cmf", 0.0):+.2f}'
-        rs_v  = r.get('rs')
-        rs_s  = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
-        hi_s  = f'{r.get("pct_from_high", 0.0):+.1f}%'
-        print(f"  {t:<8} {r['s']}/4  ${r['p']:>7.2f}  {flag}{r['st_spread']:>+5.1f}%"
-              f"  {slp_s}  {cmf_s:>6}  {rs_s:>6}  {hi_s:>6}  ${r['ma10w']:>7.2f} ${r['ma20w']:>7.2f}  {r['w_spread']:>+7.1f}%  [{src}]")
+        for r in st_squeezed[:20]:
+            t     = r['t']
+            src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+            flag  = '●' if abs(r['st_spread']) < 2.0 else ('○' if abs(r['st_spread']) < 4.0 else ' ')
+            slp_s = '▲' if r.get('slope_up') else '▼'
+            cmf_s = f'{r.get("cmf", 0.0):+.2f}'
+            rs_v  = r.get('rs')
+            rs_s  = f'{rs_v:.2f}x' if rs_v is not None else '  —  '
+            hi_s  = f'{r.get("pct_from_high", 0.0):+.1f}%'
+            print(f"  {t:<8} {r['s']}/4  ${r['p']:>7.2f}  {flag}{r['st_spread']:>+5.1f}%"
+                  f"  {slp_s}  {cmf_s:>6}  {rs_s:>6}  {hi_s:>6}  ${r['ma10w']:>7.2f} ${r['ma20w']:>7.2f}  {r['w_spread']:>+7.1f}%  [{src}]")
 
-    print(f"\n  ● |<2%| very tight   ○ |2-4%| building   + = bullish MA order   - = bearish   FullCoil = signed 10w-50w spread   CMF >+0.10 accum  <-0.10 distrib   RS vs SPY 13w")
+        print(f"\n  ● |<2%| very tight   ○ |2-4%| building   + = bullish MA order   - = bearish   FullCoil = signed 10w-50w spread   CMF >+0.10 accum  <-0.10 distrib   RS vs SPY 13w")
 
     # ── Daily Squeeze CLI ────────────────────────────────────────────────────
-    print(f"\n  DAILY SQUEEZE — 10d/20d/35d/50d MA compression  ({now})")
-    print(f"  {'─'*78}")
-    print(f"  {'Ticker':<9} {'WkMA':<5} {'Price':>8}  {'Spread':>7}  {'Slp'}  {'CMF':>6}  {'offHi':>6}  {'10d':>8} {'20d':>8} {'35d':>8} {'50d':>8}")
-    print(f"  {'─'*9} {'─'*5} {'─'*8}  {'─'*7}  {'─'*3}  {'─'*6}  {'─'*6}  {'─'*8} {'─'*8} {'─'*8} {'─'*8}")
-    for r in daily_squeezed[:20]:
-        t     = r['t']
-        src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
-        flag  = '●' if r['d_spread'] < 3.0 else ('○' if r['d_spread'] < 5.0 else ' ')
-        slp_s = '▲' if r.get('slope_up') else '▼'
-        ws    = ws_map.get(t, 0)
-        star  = '★' if t in mtf_set else ' '
-        hi    = hi_map.get(t, 0.0)
-        cmf   = r.get('cmf', 0.0)
-        print(f"  {star}{t:<8} {ws}/4  ${r['p']:>8.2f}  {flag}{r['d_spread']:>+6.1f}%  {slp_s}  {cmf:>+6.2f}  {hi:>+5.1f}%"
-              f"  ${r['ma10d']:>7.2f} ${r['ma20d']:>7.2f} ${r['ma35d']:>7.2f} ${r['ma50d']:>7.2f}  [{src}]")
-    print(f"\n  ● |<3%| very tight   ○ |3-5%| building   + bullish MA order   - bearish   CMF 20-day   ★ = MTF (all 3 TFs tight)   (top 20 shown)")
+    print(f"\n  DAILY SQUEEZE — 10d/20d/35d/50d MA compression  ({now})" + ('' if verbose else '  (see aligned_screener.html)'))
+    if verbose:
+        print(f"  {'─'*78}")
+        print(f"  {'Ticker':<9} {'WkMA':<5} {'Price':>8}  {'Spread':>7}  {'Slp'}  {'CMF':>6}  {'offHi':>6}  {'10d':>8} {'20d':>8} {'35d':>8} {'50d':>8}")
+        print(f"  {'─'*9} {'─'*5} {'─'*8}  {'─'*7}  {'─'*3}  {'─'*6}  {'─'*6}  {'─'*8} {'─'*8} {'─'*8} {'─'*8}")
+        for r in daily_squeezed[:20]:
+            t     = r['t']
+            src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+            flag  = '●' if r['d_spread'] < 3.0 else ('○' if r['d_spread'] < 5.0 else ' ')
+            slp_s = '▲' if r.get('slope_up') else '▼'
+            ws    = ws_map.get(t, 0)
+            star  = '★' if t in mtf_set else ' '
+            hi    = hi_map.get(t, 0.0)
+            cmf   = r.get('cmf', 0.0)
+            print(f"  {star}{t:<8} {ws}/4  ${r['p']:>8.2f}  {flag}{r['d_spread']:>+6.1f}%  {slp_s}  {cmf:>+6.2f}  {hi:>+5.1f}%"
+                  f"  ${r['ma10d']:>7.2f} ${r['ma20d']:>7.2f} ${r['ma35d']:>7.2f} ${r['ma50d']:>7.2f}  [{src}]")
+        print(f"\n  ● |<3%| very tight   ○ |3-5%| building   + bullish MA order   - bearish   CMF 20-day   ★ = MTF (all 3 TFs tight)   (top 20 shown)")
 
     # ── Monthly Squeeze CLI ──────────────────────────────────────────────────
-    print(f"\n  MONTHLY SQUEEZE — 3m/6m/10m/20m MA compression  ({now})")
-    print(f"  {'─'*78}")
-    print(f"  {'Ticker':<9} {'WkMA':<5} {'Price':>8}  {'Spread':>7}  {'Slp'}  {'CMF':>6}  {'offHi':>6}  {'3m':>8} {'6m':>8} {'10m':>8} {'20m':>8}")
-    print(f"  {'─'*9} {'─'*5} {'─'*8}  {'─'*7}  {'─'*3}  {'─'*6}  {'─'*6}  {'─'*8} {'─'*8} {'─'*8} {'─'*8}")
-    for r in monthly_squeezed[:20]:
-        t     = r['t']
-        src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
-        flag  = '●' if r['m_spread'] < 3.0 else ('○' if r['m_spread'] < 5.0 else ' ')
-        slp_s = '▲' if r.get('slope_up') else '▼'
-        ws    = ws_map.get(t, 0)
-        star  = '★' if t in mtf_set else ' '
-        hi    = hi_map.get(t, 0.0)
-        cmf   = r.get('cmf', 0.0)
-        print(f"  {star}{t:<8} {ws}/4  ${r['p']:>8.2f}  {flag}{r['m_spread']:>+6.1f}%  {slp_s}  {cmf:>+6.2f}  {hi:>+5.1f}%"
-              f"  ${r['ma3m']:>7.2f} ${r['ma6m']:>7.2f} ${r['ma10m']:>7.2f} ${r['ma20m']:>7.2f}  [{src}]")
-    print(f"\n  ● |<3%| very tight   ○ |3-5%| building   + bullish MA order   - bearish   CMF 6-month   ★ = MTF (all 3 TFs tight)   (top 20 shown)")
+    print(f"\n  MONTHLY SQUEEZE — 3m/6m/10m/20m MA compression  ({now})" + ('' if verbose else '  (see aligned_screener.html)'))
+    if verbose:
+        print(f"  {'─'*78}")
+        print(f"  {'Ticker':<9} {'WkMA':<5} {'Price':>8}  {'Spread':>7}  {'Slp'}  {'CMF':>6}  {'offHi':>6}  {'3m':>8} {'6m':>8} {'10m':>8} {'20m':>8}")
+        print(f"  {'─'*9} {'─'*5} {'─'*8}  {'─'*7}  {'─'*3}  {'─'*6}  {'─'*6}  {'─'*8} {'─'*8} {'─'*8} {'─'*8}")
+        for r in monthly_squeezed[:20]:
+            t     = r['t']
+            src   = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+            flag  = '●' if r['m_spread'] < 3.0 else ('○' if r['m_spread'] < 5.0 else ' ')
+            slp_s = '▲' if r.get('slope_up') else '▼'
+            ws    = ws_map.get(t, 0)
+            star  = '★' if t in mtf_set else ' '
+            hi    = hi_map.get(t, 0.0)
+            cmf   = r.get('cmf', 0.0)
+            print(f"  {star}{t:<8} {ws}/4  ${r['p']:>8.2f}  {flag}{r['m_spread']:>+6.1f}%  {slp_s}  {cmf:>+6.2f}  {hi:>+5.1f}%"
+                  f"  ${r['ma3m']:>7.2f} ${r['ma6m']:>7.2f} ${r['ma10m']:>7.2f} ${r['ma20m']:>7.2f}  [{src}]")
+        print(f"\n  ● |<3%| very tight   ○ |3-5%| building   + bullish MA order   - bearish   CMF 6-month   ★ = MTF (all 3 TFs tight)   (top 20 shown)")
 
     # ── MTF Summary CLI ──────────────────────────────────────────────────────
     if mtf_set:
-        print(f"\n  ★ MULTI-TIMEFRAME SQUEEZE — {len(mtf_set)} names (Daily + Weekly + Monthly all tight)")
-        print(f"  {'─'*60}")
-        for t in sorted(mtf_set):
-            ws  = ws_map.get(t, 0)
-            src = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
-            print(f"  ★  [{src}]  {t:8}  {ws}/4 weekly MA")
+        print(f"\n  ★ MULTI-TIMEFRAME SQUEEZE — {len(mtf_set)} names (Daily + Weekly + Monthly all tight)" + ('' if verbose else '  (see aligned_screener.html)'))
+        if verbose:
+            print(f"  {'─'*60}")
+            for t in sorted(mtf_set):
+                ws  = ws_map.get(t, 0)
+                src = 'U' if t in UNIVERSE else ('W' if t in WATCHLIST else 'X')
+                print(f"  ★  [{src}]  {t:8}  {ws}/4 weekly MA")
     else:
         print(f"\n  ★ MULTI-TIMEFRAME SQUEEZE — 0 names  (rarest signal — none this week)")
 
