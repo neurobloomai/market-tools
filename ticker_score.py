@@ -7,12 +7,21 @@ Usage:
   python ticker_score.py IRWD
 """
 
+import os
 import sys
 import types
 import warnings
 import numpy as np
 
 warnings.filterwarnings('ignore')
+
+# Optional private-layer enhancement: internal_*.py scorers live in the sibling
+# market-tools-internal repo, not duplicated into this one — see screener.py for
+# the same fallback and the reason (duplication drifted out of sync twice,
+# confirmed 2026-09-12). Falls back gracefully if that repo isn't present.
+_internal_repo = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'market-tools-internal')
+if os.path.isdir(_internal_repo) and _internal_repo not in sys.path:
+    sys.path.append(_internal_repo)
 
 sys.modules.setdefault('_yf_cache', types.ModuleType('_yf_cache'))
 import yfinance as yf

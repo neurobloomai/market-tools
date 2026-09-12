@@ -10,9 +10,19 @@ Disclaimer: For informational purposes only. Not financial advice.
 
 import _yf_cache  # noqa: F401 — install HTTP cache before yfinance fetches
 import yfinance as yf
-import warnings, os, json, webbrowser, requests, logging
+import warnings, os, sys, json, webbrowser, requests, logging
 from datetime import datetime, date
 from concurrent.futures import ThreadPoolExecutor
+
+# Optional private-layer enhancement: internal_*.py scorers (used by --technical
+# below) live in the sibling market-tools-internal repo, not duplicated into this
+# one — duplication drifted out of sync twice before this fix (confirmed 2026-09-12,
+# internal_technical_score.py and internal_spread_scanner.py had both gone stale
+# here while the internal-repo copies kept moving forward). Falls back gracefully
+# if that repo isn't present (a public clone of this repo, or a different machine).
+_internal_repo = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'market-tools-internal')
+if os.path.isdir(_internal_repo) and _internal_repo not in sys.path:
+    sys.path.append(_internal_repo)
 warnings.filterwarnings('ignore')
 logging.getLogger('yfinance').setLevel(logging.CRITICAL)
 
