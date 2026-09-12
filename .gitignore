@@ -43,7 +43,5 @@ schwab_creds.py
 !iv_data.json
 !grade_cache.json
 !earnings_cache.json
-!pullback_watch.json
-!dip_watch.json
 # positions.json intentionally NOT allowlisted — moved to market-tools-internal
 # 2026-09-06 (was exposing real account data in this public repo)
