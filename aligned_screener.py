@@ -72,8 +72,12 @@ CYCLICALS = {
     # (mortgage/HELOC rate sensitivity), NXT is utility-scale (project
     # finance + IRA/ITC policy cycle) — added together 2026-09-12
     'ENPH', 'NXT',
-    # Crypto — trading/transaction volume cycle, not commodity/capex
-    'COIN',
+    # Crypto-ecosystem — not commodity/capex; two different cycle drivers
+    # under one label: COIN is trading/transaction volume (crypto market
+    # activity), CRCL is Fed rate cycle (interest income on USDC's Treasury
+    # reserves — its own comment explicitly says "NOT a trading platform,
+    # contrast with COIN") — added together 2026-09-12
+    'COIN', 'CRCL',
 }
 
 TICKERS = list(dict.fromkeys(UNIVERSE + WATCHLIST + EXTRA + list(SPECIAL_MENTION.keys()) + list(CYCLICALS)))
