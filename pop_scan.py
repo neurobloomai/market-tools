@@ -1152,6 +1152,9 @@ if __name__ == '__main__':
     elif args == ['--dividend']:
         from dividend_plays_for_longterm import UNIVERSE as DIVIDEND_UNIVERSE
         run(list(dict.fromkeys(DIVIDEND_UNIVERSE)), 'Dividend')
+    elif args == ['--cyclicals']:
+        from aligned_screener import CYCLICALS
+        run(list(dict.fromkeys(CYCLICALS)), 'Cyclicals')
     elif '--ext-st' in args:
         rest      = [a.upper() for a in args if a != '--ext-st' and not a.startswith('--')]
         mega_flag = any(a.startswith('--mega') for a in args)
