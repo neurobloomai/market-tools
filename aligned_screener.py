@@ -1048,12 +1048,23 @@ def auto_promote_tickers(promos, repo_path):
     today = date.today().strftime('%Y-%m-%d')
     promoted = []
 
+    skipped_locked = []
     for ticker, price, grade, ma in promos:
         if price < 20:
             continue  # $20 floor — don't promote below-floor names
         # Capture WATCHLIST comment if ticker has its own line
         m = re.search(rf"^\s+'{re.escape(ticker)}',[ \t]+#[ \t]+(.+)$", src, re.MULTILINE)
         watchlist_note = m.group(1).strip() if m else None
+
+        # Manual override gate — same [LOCKED] convention already used in
+        # auto_promote_from_radar() for FUTURE_RADAR, extended here 2026-09-12
+        # after the mechanical pass/fail check promoted NTNX to UNIVERSE hours
+        # after it was deliberately kept in WATCHLIST over a documented ROE
+        # data artifact (see project_universe_watchlist_data_model memory).
+        # The blunt filter has no way to see a documented override — this does.
+        if watchlist_note and '[LOCKED]' in watchlist_note:
+            skipped_locked.append(ticker)
+            continue
 
         # Remove own-line entry (with or without comment)
         src = re.sub(rf"^\s+'{re.escape(ticker)}',[ \t]*(#[^\n]*)?\n", '', src, flags=re.MULTILINE)
@@ -1073,6 +1084,12 @@ def auto_promote_tickers(promos, repo_path):
             WATCHLIST.remove(ticker)
 
         promoted.append(ticker)
+
+    if skipped_locked:
+        print(f"\n  SKIPPED (locked, manual override in place): {', '.join(skipped_locked)}")
+
+    if not promoted:
+        return  # nothing left to write/commit — everything was locked or below the price floor
 
     screener_path.write_text(src)
 
