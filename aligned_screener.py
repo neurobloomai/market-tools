@@ -37,26 +37,40 @@ SPECIAL_MENTION = {
     'ACLS': 'Axcelis Technologies — pure-play ion implantation equipment; SiC (silicon carbide) strategic bet: SiC power devices need ~100x more implant steps than silicon — EV inverters, industrial power; switching costs real (fab qualification 6-18 months, yield risk); cycle-bottom OM 4% masks peak OM of 20%+; FY0 -21% on EV softness + China export restrictions; watch OM > 10% + ROE > 10% as the quality trigger, not MA reclaim',
 }
 
-# Cyclical names — commodity / inventory / capex cycle drivers
+# Cyclical names — commodity / inventory / capex cycle drivers, plus a couple
+# of non-commodity cycle types (solar rate-sensitivity, crypto volume) added
+# 2026-09-12 since they're genuinely cyclical but don't fit any of the
+# original categories.
 # At ≤2/4 MA alignment these go to Cycle Watch, not Special Mention
 # Entry logic: cycle-thesis based, not MA reclaim
+#
+# This set is static/hand-maintained — it does NOT auto-update when new
+# cyclical names are added to UNIVERSE/WATCHLIST/dividend elsewhere. Audited
+# 2026-09-12 (self-described "cyclical"/"cycle" language in a ticker's own
+# comment, cross-checked against membership here) and found 13 names that
+# had drifted out of sync; added below. Re-run that audit periodically
+# rather than assuming this stays current on its own.
 CYCLICALS = {
     # Memory semis — inventory cycle
     'MU', 'WDC', 'STX',
     # Semi equipment — fab capex cycle
-    'AMAT', 'LRCX', 'KLAC', 'PLAB', 'ACLS',
+    'AMAT', 'LRCX', 'KLAC', 'PLAB', 'ACLS', 'KEYS', 'AEIS', 'MKSI',
     # Cyclical semis — end-market cycle
-    'INTC', 'ON', 'NXPI', 'TXN', 'QCOM', 'ADI', 'MCHP',
+    'INTC', 'ON', 'NXPI', 'TXN', 'QCOM', 'ADI', 'MCHP', 'MXL', 'SITM', 'LSCC',
     # Energy — commodity cycle
-    'XOM', 'CVX', 'COP', 'OXY', 'SLB', 'HAL', 'MPC', 'PSX', 'VLO',
+    'XOM', 'CVX', 'COP', 'OXY', 'SLB', 'HAL', 'MPC', 'PSX', 'VLO', 'CHRD', 'REPX', 'DINO',
     # Natural gas E&P — pure commodity price exposure
     'EQT', 'AR', 'RRC',
     # Materials / metals
-    'FCX', 'NUE', 'CLF', 'NEM', 'AEM', 'WPM', 'MOS', 'CF',  # X removed — acquired by Nippon Steel, delisted
+    'FCX', 'NUE', 'CLF', 'NEM', 'AEM', 'WPM', 'MOS', 'CF', 'CENX',  # X removed — acquired by Nippon Steel, delisted; CENX added 2026-09-12 — aluminum had no representative
     # Met coal — steel production input cycle
     'AMR',
     # Industrials — capex / construction cycle
-    'CAT', 'DE', 'CMI', 'EMR',
+    'CAT', 'DE', 'CMI', 'EMR', 'NVT',
+    # Solar — residential demand tied to interest rates, not commodity/capex
+    'ENPH',
+    # Crypto — trading/transaction volume cycle, not commodity/capex
+    'COIN',
 }
 
 TICKERS = list(dict.fromkeys(UNIVERSE + WATCHLIST + EXTRA + list(SPECIAL_MENTION.keys()) + list(CYCLICALS)))
