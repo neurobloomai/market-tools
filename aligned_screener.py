@@ -67,8 +67,11 @@ CYCLICALS = {
     'AMR',
     # Industrials — capex / construction cycle
     'CAT', 'DE', 'CMI', 'EMR', 'NVT',
-    # Solar — residential demand tied to interest rates, not commodity/capex
-    'ENPH',
+    # Solar — policy/rate-sensitive demand cycle, not commodity/capex; two
+    # different demand drivers under one label: ENPH is residential
+    # (mortgage/HELOC rate sensitivity), NXT is utility-scale (project
+    # finance + IRA/ITC policy cycle) — added together 2026-09-12
+    'ENPH', 'NXT',
     # Crypto — trading/transaction volume cycle, not commodity/capex
     'COIN',
 }
