@@ -142,10 +142,17 @@ def get_extension_data(ticker, force_yf=False):
         ma10w_4wk   = float(close.rolling(10).mean().iloc[-5])
         slope       = (ma10w / ma10w_4wk - 1) * 100
 
-        # Weekly RSI-14
+        # Weekly RSI-14 — Wilder's smoothing (exponential, alpha=1/14), the
+        # standard RSI formula every charting platform uses (TradingView,
+        # ThinkOrSwim, StockCharts). A plain rolling mean here (the previous
+        # implementation) is "Cutler's RSI", a different, lesser-known
+        # variant — confirmed 2026-09-16 to disagree with the standard by
+        # anywhere from -10 to +10 points depending on the specific recent
+        # price pattern (not just a fixed offset), which had been silently
+        # feeding wrong zone classifications and RSI-band reads all session.
         delta = close.diff()
-        gain  = delta.clip(lower=0).rolling(14).mean()
-        loss  = (-delta.clip(upper=0)).rolling(14).mean()
+        gain  = delta.clip(lower=0).ewm(alpha=1/14, adjust=False).mean()
+        loss  = (-delta.clip(upper=0)).ewm(alpha=1/14, adjust=False).mean()
         rsi   = float((100 - 100 / (1 + gain / loss)).iloc[-1])
 
         # Weekly CMF-20 (Chaikin Money Flow)

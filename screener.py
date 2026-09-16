@@ -177,10 +177,10 @@ def get_ma_detail(ticker):
             prev_ma10 = closes.iloc[-11:-1].mean()
             slope = (ma10 - prev_ma10) / prev_ma10 * 100
 
-        delta = closes.diff().dropna()
-        gain  = delta.clip(lower=0).tail(14).mean()
-        loss  = (-delta.clip(upper=0)).tail(14).mean()
-        rsi   = 100 - 100 / (1 + (gain / loss if loss else 999))
+        # Fixed 2026-09-16 — was a plain 14-bar mean ("Cutler's RSI"), a real,
+        # material, bidirectional discrepancy vs calc_rsi()'s correct Wilder
+        # smoothing already used elsewhere in this file (get_tech_signal).
+        rsi = float(calc_rsi(closes, 14).dropna().iloc[-1])
 
         mas   = [m for m in [ma10, ma20, ma43, ma87] if m is not None]
         align = sum(1 for m in mas if p > m)
@@ -221,10 +221,8 @@ def get_signal_detail(ticker):
             prev_ma10 = closes.iloc[-11:-1].mean()
             slope = (ma10 - prev_ma10) / prev_ma10 * 100
 
-        d14   = closes.diff().dropna()
-        gain  = d14.clip(lower=0).tail(14).mean()
-        loss  = (-d14.clip(upper=0)).tail(14).mean()
-        rsi_v = 100 - 100 / (1 + (gain / loss if loss else 999))
+        # Fixed 2026-09-16 — same issue and fix as get_ma_detail() above.
+        rsi_v = float(calc_rsi(closes, 14).dropna().iloc[-1])
 
         mas   = [m for m in [ma10, ma20, ma43, ma87] if m is not None]
         align = sum(1 for m in mas if p > m)

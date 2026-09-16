@@ -150,10 +150,14 @@ def get_daily_ma_pos(ticker, force_yf=False):
         ma50  = close.iloc[-50:].mean()
         count = sum([price > ma10, price > ma20, price > ma50])
         near  = sum([price >= ma10*0.95, price >= ma20*0.95, price >= ma50*0.95])
-        # Daily RSI-14 — same formula used for weekly RSI elsewhere in this codebase
+        # Daily RSI-14 — Wilder's smoothing (exponential, alpha=1/14), the
+        # standard RSI formula every charting platform uses. Fixed 2026-09-16
+        # — see extension_scan.py for the full note on why the previous
+        # plain-rolling-mean version ("Cutler's RSI") was a real, material,
+        # bidirectional discrepancy, not just a fixed offset.
         delta = close.diff()
-        gain  = delta.clip(lower=0).rolling(14).mean()
-        loss  = (-delta.clip(upper=0)).rolling(14).mean()
+        gain  = delta.clip(lower=0).ewm(alpha=1/14, adjust=False).mean()
+        loss  = (-delta.clip(upper=0)).ewm(alpha=1/14, adjust=False).mean()
         rsi   = float((100 - 100 / (1 + gain / loss)).iloc[-1]) if len(close) >= 15 else float('nan')
         # weekly slope: % change in 10wk MA over last 5 weekly bars
         wk_close = hist_w['Close'].dropna() if hist_w is not None and len(hist_w) >= 15 else None
