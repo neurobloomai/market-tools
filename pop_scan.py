@@ -165,36 +165,21 @@ def get_daily_ma_pos(ticker, force_yf=False):
             ma10w_series = wk_close.rolling(10).mean().dropna()
             wk_slope = round((ma10w_series.iloc[-1] / ma10w_series.iloc[-6] - 1) * 100, 1) if len(ma10w_series) >= 6 else float('nan')
             wk_cmf = _weekly_cmf(hist_w)
-            ma10w  = float(ma10w_series.iloc[-1])
         else:
             wk_slope = float('nan')
             wk_cmf   = float('nan')
-            ma10w    = float('nan')
-        # Smoothness signal: 10w weekly MA (10 Friday closes) vs 50d daily MA
-        # (50 daily closes, same ~50-day window, but captures intraweek noise).
-        # 10w > 50d = Friday closes holding stronger than the intraweek average
-        # → smooth, sustained buying (HiQualTrend). 10w < 50d = intraweek
-        # strength not holding into week-end → choppy/distribution (LowQualTrend).
-        if ma10w == ma10w and ma50 == ma50 and ma50 != 0:  # NaN-safe
-            smoothness = round((ma10w / ma50 - 1) * 100, 2)
-            qual_trend = 'HiQualTrend' if smoothness >= 0 else 'LowQualTrend'
-        else:
-            smoothness = float('nan')
-            qual_trend = None
         return {
-            'ticker':     ticker,
-            'price':      round(price, 2),
-            'pct10':      round((price / ma10 - 1) * 100, 1),
-            'pct20':      round((price / ma20 - 1) * 100, 1),
-            'pct50':      round((price / ma50 - 1) * 100, 1),
-            'above':      count,
-            'all3':       count == 3,
-            'near':       near,
-            'rsi':        round(rsi, 1) if rsi == rsi else float('nan'),  # NaN-safe (rsi != rsi when NaN)
-            'wk_cmf':     wk_cmf,
-            'wk_slope':   wk_slope,
-            'smoothness': smoothness,
-            'qual_trend': qual_trend,
+            'ticker':   ticker,
+            'price':    round(price, 2),
+            'pct10':    round((price / ma10 - 1) * 100, 1),
+            'pct20':    round((price / ma20 - 1) * 100, 1),
+            'pct50':    round((price / ma50 - 1) * 100, 1),
+            'above':    count,
+            'all3':     count == 3,
+            'near':     near,
+            'rsi':      round(rsi, 1) if rsi == rsi else float('nan'),  # NaN-safe (rsi != rsi when NaN)
+            'wk_cmf':   wk_cmf,
+            'wk_slope': wk_slope,
         }
     except Exception:
         return None
@@ -275,15 +260,6 @@ def _slope_cell(slope):
     color = '#3fb950' if slope > 0 else '#f85149'
     sign  = '+' if slope > 0 else ''
     return f'<td style="color:{color};font-size:11px">{sign}{slope}%</td>'
-
-def _qual_cell(qual_trend, smoothness):
-    """10w weekly MA vs 50d daily MA — smooth (Friday closes holding up) vs
-    choppy (intraweek strength not holding). See project_smoothness_signal."""
-    import math
-    if qual_trend is None or (isinstance(smoothness, float) and math.isnan(smoothness)):
-        return '<td style="color:#484f58">—</td>'
-    color = '#3fb950' if qual_trend == 'HiQualTrend' else '#f85149'
-    return f'<td style="color:{color};font-size:11px" title="smoothness {smoothness:+.2f}%">{qual_trend}</td>'
 
 def _algo_tier(r):
     import math
@@ -856,7 +832,6 @@ def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly, re
               {_pct_cell(r['pct50'])}
               {_cmf_cell(r.get('wk_cmf'))}
               {_slope_cell(r.get('wk_slope'))}
-              {_qual_cell(r.get('qual_trend'), r.get('smoothness'))}
             </tr>"""
         return out
 
@@ -870,7 +845,7 @@ def build_html(all3, two, tight, misses, no_data, now, label, grades, hourly, re
     thead = """<thead>
     <tr>
       <th>Ticker</th><th>MAs</th><th>Price</th>
-      <th>vs 10dMA</th><th>vs 20dMA</th><th>vs 50dMA</th><th>Wk CMF</th><th>Wk Slope</th><th title="10w weekly MA vs 50d daily MA — smooth vs choppy trend">QualTrend</th>
+      <th>vs 10dMA</th><th>vs 20dMA</th><th>vs 50dMA</th><th>Wk CMF</th><th>Wk Slope</th>
     </tr>
   </thead>"""
 
@@ -980,13 +955,6 @@ def _cli_slope(slope):
     s = f'{slope:+.1f}%'
     return _c(_G, s) if slope > 0 else _c(_R, s)
 
-def _cli_qual(qual_trend, smoothness):
-    """10w weekly MA vs 50d daily MA smoothness signal — see _qual_cell."""
-    import math
-    if qual_trend is None or (isinstance(smoothness, float) and math.isnan(smoothness)):
-        return f'{_DIM}     —      {_RST}'
-    return _c(_G, f'{qual_trend:<12}') if qual_trend == 'HiQualTrend' else _c(_R, f'{qual_trend:<12}')
-
 def _cli_rsi(rsi):
     """Daily RSI-14. Tiers match the same RSI read used in _top10_score:
     45-65 sweet spot (momentum without exhaustion), 35-45/65-75 mild caution,
@@ -1028,12 +996,12 @@ def print_cli_table(all3, two, tight, misses, no_data, label, grades, hourly, sh
     print()
 
     # column widths (fixed, no ANSI in header)
-    COL = {'tick': 14, 'zone': 10, 'price': 9, 'pct': 8, 'rsi': 5, 'cmf': 9, 'slope': 9, 'qual': 12}
+    COL = {'tick': 14, 'zone': 10, 'price': 9, 'pct': 8, 'rsi': 5, 'cmf': 9, 'slope': 9}
     hdr = (
         f"  {'TICKER':<{COL['tick']}} {'ZONE':<{COL['zone']}} {'PRICE':>{COL['price']}}"
         f"  {'vs10d':>{COL['pct']}}  {'vs20d':>{COL['pct']}}  {'vs50d':>{COL['pct']}}"
         f"  {'RSI':>{COL['rsi']}}"
-        f"  {'WkCMF':>{COL['cmf']}}  {'WkSlope':>{COL['slope']}}  {'QualTrend':<{COL['qual']}}"
+        f"  {'WkCMF':>{COL['cmf']}}  {'WkSlope':>{COL['slope']}}"
     )
     sep = '  ' + '─' * (len(hdr) - 2)
     print(f'{_DIM}{hdr}{_RST}')
@@ -1066,7 +1034,6 @@ def print_cli_table(all3, two, tight, misses, no_data, label, grades, hourly, sh
             f'  {_lpad(_cli_rsi(r.get("rsi")),      COL["rsi"])}'
             f'  {_lpad(_cli_cmf(r.get("wk_cmf")),  COL["cmf"])}'
             f'  {_lpad(_cli_slope(r.get("wk_slope")), COL["slope"])}'
-            f'  {_cli_qual(r.get("qual_trend"), r.get("smoothness"))}'
         )
 
     groups = [
