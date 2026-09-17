@@ -1400,7 +1400,7 @@ if __name__ == '__main__':
             from pop_scan import get_daily_ma_pos
             from extension_scan import get_extension_data
             from internal_technical_score import (score_technical, tech_score_band,
-                                                   compute_slope_curvature)
+                                                   compute_slope_curvature, compute_smoothness)
         except ImportError as _e:
             print(f'\n  --technical requires internal_technical_score: {_e}\n')
             sys.exit(1)
@@ -1416,12 +1416,8 @@ if __name__ == '__main__':
             _, _curv, _ma10w = _ct
             if _ext is not None and _curv is not None:
                 _ext['curvature'] = _curv
-            if _ext is not None and _ma10w is not None and _pop is not None:
-                _pr = _pop.get('price'); _p50 = _pop.get('pct50')
-                if _pr and _p50 is not None:
-                    _den = 1 + _p50 / 100
-                    if _den > 0:
-                        _ext['smoothness'] = round((_ma10w - _pr / _den) / (_pr / _den) * 100, 3)
+            if _ext is not None:
+                _ext['smoothness'] = compute_smoothness(_pop, _ma10w)
             _sc, _bd = score_technical(_pop, _ext)
             if _sc is not None:
                 _price = (_pop or {}).get('price') or (_ext or {}).get('price')
@@ -1463,7 +1459,7 @@ if __name__ == '__main__':
             from pop_scan import get_daily_ma_pos
             from extension_scan import get_extension_data
             from internal_technical_score import (score_technical, tech_score_band,
-                                                   compute_slope_curvature)
+                                                   compute_slope_curvature, compute_smoothness)
         except ImportError as _e:
             print(f'\n  --technical-mega requires internal_technical_score: {_e}\n')
             sys.exit(1)
@@ -1482,12 +1478,8 @@ if __name__ == '__main__':
             _, _curv, _ma10w = _ct
             if _ext is not None and _curv is not None:
                 _ext['curvature'] = _curv
-            if _ext is not None and _ma10w is not None and _pop is not None:
-                _pr = _pop.get('price'); _p50 = _pop.get('pct50')
-                if _pr and _p50 is not None:
-                    _den = 1 + _p50 / 100
-                    if _den > 0:
-                        _ext['smoothness'] = round((_ma10w - _pr / _den) / (_pr / _den) * 100, 3)
+            if _ext is not None:
+                _ext['smoothness'] = compute_smoothness(_pop, _ma10w)
             _sc, _bd = score_technical(_pop, _ext)
             if _sc is not None:
                 _price = (_pop or {}).get('price') or (_ext or {}).get('price')

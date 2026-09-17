@@ -505,7 +505,8 @@ def run_full_score(tickers):
         from internal_technical_score import (score_technical, tech_score_band,
                                                sizing_weight, regime_multiplier,
                                                event_multiplier, compute_slope_curvature,
-                                               get_price_vs_87w_schwab)
+                                               get_price_vs_87w_schwab, compute_smoothness,
+                                               label_smoothness)
         from pop_scan import get_daily_ma_pos
         from extension_scan import get_extension_data
         from regime import get_regime
@@ -532,14 +533,8 @@ def run_full_score(tickers):
         _, curv, ma10w = curv_tuple
         if ext is not None and curv is not None:
             ext['curvature'] = curv
-        if ext is not None and ma10w is not None and pop is not None:
-            price = pop.get('price')
-            pct50 = pop.get('pct50')
-            if price and pct50 is not None:
-                denom = 1 + pct50 / 100
-                if denom > 0:
-                    ma50d = price / denom
-                    ext['smoothness'] = round((ma10w - ma50d) / ma50d * 100, 3)
+        if ext is not None:
+            ext['smoothness'] = compute_smoothness(pop, ma10w)
         if ext is not None and vs87w is not None:
             ext['vs_87w'] = vs87w
         if ext is not None and rvol is not None:
@@ -648,10 +643,7 @@ def _print_full_table(ordered, all_data, vix, reg_lbl, reg_mult):
         return f'{c:+.3f} {tag}'
 
     def _smooth_str(t):
-        s = all_data[t][8].get('smoothness')
-        if s is None: return '—'
-        tag = 'smooth' if s > 0.5 else ('choppy' if s < -0.5 else 'neutral')
-        return f'{s:+.2f}% {tag}'
+        return label_smoothness(all_data[t][8].get('smoothness'))
 
     def _vs87w_str(t):
         v = all_data[t][8].get('vs_87w')
