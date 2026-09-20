@@ -130,8 +130,18 @@ def get_price_history(ticker, period='3m', bar='daily'):
     data    = r.json()
     candles = data.get('candles', [])
     if not candles:
-        err = data.get('error') or data.get('message') or r.status_code
-        print(f"  [Schwab] {ticker}: no candles — {err}", file=sys.stderr)
+        if 'error' in data or 'message' in data:
+            reason = data.get('error') or data.get('message')
+        elif data.get('empty'):
+            # Schwab returned HTTP 200 with an explicit empty candle list —
+            # not a real error, just no data for this request right now.
+            # Confirmed 2026-09-19 intermittent on the weekly-bar endpoint
+            # specifically (same ticker/params failed then succeeded on
+            # retry seconds later) — transient on Schwab's side, retry it.
+            reason = 'empty response from Schwab (transient — retry)'
+        else:
+            reason = f'HTTP {r.status_code}, no candles and no error field'
+        print(f"  [Schwab] {ticker}: no candles — {reason}", file=sys.stderr)
     return candles
 
 
