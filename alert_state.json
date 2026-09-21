@@ -1,22 +1,24 @@
 {
   "setups": {
+    "NVDA": "IN",
+    "META": "IN",
     "MSFT": "IN",
-    "AAPL": "IN"
+    "AAPL": "IN",
+    "AMZN": "IN"
   },
   "watchlist": {
     "MELI": 1,
+    "ENTG": 1,
     "DT": 1,
     "MKC": 1,
     "DPZ": 1,
     "ON": 1,
-    "GWRE": 1,
     "WING": 1,
     "MNDY": 1,
     "DELL": 1,
     "CHTR": 1,
     "ALC": 1,
     "BIO": 1,
-    "RVTY": 1,
     "TMDX": 1,
     "STNE": 1,
     "CPAY": 1,
@@ -53,8 +55,18 @@
     "AROC": 1,
     "TXRH": 1,
     "VNT": 1,
-    "GRBK": 1,
-    "PHM": 1,
-    "BROS": 1
+    "BROS": 1,
+    "AMGN": 1,
+    "TMUS": 1,
+    "HON": 1,
+    "DE": 1,
+    "SBUX": 1,
+    "FIVE": 1,
+    "ARM": 1,
+    "TTMI": 1,
+    "DDS": 1,
+    "NTNX": 1,
+    "INVA": 1,
+    "ZM": 1
   }
 }
