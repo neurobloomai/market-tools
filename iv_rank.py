@@ -126,6 +126,13 @@ def main():
     # Sort by IV rank descending (highest = most interesting for selling)
     results.sort(key=lambda x: x['rank'], reverse=True)
 
+    # SPY/QQQ are a regime read (market-wide IV), not a single-name spread
+    # candidate — sectioned off from the individual tickers below rather
+    # than interleaved into the same rank-sorted table, same split
+    # internal_cmf_trend_scanner.py already applies to its own index rows.
+    stock_results = [r for r in results if r['tier'] != 1]
+    index_results = [r for r in results if r['tier'] == 1]
+
     latest_date = max(r['date'] for r in results)
     depth       = max(r['days'] for r in results)
 
@@ -161,10 +168,8 @@ def main():
            f'  {"20d":{C["t20"]}}'
            f'  {"Range (lo–hi)":>{C["range"]}}'
            f'  Signal')
-    print(hdr)
-    print(DIVIDER)
 
-    for r in results:
+    def print_row(r):
         building = r['days'] < 5
 
         iv_str    = f'{r["iv"]:>6.1f}%'
@@ -194,7 +199,20 @@ def main():
               f'  {range_str:>{C["range"]}}'
               f'  {marker} {sig}')
 
+    print(hdr)
     print(DIVIDER)
+    for r in stock_results:
+        print_row(r)
+    print(DIVIDER)
+
+    if index_results:
+        print()
+        print(f'  INDEX PROXIES  (SPY/QQQ — market-wide IV regime read, not a single-name spread candidate)')
+        print(hdr)
+        print(DIVIDER)
+        for r in index_results:
+            print_row(r)
+        print(DIVIDER)
     print(f'  Rank  : 0 = 52w IV low · 100 = 52w IV high · ≥70 sell zone · <25 buy options')
     print(f'  IV/HV : >1.0 options expensive vs realized moves (variance risk premium = sell signal)')
     print(f'  Trend : ↑ rising · ↓ falling · → flat  (over last 5 and 20 daily snapshots)')
