@@ -1053,6 +1053,13 @@ These tools do not recommend. They do not provide tailored advice. They are one 
 | **MCO** | Moody's — ratings duopoly (~80% global share with S&P) | Every bond issued globally needs a rating; Buffett-proven, near-impossible to displace |
 | **SPGI** | S&P Global — S&P 500 licensing + ratings + data | Every SPY/VOO/IVV pays SPGI; combines index royalty + ratings oligopoly |
 | **ICE** | Intercontinental Exchange — NYSE + futures + mortgage tech | Toll on NYSE trades + futures contracts + mortgage origination platform |
+| **CME** | CME Group — owns CME + CBOT + NYMEX + COMEX | Toll on every futures contract globally — rates, equity index, commodities, crypto; electronic trading scales at near-zero marginal cost |
+
+**Credit Scoring Infrastructure:**
+
+| Name | What it is | Why SIP |
+|---|---|---|
+| **FICO** | Fair Isaac — owns the FICO credit score standard | Fannie Mae + Freddie Mac mandate FICO on every US mortgage; sold billions of times at near-zero marginal cost; regulatory entrenchment |
 
 **Payment Networks:**
 
@@ -1072,14 +1079,40 @@ These tools do not recommend. They do not provide tailored advice. They are one 
 | Name | What it is | Why SIP |
 |---|---|---|
 | **WM** | Waste Management — regulated waste oligopoly | Every community needs waste removed; landfill permit moat; recycling + renewable gas tailwind |
+| **RSG** | Republic Services — WM's duopoly partner | Same landfill permit moat + municipal contract lock-in + route density economics; slow-growth but durable; SIP on dips alongside WM |
 
 **BDC / Income:**
 
 | Name | What it is | Why SIP |
 |---|---|---|
 | **MAIN** | Main Street Capital — BDC lending to lower middle market companies | ~8.4% yield paid monthly + semi-annual specials; internally managed (removes fee conflict vs externally managed BDC peers); trades at premium to NAV — rare for BDCs, reflects management quality; not a growth compounder, a durable income machine |
+| **ARCC** | Ares Capital Corporation — largest publicly traded BDC | ~10% yield (5yr avg 9.0%, not a spike); trades right at NAV (no premium, unlike MAIN); REAL CAVEAT: externally managed by Ares (the fee-conflict structure MAIN's entry contrasts itself against) + lower ROE (6.9% vs MAIN's 14.4%) — the scale/liquidity BDC pick, not a MAIN replacement |
 
-Note: MAIN is judged differently from the rest of this list — standard OM/D/E filters don't apply cleanly to BDC structure. Judge by NAV growth, dividend coverage, and management track record instead.
+Note: MAIN and ARCC are judged differently from the rest of this list — standard OM/D/E filters don't apply cleanly to BDC structure. Judge by NAV growth, dividend coverage, and management track record instead.
+
+**AI Memory Infrastructure:**
+
+| Name | What it is | Why SIP |
+|---|---|---|
+| **MU** | Micron Technology — primary US supplier of HBM for NVIDIA AI GPUs | Structural AI memory demand floor, longer contracted pricing than commodity DRAM/NAND; cyclical not a pure toll — SIP at 20w support, add on flush to 43w, full size gate is 4/4 weekly MA recovery |
+
+**Rare Disease / Specialty Gene Therapy:**
+
+| Name | What it is | Why SIP |
+|---|---|---|
+| **KRYS** | Krystal Biotech — Vyjuvek, only FDA-approved gene therapy for DEB | Monopoly drug, no approved competition, A+ on all 7 quality gates; SIP at 20wMA, add on flush to 43wMA, full size gate is pipeline readout + MA recovery |
+
+**Packaging / Industrial Dividend:**
+
+| Name | What it is | Why SIP |
+|---|---|---|
+| **SW** | Smurfit Westrock — world's largest paper-based packaging company | ~4% yield, FCF-supported not earnings-dependent; corrugated boxes are durable e-commerce packaging demand; SIP on dips for yield accumulation |
+
+**Logistics Real Estate Infrastructure:**
+
+| Name | What it is | Why SIP |
+|---|---|---|
+| **PLD** | Prologis — world's largest industrial REIT | Amazon/FedEx/DHL/UPS/Walmart last-mile warehouse infrastructure, irreplaceable locations; ~3.5% yield, AFFO-covered; SIP on pullbacks — own the infrastructure that powers e-commerce, not the e-commerce companies |
 
 Note: NDAQ ≠ Nasdaq Composite ≠ QQQ. QQQ pays licensing fees *to* NDAQ. Owning NDAQ means owning the company that collects those fees.
 
