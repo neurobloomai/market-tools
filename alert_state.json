@@ -4,7 +4,8 @@
     "META": "IN",
     "MSFT": "IN",
     "AAPL": "IN",
-    "AMZN": "IN"
+    "AMZN": "IN",
+    "MU": "IN"
   },
   "watchlist": {
     "MELI": 1,
@@ -19,19 +20,17 @@
     "CHTR": 1,
     "ALC": 1,
     "BIO": 1,
+    "RVTY": 1,
     "TMDX": 1,
-    "STNE": 1,
     "CPAY": 1,
-    "DRI": 1,
     "GEV": 1,
+    "LHX": 1,
     "PEG": 1,
     "AMG": 1,
     "CRH": 1,
     "VST": 1,
     "LNG": 1,
     "LDOS": 1,
-    "PGY": 1,
-    "UPWK": 1,
     "CLS": 1,
     "PRGS": 1,
     "SSNC": 1,
@@ -62,11 +61,17 @@
     "DE": 1,
     "SBUX": 1,
     "FIVE": 1,
-    "ARM": 1,
     "TTMI": 1,
     "DDS": 1,
     "NTNX": 1,
     "INVA": 1,
-    "ZM": 1
+    "ZM": 1,
+    "HLIO": 1,
+    "VVV": 1,
+    "GPOR": 1,
+    "SARO": 1,
+    "SMTC": 1,
+    "NOVT": 1,
+    "WOR": 1
   }
 }
