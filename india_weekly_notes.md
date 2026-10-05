@@ -62,8 +62,8 @@ _Weekly observations — what to watch, what is coiling, what to avoid._
 | **SONACOMS** | ₹805.00 | 4/4 | A+ | ROE/ROA ROE None% / ROA None% / FCF Yield missing | Sona BLW Precision — precision differential gears + motor housings for… |
 | **ANANDRATHI** | ₹2117.50 | 3/4 | A+ | ROE/ROA ROE None% / ROA None% / ROE (financial) missing | Anand Rathi Wealth — wealth management, asset-light; OM 40%, NM 32%, R… |
 | **CRAFTSMAN** | ₹10266.00 | 3/4 | B | ROE/ROA ROE None% / ROA None% / FCF Yield missing | Craftsman Automation — precision machined components + aluminum die ca… |
-| **ETERNAL** | ₹313.90 | 3/4 | B | Op Margin 0.2% / Net Margin 0.6% / ROE/ROA ROE None% / ROA None% / FCF Yield missing / P/E 85.3x | Eternal (formerly Zomato) — food delivery + quick commerce; profitabil… |
-| **NYKAA** | ₹324.95 | 3/4 | A | Op Margin 5.3% / Net Margin 2.4% / ROE/ROA ROE None% / ROA None% / FCF Yield missing / P/E 115.4x | profitability still building |
+| **ETERNAL** | ₹313.90 | 3/4 | B | Op Margin 0.2% / Net Margin 0.6% / ROE/ROA ROE None% / ROA None% / FCF Yield missing / P/E 85.5x | Eternal (formerly Zomato) — food delivery + quick commerce; profitabil… |
+| **NYKAA** | ₹324.95 | 3/4 | A | Op Margin 5.3% / Net Margin 2.4% / ROE/ROA ROE None% / ROA None% / FCF Yield missing / P/E 115.7x | profitability still building |
 | **TIIL** | ₹2893.80 | 3/4 | A | ROE/ROA ROE None% / ROA None% / FCF Yield missing | Triveni Turbine — dominant in industrial steam turbines 0.5-100MW (cap… |
 | **ADANIENT** | ₹2816.80 | 2/4 | B | Debt/EV 0.227 / ROE/ROA ROE None% / ROA None% / FCF Yield missing | conglomerate, debt heavy |
 | **ADANIGREEN** | ₹1276.10 | 2/4 | A | Debt/EV 0.324 / ROE/ROA ROE None% / ROA None% / FCF Yield missing | Adani Green — heavy capex, debt, P/E stretched but 57% op margin |
