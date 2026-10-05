@@ -1,17 +1,17 @@
 {
   "TROW": {
-    "div_yield": 4.93,
+    "div_yield": 4.97,
     "payout": 51.6,
-    "fcf_yield": 9.0,
+    "fcf_yield": 9.1,
     "om": 28.7,
     "nm": 29.3,
     "roe": 19.4,
     "roa": 10.7,
     "dev": 0.022,
-    "pe": 10.6
+    "pe": 10.5
   },
   "AMP": {
-    "div_yield": 1.38,
+    "div_yield": 1.39,
     "payout": 15.7,
     "fcf_yield": 6.7,
     "om": 30.7,
@@ -22,29 +22,29 @@
     "pe": 11.9
   },
   "BEN": {
-    "div_yield": 4.0,
+    "div_yield": 4.02,
     "payout": 89.1,
-    "fcf_yield": -17.8,
+    "fcf_yield": -17.9,
     "om": 13.0,
     "nm": 8.7,
     "roe": 7.9,
     "roa": 2.6,
-    "dev": 0.176,
-    "pe": 22.5
+    "dev": 0.177,
+    "pe": 22.3
   },
   "AFL": {
-    "div_yield": 2.15,
-    "payout": 25.7,
-    "fcf_yield": 9.0,
+    "div_yield": 2.19,
+    "payout": 25.6,
+    "fcf_yield": 9.2,
     "om": 25.7,
     "nm": 26.9,
     "roe": 16.9,
     "roa": 3.1,
-    "dev": 0.252,
-    "pe": 12.3
+    "dev": 0.256,
+    "pe": 12.0
   },
   "CINF": {
-    "div_yield": 2.31,
+    "div_yield": 2.32,
     "payout": 17.1,
     "fcf_yield": 12.0,
     "om": 37.2,
@@ -52,271 +52,271 @@
     "roe": 21.5,
     "roa": 6.4,
     "dev": 0.037,
-    "pe": 7.7
+    "pe": 7.6
   },
   "TRV": {
-    "div_yield": 1.38,
+    "div_yield": 1.39,
     "payout": 12.2,
-    "fcf_yield": 19.5,
+    "fcf_yield": 19.7,
     "om": 23.7,
     "nm": 17.0,
     "roe": 26.5,
     "roa": 4.8,
-    "dev": 0.114,
-    "pe": 9.8
+    "dev": 0.115,
+    "pe": 9.7
   },
   "CB": {
-    "div_yield": 1.22,
+    "div_yield": 1.23,
     "payout": 13.9,
     "fcf_yield": 8.2,
     "om": 23.5,
     "nm": 18.1,
     "roe": 14.8,
     "roa": 3.4,
-    "dev": 0.166,
-    "pe": 11.8
+    "dev": 0.167,
+    "pe": 11.7
   },
   "AJG": {
-    "div_yield": 1.21,
+    "div_yield": 1.24,
     "payout": 44.8,
-    "fcf_yield": 3.5,
+    "fcf_yield": 3.6,
     "om": 19.2,
     "nm": 10.4,
     "roe": 6.7,
     "roa": 2.3,
-    "dev": 0.196,
-    "pe": 38.3
+    "dev": 0.2,
+    "pe": 37.5
   },
   "AON": {
-    "div_yield": 1.18,
+    "div_yield": 1.22,
     "payout": 16.8,
-    "fcf_yield": 5.4,
+    "fcf_yield": 5.6,
     "om": 23.5,
     "nm": 22.3,
     "roe": 44.7,
     "roa": 5.8,
-    "dev": 0.215,
-    "pe": 15.3
+    "dev": 0.22,
+    "pe": 14.9
   },
   "PRU": {
-    "div_yield": 4.69,
-    "payout": 49.9,
-    "fcf_yield": 18.3,
+    "div_yield": 4.97,
+    "payout": 49.8,
+    "fcf_yield": 19.4,
     "om": 7.5,
     "nm": 6.0,
     "roe": 12.0,
     "roa": 0.4,
-    "dev": 0.918,
-    "pe": 10.8
+    "dev": 0.954,
+    "pe": 10.2
   },
   "ABT": {
-    "div_yield": 2.49,
-    "payout": 79.0,
-    "fcf_yield": 4.1,
+    "div_yield": 2.58,
+    "payout": 78.7,
+    "fcf_yield": 4.3,
     "om": 14.7,
     "nm": 11.6,
     "roe": 10.6,
     "roa": 5.3,
-    "dev": 0.161,
-    "pe": 32.8
+    "dev": 0.167,
+    "pe": 31.5
   },
   "JNJ": {
-    "div_yield": 1.98,
-    "payout": 60.8,
-    "fcf_yield": 2.6,
+    "div_yield": 2.09,
+    "payout": 60.7,
+    "fcf_yield": 2.7,
     "om": 29.2,
     "nm": 21.5,
     "roe": 25.7,
     "roa": 8.6,
-    "dev": 0.072,
-    "pe": 31.5
+    "dev": 0.076,
+    "pe": 29.7
   },
   "ABBV": {
-    "div_yield": 2.62,
+    "div_yield": 2.63,
     "payout": 190.4,
     "fcf_yield": 3.6,
     "om": 40.0,
     "nm": 9.8,
     "roe": 0,
     "roa": 10.5,
-    "dev": 0.133,
-    "pe": 74.5
+    "dev": 0.134,
+    "pe": 74.2
   },
   "MRK": {
-    "div_yield": 2.29,
+    "div_yield": 2.36,
     "payout": 0,
-    "fcf_yield": 4.1,
+    "fcf_yield": 4.3,
     "om": -0.2,
     "nm": 4.8,
     "roe": 7.0,
     "roa": 11.9,
-    "dev": 0.13,
-    "pe": 119.0
+    "dev": 0.134,
+    "pe": 114.5
   },
   "BMY": {
-    "div_yield": 4.01,
+    "div_yield": 4.12,
     "payout": 55.3,
-    "fcf_yield": 6.3,
+    "fcf_yield": 6.5,
     "om": 34.4,
     "nm": 18.9,
     "roe": 46.6,
     "roa": 10.7,
-    "dev": 0.277,
-    "pe": 13.8
+    "dev": 0.284,
+    "pe": 13.5
   },
   "NVO": {
-    "div_yield": 4.63,
-    "payout": 44.5,
-    "fcf_yield": 22.0,
+    "div_yield": 4.81,
+    "payout": 45.1,
+    "fcf_yield": 22.9,
     "om": 42.5,
     "nm": 35.3,
     "roe": 59.8,
     "roa": 18.7,
-    "dev": 0.525,
-    "pe": 9.7
+    "dev": 0.538,
+    "pe": 9.1
   },
   "PFE": {
-    "div_yield": 6.0,
+    "div_yield": 6.19,
     "payout": 0,
-    "fcf_yield": 7.6,
+    "fcf_yield": 7.9,
     "om": 27.9,
     "nm": 6.8,
     "roe": 5.0,
     "roa": 5.8,
-    "dev": 0.295,
-    "pe": 37.7
+    "dev": 0.302,
+    "pe": 36.6
   },
   "CVS": {
-    "div_yield": 2.98,
-    "payout": 70.2,
-    "fcf_yield": 7.1,
+    "div_yield": 3.08,
+    "payout": 70.0,
+    "fcf_yield": 7.3,
     "om": 3.9,
     "nm": 1.2,
     "roe": 6.2,
     "roa": 3.0,
-    "dev": 0.432,
-    "pe": 23.5
+    "dev": 0.441,
+    "pe": 22.8
   },
   "PG": {
-    "div_yield": 2.98,
+    "div_yield": 3.0,
     "payout": 64.3,
     "fcf_yield": 3.9,
     "om": 22.1,
     "nm": 18.4,
     "roe": 30.3,
     "roa": 10.7,
-    "dev": 0.096,
-    "pe": 22.1
+    "dev": 0.097,
+    "pe": 21.9
   },
   "CL": {
-    "div_yield": 2.46,
+    "div_yield": 2.52,
     "payout": 82.3,
-    "fcf_yield": 5.0,
+    "fcf_yield": 5.1,
     "om": 21.0,
     "nm": 9.7,
     "roe": 267.4,
     "roa": 15.8,
-    "dev": 0.104,
-    "pe": 33.9
+    "dev": 0.106,
+    "pe": 33.2
   },
   "KO": {
-    "div_yield": 2.41,
+    "div_yield": 2.48,
     "payout": 62.5,
     "fcf_yield": 1.4,
     "om": 34.9,
     "nm": 28.6,
     "roe": 42.1,
     "roa": 9.4,
-    "dev": 0.109,
-    "pe": 26.4
+    "dev": 0.111,
+    "pe": 25.7
   },
   "PEP": {
-    "div_yield": 4.6,
+    "div_yield": 4.7,
     "payout": 75.3,
-    "fcf_yield": 4.5,
+    "fcf_yield": 4.6,
     "om": 16.8,
     "nm": 10.8,
     "roe": 51.5,
     "roa": 8.9,
-    "dev": 0.244,
-    "pe": 16.9
+    "dev": 0.248,
+    "pe": 16.5
   },
   "KHC": {
-    "div_yield": 6.77,
+    "div_yield": 7.21,
     "payout": 73.1,
-    "fcf_yield": 11.6,
+    "fcf_yield": 12.4,
     "om": 15.5,
     "nm": -13.6,
     "roe": -8.8,
     "roa": 3.6,
-    "dev": 0.427,
+    "dev": 0.444,
     "pe": null
   },
   "CLX": {
-    "div_yield": 5.97,
+    "div_yield": 6.22,
     "payout": 103.1,
     "fcf_yield": 1.1,
     "om": 12.9,
     "nm": 8.7,
     "roe": 163.8,
     "roa": 8.3,
-    "dev": 0.355,
-    "pe": 17.4
+    "dev": 0.365,
+    "pe": 16.7
   },
   "KR": {
-    "div_yield": 2.66,
-    "payout": 75.7,
+    "div_yield": 2.64,
+    "payout": 77.8,
     "fcf_yield": 7.3,
     "om": 3.0,
     "nm": 0.7,
     "roe": 14.4,
     "roa": 5.8,
-    "dev": 0.422,
-    "pe": 31.8
+    "dev": 0.421,
+    "pe": 32.8
   },
   "GPC": {
-    "div_yield": 3.28,
+    "div_yield": 3.34,
     "payout": 0,
-    "fcf_yield": 5.1,
+    "fcf_yield": 5.2,
     "om": 6.6,
     "nm": 0.1,
     "roe": 0.7,
     "roa": 4.5,
-    "dev": 0.277,
-    "pe": 518.4
+    "dev": 0.281,
+    "pe": 509.0
   },
   "SYY": {
-    "div_yield": 2.8,
+    "div_yield": 2.84,
     "payout": 59.3,
-    "fcf_yield": 5.1,
+    "fcf_yield": 5.0,
     "om": 4.8,
     "nm": 2.1,
     "roe": 77.7,
     "roa": 8.0,
-    "dev": 0.296,
-    "pe": 21.1
+    "dev": 0.299,
+    "pe": 21.2
   },
   "ITW": {
-    "div_yield": 2.51,
-    "payout": 58.3,
-    "fcf_yield": 3.1,
+    "div_yield": 2.62,
+    "payout": 58.4,
+    "fcf_yield": 3.2,
     "om": 26.9,
     "nm": 19.4,
     "roe": 104.6,
     "roa": 16.9,
-    "dev": 0.111,
-    "pe": 24.9
+    "dev": 0.116,
+    "pe": 23.8
   },
   "EMR": {
-    "div_yield": 1.4,
+    "div_yield": 1.37,
     "payout": 48.0,
-    "fcf_yield": 4.2,
+    "fcf_yield": 4.1,
     "om": 26.9,
     "nm": 13.8,
     "roe": 12.8,
     "roa": 6.9,
-    "dev": 0.138,
-    "pe": 34.6
+    "dev": 0.136,
+    "pe": 35.4
   },
   "GWW": {
     "div_yield": 0,
@@ -326,52 +326,52 @@
     "nm": 9.9,
     "roe": 46.1,
     "roa": 19.9,
-    "dev": 0.046,
-    "pe": 31.6
+    "dev": 0.044,
+    "pe": 32.7
   },
   "CMI": {
-    "div_yield": 1.68,
+    "div_yield": 1.67,
     "payout": 40.9,
     "fcf_yield": 3.1,
     "om": 11.9,
     "nm": 7.8,
     "roe": 21.1,
     "roa": 7.0,
-    "dev": 0.107,
-    "pe": 26.8
+    "dev": 0.106,
+    "pe": 27.0
   },
   "DOV": {
-    "div_yield": 1.09,
+    "div_yield": 1.11,
     "payout": 25.1,
     "fcf_yield": 3.5,
     "om": 18.7,
     "nm": 13.5,
     "roe": 14.9,
     "roa": 7.1,
-    "dev": 0.119,
-    "pe": 23.2
+    "dev": 0.121,
+    "pe": 22.9
   },
   "MCD": {
-    "div_yield": 3.26,
+    "div_yield": 3.33,
     "payout": 59.7,
-    "fcf_yield": 3.7,
+    "fcf_yield": 3.8,
     "om": 46.5,
     "nm": 31.7,
     "roe": 0,
     "roa": 13.2,
-    "dev": 0.247,
-    "pe": 19.2
+    "dev": 0.251,
+    "pe": 18.8
   },
   "TXN": {
-    "div_yield": 2.19,
-    "payout": 85.4,
-    "fcf_yield": 1.4,
+    "div_yield": 2.07,
+    "payout": 85.5,
+    "fcf_yield": 1.3,
     "om": 42.6,
     "nm": 31.1,
     "roe": 35.2,
     "roa": 13.1,
-    "dev": 0.054,
-    "pe": 42.2
+    "dev": 0.051,
+    "pe": 44.7
   },
   "MSFT": {
     "div_yield": 0,
@@ -382,7 +382,7 @@
     "roe": 34.0,
     "roa": 14.1,
     "dev": 0.033,
-    "pe": 28.7
+    "pe": 28.8
   },
   "AAPL": {
     "div_yield": 0,
@@ -393,160 +393,160 @@
     "roe": 148.8,
     "roa": 27.1,
     "dev": 0.017,
-    "pe": 39.1
+    "pe": 38.3
   },
   "CVX": {
-    "div_yield": 3.48,
+    "div_yield": 3.44,
     "payout": 67.2,
-    "fcf_yield": 5.5,
+    "fcf_yield": 5.4,
     "om": 21.9,
     "nm": 9.8,
     "roe": 12.2,
     "roa": 5.9,
-    "dev": 0.085,
-    "pe": 19.7
+    "dev": 0.084,
+    "pe": 19.9
   },
   "XOM": {
-    "div_yield": 2.57,
+    "div_yield": 2.51,
     "payout": 52.5,
     "fcf_yield": 3.1,
     "om": 15.9,
     "nm": 9.1,
     "roe": 12.6,
     "roa": 5.5,
-    "dev": 0.061,
-    "pe": 20.7
+    "dev": 0.059,
+    "pe": 21.1
   },
   "CNQ": {
-    "div_yield": 3.8,
+    "div_yield": 3.63,
     "payout": 43.2,
-    "fcf_yield": 7.6,
+    "fcf_yield": 7.4,
     "om": 43.1,
     "nm": 26.3,
     "roe": 26.7,
     "roa": 7.9,
-    "dev": 0.175,
+    "dev": 0.172,
     "pe": 11.9
   },
   "OXY": {
-    "div_yield": 1.97,
-    "payout": 29.5,
-    "fcf_yield": 6.7,
+    "div_yield": 1.93,
+    "payout": 28.4,
+    "fcf_yield": 6.5,
     "om": 45.4,
     "nm": 30.3,
     "roe": 10.6,
     "roa": 4.7,
-    "dev": 0.192,
-    "pe": 16.8
+    "dev": 0.189,
+    "pe": 16.5
   },
   "DVN": {
-    "div_yield": 2.72,
-    "payout": 22.6,
+    "div_yield": 2.69,
+    "payout": 22.7,
     "fcf_yield": 1.5,
     "om": 41.1,
     "nm": 17.5,
     "roe": 11.5,
     "roa": 5.9,
-    "dev": 0.19,
-    "pe": 10.2
+    "dev": 0.188,
+    "pe": 10.4
   },
   "VZ": {
-    "div_yield": 6.01,
+    "div_yield": 6.16,
     "payout": 72.8,
-    "fcf_yield": 8.9,
+    "fcf_yield": 9.2,
     "om": 23.0,
     "nm": 11.6,
     "roe": 15.8,
     "roa": 5.0,
-    "dev": 0.498,
-    "pe": 12.3
+    "dev": 0.504,
+    "pe": 12.0
   },
   "AWK": {
-    "div_yield": 2.73,
+    "div_yield": 2.75,
     "payout": 58.5,
     "fcf_yield": -6.9,
     "om": 40.7,
     "nm": 21.3,
     "roe": 10.1,
     "roa": 3.5,
-    "dev": 0.384,
-    "pe": 22.7
+    "dev": 0.385,
+    "pe": 22.6
   },
   "XYL": {
-    "div_yield": 1.68,
+    "div_yield": 1.69,
     "payout": 39.5,
-    "fcf_yield": 4.9,
+    "fcf_yield": 5.0,
     "om": 17.0,
     "nm": 11.2,
     "roe": 9.2,
     "roa": 5.1,
     "dev": 0.118,
-    "pe": 24.4
+    "pe": 24.2
   },
   "WEC": {
-    "div_yield": 3.76,
+    "div_yield": 3.75,
     "payout": 71.7,
     "fcf_yield": -7.1,
     "om": 21.8,
     "nm": 16.7,
     "roe": 12.0,
     "roa": 3.0,
-    "dev": 0.408,
+    "dev": 0.407,
     "pe": 19.7
   },
   "NKE": {
-    "div_yield": 4.59,
+    "div_yield": 4.84,
     "payout": 77.6,
-    "fcf_yield": 3.6,
-    "om": 12.7,
+    "fcf_yield": 3.5,
+    "om": 7.9,
     "nm": 6.7,
-    "roe": 22.1,
-    "roa": 7.0,
-    "dev": 0.201,
-    "pe": 17.0
+    "roe": 21.6,
+    "roa": 6.9,
+    "dev": 0.21,
+    "pe": 16.1
   },
   "GM": {
     "div_yield": 0,
-    "payout": 29.5,
-    "fcf_yield": 29.3,
+    "payout": 29.6,
+    "fcf_yield": 31.9,
     "om": 3.2,
     "nm": 1.1,
     "roe": 3.2,
     "roa": 2.2,
-    "dev": 0.723,
-    "pe": 36.9
+    "dev": 0.738,
+    "pe": 35.1
   },
   "F": {
-    "div_yield": 4.72,
+    "div_yield": 4.96,
     "payout": 64.1,
-    "fcf_yield": -15.7,
+    "fcf_yield": -16.5,
     "om": 1.9,
     "nm": -3.9,
     "roe": -18.3,
     "roa": 0.3,
-    "dev": 0.851,
+    "dev": 0.862,
     "pe": null
   },
   "VFC": {
-    "div_yield": 2.54,
-    "payout": 52.2,
+    "div_yield": 2.51,
+    "payout": 52.9,
     "fcf_yield": 5.8,
     "om": -5.5,
     "nm": 2.9,
     "roe": 17.9,
     "roa": 4.0,
-    "dev": 0.503,
-    "pe": 20.5
+    "dev": 0.5,
+    "pe": 21.1
   },
   "FMC": {
-    "div_yield": 3.34,
+    "div_yield": 3.79,
     "payout": 0,
-    "fcf_yield": 11.1,
+    "fcf_yield": 12.6,
     "om": 11.8,
     "nm": -84.8,
     "roe": -88.4,
     "roa": 0.6,
-    "dev": 0.855,
+    "dev": 0.879,
     "pe": null
   },
   "NWL": {
@@ -572,95 +572,95 @@
     "pe": 15.0
   },
   "GFI": {
-    "div_yield": 5.33,
+    "div_yield": 6.04,
     "payout": 31.8,
-    "fcf_yield": 11.6,
+    "fcf_yield": 13.2,
     "om": 55.0,
     "nm": 38.7,
     "roe": 58.7,
     "roa": 28.5,
-    "dev": 0.036,
-    "pe": 8.2
+    "dev": 0.041,
+    "pe": 7.3
   },
   "B": {
-    "div_yield": 1.63,
+    "div_yield": 1.74,
     "payout": 23.8,
-    "fcf_yield": 7.2,
+    "fcf_yield": 7.7,
     "om": 51.3,
     "nm": 31.6,
     "roe": 27.0,
     "roa": 13.4,
-    "dev": 0.059,
-    "pe": 11.1
+    "dev": 0.063,
+    "pe": 10.4
   },
   "ACN": {
-    "div_yield": 3.7,
+    "div_yield": 3.28,
     "payout": 50.9,
-    "fcf_yield": 11.2,
-    "om": 17.0,
-    "nm": 10.7,
-    "roe": 24.4,
-    "roa": 10.9,
-    "dev": 0.078,
-    "pe": 14.1
+    "fcf_yield": 9.2,
+    "om": 15.3,
+    "nm": 11.3,
+    "roe": 26.0,
+    "roa": 10.5,
+    "dev": 0.111,
+    "pe": 15.9
   },
   "CTSH": {
-    "div_yield": 2.3,
+    "div_yield": 2.26,
     "payout": 27.5,
-    "fcf_yield": 8.6,
+    "fcf_yield": 8.4,
     "om": 17.5,
     "nm": 10.3,
     "roe": 14.9,
     "roa": 10.7,
-    "dev": 0.078,
-    "pe": 12.3
+    "dev": 0.076,
+    "pe": 12.6
   },
   "ADP": {
-    "div_yield": 2.58,
+    "div_yield": 2.64,
     "payout": 60.7,
-    "fcf_yield": 5.0,
+    "fcf_yield": 5.1,
     "om": 23.5,
     "nm": 20.1,
     "roe": 72.2,
     "roa": 6.2,
-    "dev": 0.052,
-    "pe": 24.1
+    "dev": 0.053,
+    "pe": 23.6
   },
   "GIS": {
-    "div_yield": 7.25,
+    "div_yield": 7.62,
     "payout": 59.4,
-    "fcf_yield": 7.2,
+    "fcf_yield": 7.6,
     "om": 15.2,
     "nm": -4.9,
     "roe": -10.5,
     "roa": 5.6,
-    "dev": 0.437,
+    "dev": 0.449,
     "pe": null
   },
   "BR": {
-    "div_yield": 2.66,
+    "div_yield": 2.78,
     "payout": 40.6,
-    "fcf_yield": 6.4,
+    "fcf_yield": 6.7,
     "om": 24.6,
     "nm": 15.0,
     "roe": 40.9,
     "roa": 9.3,
-    "dev": 0.162,
-    "pe": 17.1
+    "dev": 0.168,
+    "pe": 16.3
   },
   "CF": {
     "div_yield": 2.09,
     "payout": 14.8,
-    "fcf_yield": 7.4,
+    "fcf_yield": 7.3,
     "om": 49.3,
     "nm": 27.1,
     "roe": 29.9,
     "roa": 12.9,
-    "dev": 0.167,
+    "dev": 0.166,
     "pe": 8.5
   },
   "CME": {
-    "div_yield": 1.97,
+    "div_yield": 1.98,
     "payout": 95.4,
     "fcf_yield": 3.1,
     "om": 65.0,
@@ -668,88 +668,88 @@
     "roe": 15.8,
     "roa": 1.5,
     "dev": 0.04,
-    "pe": 22.4
+    "pe": 22.3
   },
   "FDS": {
-    "div_yield": 1.7,
+    "div_yield": 1.74,
     "payout": 29.4,
-    "fcf_yield": 6.4,
-    "om": 30.5,
-    "nm": 23.2,
-    "roe": 27.0,
-    "roa": 11.1,
-    "dev": 0.143,
-    "pe": 18.0
+    "fcf_yield": 6.8,
+    "om": 24.7,
+    "nm": 21.5,
+    "roe": 25.5,
+    "roa": 10.4,
+    "dev": 0.144,
+    "pe": 18.3
   },
   "HSY": {
-    "div_yield": 3.49,
+    "div_yield": 3.63,
     "payout": 77.1,
-    "fcf_yield": 5.2,
+    "fcf_yield": 5.4,
     "om": 23.1,
     "nm": 12.2,
     "roe": 32.8,
     "roa": 9.9,
-    "dev": 0.154,
-    "pe": 22.7
+    "dev": 0.159,
+    "pe": 21.9
   },
   "KMB": {
-    "div_yield": 5.2,
-    "payout": 100.4,
-    "fcf_yield": 2.9,
+    "div_yield": 5.43,
+    "payout": 100.2,
+    "fcf_yield": 3.0,
     "om": 19.0,
     "nm": 11.8,
     "roe": 104.9,
     "roa": 10.2,
-    "dev": 0.17,
-    "pe": 19.5
+    "dev": 0.176,
+    "pe": 18.6
   },
   "TRI": {
-    "div_yield": 2.65,
-    "payout": 66.6,
-    "fcf_yield": 4.9,
+    "div_yield": 2.68,
+    "payout": 66.4,
+    "fcf_yield": 5.0,
     "om": 28.3,
     "nm": 21.2,
     "roe": 14.2,
     "roa": 7.4,
-    "dev": 0.071,
-    "pe": 26.1
+    "dev": 0.072,
+    "pe": 25.6
   },
   "HD": {
-    "div_yield": 3.18,
+    "div_yield": 3.3,
     "payout": 64.8,
-    "fcf_yield": 3.7,
+    "fcf_yield": 3.8,
     "om": 12.9,
     "nm": 8.4,
     "roe": 104.3,
     "roa": 12.1,
-    "dev": 0.179,
-    "pe": 20.5
+    "dev": 0.184,
+    "pe": 19.8
   },
   "EPR": {
-    "div_yield": 6.55,
+    "div_yield": 6.59,
     "payout": 115.4,
     "fcf_yield": 7.8,
     "om": 54.3,
     "nm": 35.6,
     "roe": 11.3,
     "roa": 4.2,
-    "dev": 0.448,
-    "pe": 18.2
+    "dev": 0.45,
+    "pe": 18.1
   },
   "VICI": {
-    "div_yield": 7.83,
-    "payout": 69.8,
-    "fcf_yield": 1.0,
+    "div_yield": 8.12,
+    "payout": 70.0,
+    "fcf_yield": 1.1,
     "om": 70.2,
     "nm": 67.5,
     "roe": 9.8,
     "roa": 4.8,
-    "dev": 0.407,
-    "pe": 9.1
+    "dev": 0.416,
+    "pe": 8.8
   },
   "MAIN": {
     "div_yield": 5.77,
-    "payout": 86.4,
+    "payout": 86.1,
     "fcf_yield": 4.8,
     "om": 87.2,
     "nm": 78.5,
@@ -759,74 +759,74 @@
     "pe": 11.1
   },
   "PNC": {
-    "div_yield": 3.55,
+    "div_yield": 3.62,
     "payout": 37.4,
     "fcf_yield": 0.0,
     "om": 38.7,
     "nm": 31.4,
     "roe": 12.6,
     "roa": 1.3,
-    "dev": 0.516,
-    "pe": 12.4
+    "dev": 0.522,
+    "pe": 12.2
   },
   "SWKS": {
-    "div_yield": 4.13,
+    "div_yield": 3.42,
     "payout": 147.1,
-    "fcf_yield": 3.3,
+    "fcf_yield": 3.5,
     "om": 8.8,
     "nm": 7.2,
     "roe": 5.1,
     "roa": 3.4,
-    "dev": 0.051,
-    "pe": 46.3
+    "dev": 0.054,
+    "pe": 44.1
   },
   "EPD": {
-    "div_yield": 6.0,
-    "payout": 75.8,
+    "div_yield": 6.09,
+    "payout": 76.0,
     "fcf_yield": 1.4,
     "om": 11.8,
     "nm": 10.8,
     "roe": 20.9,
     "roa": 5.9,
-    "dev": 0.3,
-    "pe": 12.7
+    "dev": 0.303,
+    "pe": 12.6
   },
   "ET": {
-    "div_yield": 6.74,
+    "div_yield": 6.64,
     "payout": 91.4,
     "fcf_yield": 4.5,
     "om": 10.4,
     "nm": 4.9,
     "roe": 14.6,
     "roa": 5.1,
-    "dev": 0.446,
-    "pe": 13.8
+    "dev": 0.443,
+    "pe": 14.0
   },
   "FIS": {
-    "div_yield": 4.97,
+    "div_yield": 5.43,
     "payout": 25.8,
-    "fcf_yield": 14.5,
+    "fcf_yield": 15.9,
     "om": 20.7,
     "nm": 27.6,
     "roe": 22.3,
     "roa": 4.3,
-    "dev": 0.548,
-    "pe": 5.4
+    "dev": 0.571,
+    "pe": 5.0
   },
   "XEL": {
-    "div_yield": 3.4,
+    "div_yield": 3.32,
     "payout": 63.7,
-    "fcf_yield": -18.1,
+    "fcf_yield": -17.7,
     "om": 22.7,
     "nm": 15.3,
     "roe": 9.9,
     "roa": 2.4,
-    "dev": 0.5,
-    "pe": 19.1
+    "dev": 0.494,
+    "pe": 19.6
   },
   "SNA": {
-    "div_yield": 2.64,
-    "payout": 48.3,
+    "div_yield": 2.65,
+    "payout": 48.2,
     "fcf_yield": 5.8,
     "om": 25.4,
     "nm": 19.6,
@@ -836,41 +836,41 @@
     "pe": 18.8
   },
   "CBT": {
-    "div_yield": 2.34,
+    "div_yield": 2.4,
     "payout": 51.0,
-    "fcf_yield": 6.4,
+    "fcf_yield": 6.5,
     "om": 14.3,
     "nm": 5.2,
     "roe": 13.3,
     "roa": 8.9,
-    "dev": 0.246,
-    "pe": 22.1
+    "dev": 0.251,
+    "pe": 21.6
   },
   "SM": {
-    "div_yield": 2.6,
+    "div_yield": 2.5,
     "payout": 18.4,
-    "fcf_yield": 18.3,
+    "fcf_yield": 17.6,
     "om": 60.3,
     "nm": 20.2,
     "roe": 16.1,
     "roa": 6.9,
-    "dev": 0.5,
-    "pe": 6.0
+    "dev": 0.489,
+    "pe": 6.2
   },
   "CATY": {
-    "div_yield": 2.47,
-    "payout": 28.2,
+    "div_yield": 2.5,
+    "payout": 28.1,
     "fcf_yield": 0.0,
     "om": 62.6,
     "nm": 43.7,
     "roe": 11.7,
     "roa": 1.4,
-    "dev": 0.059,
-    "pe": 12.0
+    "dev": 0.06,
+    "pe": 11.9
   },
   "IBOC": {
     "div_yield": 2.09,
-    "payout": 21.5,
+    "payout": 21.6,
     "fcf_yield": 0.0,
     "om": 60.5,
     "nm": 49.3,
@@ -880,227 +880,227 @@
     "pe": 10.5
   },
   "CFG": {
-    "div_yield": 2.81,
+    "div_yield": 2.86,
     "payout": 39.2,
     "fcf_yield": 0.0,
     "om": 35.1,
     "nm": 26.1,
     "roe": 8.3,
     "roa": 0.9,
-    "dev": 0.508,
-    "pe": 14.3
+    "dev": 0.516,
+    "pe": 14.0
   },
   "STT": {
-    "div_yield": 2.03,
-    "payout": 29.7,
+    "div_yield": 2.09,
+    "payout": 29.6,
     "fcf_yield": 0.0,
     "om": 34.3,
     "nm": 23.0,
     "roe": 12.4,
     "roa": 0.9,
-    "dev": -1.001,
-    "pe": 16.0
+    "dev": -0.976,
+    "pe": 15.5
   },
   "WFC": {
-    "div_yield": 2.41,
+    "div_yield": 2.49,
     "payout": 26.2,
     "fcf_yield": 0.0,
     "om": 37.4,
     "nm": 27.2,
     "roe": 12.6,
     "roa": 1.1,
-    "dev": 1.911,
-    "pe": 12.1
+    "dev": 1.97,
+    "pe": 11.7
   },
   "BAC": {
-    "div_yield": 2.26,
+    "div_yield": 2.38,
     "payout": 25.9,
     "fcf_yield": 0.0,
     "om": 38.3,
     "nm": 29.5,
     "roe": 11.2,
     "roa": 1.0,
-    "dev": 2.305,
-    "pe": 13.1
+    "dev": 2.453,
+    "pe": 12.4
   },
   "C": {
-    "div_yield": 2.0,
+    "div_yield": 2.09,
     "payout": 25.9,
     "fcf_yield": 0.0,
     "om": 36.2,
     "nm": 21.8,
     "roe": 8.5,
     "roa": 0.7,
-    "dev": 26.61,
-    "pe": 14.5
+    "dev": 37.619,
+    "pe": 13.9
   },
   "CQP": {
-    "div_yield": 5.16,
+    "div_yield": 5.33,
     "payout": 59.3,
-    "fcf_yield": 7.2,
+    "fcf_yield": 7.4,
     "om": 51.9,
     "nm": 27.3,
     "roe": 1516.9,
     "roa": 14.0,
-    "dev": 0.346,
-    "pe": 11.6
+    "dev": 0.355,
+    "pe": 11.1
   },
   "NEE": {
-    "div_yield": 3.28,
+    "div_yield": 3.24,
     "payout": 53.5,
-    "fcf_yield": -11.2,
+    "fcf_yield": -11.1,
     "om": 31.5,
     "nm": 32.4,
     "roe": 11.7,
     "roa": 2.4,
-    "dev": 0.398,
-    "pe": 17.1
+    "dev": 0.396,
+    "pe": 17.3
   },
   "DUK": {
-    "div_yield": 3.83,
+    "div_yield": 3.8,
     "payout": 64.2,
-    "fcf_yield": -5.1,
+    "fcf_yield": -5.0,
     "om": 27.5,
     "nm": 16.0,
     "roe": 9.9,
     "roa": 2.8,
-    "dev": 0.504,
-    "pe": 17.1
+    "dev": 0.502,
+    "pe": 17.2
   },
   "SO": {
-    "div_yield": 3.67,
+    "div_yield": 3.63,
     "payout": 71.8,
     "fcf_yield": -4.1,
     "om": 29.6,
     "nm": 15.4,
     "roe": 11.5,
     "roa": 3.3,
-    "dev": 0.448,
-    "pe": 20.0
+    "dev": 0.445,
+    "pe": 20.2
   },
   "AEE": {
-    "div_yield": 3.02,
+    "div_yield": 3.0,
     "payout": 51.4,
     "fcf_yield": -6.5,
     "om": 25.2,
     "nm": 18.6,
     "roe": 11.9,
     "roa": 3.1,
-    "dev": 0.441,
-    "pe": 17.5
+    "dev": 0.44,
+    "pe": 17.6
   },
   "CNP": {
-    "div_yield": 2.61,
-    "payout": 53.6,
-    "fcf_yield": -21.4,
+    "div_yield": 2.54,
+    "payout": 53.2,
+    "fcf_yield": -20.9,
     "om": 24.5,
     "nm": 11.6,
     "roe": 9.8,
     "roa": 3.0,
-    "dev": 0.509,
-    "pe": 21.9
+    "dev": 0.502,
+    "pe": 22.4
   },
   "SRE": {
-    "div_yield": 3.37,
-    "payout": 75.5,
-    "fcf_yield": -54.3,
+    "div_yield": 3.36,
+    "payout": 75.3,
+    "fcf_yield": -54.0,
     "om": 28.3,
     "nm": 16.8,
     "roe": 6.7,
     "roa": 2.0,
-    "dev": 0.373,
-    "pe": 22.6
+    "dev": 0.372,
+    "pe": 22.7
   },
   "PPG": {
-    "div_yield": 2.75,
+    "div_yield": 2.82,
     "payout": 40.8,
-    "fcf_yield": 4.6,
+    "fcf_yield": 4.7,
     "om": 14.0,
     "nm": 9.6,
     "roe": 19.3,
     "roa": 6.0,
-    "dev": 0.25,
-    "pe": 15.4
+    "dev": 0.254,
+    "pe": 15.1
   },
   "ARCC": {
-    "div_yield": 10.0,
+    "div_yield": 10.18,
     "payout": 143.3,
-    "fcf_yield": 5.5,
+    "fcf_yield": 5.6,
     "om": 75.7,
     "nm": 30.9,
     "roe": 6.9,
     "roa": 4.9,
-    "dev": 0.542,
-    "pe": 14.3
+    "dev": 0.547,
+    "pe": 14.1
   },
   "AB": {
-    "div_yield": 9.7,
-    "payout": 101.8,
+    "div_yield": 9.91,
+    "payout": 101.2,
     "fcf_yield": 0.0,
     "om": 100.0,
     "nm": 390.7,
     "roe": 19.4,
     "roa": 0,
     "dev": 0,
-    "pe": 10.7
+    "pe": 10.4
   },
   "ERIE": {
-    "div_yield": 2.62,
-    "payout": 64.6,
-    "fcf_yield": 4.1,
+    "div_yield": 2.65,
+    "payout": 52.1,
+    "fcf_yield": 4.2,
     "om": 19.1,
     "nm": 14.0,
     "roe": 24.8,
     "roa": 14.1,
     "dev": 0.006,
-    "pe": 20.2
+    "pe": 20.0
   },
   "FMS": {
-    "div_yield": 3.84,
+    "div_yield": 3.92,
     "payout": 45.0,
-    "fcf_yield": 16.7,
+    "fcf_yield": 17.1,
     "om": 10.8,
     "nm": 4.8,
     "roe": 8.5,
     "roa": 4.0,
-    "dev": 0.478,
-    "pe": 12.0
+    "dev": 0.483,
+    "pe": 11.5
   },
   "CHD": {
-    "div_yield": 1.28,
+    "div_yield": 1.3,
     "payout": 38.6,
-    "fcf_yield": 4.1,
+    "fcf_yield": 4.2,
     "om": 18.1,
     "nm": 12.0,
     "roe": 17.0,
     "roa": 7.9,
-    "dev": 0.097,
-    "pe": 30.9
+    "dev": 0.099,
+    "pe": 30.2
   },
   "INGR": {
-    "div_yield": 3.43,
+    "div_yield": 3.48,
     "payout": 35.7,
-    "fcf_yield": 7.5,
+    "fcf_yield": 7.6,
     "om": 12.6,
     "nm": 8.2,
     "roe": 13.7,
     "roa": 7.3,
-    "dev": 0.257,
-    "pe": 10.5
+    "dev": 0.261,
+    "pe": 10.4
   },
   "ECL": {
-    "div_yield": 1.04,
+    "div_yield": 1.07,
     "payout": 38.1,
     "fcf_yield": 1.9,
     "om": 18.5,
     "nm": 12.6,
     "roe": 22.0,
     "roa": 7.2,
-    "dev": 0.16,
-    "pe": 37.5
+    "dev": 0.163,
+    "pe": 36.7
   },
   "ROL": {
-    "div_yield": 2.43,
+    "div_yield": 2.42,
     "payout": 64.9,
     "fcf_yield": 3.5,
     "om": 18.8,
@@ -1108,187 +1108,187 @@
     "roe": 37.0,
     "roa": 14.1,
     "dev": 0.072,
-    "pe": 27.3
+    "pe": 27.4
   },
   "CTAS": {
-    "div_yield": 1.04,
-    "payout": 36.9,
-    "fcf_yield": 2.0,
+    "div_yield": 1.08,
+    "payout": 36.7,
+    "fcf_yield": 2.1,
     "om": 24.1,
     "nm": 17.8,
     "roe": 41.4,
     "roa": 16.7,
-    "dev": 0.033,
-    "pe": 39.4
+    "dev": 0.034,
+    "pe": 38.1
   },
   "UNP": {
-    "div_yield": 2.07,
+    "div_yield": 2.04,
     "payout": 44.7,
     "fcf_yield": 2.9,
     "om": 41.0,
     "nm": 28.8,
     "roe": 39.7,
     "roa": 9.3,
-    "dev": 0.163,
-    "pe": 22.2
+    "dev": 0.16,
+    "pe": 22.6
   },
   "WM": {
-    "div_yield": 1.83,
+    "div_yield": 1.85,
     "payout": 50.1,
-    "fcf_yield": 2.8,
+    "fcf_yield": 2.9,
     "om": 19.0,
     "nm": 11.1,
     "roe": 29.8,
     "roa": 6.6,
-    "dev": 0.221,
-    "pe": 29.3
+    "dev": 0.223,
+    "pe": 29.0
   },
   "LEVI": {
-    "div_yield": 3.24,
+    "div_yield": 3.22,
     "payout": 40.0,
-    "fcf_yield": 7.8,
+    "fcf_yield": 7.7,
     "om": 9.0,
     "nm": 9.7,
     "roe": 25.4,
     "roa": 7.2,
-    "dev": 0.258,
-    "pe": 14.1
+    "dev": 0.256,
+    "pe": 14.2
   },
   "QSR": {
-    "div_yield": 3.63,
+    "div_yield": 3.72,
     "payout": 63.8,
-    "fcf_yield": 5.2,
+    "fcf_yield": 5.3,
     "om": 27.7,
     "nm": 13.1,
     "roe": 34.8,
     "roa": 6.4,
-    "dev": 0.381,
-    "pe": 18.0
+    "dev": 0.387,
+    "pe": 17.6
   },
   "IFF": {
-    "div_yield": 1.87,
-    "payout": 49.5,
-    "fcf_yield": -7.9,
+    "div_yield": 1.94,
+    "payout": 158.4,
+    "fcf_yield": -8.2,
     "om": 8.5,
     "nm": 2.6,
     "roe": -5.5,
     "roa": 2.3,
-    "dev": 0.227,
-    "pe": null
+    "dev": 0.235,
+    "pe": 81.6
   },
   "RPM": {
-    "div_yield": 2.15,
+    "div_yield": 2.18,
     "payout": 41.2,
-    "fcf_yield": 3.7,
+    "fcf_yield": 3.8,
     "om": 15.3,
     "nm": 8.4,
     "roe": 21.4,
     "roa": 7.6,
-    "dev": 0.191,
-    "pe": 19.4
+    "dev": 0.193,
+    "pe": 19.2
   },
   "AMT": {
-    "div_yield": 4.24,
+    "div_yield": 4.41,
     "payout": 96.0,
-    "fcf_yield": 3.7,
+    "fcf_yield": 3.9,
     "om": 45.4,
     "nm": 31.1,
     "roe": 33.9,
     "roa": 4.9,
-    "dev": 0.35,
-    "pe": 23.3
+    "dev": 0.359,
+    "pe": 22.3
   },
   "CMCSA": {
-    "div_yield": 6.02,
-    "payout": 42.3,
-    "fcf_yield": 16.3,
+    "div_yield": 6.12,
+    "payout": 42.6,
+    "fcf_yield": 16.6,
     "om": 17.2,
     "nm": 9.0,
     "roe": 11.5,
     "roa": 4.3,
-    "dev": 0.563,
+    "dev": 0.567,
     "pe": 7.0
   },
   "RSG": {
-    "div_yield": 1.26,
-    "payout": 35.4,
+    "div_yield": 1.28,
+    "payout": 35.5,
     "fcf_yield": 3.0,
     "om": 20.4,
     "nm": 12.9,
     "roe": 18.2,
     "roa": 6.2,
-    "dev": 0.181,
-    "pe": 30.0
+    "dev": 0.182,
+    "pe": 29.7
   },
   "FRT": {
-    "div_yield": 4.2,
+    "div_yield": 4.35,
     "payout": 91.3,
-    "fcf_yield": 4.7,
+    "fcf_yield": 4.9,
     "om": 35.0,
     "nm": 32.7,
     "roe": 12.6,
     "roa": 3.3,
-    "dev": 0.329,
-    "pe": 22.3
+    "dev": 0.336,
+    "pe": 21.6
   },
   "NNN": {
-    "div_yield": 6.0,
-    "payout": 118.2,
-    "fcf_yield": -17.5,
+    "div_yield": 6.06,
+    "payout": 118.8,
+    "fcf_yield": -17.6,
     "om": 61.7,
     "nm": 40.4,
     "roe": 8.7,
     "roa": 3.9,
-    "dev": 0.387,
+    "dev": 0.389,
     "pe": 20.3
   },
   "O": {
-    "div_yield": 5.87,
+    "div_yield": 6.02,
     "payout": 0,
-    "fcf_yield": 3.0,
+    "fcf_yield": 3.1,
     "om": 47.0,
     "nm": 20.9,
     "roe": 3.2,
     "roa": 2.4,
-    "dev": 0.366,
-    "pe": 40.5
+    "dev": 0.371,
+    "pe": 39.2
   },
   "WPC": {
-    "div_yield": 5.75,
+    "div_yield": 5.89,
     "payout": 126.7,
-    "fcf_yield": 7.3,
+    "fcf_yield": 7.5,
     "om": 59.3,
     "nm": 35.8,
     "roe": 7.8,
     "roa": 3.4,
-    "dev": 0.373,
-    "pe": 22.6
+    "dev": 0.378,
+    "pe": 22.1
   },
   "STAG": {
-    "div_yield": 4.21,
+    "div_yield": 4.3,
     "payout": 116.9,
-    "fcf_yield": 6.5,
+    "fcf_yield": 6.6,
     "om": 37.0,
     "nm": 28.1,
     "roe": 7.0,
     "roa": 2.9,
-    "dev": 0.329,
-    "pe": 28.3
+    "dev": 0.334,
+    "pe": 27.7
   },
   "WD": {
-    "div_yield": 7.16,
+    "div_yield": 8.01,
     "payout": 0,
     "fcf_yield": 0.0,
     "om": 0.8,
     "nm": 3.3,
     "roe": 2.4,
     "roa": 0.9,
-    "dev": 0.676,
-    "pe": 33.9
+    "dev": 0.704,
+    "pe": 30.3
   },
   "RHP": {
     "div_yield": 3.95,
-    "payout": 115.9,
+    "payout": 115.6,
     "fcf_yield": 6.8,
     "om": 23.3,
     "nm": 9.9,
@@ -1298,92 +1298,92 @@
     "pe": 29.6
   },
   "HASI": {
-    "div_yield": 4.67,
+    "div_yield": 4.69,
     "payout": 0,
     "fcf_yield": 0.0,
     "om": 22.2,
     "nm": 67.7,
     "roe": 3.4,
     "roa": 1.1,
-    "dev": 0.566,
-    "pe": 56.1
+    "dev": 0.568,
+    "pe": 55.8
   },
   "PR": {
-    "div_yield": 2.95,
-    "payout": 40.0,
-    "fcf_yield": 2.6,
+    "div_yield": 2.85,
+    "payout": 40.8,
+    "fcf_yield": 2.5,
     "om": 57.4,
     "nm": 21.5,
     "roe": 11.4,
     "roa": 7.5,
-    "dev": 0.151,
-    "pe": 13.8
+    "dev": 0.146,
+    "pe": 14.6
   },
   "DINO": {
-    "div_yield": 1.97,
-    "payout": 19.1,
-    "fcf_yield": 10.7,
+    "div_yield": 1.85,
+    "payout": 19.0,
+    "fcf_yield": 10.1,
     "om": 11.7,
     "nm": 6.1,
     "roe": 19.5,
     "roa": 9.2,
-    "dev": 0.166,
-    "pe": 10.2
+    "dev": 0.157,
+    "pe": 10.8
   },
   "MGY": {
     "div_yield": 2.74,
-    "payout": 27.5,
+    "payout": 27.6,
     "fcf_yield": 5.0,
     "om": 50.7,
     "nm": 28.8,
     "roe": 20.9,
     "roa": 11.8,
     "dev": 0.071,
-    "pe": 10.5
+    "pe": 10.6
   },
   "IBM": {
-    "div_yield": 3.0,
+    "div_yield": 3.04,
     "payout": 59.8,
     "fcf_yield": 5.7,
     "om": 16.5,
     "nm": 15.5,
     "roe": 34.5,
     "roa": 5.3,
-    "dev": 0.242,
-    "pe": 20.0
+    "dev": 0.244,
+    "pe": 19.8
   },
   "NSC": {
-    "div_yield": 1.73,
+    "div_yield": 1.7,
     "payout": 46.1,
-    "fcf_yield": 2.0,
+    "fcf_yield": 1.9,
     "om": 35.3,
     "nm": 21.0,
     "roe": 17.0,
     "roa": 6.0,
-    "dev": 0.199,
-    "pe": 26.7
+    "dev": 0.196,
+    "pe": 27.1
   },
   "DTM": {
-    "div_yield": 2.88,
-    "payout": 74.6,
+    "div_yield": 2.91,
+    "payout": 74.4,
     "fcf_yield": 1.0,
     "om": 50.4,
     "nm": 35.7,
     "roe": 9.9,
     "roa": 4.0,
-    "dev": 0.213,
-    "pe": 26.8
+    "dev": 0.215,
+    "pe": 26.5
   },
   "TRP": {
-    "div_yield": 4.25,
+    "div_yield": 4.18,
     "payout": 98.4,
     "fcf_yield": 2.0,
     "om": 44.3,
     "nm": 22.9,
     "roe": 11.8,
     "roa": 3.7,
-    "dev": 0.483,
-    "pe": 23.7
+    "dev": 0.482,
+    "pe": 23.3
   },
   "DLR": {
     "div_yield": 2.73,
@@ -1393,22 +1393,22 @@
     "nm": 11.8,
     "roe": 2.9,
     "roa": 1.5,
-    "dev": 0.23,
-    "pe": 87.1
+    "dev": 0.231,
+    "pe": 86.7
   },
   "CCEP": {
-    "div_yield": 2.37,
+    "div_yield": 2.38,
     "payout": 46.6,
-    "fcf_yield": 3.5,
+    "fcf_yield": 3.6,
     "om": 13.4,
     "nm": 9.3,
     "roe": 23.5,
     "roa": 5.6,
-    "dev": 0.219,
-    "pe": 20.1
+    "dev": 0.22,
+    "pe": 19.5
   },
   "KRP": {
-    "div_yield": 10.98,
+    "div_yield": 10.97,
     "payout": 177.7,
     "fcf_yield": 8.3,
     "om": 56.1,
@@ -1416,39 +1416,39 @@
     "roe": 12.4,
     "roa": 6.6,
     "dev": 0.224,
-    "pe": 17.1
+    "pe": 17.2
   },
   "TIGO": {
-    "div_yield": 3.24,
-    "payout": 74.8,
-    "fcf_yield": 12.1,
+    "div_yield": 3.4,
+    "payout": 75.8,
+    "fcf_yield": 12.7,
     "om": 20.7,
     "nm": 9.2,
     "roe": 21.7,
     "roa": 5.9,
-    "dev": 0.451,
-    "pe": 23.1
+    "dev": 0.464,
+    "pe": 22.3
   },
   "NVS": {
-    "div_yield": 3.26,
+    "div_yield": 3.36,
     "payout": 71.6,
-    "fcf_yield": 4.3,
+    "fcf_yield": 4.4,
     "om": 34.6,
     "nm": 22.5,
     "roe": 30.3,
     "roa": 10.2,
-    "dev": 0.154,
-    "pe": 22.0
+    "dev": 0.158,
+    "pe": 21.3
   },
   "DMLP": {
-    "div_yield": 11.0,
+    "div_yield": 11.15,
     "payout": 145.2,
-    "fcf_yield": 8.7,
+    "fcf_yield": 8.8,
     "om": 55.1,
     "nm": 45.3,
     "roe": 28.0,
     "roa": 17.1,
     "dev": 0.003,
-    "pe": 16.6
+    "pe": 16.4
   }
 }
