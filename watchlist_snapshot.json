@@ -516,7 +516,7 @@
         "\u2264 100x"
       ]
     ],
-    "note": "Cloudflare \u2014 global network infrastructure platform; CDN + DDoS protection + Zero Trust/SASE (Cloudflare One) + AI inference at the edge (Workers AI runs on 300+ PoPs globally); platform consolidation play: enterprises replacing 5-10 point security vendors with a single Cloudflare stack \u2014 each new product (CASB, DLP, RBI, ZTNA) sold into the existing base with near-zero CAC; GrossM 73.3%, RevG 33.5%, FCF 0.8% (barely positive), D/EV 0.037 (near-zero debt); OM -9.7% only blocker \u2014 stock-comp heavy GAAP drag, FCF is the honest signal (already crossing zero); Workers AI is an emerging edge inference network \u2014 low-latency AI calls at 300+ locations globally without GPU datacenter dependency; gate: OM crossing 0% sustained + trending toward 10% as S&M leverage kicks in at scale; fwdPE 170.9x rich but compresses fast as OM inflects; added 2026-07-30",
+    "note": "Cloudflare \u2014 global network infrastructure platform; CDN + DDoS protection + Zero Trust/SASE (Cloudflare One) + AI inference at the edge (Workers AI runs on 300+ PoPs globally); platform consolidation play: enterprises replacing 5-10 point security vendors with a single Cloudflare stack \u2014 each new product (CASB, DLP, RBI, ZTNA) sold into the existing base with near-zero CAC; GrossM 73.3%, RevG 33.5%, FCF 0.8% (barely positive), D/EV 0.037 (near-zero debt); Workers AI is an emerging edge inference network \u2014 low-latency AI calls at 300+ locations globally without GPU datacenter dependency; REAL BACKSLIDING since this entry was written, refreshed 2026-09-29 rather than left stale: OM was -9.7% at add time, described as \"already crossing zero\" \u2014 Schwab's raw operatingMarginTTM/MRQ now show -8.2%/-24.4%, meaning the MOST RECENT quarter alone moved backward, not toward the 0% gate (epsChangePercentTTM +27.2% is still genuinely positive, so this isn't a full reversal of the growth story, just a real margin step back worth tracking, not glossing over); market cap has grown to $124.3B in the meantime; gate: OM actually crossing 0% sustained + trending toward 10% as S&M leverage kicks in at scale \u2014 unchanged gate, but the MRQ move this cycle went the wrong way, watch next print closely; fwdPE 170.9x rich but compresses fast as OM inflects; added WATCHLIST 2026-07-30, refreshed 2026-09-29",
     "grade": "B"
   },
   "TREE": {
@@ -532,7 +532,7 @@
         "\u2265 10%"
       ]
     ],
-    "note": "LendingTree \u2014 online financial marketplace connecting consumers with lenders (mortgages, personal loans, auto, credit cards, insurance); pure lead-gen model = GrossM 96.3%, near-zero marginal cost per match; got crushed when rates went 3%\u21927%+ (mortgage origination volume collapsed \u2014 that's their core product); RevG 36.5% = rate normalization recovery is real and accelerating; FCF $61.7M on $442M market cap (14% FCF yield), fwdPE 4.8x \u2014 priced like it stays broken; OM 9.8% just below gate + D/EV elevated (debt from accumulated losses during rate shock) both blocking; gate: OM crossing 10% sustained + D/EV compressing as FCF pays down debt; rate environment is the macro lever \u2014 this is a recovery story, not a compounder; added 2026-07-30",
+    "note": "LendingTree \u2014 online financial marketplace connecting consumers with lenders (mortgages, personal loans, auto, credit cards, insurance); pure lead-gen model = GrossM 96.3%, near-zero marginal cost per match; got crushed when rates went 3%\u21927%+ (mortgage origination volume collapsed \u2014 that's their core product); RevG 36.5% = rate normalization recovery is real and accelerating; FCF $61.7M on $442M market cap (14% FCF yield), fwdPE 4.8x \u2014 priced like it stays broken; DATA-QUALITY CAUTION added 2026-09-29, not present when this was first written: Schwab's raw operatingMarginTTM and netProfitMarginTTM are byte-identical (14.3246/14.3246) and operatingMarginMRQ/netProfitMarginMRQ are also byte-identical (3.0546/3.0546) \u2014 the same red-flag signature already documented for SMTC elsewhere in this file (two independently-computed margins should not match exactly, especially on a POSITIVE margin where real tax/interest effects should create a gap); epsChangePercentTTM is -442.9%, an extreme trailing EPS collapse directly contradicting the TTM margin reading of +14.3% (above the old 10% gate) \u2014 don't trust the \"OM crossing 10%\" read as a real gate-clear until this resolves; mechanical filter currently still reads False regardless, so not an active promotion risk yet, but worth knowing before assuming the original OM 9.8%-just-below-gate story has simply improved; gate: OM crossing 10% sustained AND TTM/MRQ converging cleanly (not just TTM alone) + D/EV compressing as FCF pays down debt; rate environment is the macro lever \u2014 this is a recovery story, not a compounder; added WATCHLIST 2026-07-30, refreshed 2026-09-29",
     "grade": "A"
   },
   "ALC": {
@@ -741,17 +741,6 @@
     ],
     "note": "Boston Beer Company \u2014 craft + flavored malt beverage portfolio: Samuel Adams (premium craft, loyal following), Twisted Tea (hard iced tea, the real growth engine \u2014 consistent share gains, working-class/sports audience with strong repeat purchase), Truly Hard Seltzer (category peaked and collapsed post-COVID, significant write-downs dragging GAAP NM negative), Angry Orchard (cider, stable niche), Dogfish Head (craft, acquired 2019); GrossM 48.9%, D/EV 0.019 (near-zero debt, pristine balance sheet), FCF 23.0% (exceptional \u2014 operating cash machine intact despite GAAP losses); OM 9.3% (0.7% from gate), NM -3.6% (Truly inventory/impairment charges, not structural operating failure), ROE -8.6% (follows NM); RevG -3.3% (Truly drag on blended; Twisted Tea growing independently); fwdPE 17.5x; -30% from 52w high ($264 \u2192 $184); LT play \u2014 Twisted Tea alone is a durable brand with pricing power and no obvious AI/substitution threat; gate: OM \u2265 10% + NM \u2265 5% as Truly charges roll off and Twisted Tea scale lifts blended margins; added 2026-08-05",
     "grade": "B"
-  },
-  "STNE": {
-    "fails": [
-      [
-        "Debt/EV",
-        "1.549",
-        "\u2264 0.20"
-      ]
-    ],
-    "note": "StoneCo \u2014 Brazilian SMB payments + credit platform; V/MA-like toll on Brazil's merchant ecosystem (2M+ active merchants, stone-branded POS/software/banking); GrossM 73.6%, OM 44.3%, NM 25.9%, ROE 30.7%, FCF 86.6% \u2014 A+ on every quality metric; D/EV 1.835 only blocker \u2014 structural credit book artifact (StoneCo lends to merchants, funds loans through debt, same read as IBKR/SCHW where leverage is the business model not deterioration); RevG 4.3% slow (payment volume growth steady, credit portfolio being managed conservatively post-2021 credit loss episode); Nubank (NU) + MercadoPago (MELI) are real competitors \u2014 StoneCo differentiates on SMB software integration (vertical POS + ERP + banking in one platform); Brazil macro + BRL currency = structural risk layer; price $10.97 (-22.9% from 200MA) \u2014 dislocated from quality; gate: RevG reaccelerating above 10% as merchant base compounds + credit loss ratios holding stable (2021 episode was a stress test the model survived) + D/EV declining as credit book matures; added 2026-07-29",
-    "grade": "A+"
   },
   "CPAY": {
     "fails": [
@@ -1147,28 +1136,6 @@
     "note": "Flutter Entertainment \u2014 global online sports betting; FanDuel #1 US (~45% share) + Paddy Power/Betfair (UK/Ireland) + Sportsbet (Australia) + Sisal (Italy) + PokerStars; Betfair exchange model (P2P betting, FLUT takes commission) = structurally lower cost than traditional sportsbook; OM ~12%, NM ~9%, FCF ~4%, RevG ~22%, ROE ~12%; D/EV ~0.30 (serial acquisition debt \u2014 Sisal 2022 + PokerStars integration) only blocker; two-speed business: mature international at high margins subsidizing FanDuel US scale-up; gate: D/EV \u2264 0.20 as FCF deleverages",
     "grade": "B"
   },
-  "PGY": {
-    "fails": [
-      [
-        "Debt/EV",
-        "0.774",
-        "\u2264 0.20"
-      ]
-    ],
-    "note": "Pagaya Technologies \u2014 AI-powered credit underwriting network; embeds into bank/lender origination flows, expands credit access via ML risk models; NM 9.1%, ROE 19.5%, FCF 11.3% all strong; D/EV 0.593 the one blocker \u2014 improved from 0.81 at FUTURE_RADAR promotion but still well above 0.20 gate; gate: D/EV \u2264 0.20 as credit book matures and debt amortizes; promoted FUTURE_RADAR \u2192 WATCHLIST 2026-07-29",
-    "grade": "A"
-  },
-  "UPWK": {
-    "fails": [
-      [
-        "Debt/EV",
-        "0.485",
-        "\u2264 0.20"
-      ]
-    ],
-    "note": "Upwork \u2014 freelance marketplace; D/EV 0.44 (converts) only blocker, margins/FCF solid",
-    "grade": "A"
-  },
   "CLS": {
     "fails": [
       [
@@ -1199,7 +1166,7 @@
         "\u2264 0.20"
       ]
     ],
-    "note": "SS&C Technologies \u2014 fund admin infra, $1.28B FCF, extreme switching costs, debt 0.32 only blocker",
+    "note": "SS&C Technologies \u2014 fund admin infra, $1.28B FCF (FCF yield 7.1%), extreme switching costs; REFRESHED 2026-09-29 with real trend, thin comment previously: debt_to_ev has genuinely improved 0.32 -> 0.301 (real, modest, ~6% relative decline, still well above the 0.20 gate) \u2014 confirmed the ONLY blocker via passes_quality_filter(): OM 24.6% \u2713, NM 13.2% \u2713, ROE 12.6% \u2713 all clear; RevG 10.3%, fwd PE 10.2x (cheap); note Schwab's own D/Capital (51.85%) and D/E (111.95%) are different metrics from this file's debt_to_ev (total debt / enterprise value) \u2014 don't confuse the two, this file tracks debt_to_ev specifically; technical: below 10w MA (-3.3%), weekly RSI 54, weekly slope +5.5% (real positive), CMF +0.134 (real accumulation), -12.4% off 52w high, 87w structure -1.0% \"below LT\" \u2014 essentially at its long-term base, not extended; earnings Oct 22 (22d); gate: debt_to_ev continuing to decline toward 0.20 as FCF pays down debt; refreshed 2026-09-29",
     "grade": "A"
   },
   "SYM": {
@@ -1231,7 +1198,7 @@
         "\u2265 10%"
       ]
     ],
-    "note": "American Superconductor \u2014 power electronics, grid/defense; OpM 5.1%, one filter away",
+    "note": "American Superconductor \u2014 power electronics, grid/defense; STALE SNAPSHOT REFRESHED 2026-09-29 (old comment's \"OpM 5.1%, one filter away\" no longer matches \u2014 real move since then, not a typo): OM/NM TTM now +42.6%, though MRQ has decelerated hard to +10.1% (real, not artifact \u2014 no sign flip, still solidly positive just off its TTM pace); RevG TTM +25.9%, YoY +34.3% \u2014 strong and real; EPS Growth TTM +1806.2% (extreme but plausible off a very small prior-year base, small-company earnings inflection, not confirmed as an artifact); D/E near-zero (0.45%), current ratio 2.43 \u2014 clean balance sheet; ROE 30.2% but ROA only 1.5% \u2014 split worth noting, ROA is the more trustworthy read given the gap; grade context: the margin deceleration (42.6%\u219210.1%) is real and should be watched next print, but MRQ is still comfortably positive, not a warning sign like APD's; gate: OM sustaining double digits + margin trend stabilizing rather than continuing to decelerate; refreshed 2026-09-29",
     "grade": "A"
   },
   "BMY": {
@@ -1253,7 +1220,7 @@
         "\u2265 10%"
       ]
     ],
-    "note": "TG Therapeutics \u2014 Briumvi (ublituximab, anti-CD20 MS); faster infusion than Ocrevus, scaling fast; NM 66%, OM 17%, GrossM 83%, ROE 112%, RevG 69.6%, fwd P/E 18.6x; D/E 1.29 (commercialization converts) + FCF -$30M blocking; watching from distance \u2014 wait for real discount before considering",
+    "note": "TG Therapeutics \u2014 Briumvi (ublituximab, anti-CD20 MS); faster infusion than Ocrevus, scaling fast; STALE SNAPSHOT REFRESHED 2026-09-29 \u2014 old figures (NM 66%, OM 17%, ROE 112%) no longer match current data, real drift not a typo: GrossM 82.4% (MRQ 82.9%), OM/NM TTM +55.2% but MRQ decelerated sharply to +3.2% \u2014 a real, large step-down worth tracking, though still positive not a loss; ROE +100.3% (small-equity-base effect from a young commercial-stage company, treat as directional not literal) vs ROA a much more modest +7.3% \u2014 use ROA as the sanity check; RevG TTM +76.1%, YoY +87.3% \u2014 the real commercial-ramp story, still strong and accelerating; EPS Growth TTM +1746.7% (extreme, small-base effect off early commercialization, not confirmed artifact); D/E 124.6%, D/Capital 55.4% \u2014 real leverage, current ratio 4.27 still comfortable; still the same original thesis: watching from distance, wait for a real discount, but the MRQ margin deceleration is new information worth a closer look next print; refreshed 2026-09-29",
     "grade": "A"
   },
   "MDT": {
@@ -1407,7 +1374,7 @@
         "> 0%"
       ]
     ],
-    "note": "Air Products \u2014 industrial gases, green/blue hydrogen megaproject bet ($15B+, NEOM/Louisiana); D/EV 0.224 + FCF -5.6% from capex cycle both blocking; new CEO reviewing strategy; watch for FCF inflection as projects come online",
+    "note": "Air Products \u2014 industrial gases, green/blue hydrogen megaproject bet ($15B+, NEOM/Louisiana); REAL, SERIOUS DETERIORATION found on refresh 2026-09-29, not just a stale comment \u2014 the old \"D/EV + FCF blocking, watch for FCF inflection\" framing undersells what's actually happened: OM/NM TTM near breakeven (0.0%/-0.4%) but MRQ collapsed to -45.0%/-45.6% \u2014 a genuine, large recent-quarter loss, not a sign-flip artifact (both TTM and MRQ point the same direction, just a severe step down in magnitude); EPS TTM has turned negative (-$0.21, EPS Growth TTM -110.1%); ROE 0.0%, ROIC -0.1% \u2014 both reflect the same real weakness; D/E 104.5%, D/Capital 49.7% \u2014 leverage itself hasn't improved either; current ratio 1.08 (thin, worth watching); div yield 2.57% still being paid despite the loss quarter; this reads like the hydrogen megaproject bet (NEOM/Louisiana capex cycle) is genuinely hurting near-term earnings, not just suppressing FCF as the old comment implied \u2014 gate: MRQ OM/NM actually recovering toward breakeven, not just \"FCF inflecting\" as previously framed, before treating the new-CEO-strategy-review angle as a real catalyst; refreshed 2026-09-29",
     "grade": "B"
   },
   "PYPL": {
@@ -1757,38 +1724,6 @@
     "note": "CAVA Group \u2014 Mediterranean fast-casual (hummus/pita/bowls); the CMG analog in a less-penetrated cuisine category; company-owned model, same unit economics playbook; RevG 32.1% (still expanding rapidly, ~350 locations vs CMG's ~3,500 = long runway); GrossM 37.7% (restaurant ceiling, same as CMG); OM 6.4% (needs 10%), NM 4.8% (needs 5%), ROE 8.0% (needs 10%), FCF -0.2% (essentially breakeven) \u2014 all 4 within 2-3 quarters of clearing as new units mature and operating leverage kicks in; D/EV 0.066 (near-zero debt, clean balance sheet); fwd P/E 84x (growth premium, not a value entry); gate: OM \u2265 10% + NM \u2265 5% + FCF positive + ROE \u2265 10% \u2014 unit-level AUV growth + store maturity is the path, not a business model change; added 2026-08-04",
     "grade": "B"
   },
-  "PINS": {
-    "fails": [
-      [
-        "Op Margin",
-        "-3.5%",
-        "\u2265 10%"
-      ],
-      [
-        "ROE/ROA",
-        "ROE 6.5% / ROA 3.5%",
-        "\u2265 10% / \u2265 15%"
-      ]
-    ],
-    "note": "Pinterest \u2014 visual discovery + social commerce platform; 570M+ MAU, strong advertiser demand signal; GrossM 80%, FCF 7.5%, NM 7.6%, RevG 17.8%, D/EV 0.085, fwdPE 11x; OM -3.3% (needs 10%) + ROE 8.9% (needs 10%) the only two blockers \u2014 both within 1-2 quarters of clearing as ad platform operating leverage kicks in; shopping/commerce integration (Amazon, Salesforce partnerships) expanding monetization per user beyond standard display ads; added 2026-08-05",
-    "grade": "B"
-  },
-  "FVRR": {
-    "fails": [
-      [
-        "Op Margin",
-        "6.0%",
-        "\u2265 10%"
-      ],
-      [
-        "ROE/ROA",
-        "ROE 7.1% / ROA 2.8%",
-        "\u2265 10% / \u2265 15%"
-      ]
-    ],
-    "note": "Fiverr \u2014 two-sided freelance marketplace (Fiverr Business, Pro, Seller Plus); GrossM 82%, FCF 23.7% (exceptional for marketplace \u2014 structural cash generation), NM 7.2%, D/EV 0.026; OM 6.0% (needs 10%) + ROE 7.1% (needs 10%) + RevG -10.0% (declining \u2014 AI reducing demand for some commodity freelance categories) all blocking; the FCF at 23.7% is the honest signal \u2014 the business is generating real cash even while revenue contracts; gate: RevG stabilizing/turning positive as higher-value professional services replace commodity gigs + OM \u2265 10% as take-rate expands on Fiverr Business tier; added 2026-08-05",
-    "grade": "B"
-  },
   "ETSY": {
     "fails": [
       [
@@ -1802,7 +1737,7 @@
         "\u2265 10% / \u2265 15%"
       ]
     ],
-    "note": "Etsy \u2014 handmade/vintage marketplace; pure two-sided marketplace (no inventory, no fulfillment): 7.5M active sellers + 90M active buyers; GMS-based take rate ~21% = near-zero marginal cost per transaction once marketplace is liquid; GrossM 72.6%, FCF 16.3% (exceptional for marketplace), D/EV 0.13, fwd P/E 14.8x; OM 10.4% just above gate, NM 11.6%, ROE 2.3% (gate \u226510%) only blocker (buyback-distorted equity base, ROIC cleaner signal); RevG -1.0% (post-COVID normalization \u2014 GMS peaked 2021, now stabilizing at higher baseline); differentiated from Amazon/Shopify: handmade/vintage category = not commoditizable (buyers come for uniqueness, not price), high repeat purchase intent; Depop (gen-z resale) + Reverb (music gear) extend addressable categories; gate: ROE inflecting toward 10% as earnings rebuild equity base + RevG turning positive as GMS stabilizes; added 2026-08-04",
+    "note": "[LOCKED] Etsy \u2014 handmade/vintage marketplace; pure two-sided marketplace (no inventory, no fulfillment): 7.5M active sellers + 90M active buyers; GMS-based take rate ~21% = near-zero marginal cost per transaction once marketplace is liquid; GrossM 72.6%, FCF 16.3% (exceptional for marketplace), D/EV 0.13, fwd P/E 14.8x; OM 10.4% just above gate, NM 11.6% (yfinance TTM \u2014 see contamination note below), ROE 2.3% (gate \u226510%) only mechanical blocker (buyback-distorted equity base, ROIC cleaner signal); CONTAMINATED, per internal_margin_trend_scanner.py (2026-09-28): Schwab's raw netProfitMarginTTM/MRQ show a real sign flip, +7.1% TTM vs -7.0% MRQ \u2014 the most recent quarter alone was a net LOSS, not just softer margin, contradicting the positive NM this comment's yfinance figure implies; not an urgent promotion risk right now since ROE 2.3% already blocks it mechanically regardless (same reasoning as INVA elsewhere in this file), but the NM/ROE numbers here aren't fully trustworthy until a clean quarter shows TTM/MRQ converging \u2014 [LOCKED] added 2026-09-28 so this isn't silently promoted on the ROE gate clearing before the MRQ loss is understood; RevG -1.0% (post-COVID normalization \u2014 GMS peaked 2021, now stabilizing at higher baseline); differentiated from Amazon/Shopify: handmade/vintage category = not commoditizable (buyers come for uniqueness, not price), high repeat purchase intent; Depop (gen-z resale) + Reverb (music gear) extend addressable categories; gate: ROE inflecting toward 10% as earnings rebuild equity base + RevG turning positive as GMS stabilizes + MRQ net margin returning positive and converging with TTM; added 2026-08-04",
     "grade": "B"
   },
   "W": {
@@ -1876,7 +1811,7 @@
         "> 0%"
       ]
     ],
-    "note": "Royalty Pharma \u2014 largest pharma royalty acquirer; owns royalty rights on ~35+ approved drugs (Vertex CF franchise/Trikafta, J&J Imbruvica, AZ Farxiga, Biogen Leqembi, Novartis Promacta, BMS Opdivo); same model as TPL but for drugs: funds late-stage trials or buys existing royalty streams from universities/biotechs, then collects % of drug sales for patent life \u2014 no clinical risk, no manufacturing, no sales force; NM 33.9%, ROE 13.8%, RevG 11.0%; D/EV 0.236 (deliberate leverage to fund royalty acquisitions, amortizes on incoming royalty cash \u2014 gate \u2264 0.20) + FCF -2.8% (royalty acquisition spend coded as investing outflow, same artifact as TPL \u2014 not structural cash burn) both blocking; grade A; added WATCHLIST 2026-07-29",
+    "note": "Royalty Pharma \u2014 largest pharma royalty acquirer; owns royalty rights on ~35+ approved drugs (Vertex CF franchise/Trikafta, J&J Imbruvica, AZ Farxiga, Biogen Leqembi, Novartis Promacta, BMS Opdivo); same model as TPL but for drugs: funds late-stage trials or buys existing royalty streams from universities/biotechs, then collects % of drug sales for patent life \u2014 no clinical risk, no manufacturing, no sales force; D/EV 0.236 (deliberate leverage to fund royalty acquisitions, amortizes on incoming royalty cash \u2014 gate \u2264 0.20) + FCF -2.8% (royalty acquisition spend coded as investing outflow, same artifact as TPL \u2014 not structural cash burn) both blocking; grade A; REAL WITHIN-YEAR DETERIORATION, refreshed 2026-09-29 rather than left at the original NM 33.9%/ROE 13.8% snapshot: Schwab's raw netProfitMarginTTM/MRQ now show 32.0%/2.6% and operatingMarginTTM/MRQ show 53.1%/12.1% \u2014 the TTM average is being propped up by much stronger earlier quarters, and the trend has genuinely weakened, not just cooled slightly; epsChangePercentTTM -6.8% (real, mild, consistent direction, not an artifact contradiction); still no clinical/manufacturing risk structurally, this is a real earnings-trajectory softening worth tracking, not a data-quality flag; gate: OM/NM MRQ recovering back toward the TTM average, not just FCF/D-EV compressing as originally framed \u2014 the margin trend itself now needs watching too; added WATCHLIST 2026-07-29, refreshed 2026-09-29",
     "grade": "B"
   },
   "CBRS": {
@@ -2157,22 +2092,6 @@
       ]
     ],
     "note": "Vontier Corporation \u2014 Fortive 2020 spinoff; Gilbarco Veeder-Root (dominant fuel dispenser + point-of-sale systems for gas stations, plus EPA-mandated underground storage tank leak-detection monitoring \u2014 regulatory-driven replacement demand, deep integration into station infrastructure) + Matco Tools (franchise mobile-tool distribution to independent auto techs, Snap-on-style model) + Teletrac Navman (fleet telematics); moat is real but narrower than a category-definer \u2014 regulatory compliance + franchise distribution, not a platform network effect; GrossM 47.2% \u2713, OM 19.4% \u2713, NM 11.3% \u2713, ROE 28.9% \u2713, FCF 7.7% \u2713 \u2014 5/7 gates; D/EV 31.3% (spinoff-allocated debt) + RevG -2.2% (fuel dispenser replacement cycle lumpy, EV transition headwind on legacy fuel systems) both blocking; grade B; gate: D/EV \u2264 0.20 as FCF deleverages + RevG turning positive as EV-charging/mobility segment offsets fuel-systems decline; added WATCHLIST 2026-09-05",
-    "grade": "B"
-  },
-  "RYN": {
-    "fails": [
-      [
-        "Debt/EV",
-        "0.265",
-        "\u2264 0.20"
-      ],
-      [
-        "ROE/ROA",
-        "ROE 2.0% / ROA 1.8%",
-        "\u2265 10% / \u2265 15%"
-      ]
-    ],
-    "note": "Rayonier \u2014 pure-play timberland REIT, now the largest publicly-traded one after absorbing PotlatchDeltic (PCH) in 2024; moat = irreplaceable land scarcity + multi-decade growth cycles no competitor can accelerate; OM 11.8% \u2713, NM 7.8% \u2713, FCF 1.8% \u2713 \u2014 3/7 gates; ROE 2.0% + D/EV 24.9% both REIT-structure artifacts (real estate at historical cost compresses ROE, secured leverage against income-generating land is not deteriorating debt \u2014 same read as PLD/VICI); GrossM 24.8% structurally low for timber operations; RevG 272% is the PCH-consolidation effect, not organic \u2014 treat as a one-time step change, not a growth trend; grade B (REIT-artifact framing); gate: ROE/D-EV normalizing as PCH integration completes + AFFO growth confirming underlying quality; added as part of a sector-coverage audit filling the \"timber\" gap in the AI-disruption-resistance lens; added WATCHLIST 2026-09-05",
     "grade": "B"
   },
   "BROS": {
@@ -2596,15 +2515,51 @@
     "note": "Worthington Enterprises, Inc. \u2014 WAVE ceiling-grid systems (JV with Armstrong World Industries) + Pressure Cylinders (propane tanks/cylinders) + Consumer Products (Coleman camping gear, tool storage); NOT a datacenter-infrastructure play despite the surface-level building-products association \u2014 checked plainly, no primary datacenter exposure the way cooling/power names (Vertiv, nVent, Eaton) actually have, at most an incidental sliver from commercial finished-space demand; single blocker on the standard gate \u2014 Op Margin 4.0% (well below the 10% gate) \u2014 6/7 gates; grade B; D/EV 0.109 \u2713 (clean), ROE 16.2% \u2713 (clears independently of low ROA 3.1%), FCF 2.3% \u2713 (real but modest \u2014 \"decent cash generator,\" not a standout cash cow); REAL UNRESOLVED DATA CONFLICT on the one blocker, flagged not resolved: Schwab's raw operatingMarginTTM/MRQ show 11.2%/12.9% \u2014 comfortably PASSING the same gate that yfinance's 4.0% fails; epsChangePercentTTM +63.5% (strong, genuine) leans toward the higher Schwab margin being closer to reality, but not confirmed either way, same kind of cross-vendor gap already flagged for NGVT/CCEP; $2.9B market cap; dividendYield 1.36% (real, modest); RevG +13.2% (fy1 +9.4%); technical: zone fresh, +3.2% above 10w MA, RSI 57 comfortable, weekly slope +2.8%, CMF +0.077, 87w structure +9.3% \"at base\" \u2014 genuinely healthy, not stretched; gate to UNIVERSE: resolving the OM cross-vendor gap (or Op Margin crossing 10% on the yfinance figure directly) before trusting a promotion; added WATCHLIST 2026-09-24",
     "grade": "B"
   },
-  "ONC": {
+  "BBIO": {
     "fails": [
       [
-        "Passes all filters",
-        "\u2014",
-        "\u2014"
+        "Debt/EV",
+        "0.213",
+        "\u2264 0.20"
+      ],
+      [
+        "Op Margin",
+        "-43.9%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-97.0%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE None% / ROA -26.0%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "-2.4%",
+        "> 0%"
       ]
     ],
-    "note": "BeOne Medicines Ltd ADR (formerly BeiGene) \u2014 commercial-stage oncology biopharma; Swiss-domiciled ADR, foreign-structure caveat worth naming plainly, same disclosure category as TIGO/NVO elsewhere in this framework; GrossM 88.9% (MRQ 89.8%), OM 10.7% (MRQ 13.9%, improving), NM 10.7% (MRQ 13.9%, improving) \u2014 margins moving the right direction, not the NTNX/INVA/ZM deterioration pattern; RevG TTM +34.4%, YoY +40.2% \u2014 strong and accelerating, both metrics agree; ROE 14.7%, ROA 7.5%, ROIC 9.3% \u2014 reasonable, not artifact-extreme; D/Capital 24.2%, D/E 33.8% \u2014 healthy leverage, current ratio 3.40 (strong liquidity); ARTIFACT CAUTION on trailing EPS: epsChangePercentTTM -140.3% despite margins improving on MRQ basis \u2014 same disconnect signature flagged elsewhere in this framework, not resolved either way, don't trust trailing EPS/payout math at face value; priced for growth not value: trailing PE 64.6x, P/CF 35.4x; no dividend; $41.0B market cap; technical: zone fresh, +3.2% above 10w MA, 77% runway to ceiling, weekly RSI 60 (sweet spot), weekly slope +7.0%, CMF +0.016 (barely positive, not a strong flow confirmation yet), 87w structure +20.8% \"mild\" (not extended); earnings Nov 5 (39d); gate to UNIVERSE: EPS/margin metrics converging cleanly + valuation multiple compressing as growth is proven out over further quarters; added WATCHLIST 2026-09-27",
+    "note": "BridgeBio Pharma \u2014 commercial-stage biopharma; Attruby (acoramidis, FDA-approved Nov 2024) for ATTR-CM is the real growth driver, not a hope \u2014 confirmed via SEC filings/investor releases: US net product revenue $146.0M (Q4'25) -> $180.6M (Q1'26) -> $222.4M (Q2'26), +120.4% YoY, growth led by treatment-naive patient starts; matches the live data almost exactly: RevG TTM +202.4%, YoY +126.3%; GrossM 94.4% (MRQ 93.8%) \u2014 pharma-royalty-like economics; OM/NM TTM -98.5%/-97.0% but MRQ -64.0%/-62.5% \u2014 genuinely improving as revenue scales against a mostly-fixed cost base, not an artifact contradiction; still deeply GAAP-loss-making, EPS TTM -$3.57; ARTIFACT WARNING on ROE/P-B specifically: ROE +32.8% and P/B -5.78 are NOT trustworthy signals \u2014 D/Capital 325.4% and D/E -112.6% both point to negative stockholders' equity (likely convertible-debt financing + accumulated deficit, common mid-commercial-ramp biotech financing), not real capital efficiency; current ratio 1.23, reasonably healthy short-term liquidity; $12.8B market cap, Beta 0.97; no dividend; REAL CAUTION on the technical side, not a \"buy the growth story\" entry yet: below its 10w MA (-10.8%), weekly RSI 43, weekly slope -7.1% (declining), CMF -0.111 (real distribution, not mild), -22.2% off 52w high, 87w structure +12.7% \"mild\"; earnings Oct 28 (29d); gate to UNIVERSE: OM/NM continuing to converge toward breakeven as Attruby revenue scales + CMF distribution stopping before treating this as a technical entry, not just a fundamentals one; added WATCHLIST 2026-09-29",
+    "grade": "B"
+  },
+  "LFUS": {
+    "fails": [
+      [
+        "Net Margin",
+        "-0.3%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -0.3% / ROA 6.7%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Littelfuse \u2014 circuit-protection (fuses) + power semiconductors + sensors for electronics/auto/industrial; TTM loss is real and explained, not a mystery artifact \u2014 Q4 2025 carried a $301M non-cash goodwill impairment (Semiconductor Products business), producing a full-year 2025 GAAP loss (-$2.89 EPS); confirmed via SEC filings the company genuinely returned to profitability in H1 2026 ($164.6M net income for the six months ended June 27, 2026) \u2014 matches the live data exactly: OM/NM TTM -0.3% (impairment-dragged) vs MRQ +12.1% (real recovery, independently confirmed, not just a Schwab-margin reading); LOTS of real blockers on the trailing-basis mechanical gates: OM -0.3% \u2717 (10% gate), NM -0.3% \u2717 (5% gate), ROE -0.3% \u2717 and ROA 6.7% \u2717 (both fail, ROA below the 15% fallback floor too) \u2014 all casualties of the one-time charge aging through the TTM window, not ongoing deterioration; CLEAN: D/Capital 17.96% \u2713 (well inside the 20% gate), current ratio 2.76, FCF yield 3.36% \u2713 (real, positive); RevG TTM +15.4%, YoY +8.9% \u2014 both positive, consistent; cross-vendor note: yfinance's own operatingMargins reads +18.8%, notably different from Schwab's -0.3% TTM \u2014 same kind of unresolved gap already flagged for WOR/NGVT/CCEP; grade context: the \"clears in 1-2 quarters\" read is concrete, not just hopeful \u2014 Q4 2025 (the impairment quarter) rolls out of the trailing-twelve-month window within the next couple of reporting cycles, at which point OM/NM/ROE clear mechanically even without further operational improvement, purely from the one-time charge aging out of the average; $10.9B market cap, Beta 1.47; technical: -0.4% below 10w MA (essentially at it), weekly RSI 54 neutral, weekly slope +1.5% mildly positive, CMF +0.008 essentially neutral, -10.9% off 52w high, 87w structure +40.4% \"moderate\" \u2014 healthy, not extended; earnings Oct 28 (29d); gate to UNIVERSE: OM/NM/ROE/ROA clearing as Q4 2025 rolls out of the TTM window (mechanical) + real continued profitability confirming the H1 2026 recovery holds (not mechanical); added WATCHLIST 2026-09-29",
     "grade": "B"
   }
 }
