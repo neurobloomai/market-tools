@@ -1,38 +1,38 @@
-**Subject:** Market Pulse — Week ending Sep 18 2026 · Mixed / Breadth Diverging
+**Subject:** Market Pulse — Week ending Oct 02 2026 · Mixed / Aligned
 
 ---
 
 **POSTURE**
 
-US: 23.5% above MA20, 47.0% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 24 names Fully Stacked. India: 31.8% above MA20, 35.2% above MA100 — correcting, structure under pressure. 7 names Fully Stacked.
+US: 41.3% above MA20, 42.0% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 31 names Fully Stacked. India: 13.6% above MA20, 20.5% above MA100 — correcting, structure under pressure. 2 names Fully Stacked.
 
 
 **WHAT MOVED**
 
-Entered Fully Stacked — Universe: NVDA, JNJ, ABBV, MRK, TMO, FTNT, EW, INCY, A, MEDP, DXCM, FFIV, QRVO, AMD, QLYS, ILMN, HAE
-Entered Fully Stacked — Watchlist: SNOW, CRWD, DT, TEAM, P, WAT, RVTY, FROG, TGTX, S, NTNX
-Left Fully Stacked — Universe: JPM, CF, APH, CHRD, COP, NUE
-Left Fully Stacked — Watchlist: CNC, NTRS, QCRH
+Entered Fully Stacked — Universe: PANW, EXPD, MTD, LGND, AME, PLTR, TER, KEYS, DUOL, COKE, MATX, JCI
+Entered Fully Stacked — Watchlist: ENTG, DDOG, FROG, GTLB, W, MSGS, SMTC
+Left Fully Stacked — Universe: AAPL, JNJ, MRK, HOOD, MEDP, VRTX, QRVO, HAE, ETON
+Left Fully Stacked — Watchlist: DELL, BIO, TGTX, BIIB
 
 **SETUPS WORTH WATCHING**
 
-**MSFT** [Universe] — weekly gate open, IN, +4.7% vs MA10w, W.slope +34.27
-**META** [Universe] — weekly gate open, IN, +10.2% vs MA10w, W.slope +12.82
-**AAPL** [Universe] — weekly gate open, IN, +4.7% vs MA10w, W.slope +8.14
+**MU** [Universe] — weekly gate open, IN, +10.4% vs MA10w, W.slope +42.38
+**MSFT** [Universe] — weekly gate open, IN, +4.0% vs MA10w, W.slope +36.90
+**META** [Universe] — weekly gate open, IN, +16.1% vs MA10w, W.slope +23.61
 
 **WATCHLIST WATCH**
 
-**AMG** — Debt/EV: 0.246 (gate ≤ 0.20)
+**AMG** — Debt/EV: 0.237 (gate ≤ 0.20)
   _multi-boutique AM (AQR, Tweedy Browne etc.)_
-**AMGN** — Debt/EV: 0.229 (gate ≤ 0.20)
+**AMGN** — Debt/EV: 0.214 (gate ≤ 0.20)
   _top-10 global biopharma_
 
 **ONE THOUGHT**
 
-The US market is doing what healthy corrections look like—short-term momentum has pulled back below the 20-day while the long-term structure (47% above the 100-day) remains intact, and we're seeing more names hold their positions in that durable setup than lose them. India, by contrast, is correcting into structural pressure, with both intermediate and longer-term positioning deteriorating together. The divergence matters: one market is shaking out weak hands within an uptrend; the other is testing whether its uptrend survives at all.
+The market is exhibiting a peculiar bifurcation: long-term structures remain largely intact across the US (42% of names above their 100-day average), yet short-term momentum has compressed enough that pullbacks are now routine—visible in the 41.3% above MA20 and reinforced by 13 names exiting Fully Stacked status this week alone. The 19 new entries suggest quality names are still emerging from consolidation, but the composition shift (more exits than usual, with household names like AAPL and JNJ among them) indicates the market is asking holders to prove conviction rather than rewarding passive duration. For investors managing both timeframes, this is the distinction between a healthy correction within a bull structure and the early signal that participation may be narrowing—watch whether the next batch of entries comes from the same quality cohort or represents a widening net.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-09-21 08:14 UTC · Not financial advice_
+_Draft generated 2026-10-05 09:25 UTC · Not financial advice_
