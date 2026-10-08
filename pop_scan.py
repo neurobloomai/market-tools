@@ -61,7 +61,7 @@ MEGA_CAP = [
     # Semis + equipment
     'MU', 'AMD', 'NVDA', 'AVGO', 'QCOM', 'INTC', 'AMAT',
     # Mega-cap tech (QQQ drivers)
-    'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META', 'TSLA', 'NFLX', 'CSCO',
+    'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'META', 'TSLA', 'NFLX', 'CSCO', 'PLTR',
     # Financials
     'JPM', 'V', 'MA', 'GS',
     # Healthcare / Pharma
