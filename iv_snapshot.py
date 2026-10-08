@@ -126,11 +126,22 @@ def get_atm_iv(ticker):
 
 
 def get_hv30(ticker):
-    """30-day realized vol annualized (%). Returns float or None."""
+    """30-day realized vol annualized (%). Returns float or None.
+
+    Log returns over the trailing 30 observations -- standard quant-finance
+    convention (additive across time, symmetric for up/down moves), not the
+    simple-percentage/21-obs version this used to compute. Caught live
+    2026-10-08: every ad-hoc manual HV30 check this session (PLTR, MU, MA,
+    INTU, HL, AMAT, AVGO) used log returns/30-obs, silently diverging from
+    this shipped function's simple-returns/21-obs -- verified a real 2.6pt
+    gap on MU (47.75% old vs 45.12% new) at the exact moment that matters
+    for judging an IV/HV ratio as cheap vs fair. Standardizing here rather
+    than changing every future manual check to match the old convention.
+    """
     try:
         hist = yf.Ticker(ticker).history(period='3mo')['Close']
-        ret  = hist.pct_change().dropna()
-        hv   = ret.rolling(21).std().iloc[-1] * np.sqrt(252) * 100
+        ret  = np.log(hist / hist.shift(1)).dropna()
+        hv   = ret.tail(30).std() * np.sqrt(252) * 100
         return round(float(hv), 2)
     except Exception:
         return None

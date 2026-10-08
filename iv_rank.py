@@ -20,12 +20,15 @@ from pathlib import Path
 
 DATA_FILE = Path(__file__).parent / 'iv_data.json'
 
-TIERS = {
-    'SPY': 1, 'QQQ': 1,
-    'NVDA': 2, 'AAPL': 2, 'MSFT': 2, 'META': 2,
-    'AMZN': 2, 'GOOGL': 2, 'TSLA': 2,
-    'MU': 3, 'AMD': 3, 'JPM': 3, 'GS': 3, 'NFLX': 3,
-}
+# TIERS used to be duplicated here AND in iv_snapshot.py -- caught live
+# 2026-10-08: PLTR was added to iv_snapshot.py's TIERS/SPREAD_UNIVERSE on
+# 2026-10-07 but not here, so internal_iv_structure_scanner.py's bare/full
+# scan (which reads THIS module's TIERS for its default universe) silently
+# excluded PLTR even though its IV data was being collected correctly --
+# no error, just absent. Single source of truth now: import from
+# iv_snapshot.py, the file that actually gets updated when a ticker is
+# added, so this can't drift out of sync again.
+from iv_snapshot import TIERS
 
 SELL_THRESHOLD = 70   # IV rank above this = elevated
 BUY_THRESHOLD  = 25   # IV rank below this = cheap options
@@ -55,11 +58,26 @@ def compute(ticker, history):
     current_date = dates_v[-1]
     days         = len(ivs)
 
-    # IV rank + percentile (last 252 or all available)
+    # IV rank + percentile (last 252 or all available) -- suppressed to None
+    # below 5 days of history rather than returning the hi==lo fallback
+    # (50.0) as if it were a real rank. Caught live 2026-10-08: PLTR had
+    # only 2 days of history, got the 50.0 fallback, and
+    # internal_iv_structure_scanner.py (which doesn't check `days` before
+    # using the rank) confidently printed "BULL CALL DEBIT SPREAD, IV rank
+    # 50.0%" off essentially no data. iv_snapshot.py's own compute_rank()
+    # already had this discipline (returns None below 5 days) -- this
+    # brings compute() in line with it so EVERY consumer gets a clear
+    # "not enough data" signal instead of a fake number, not just the ones
+    # that happen to check `days` themselves.
     window = ivs[-252:]
     lo, hi = min(window), max(window)
-    rank   = (current_iv - lo) / (hi - lo) * 100 if hi != lo else 50.0
-    pct    = sum(1 for v in window if v < current_iv) / len(window) * 100
+    if days < 5:
+        rank, pct = None, None
+    else:
+        rank = (current_iv - lo) / (hi - lo) * 100 if hi != lo else 50.0
+        pct  = sum(1 for v in window if v < current_iv) / len(window) * 100
+        rank = round(rank, 1)
+        pct  = round(pct, 1)
 
     # IV/HV ratio
     ratio = current_iv / current_hv if current_hv else None
@@ -98,8 +116,8 @@ def compute(ticker, history):
         'iv':        current_iv,
         'hv':        current_hv,
         'ratio':     ratio,
-        'rank':      round(rank, 1),
-        'pct':       round(pct, 1),
+        'rank':      rank,
+        'pct':       pct,
         't5':        t5,
         't20':       t20,
         'signal':    sig,
@@ -124,7 +142,8 @@ def main():
         return
 
     # Sort by IV rank descending (highest = most interesting for selling)
-    results.sort(key=lambda x: x['rank'], reverse=True)
+    # None (still-building history) sorts to the bottom regardless of direction
+    results.sort(key=lambda x: x['rank'] if x['rank'] is not None else -1, reverse=True)
 
     # SPY/QQQ are a regime read (market-wide IV), not a single-name spread
     # candidate — sectioned off from the individual tickers below rather
