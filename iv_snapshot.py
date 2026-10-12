@@ -46,6 +46,9 @@ SPREAD_UNIVERSE = [
     'SPY', 'QQQ',
     'NVDA', 'AAPL', 'MSFT', 'META', 'AMZN', 'GOOGL', 'TSLA',
     'MU', 'AMD', 'JPM', 'GS', 'NFLX',
+    'PLTR',                     # added 2026-10-07 -- proven liquid in practice (two real
+                                 # positions filled/closed this week with tight spreads and
+                                 # real volume), not just theoretically qualifying
 ]
 
 TIERS = {
@@ -53,6 +56,7 @@ TIERS = {
     'NVDA': 2, 'AAPL': 2, 'MSFT': 2, 'META': 2,
     'AMZN': 2, 'GOOGL': 2, 'TSLA': 2,
     'MU': 3, 'AMD': 3, 'JPM': 3, 'GS': 3, 'NFLX': 3,
+    'PLTR': 2,
 }
 
 
