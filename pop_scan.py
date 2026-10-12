@@ -1001,7 +1001,7 @@ def print_cli_table(all3, two, tight, misses, no_data, label, grades, hourly, sh
         f"  {'TICKER':<{COL['tick']}} {'ZONE':<{COL['zone']}} {'PRICE':>{COL['price']}}"
         f"  {'vs10d':>{COL['pct']}}  {'vs20d':>{COL['pct']}}  {'vs50d':>{COL['pct']}}"
         f"  {'RSI':>{COL['rsi']}}"
-        f"  {'WkCMF':>{COL['cmf']}}  {'WkSlope':>{COL['slope']}}"
+        f"  {'WkCMF10':>{COL['cmf']}}  {'Wk10Slp':>{COL['slope']}}"
     )
     sep = '  ' + '─' * (len(hdr) - 2)
     print(f'{_DIM}{hdr}{_RST}')
@@ -1082,7 +1082,14 @@ def print_combined_cli(tickers, ext_results, pop_results, h_stacks, label, grade
             print(f'  {t:<12}  {_DIM}no data{_RST}')
 
     # ── Daily MA lens ──────────────────────────────────────────────────────
-    print(f'\n  {_DIM}── Daily MA Position ─────────────────────────────────────────────────────{_RST}')
+    # Section is titled "Daily" for the price/MA columns (vs10d/vs20d/vs50d,
+    # genuinely daily-bar-based) -- but WkCMF/WkSlope printed in this same
+    # table are a 10-week WEEKLY measure (pop_scan's own _weekly_cmf(),
+    # built from fetch_weekly() bars), not daily. Caught live 2026-10-12,
+    # same mislabeling already fixed in internal_clean_setup_scanner.py's
+    # D.CMF column -- relabeled WkCMF10/Wk10Slp here too so nothing in this
+    # table implies daily-bar data that isn't.
+    print(f'\n  {_DIM}── Daily MA Position (price) + WkCMF10 (10-week weekly flow, not daily) ──{_RST}')
     hourly = {t: s for t, s in zip(tickers, h_stacks)}
     valid  = [r for r in pop_results if r is not None]
     hits   = sorted([r for r in valid if r['above'] >= 2], key=lambda x: (-x['above'], -x['pct50']))
