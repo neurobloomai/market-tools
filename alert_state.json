@@ -1,11 +1,10 @@
 {
   "setups": {
-    "NVDA": "IN",
-    "META": "IN",
+    "NVDA": "-EXT",
+    "META": "-EXT",
     "MSFT": "IN",
     "AAPL": "IN",
-    "AMZN": "IN",
-    "MU": "IN"
+    "MU": "-EXT"
   },
   "watchlist": {
     "MELI": 1,
@@ -72,6 +71,16 @@
     "SARO": 1,
     "SMTC": 1,
     "NOVT": 1,
-    "WOR": 1
+    "WOR": 1,
+    "NOC": 1,
+    "BDC": 1,
+    "Q": 1,
+    "PEP": 1,
+    "MDLZ": 1,
+    "STZ": 1,
+    "SM": 1,
+    "AMT": 1,
+    "SPG": 1,
+    "CLX": 1
   }
 }
