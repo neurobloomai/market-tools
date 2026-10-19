@@ -1,24 +1,22 @@
-**Subject:** Market Pulse — Week ending Oct 02 2026 · Mixed / Aligned
+**Subject:** Market Pulse — Week ending Oct 16 2026 · Mixed / Aligned
 
 ---
 
 **POSTURE**
 
-US: 41.3% above MA20, 42.0% above MA100 — more names intact long-term than short-term. Short-term pullbacks within healthy structure. 31 names Fully Stacked. India: 13.6% above MA20, 20.5% above MA100 — correcting, structure under pressure. 2 names Fully Stacked.
+US: 58.3% above MA20, 51.7% above MA100 — short-term momentum leading. 37 names Fully Stacked. India: 29.5% above MA20, 23.9% above MA100 — correcting, structure under pressure. 2 names Fully Stacked.
 
 
 **WHAT MOVED**
 
-Entered Fully Stacked — Universe: PANW, EXPD, MTD, LGND, AME, PLTR, TER, KEYS, DUOL, COKE, MATX, JCI
-Entered Fully Stacked — Watchlist: ENTG, DDOG, FROG, GTLB, W, MSGS, SMTC
-Left Fully Stacked — Universe: AAPL, JNJ, MRK, HOOD, MEDP, VRTX, QRVO, HAE, ETON
-Left Fully Stacked — Watchlist: DELL, BIO, TGTX, BIIB
+Entered Fully Stacked — Universe: AAPL, V, MA, LLY, TMO, CRM, PAYC, PCTY, TRV, CTAS, TRI, IT, FAST, CHD, WSM, ECL, MATX, ONC
+Left Fully Stacked — Universe: NVDA, FTNT, PANW, MRVL, LGND, ZBRA, APH, AME, NVT, ANET, PLTR, TSM, ASML, KEYS, AAMI, FCX, SCCO, DUOL, FFIV, QLYS, ILMN, FORM, NTAP, JCI
 
 **SETUPS WORTH WATCHING**
 
-**MU** [Universe] — weekly gate open, IN, +10.4% vs MA10w, W.slope +42.38
-**MSFT** [Universe] — weekly gate open, IN, +4.0% vs MA10w, W.slope +36.90
-**META** [Universe] — weekly gate open, IN, +16.1% vs MA10w, W.slope +23.61
+**META** [Universe] — weekly gate open, -EXT, +8.2% vs MA10w, W.slope +41.35
+**MU** [Universe] — weekly gate open, -EXT, -11.6% vs MA10w, W.slope +36.13
+**NVDA** [Universe] — weekly gate open, -EXT, -4.0% vs MA10w, W.slope +4.65
 
 **WATCHLIST WATCH**
 
@@ -29,10 +27,10 @@ Left Fully Stacked — Watchlist: DELL, BIO, TGTX, BIIB
 
 **ONE THOUGHT**
 
-The market is exhibiting a peculiar bifurcation: long-term structures remain largely intact across the US (42% of names above their 100-day average), yet short-term momentum has compressed enough that pullbacks are now routine—visible in the 41.3% above MA20 and reinforced by 13 names exiting Fully Stacked status this week alone. The 19 new entries suggest quality names are still emerging from consolidation, but the composition shift (more exits than usual, with household names like AAPL and JNJ among them) indicates the market is asking holders to prove conviction rather than rewarding passive duration. For investors managing both timeframes, this is the distinction between a healthy correction within a bull structure and the early signal that participation may be narrowing—watch whether the next batch of entries comes from the same quality cohort or represents a widening net.
+The US market is exhibiting a peculiar bifurcation: broad short-term momentum (58% above MA20) masks a selectivity problem underneath, with only 37 names fully qualified versus the exits of 24 established positions this period. The composition of those exits—a cluster of semiconductor, cybersecurity, and semiconductor-adjacent names alongside chipmaking equipment—suggests mean reversion in the trades that led us higher, not new conviction building. Meanwhile, India's structural deterioration (under 30% above both moving averages) and the concentration of quality names into mega-cap holdings (2 Fully Stacked) indicates capital is rotating into defensive positioning globally, which typically precedes either a pause or a repricing of duration risk.
 
 ---
 
 → Full context: [neurobloom.ai](https://neurobloom.ai)
 
-_Draft generated 2026-10-05 09:25 UTC · Not financial advice_
+_Draft generated 2026-10-19 08:04 UTC · Not financial advice_
