@@ -59,6 +59,22 @@ jobs:
           git pull --rebase origin main || true
           git push || (sleep 10 && git pull --rebase origin main && git push)
 
+      - name: Sync after IV snapshot
+        run: |
+          git stash --include-untracked || true
+          git pull --rebase origin main || true
+          git stash pop || true
+
+      - name: Refresh signal cache (BullDiv/BearDiv/Trend)
+        run: python screener.py --mega
+
+      - name: Commit signal cache
+        run: |
+          git add signal_cache.json
+          git diff --staged --quiet || git commit -m "signal_cache: $(date -u +'%Y-%m-%d') refresh"
+          git pull --rebase origin main || true
+          git push || (sleep 10 && git pull --rebase origin main && git push)
+
       # ── Deploy GitHub Pages ───────────────────────────────────────────────────
       - uses: actions/configure-pages@v5
 
