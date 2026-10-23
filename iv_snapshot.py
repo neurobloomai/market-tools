@@ -60,37 +60,62 @@ TIERS = {
 }
 
 
-def get_atm_iv_schwab(ticker):
-    """ATM IV via Schwab option chain — volatility field is already %, no conversion needed."""
-    try:
-        from schwab_client import get_option_chain
-        data = get_option_chain(ticker, strikes=3)
-        if 'error' in data or data.get('status') == 'FAILED':
-            return None, None
-        underlying = data.get('underlyingPrice')
-        if not underlying:
-            return None, None
-        target  = _date.today() + timedelta(days=30)
-        all_exp = sorted(set(
-            list(data.get('callExpDateMap', {}).keys()) +
-            list(data.get('putExpDateMap',  {}).keys())
-        ))
-        if not all_exp:
-            return None, None
-        exp = min(all_exp, key=lambda x: abs((_date.fromisoformat(x.split(':')[0]) - target).days))
-        calls = data.get('callExpDateMap', {}).get(exp, {})
-        puts  = data.get('putExpDateMap',  {}).get(exp, {})
-        all_strikes = sorted(set(list(calls.keys()) + list(puts.keys())), key=float)
-        if not all_strikes:
-            return None, None
-        atm   = min(all_strikes, key=lambda s: abs(float(s) - underlying))
-        c_iv  = (calls.get(atm) or [{}])[0].get('volatility', 0)
-        p_iv  = (puts.get(atm)  or [{}])[0].get('volatility', 0)
-        if c_iv < 1.0 or p_iv < 1.0:   # Schwab volatility is already %; < 1% = bad data
-            return None, None
-        return round((c_iv + p_iv) / 2, 2), round(float(underlying), 2)
-    except Exception:
-        return None, None
+def get_atm_iv_schwab(ticker, retries=3):
+    """
+    ATM IV via Schwab option chain — volatility field is already %, no conversion needed.
+
+    Retries on the < 1.0 sanity-check rejection, not just exceptions: that check exists
+    because Schwab's per-strike live Greeks engine has a confirmed, real failure mode —
+    it returns a literal -999.0 sentinel for 'volatility' (and every other live-computed
+    Greek) when its live feed hasn't caught up, found directly on AMD/SPY chains
+    2026-10-20. -999.0 < 1.0, so it was silently treated the same as "no data" and a
+    single bad read permanently killed that day's snapshot for the ticker — confirmed
+    as the likely cause of NFLX's null 2026-10-21 entry, found live 2026-10-22. A
+    transient glitch deserves a retry before giving up, the same way get_fundamentals()
+    already retries 3x elsewhere in this framework.
+    """
+    import time
+    last_bad = None
+    for attempt in range(retries):
+        try:
+            from schwab_client import get_option_chain
+            data = get_option_chain(ticker, strikes=3)
+            if 'error' in data or data.get('status') == 'FAILED':
+                last_bad = f"chain error/status FAILED: {data.get('error') or data.get('status')}"
+                continue
+            underlying = data.get('underlyingPrice')
+            if not underlying:
+                last_bad = 'no underlyingPrice in chain response'
+                continue
+            target  = _date.today() + timedelta(days=30)
+            all_exp = sorted(set(
+                list(data.get('callExpDateMap', {}).keys()) +
+                list(data.get('putExpDateMap',  {}).keys())
+            ))
+            if not all_exp:
+                last_bad = 'no expirations in chain response'
+                continue
+            exp = min(all_exp, key=lambda x: abs((_date.fromisoformat(x.split(':')[0]) - target).days))
+            calls = data.get('callExpDateMap', {}).get(exp, {})
+            puts  = data.get('putExpDateMap',  {}).get(exp, {})
+            all_strikes = sorted(set(list(calls.keys()) + list(puts.keys())), key=float)
+            if not all_strikes:
+                last_bad = f'no strikes for expiry {exp}'
+                continue
+            atm   = min(all_strikes, key=lambda s: abs(float(s) - underlying))
+            c_iv  = (calls.get(atm) or [{}])[0].get('volatility', 0)
+            p_iv  = (puts.get(atm)  or [{}])[0].get('volatility', 0)
+            if c_iv < 1.0 or p_iv < 1.0:   # Schwab volatility is already %; < 1% = bad data (includes the -999 sentinel)
+                last_bad = f'bad volatility at strike {atm}: call={c_iv}, put={p_iv}'
+                continue
+            return round((c_iv + p_iv) / 2, 2), round(float(underlying), 2)
+        except Exception as e:
+            last_bad = f'exception: {e}'
+        if attempt < retries - 1:
+            time.sleep(1.5 * (attempt + 1))
+
+    print(f'  [iv_snapshot] {ticker}: ATM IV unavailable after {retries} attempts — {last_bad}')
+    return None, None
 
 
 def get_atm_iv(ticker):
