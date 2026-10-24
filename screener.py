@@ -1060,10 +1060,27 @@ def quality_grade(d):
     if d['net_margin'] and d['net_margin'] >= 15: score += 1
     if d['roe'] and d['roe'] >= 20: score += 1
     if d['fcf_yield'] and d['fcf_yield'] >= 3: score += 1
-    if d['rev_growth'] and d['rev_growth'] >= 10: score += 1
 
-    # Max score: 9 (D/EV 2 + GM 1 + OM 2 + NM 1 + ROE 1 + FCF 1 + RevG 1)
-    # Thresholds unchanged — OM reweighting rewards strong OM, doesn't penalize rest
+    # RevG deliberately NOT scored here (removed 2026-10-24) -- quality and growth are
+    # separate, roughly orthogonal factors (quant-finance convention: a name can be
+    # high-quality-growth, high-quality-value, or low-quality-either). Baking growth
+    # into the quality score let a name buy an extra point for growing fast regardless
+    # of actual capital efficiency, which is a different question. RevG is still fully
+    # visible -- every UNIVERSE/WATCHLIST entry already states "RevG +X% TTM" in its
+    # writeup -- it just no longer inflates or deflates the quality label itself.
+    # Verified against this session's own tickers before landing: AMD (RevG +50.1%)
+    # flips A -> B once growth stops masking its actually-weak capital efficiency
+    # (3/8 on the remaining metrics) -- exactly the AMD "richest valuation, weakest
+    # ROIC" pattern already flagged repeatedly this week, now caught by the grade
+    # itself instead of needing a manual override note. NVS (RevG +0.8%, essentially
+    # no growth) still correctly grades A+ on capital efficiency alone. 10 of 12
+    # names tested were unchanged.
+    #
+    # Max score: 8 (D/EV 2 + GM 1 + OM 2 + NM 1 + ROE 1 + FCF 1). Thresholds (6, 4)
+    # left as absolute values, not rescaled proportionally from the old /9 max --
+    # A+ is now a genuinely higher bar (75% of points vs the old 66.7%), which is
+    # the correct direction: a name that was A+ partly via a growth assist should
+    # now have to earn it on capital efficiency alone.
     if score >= 6: grade = 'A+'
     elif score >= 4: grade = 'A'
     else: grade = 'B'
