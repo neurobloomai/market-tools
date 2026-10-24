@@ -32,7 +32,7 @@ warnings.filterwarnings('ignore')
 # mock _yf_cache so screener.py imports cleanly without requests_cache installed
 sys.modules.setdefault('_yf_cache', types.ModuleType('_yf_cache'))
 
-from screener import UNIVERSE, WATCHLIST
+from screener import UNIVERSE, WATCHLIST, quality_grade, passes_quality_filter, get_fundamentals
 from regime import get_regime, regime_html, sizing_signal, REGIME_CSS
 from event_risk import get_earnings_batch, earnings_cli, earnings_html_badge, EVENT_CSS
 
@@ -75,29 +75,17 @@ MEGA_CAP = [
 ]
 
 def _load_grades():
+    """Grades every cached ticker via screener.py's own quality_grade()/passes_quality_filter()
+    -- no local reimplementation. Used to duplicate this scoring here with its own thresholds
+    (fraction-scale, e.g. om >= 0.10) applied to percent-scale cached data (om: 17.2), which made
+    the filter nearly a no-op, and it still carried the growth-conflation RevG criterion that
+    screener.py's quality_grade() dropped 2026-10-24 -- found live when AMD still showed A+ here
+    after the fix landed everywhere else. Single source of truth now."""
     try:
         with open(_CACHE_FILE) as f:
             cache = json.load(f)
-        grades = {}
-        for t, d in cache.items():
-            if not d:
-                continue
-            om  = d.get('operating_margin') or 0
-            nm  = d.get('net_margin') or 0
-            roe = d.get('roe') or 0
-            dev = d.get('debt_to_ev') or 1
-            fcf = d.get('fcf_yield') or 0
-            gm  = d.get('gross_margin') or 0
-            rg  = d.get('rev_growth') or 0
-            passes = om >= 0.10 and nm >= 0.05 and roe >= 0.10 and dev <= 0.20 and fcf > 0
-            if not passes:
-                grades[t] = None
-                continue
-            aplus = (dev <= 0.03 and om >= 0.20 and nm >= 0.10 and roe >= 0.20
-                     and fcf >= 0.02 and gm >= 0.60 and rg >= 0.05)
-            a     = (dev <= 0.10 and om >= 0.15 and nm >= 0.08 and roe >= 0.15 and fcf >= 0.01)
-            grades[t] = 'A+' if aplus else ('A' if a else 'B')
-        return grades
+        return {t: (quality_grade(d) if passes_quality_filter(d) else None)
+                for t, d in cache.items() if d}
     except Exception:
         return {}
 
@@ -393,34 +381,16 @@ def _top10_score(ext_r, pop_r, hourly_ok, grade):
 _ETF_SET = {'SPY','QQQ','IWM','GLD','TLT','SLV','DIA','XLF','XLK','XLE','ARKK','VTI','VOO'}
 
 def _fetch_grade_live(ticker):
-    """Fetch fundamental grade from yfinance. Returns 'A+', 'A', 'B', or None."""
+    """Fetch fundamental grade for a ticker not yet in the cache, via screener.py's own
+    get_fundamentals() + quality_grade() -- same single source of truth as _load_grades(),
+    not a second hand-rolled copy. get_fundamentals() also persists the fetch into
+    screener_data_cache.json, so this stops being a cache miss next run."""
     if ticker in _ETF_SET:
         return None
-    try:
-        import io, contextlib
-        buf = io.StringIO()
-        with contextlib.redirect_stdout(buf), contextlib.redirect_stderr(buf):
-            info = yf.Ticker(ticker).info
-        gm   = info.get('grossMargins')   or 0
-        om   = info.get('operatingMargins') or 0
-        nm   = info.get('profitMargins')  or 0
-        roe  = info.get('returnOnEquity') or 0
-        ev   = info.get('enterpriseValue') or 0
-        debt = info.get('totalDebt') or 0
-        fcf  = info.get('freeCashflow') or 0
-        mktcap = info.get('marketCap') or 1
-        rg   = info.get('revenueGrowth') or 0
-        d_ev = (debt / ev) if ev > 0 else 1.0
-        fcf_y = fcf / mktcap
-        passes = om >= 0.10 and nm >= 0.05 and roe >= 0.10 and d_ev <= 0.20 and fcf_y > 0
-        if not passes:
-            return None
-        aplus = (d_ev <= 0.03 and om >= 0.20 and nm >= 0.10 and roe >= 0.20
-                 and fcf_y >= 0.02 and gm >= 0.60 and rg >= 0.05)
-        a     = (d_ev <= 0.10 and om >= 0.15 and nm >= 0.08 and roe >= 0.15 and fcf_y >= 0.01)
-        return 'A+' if aplus else ('A' if a else 'B')
-    except Exception:
+    d = get_fundamentals(ticker)
+    if not d or not passes_quality_filter(d):
         return None
+    return quality_grade(d)
 
 
 def _ext_zone_label(ext_r):
