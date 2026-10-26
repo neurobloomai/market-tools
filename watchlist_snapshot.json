@@ -45,7 +45,7 @@
       ],
       [
         "P/E",
-        "111.5x",
+        "107.7x",
         "\u2264 100x"
       ]
     ],
@@ -56,7 +56,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.508",
+        "0.443",
         "\u2264 0.20"
       ],
       [
@@ -93,7 +93,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.227",
+        "0.218",
         "\u2264 0.20"
       ],
       [
@@ -124,7 +124,7 @@
       ],
       [
         "P/E",
-        "157.0x",
+        "159.9x",
         "\u2264 100x"
       ]
     ],
@@ -171,7 +171,7 @@
       ]
     ],
     "note": "Datadog \u2014 cloud observability + security platform (infrastructure monitoring, APM, logs, SIEM); every cloud-native app needs observability \u2014 DDOG is the default for DevOps/SRE teams; GrossM 79.9%, RevG 32.2%, D/EV 0.013 (net cash); OM 0.8%, NM 3.7%, ROE 3.9% \u2014 all three blocking; $100B+ market cap on near-zero operating earnings = paying 40-50x forward revenue for margin expansion that hasn't printed; the spend is real (R&D + S&M consuming all gross profit), the platform is real, the ARR compounding is real \u2014 but the current metrics don't support UNIVERSE placement; gate: OM crossing 10% as RevG compounds and S&M/R&D as % of revenue normalizes; moved from UNIVERSE 2026-08-06",
-    "grade": "A"
+    "grade": "B"
   },
   "DT": {
     "fails": [
@@ -182,7 +182,7 @@
       ]
     ],
     "note": "Dynatrace \u2014 AI-powered observability platform (infrastructure + APM + logs + security + digital experience monitoring); Davis causal AI engine auto-detects root cause without manual alert configuration \u2014 differentiated vs DDOG's query-first model; GrossM 81.6%, RevG 16.2%, D/EV 1.2% (near-zero debt), FCF 26.1% of revenue; OM 12.9%, NM 7.2%, ROE 5.9% \u2014 all three blocking; context: OM 12.9% already ahead of DDOG (0.8%), CRWD (-2.2%), ZS (-3.3%) \u2014 margin path shorter than peers; AI observability angle is real new TAM: monitoring LLM traces, AI model latency, GPU infra performance as enterprises deploy AI at scale; fwdPE 21.6x reasonable; 4/7 gates; at ceiling (+0.2% blown), RSI 75, 3/3 daily \u26a1H \u2014 technically extended, wait for pullback; gate: OM \u2265 20% + NM \u2265 10% + ROE \u2265 10% as SBC normalizes and ARR scale drives leverage; added WATCHLIST 2026-08-19",
-    "grade": "A"
+    "grade": "B"
   },
   "MDB": {
     "fails": [
@@ -203,7 +203,7 @@
       ]
     ],
     "note": "",
-    "grade": "A"
+    "grade": "B"
   },
   "HUBS": {
     "fails": [
@@ -240,24 +240,24 @@
       ]
     ],
     "note": "",
-    "grade": "A"
+    "grade": "B"
   },
   "MKC": {
     "fails": [
       [
         "Debt/EV",
-        "0.273",
+        "0.275",
         "\u2264 0.20"
       ]
     ],
     "note": "",
-    "grade": "A"
+    "grade": "B"
   },
   "DPZ": {
     "fails": [
       [
         "Debt/EV",
-        "0.35",
+        "0.337",
         "\u2264 0.20"
       ]
     ],
@@ -279,7 +279,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.331",
+        "0.289",
         "\u2264 0.20"
       ]
     ],
@@ -295,7 +295,7 @@
       ]
     ],
     "note": "Monday.com \u2014 work OS (project mgmt + CRM + dev + marketing) built on a flexible canvas; Israel-based; GrossM 89.2%, FCF 25.2%, RevG 24.5% \u2014 the three honest signals; OM -0.1% (essentially breakeven, hairline below gate) + ROE 9.5% (hairline below 10% gate) both blocking; D/EV 0.064 (near-zero debt); fwdPE 16.9x; differentiated from MSFT Project/Asana/Smartsheet by flexibility (no-code automation, cross-team use cases) + Shopify/Salesforce integrations; gate: OM crossing 10% as S&M leverage builds + ROE crossing 10%; 2 hairline blockers \u2014 could clear in 1-2 quarters; added WATCHLIST 2026-08-07",
-    "grade": "A"
+    "grade": "B"
   },
   "AAOI": {
     "fails": [
@@ -316,7 +316,7 @@
       ],
       [
         "FCF Yield",
-        "-10.3%",
+        "-15.5%",
         "> 0%"
       ]
     ],
@@ -326,19 +326,19 @@
   "MXL": {
     "fails": [
       [
-        "Op Margin",
-        "-2.4%",
-        "\u2265 10%"
-      ],
-      [
         "Net Margin",
-        "-18.2%",
+        "-4.4%",
         "\u2265 5%"
       ],
       [
         "ROE/ROA",
-        "ROE -21.3% / ROA -4.9%",
+        "ROE -5.9% / ROA -0.4%",
         "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "-0.5%",
+        "> 0%"
       ]
     ],
     "note": "MaxLinear \u2014 high-speed analog/mixed-signal semiconductors; PAM4 DSPs for 400G/800G optical datacenter interconnects (AI GPU cluster bandwidth), DOCSIS 3.1/4.0 broadband access SoCs, Wi-Fi; revenue collapsed 2023-2024 from broadband/cable inventory correction (ISPs over-ordered post-COVID), recovering now as datacenter interconnect mix grows; GrossM 57.5%, D/EV 1.9% (clean), RevG 55.2% \u2014 recovery ramp real; OM -2.4% (at zero, one quarter from positive), NM neg, ROE -21.3%, FCF 0.2% \u2014 cyclical trough artifacts, not structural ceilings; 87w +190.2% extreme is a recovery-from-collapse artifact (stock: $90\u2192$7\u2192$84), not dangerous extension; gate: OM \u2265 10% + FCF \u2265 3% as PAM4 datacenter interconnect revenue becomes majority mix; added WATCHLIST 2026-08-15',",
@@ -384,7 +384,7 @@
       ]
     ],
     "note": "Everpure (formerly Pure Storage / PSTG) \u2014 all-flash storage platform for enterprise + AI workloads; AI training/inference data lives on flash, not spinning disk = durable demand floor as AI scales; GrossM 70.2% (software-like storage economics), ROE 16.8%, D/EV 0.031 (nearly debt-free), FCF 0.9%; OM -18.5% GAAP blocker (stock-comp heavy, same structural pattern as NET/MNDY \u2014 non-GAAP OM meaningfully better); NM 5.7% > OM = non-operating income offsetting GAAP drag; RevG 0% \u2014 transition year or data gap from ticker/name change; 4/4 MA aligned, RSI 62.2; gate: OM crossing 0% GAAP sustained + RevG re-accelerating as AI storage demand ramps; added WATCHLIST 2026-08-08",
-    "grade": "A"
+    "grade": "B"
   },
   "DELL": {
     "fails": [
@@ -417,7 +417,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.844",
+        "0.848",
         "\u2264 0.20"
       ]
     ],
@@ -428,7 +428,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.291",
+        "0.297",
         "\u2264 0.20"
       ],
       [
@@ -438,7 +438,7 @@
       ]
     ],
     "note": "Raymond James Financial \u2014 independent full-service wealth management + investment banking + asset management; ~9,000 financial advisors in Private Client Group (PCG) = recurring AUM fee base that grows with markets and net new asset flows regardless of trading activity; PCG is the flywheel: advisors bring clients, clients bring AUM, AUM fees compound; not a bulge-bracket (Goldman trading-desk risk), not a robo-advisor (Betterment commoditization) \u2014 the trusted-advisor middle path at scale; OM 19.4%, fwdPE 12.3x cheap, RevG 15.2%, GrossM 93.2%; NM/ROE/FCF blank in yfinance (financial firm reporting artifact \u2014 same sector gap as PNC/PRU, not actual failures); gate: yfinance data stabilizing on NM/ROE so screener can grade fairly; added 2026-07-30",
-    "grade": "A"
+    "grade": "B"
   },
   "DFIN": {
     "fails": [
@@ -459,13 +459,8 @@
   "MKL": {
     "fails": [
       [
-        "Debt/EV",
-        "0.213",
-        "\u2264 0.20"
-      ],
-      [
         "FCF Yield",
-        "-8.0%",
+        "-7.4%",
         "> 0%"
       ]
     ],
@@ -476,7 +471,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.418",
+        "0.481",
         "\u2264 0.20"
       ],
       [
@@ -512,7 +507,7 @@
       ],
       [
         "P/E",
-        "208.2x",
+        "194.1x",
         "\u2264 100x"
       ]
     ],
@@ -523,7 +518,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.65",
+        "0.621",
         "\u2264 0.20"
       ],
       [
@@ -533,7 +528,7 @@
       ]
     ],
     "note": "LendingTree \u2014 online financial marketplace connecting consumers with lenders (mortgages, personal loans, auto, credit cards, insurance); pure lead-gen model = GrossM 96.3%, near-zero marginal cost per match; got crushed when rates went 3%\u21927%+ (mortgage origination volume collapsed \u2014 that's their core product); RevG 36.5% = rate normalization recovery is real and accelerating; FCF $61.7M on $442M market cap (14% FCF yield), fwdPE 4.8x \u2014 priced like it stays broken; DATA-QUALITY CAUTION added 2026-09-29, not present when this was first written: Schwab's raw operatingMarginTTM and netProfitMarginTTM are byte-identical (14.3246/14.3246) and operatingMarginMRQ/netProfitMarginMRQ are also byte-identical (3.0546/3.0546) \u2014 the same red-flag signature already documented for SMTC elsewhere in this file (two independently-computed margins should not match exactly, especially on a POSITIVE margin where real tax/interest effects should create a gap); epsChangePercentTTM is -442.9%, an extreme trailing EPS collapse directly contradicting the TTM margin reading of +14.3% (above the old 10% gate) \u2014 don't trust the \"OM crossing 10%\" read as a real gate-clear until this resolves; mechanical filter currently still reads False regardless, so not an active promotion risk yet, but worth knowing before assuming the original OM 9.8%-just-below-gate story has simply improved; gate: OM crossing 10% sustained AND TTM/MRQ converging cleanly (not just TTM alone) + D/EV compressing as FCF pays down debt; rate environment is the macro lever \u2014 this is a recovery story, not a compounder; added WATCHLIST 2026-07-30, refreshed 2026-09-29",
-    "grade": "A"
+    "grade": "B"
   },
   "ALC": {
     "fails": [
@@ -598,7 +593,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.31",
+        "0.293",
         "\u2264 0.20"
       ],
       [
@@ -614,7 +609,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.259",
+        "0.305",
         "\u2264 0.20"
       ]
     ],
@@ -625,7 +620,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.456",
+        "0.325",
         "\u2264 0.20"
       ],
       [
@@ -646,7 +641,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.818",
+        "0.676",
         "\u2264 0.20"
       ],
       [
@@ -671,11 +666,6 @@
   "COR": {
     "fails": [
       [
-        "Debt/EV",
-        "0.205",
-        "\u2264 0.20"
-      ],
-      [
         "Op Margin",
         "1.4%",
         "\u2265 10%"
@@ -691,11 +681,6 @@
   },
   "COO": {
     "fails": [
-      [
-        "Debt/EV",
-        "0.213",
-        "\u2264 0.20"
-      ],
       [
         "ROE/ROA",
         "ROE 6.8% / ROA 2.7%",
@@ -724,18 +709,13 @@
   "SAM": {
     "fails": [
       [
-        "Op Margin",
-        "9.3%",
-        "\u2265 10%"
-      ],
-      [
         "Net Margin",
-        "-3.6%",
+        "-3.8%",
         "\u2265 5%"
       ],
       [
         "ROE/ROA",
-        "ROE -8.6% / ROA 5.4%",
+        "ROE -8.9% / ROA 5.4%",
         "\u2265 10% / \u2265 15%"
       ]
     ],
@@ -746,7 +726,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.315",
+        "0.309",
         "\u2264 0.20"
       ]
     ],
@@ -757,7 +737,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.276",
+        "0.265",
         "\u2264 0.20"
       ],
       [
@@ -820,7 +800,7 @@
       ]
     ],
     "note": "GE Vernova \u2014 picks-and-shovels for entire energy transition; supplies wind turbines, gas turbines, grid (transformers/switchgear/HVDC) \u2014 every renewable project + datacenter power need touches GEV; OM 5.5% only blocker (offshore wind losses dragging profitable gas+grid mix; inflects as wind rolls off); D/EV 0.012, ROE 75.7%, FCF +3.0%, fwd P/E 46.8x; grade A+; at 52w highs +113% from low, 42% above 40w MA \u2014 wait for 20-25% correction (~$870-920)",
-    "grade": "A+"
+    "grade": "A"
   },
   "LHX": {
     "fails": [
@@ -837,7 +817,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.426",
+        "0.409",
         "\u2264 0.20"
       ]
     ],
@@ -848,12 +828,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.398",
+        "0.388",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-11.2%",
+        "-12.3%",
         "> 0%"
       ]
     ],
@@ -864,7 +844,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.407",
+        "0.404",
         "\u2264 0.20"
       ],
       [
@@ -880,12 +860,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.408",
+        "0.386",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-7.1%",
+        "-6.5%",
         "> 0%"
       ]
     ],
@@ -896,12 +876,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.424",
+        "0.402",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-6.9%",
+        "-6.3%",
         "> 0%"
       ]
     ],
@@ -912,7 +892,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.5",
+        "0.471",
         "\u2264 0.20"
       ],
       [
@@ -922,7 +902,7 @@
       ],
       [
         "FCF Yield",
-        "-18.1%",
+        "-16.2%",
         "> 0%"
       ]
     ],
@@ -933,7 +913,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.237",
+        "0.232",
         "\u2264 0.20"
       ]
     ],
@@ -944,7 +924,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.415",
+        "0.353",
         "\u2264 0.20"
       ],
       [
@@ -954,7 +934,7 @@
       ]
     ],
     "note": "Northern Trust \u2014 UHNW wealth management + global asset servicing (custody for institutional); deep trust bank franchise: serves family offices, endowments, ultra-high-net-worth individuals where relationships are generational and switching is rare; OM 42.5% exceptional (best-in-class among banks), NM 24.7%, ROE 17.1%, RevG 36.4%; D/EV 0.397 primary blocker (real bank debt \u2014 structured notes + long-term borrowings, not a yfinance artifact); FCF 0%, GrossM 0% banking artifacts; 4/4 MA aligned, RSI 74.9; gate: D/EV compressing below 0.25 as structured note maturity schedule reduces leverage; judge by: UHNW AUM + trust fee revenue + NIM trend; added WATCHLIST 2026-08-08",
-    "grade": "A"
+    "grade": "B"
   },
   "JLL": {
     "fails": [
@@ -987,7 +967,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.521",
+        "0.541",
         "\u2264 0.20"
       ],
       [
@@ -1003,7 +983,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.4",
+        "0.382",
         "\u2264 0.20"
       ],
       [
@@ -1029,7 +1009,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.297",
+        "0.295",
         "\u2264 0.20"
       ]
     ],
@@ -1040,18 +1020,18 @@
     "fails": [
       [
         "Debt/EV",
-        "0.319",
+        "0.298",
         "\u2264 0.20"
       ]
     ],
     "note": "Cheniere Energy \u2014 largest US LNG export terminal operator (Sabine Pass + Corpus Christi); long-term take-or-pay SPAs (20yr contracts) = utility-like contracted cash flows; Europe permanent de-Russian gas = structural LNG demand floor; FCF $1.7B + ROE 28.9% show real economics; D/E 3.2 structural terminal infrastructure debt (same read as telecom capex, not deteriorating); GAAP OM distorted by commodity MTM hedging accounting \u2014 FCF is the signal, not OM; B (3/7); MA 3/4, slope negative \u2014 below MA20w $249, entry on weekly alignment recovery",
-    "grade": "A"
+    "grade": "B"
   },
   "LDOS": {
     "fails": [
       [
         "Debt/EV",
-        "0.307",
+        "0.287",
         "\u2264 0.20"
       ]
     ],
@@ -1072,7 +1052,7 @@
       ],
       [
         "FCF Yield",
-        "-0.7%",
+        "-1.0%",
         "> 0%"
       ]
     ],
@@ -1098,7 +1078,7 @@
       ],
       [
         "FCF Yield",
-        "-1.4%",
+        "-1.6%",
         "> 0%"
       ]
     ],
@@ -1109,7 +1089,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.484",
+        "0.494",
         "\u2264 0.20"
       ],
       [
@@ -1129,7 +1109,7 @@
       ],
       [
         "FCF Yield",
-        "-6.9%",
+        "-7.1%",
         "> 0%"
       ]
     ],
@@ -1145,29 +1125,29 @@
       ]
     ],
     "note": "Celestica \u2014 AI infra contract manufacturer (servers, networking), ROE 52%, D/EV 0.02, gross margin 12% blocks universe",
-    "grade": "A"
+    "grade": "B"
   },
   "PRGS": {
     "fails": [
       [
         "Debt/EV",
-        "0.468",
+        "0.415",
         "\u2264 0.20"
       ]
     ],
     "note": "Progress Software \u2014 serial acquirer of mature enterprise software: OpenEdge (30-40yr installed base low-code apps, near-impossible to rip out), Telerik/Kendo UI (developer UI components), MOVEit (managed file transfer); GrossM 85.6%, FCF 18.6% (exceptional), fwdPE 6.5x = priced like broken, runs like cash cow; OM 18.5% + ROE 18.6% both 1-2% below gate; D/EV 0.461 serial acquisition debt = main blocker; RevG 6.8% \u2014 mature, not a growth story; MOVEit 2023 ransomware breach created liability overhang + reputational hit, but customers stayed (switching costs > breach risk); value play: FCF at 6.5x is the signal, not the headline metrics; grade B; gate: D/EV \u2264 0.25 as FCF deleverages + OM crossing 20% as acquired businesses optimize",
-    "grade": "B"
+    "grade": "A"
   },
   "SSNC": {
     "fails": [
       [
         "Debt/EV",
-        "0.301",
+        "0.289",
         "\u2264 0.20"
       ]
     ],
     "note": "SS&C Technologies \u2014 fund admin infra, $1.28B FCF (FCF yield 7.1%), extreme switching costs; REFRESHED 2026-09-29 with real trend, thin comment previously: debt_to_ev has genuinely improved 0.32 -> 0.301 (real, modest, ~6% relative decline, still well above the 0.20 gate) \u2014 confirmed the ONLY blocker via passes_quality_filter(): OM 24.6% \u2713, NM 13.2% \u2713, ROE 12.6% \u2713 all clear; RevG 10.3%, fwd PE 10.2x (cheap); note Schwab's own D/Capital (51.85%) and D/E (111.95%) are different metrics from this file's debt_to_ev (total debt / enterprise value) \u2014 don't confuse the two, this file tracks debt_to_ev specifically; technical: below 10w MA (-3.3%), weekly RSI 54, weekly slope +5.5% (real positive), CMF +0.134 (real accumulation), -12.4% off 52w high, 87w structure -1.0% \"below LT\" \u2014 essentially at its long-term base, not extended; earnings Oct 22 (22d); gate: debt_to_ev continuing to decline toward 0.20 as FCF pays down debt; refreshed 2026-09-29",
-    "grade": "A"
+    "grade": "B"
   },
   "SYM": {
     "fails": [
@@ -1205,7 +1185,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.277",
+        "0.282",
         "\u2264 0.20"
       ]
     ],
@@ -1223,24 +1203,8 @@
     "note": "TG Therapeutics \u2014 Briumvi (ublituximab, anti-CD20 MS); faster infusion than Ocrevus, scaling fast; STALE SNAPSHOT REFRESHED 2026-09-29 \u2014 old figures (NM 66%, OM 17%, ROE 112%) no longer match current data, real drift not a typo: GrossM 82.4% (MRQ 82.9%), OM/NM TTM +55.2% but MRQ decelerated sharply to +3.2% \u2014 a real, large step-down worth tracking, though still positive not a loss; ROE +100.3% (small-equity-base effect from a young commercial-stage company, treat as directional not literal) vs ROA a much more modest +7.3% \u2014 use ROA as the sanity check; RevG TTM +76.1%, YoY +87.3% \u2014 the real commercial-ramp story, still strong and accelerating; EPS Growth TTM +1746.7% (extreme, small-base effect off early commercialization, not confirmed artifact); D/E 124.6%, D/Capital 55.4% \u2014 real leverage, current ratio 4.27 still comfortable; still the same original thesis: watching from distance, wait for a real discount, but the MRQ margin deceleration is new information worth a closer look next print; refreshed 2026-09-29",
     "grade": "A"
   },
-  "MDT": {
-    "fails": [
-      [
-        "Debt/EV",
-        "0.211",
-        "\u2264 0.20"
-      ]
-    ],
-    "note": "Medtronic \u2014 largest pure-play medtech (cardiac rhythm mgmt, spine/neuro surgery, diabetes CGM, surgical robotics Hugo); OM 22.0%, NM 13.2%, FCF 4.3%, fwd P/E 13x, RevG 9.9%, ~3.5% dividend; ROE 9.8% (gate \u226510%) + D/EV 0.229 (gate \u22640.20) both blocking \u2014 both acquisition artifacts from Covidien ($50B, 2015) and subsequent M&A inflating goodwill and leverage, not structural deterioration; grade B; gate: ROE crossing 10% + D/EV \u2264 0.20 as FCF deleverages acquisition debt",
-    "grade": "B"
-  },
   "BIIB": {
     "fails": [
-      [
-        "Debt/EV",
-        "0.205",
-        "\u2264 0.20"
-      ],
       [
         "ROE/ROA",
         "ROE 4.6% / ROA 5.2%",
@@ -1254,7 +1218,7 @@
     "fails": [
       [
         "Op Margin",
-        "4.0%",
+        "3.8%",
         "\u2265 10%"
       ],
       [
@@ -1264,7 +1228,7 @@
       ]
     ],
     "note": "Costco \u2014 membership moat, not a margin story; OM ~3% by design (merchandise passes savings to members, fee stream runs at ~95% margin); screen blocks on OM/NM \u2014 low margins are the product, not a flaw; measure by membership fee growth + renewal rate (~93%) + ROIC; currently 0/4 MA (CMF -0.20, distribution); promote to UNIVERSE on 4/4 recovery",
-    "grade": "A"
+    "grade": "B"
   },
   "WMT": {
     "fails": [
@@ -1297,7 +1261,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.362",
+        "0.364",
         "\u2264 0.20"
       ],
       [
@@ -1355,7 +1319,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.221",
+        "0.207",
         "\u2264 0.20"
       ],
       [
@@ -1370,7 +1334,7 @@
       ],
       [
         "FCF Yield",
-        "-2.4%",
+        "-2.2%",
         "> 0%"
       ]
     ],
@@ -1381,7 +1345,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.284",
+        "0.275",
         "\u2264 0.20"
       ]
     ],
@@ -1392,7 +1356,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.469",
+        "0.43",
         "\u2264 0.20"
       ]
     ],
@@ -1418,7 +1382,7 @@
       ]
     ],
     "note": "Samsara \u2014 fleet/IoT SaaS, GM 76%, zero debt, 30% RevG, FCF just turned positive; OM 1.5% blocking, 2yr runway to A/A+ as scale drives margin",
-    "grade": "A"
+    "grade": "B"
   },
   "GFS": {
     "fails": [
@@ -1456,7 +1420,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.28",
+        "0.322",
         "\u2264 0.20"
       ],
       [
@@ -1498,7 +1462,45 @@
       ]
     ],
     "note": "Lattice Semiconductor \u2014 low-power FPGAs, 60%+ gross margin, zero debt; AI edge + industrial; cyclical trough recovery",
+    "grade": "B"
+  },
+  "HPE": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.227",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "Hewlett Packard Enterprise \u2014 enterprise servers/networking/storage; AI server demand driving RevG +33.7%, but that growth doesn't buy quality (post-2026-10-24 fix) \u2014 gate is purely capital efficiency: OM 12.6% \u2713, NM 6.7% \u2713, ROE 10.9% \u2713, FCF yield 6.3% \u2713; single blocker is D/EV 0.227, a hairline miss vs the 0.20 gate (one tick over, not a leverage concern); fwdPE 29.2x; gate: D/EV crossing below 0.20 as FCF-funded deleveraging continues; added WATCHLIST 2026-10-24",
+    "grade": "B"
+  },
+  "TDY": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE 9.5% / ROA 5.3%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Teledyne Technologies \u2014 instrumentation/sensors (marine, aerospace, environmental) + digital imaging (machine vision, infrared, X-ray detectors \u2014 FLIR acquisition); D/EV 0.066 \u2713 (near debt-free), OM 20.8% \u2713, NM 15.8% \u2713, FCF yield 3.3% \u2713 \u2014 single blocker is ROE/ROA: ROE 9.5% (hairline below 10% gate) and ROA 5.3% (well below the 15% fallback floor); serial-acquirer model means goodwill-heavy balance sheet depresses ROE/ROA ratios even with genuinely strong operating economics (same pattern as AME/HEI in UNIVERSE, just not yet past the ROE line); fwdPE 28.6x; RevG 9.4% modest; gate: ROE crossing 10% as acquired-business integration matures; added WATCHLIST 2026-10-24",
     "grade": "A"
+  },
+  "ASX": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.969",
+        "\u2264 0.20"
+      ],
+      [
+        "FCF Yield",
+        "-123.0%",
+        "> 0%"
+      ]
+    ],
+    "note": "ASE Technology Holding \u2014 Taiwan-based (Kaohsiung), NOT Israeli (that's TSEM/Tower Semiconductor, added to UNIVERSE same day \u2014 easy to conflate the two); world's largest OSAT (outsourced semiconductor assembly & test) \u2014 advanced packaging (SiP, flip-chip, and increasingly CoWoS-adjacent AI chip packaging) for the fabless/foundry ecosystem; ARTIFACT WARNING: yfinance's raw debt_to_ev (0.969) and fcf_yield (-123%) are NOT real \u2014 confirmed a TWD/USD currency-unit mismatch (totalDebt $295.8B and operatingCashflow $168.8B are reported in TWD while marketCap/enterpriseValue are in USD; converting at ~31 TWD/USD gives debt/EV \u2248 0.10 and FCF yield \u2248 -4%, both sane); Schwab cross-check corroborates \u2014 P/CF 9.1x implies healthy positive operating cash flow, directly contradicting the -123% figure; real picture: GrossM 19.5% \u2713, OM TTM 8.78% / MRQ 11.27% \u2014 a genuine within-year margin recovery (NTNX/INVA/ZM-style TTM-vs-MRQ pattern, not an artifact this time, an actual trend), NM TTM 8.55% \u2713, ROE 17.0% \u2713, ROA 4.7%, RevG TTM +14.5%; D/Equity 55.7% and D/Capital 32.6% (Schwab, currency-clean ratios) are moderate, not alarming; true FCF likely still modestly negative \u2014 AI-packaging capex ramp (CoWoS/advanced-packaging capacity build), same explainable pattern as FN's optical-interconnect capex; [LOCKED] per the margin-artifact rule \u2014 TTM-vs-MRQ disagreement goes WATCHLIST regardless of what a raw gate check would otherwise read, never auto-promoted; gate to UNIVERSE: OM clearing 10% on a clean TTM basis as the MRQ recovery persists + FCF turning positive as packaging capex normalizes + yfinance's currency-unit bug independently confirmed resolved (don't trust a future \"passes\" read on debt/EV or FCF yield for this ticker without re-verifying units first); added WATCHLIST 2026-10-24",
+    "grade": "B"
   },
   "ONTO": {
     "fails": [
@@ -1509,7 +1511,7 @@
       ]
     ],
     "note": "Onto Innovation \u2014 advanced packaging inspection/metrology; HBM + chiplet complexity = more inspection; picks-and-shovels for AI silicon",
-    "grade": "A"
+    "grade": "B"
   },
   "INTC": {
     "fails": [
@@ -1536,7 +1538,7 @@
       ]
     ],
     "note": "Toast \u2014 restaurant POS/payments platform; ROE 22.5%, FCF 4%, rev growth 21.9%, near-zero debt; OM 6.7% + NM 6.4% blocking; grades A, 0/4 MA; strong switching costs, margins scaling",
-    "grade": "A"
+    "grade": "B"
   },
   "FIG": {
     "fails": [
@@ -1600,7 +1602,7 @@
       ],
       [
         "FCF Yield",
-        "-1.1%",
+        "-1.6%",
         "> 0%"
       ]
     ],
@@ -1611,12 +1613,12 @@
     "fails": [
       [
         "FCF Yield",
-        "-0.4%",
+        "-0.5%",
         "> 0%"
       ]
     ],
     "note": "Fabrinet \u2014 precision optical/photonic contract manufacturer (clean-room assembly of optical transceivers, networking hardware, medical devices); primary manufacturer for Coherent, Lumentum, Ciena \u2014 the factory behind AI datacenter optical interconnects without owning the IP; GrossM 12.0% structural exception (contract manufacturing model \u2014 same lens as FERG/COR, margin is for process precision not IP ownership; 12% is exceptional for a CM); OM 9.9% \u2717 (one quarter from 10% gate), NM 9.9% \u2713, ROE 20.0% \u2713 (strong capital efficiency despite thin GrossM), D/EV 0.0% \u2713 (zero debt \u2014 exceptional for manufacturing), RevG 39.3% \u2713; FCF -$79M \u2717 (capex ramp for AI optical volume surge); 2 real blockers: OM 9.9% + FCF negative; Thailand manufacturing base = cost advantage + geopolitical concentration risk; gate: OM crossing 10% sustained + FCF turning positive as 800G/1.6T optical capex normalizes; added WATCHLIST 2026-08-18",
-    "grade": "A"
+    "grade": "B"
   },
   "AVAV": {
     "fails": [
@@ -1637,34 +1639,23 @@
       ],
       [
         "FCF Yield",
-        "-0.3%",
+        "-0.4%",
         "> 0%"
       ]
     ],
     "note": "AeroVironment \u2014 defense drones (Switchblade loitering munition, Puma ISR); RevG 143.4%, D/EV 0.108; OM -5.1% scaling with DoD contracts; proven battlefield platform",
     "grade": "B"
   },
-  "REPX": {
-    "fails": [
-      [
-        "Debt/EV",
-        "0.234",
-        "\u2264 0.20"
-      ]
-    ],
-    "note": "Riley Exploration Permian \u2014 Permian Basin pure-play E&P (conventional + unconventional oil/gas); OM 52.6%, NM 24.5%, ROE 19.9%, FCF 15.2%, GrossM 71.0%, RevG 94.2% \u2014 6/7 clear; D/EV 0.239 sole blocker (0.039 above gate \u2014 Permian acquisition debt; FCF 15.2% is the paydown engine); cyclical: metrics move with oil price, not structural deterioration; gate: D/EV \u2264 0.20 as FCF deleverages; added WATCHLIST 2026-09-02",
-    "grade": "A+"
-  },
   "CENX": {
     "fails": [
       [
         "FCF Yield",
-        "-1.2%",
+        "-1.5%",
         "> 0%"
       ]
     ],
     "note": "Century Aluminum \u2014 US aluminum smelter (Hawesville KY + Sebree KY + Mt. Holly SC + Iceland); GrossM 18.9% structural exception (aluminum smelting is energy-intensive commodity processing \u2014 same lens as FERG/COR/FN, this is the margin ceiling for the business model, not a quality failure); OM 28.1%, NM 22.6%, ROE 51.7% exceptional, D/EV 0.098, RevG 19.7%; FCF -1.0% sole blocker (barely negative \u2014 capex cycle, not structural cash burn); US reshoring + defense aluminum demand tailwind; cyclical: aluminum spot prices + power costs (energy ~30% of production cost) drive margin swings; gate: FCF turning consistently positive as capex cycle normalizes; added WATCHLIST 2026-09-02",
-    "grade": "A+"
+    "grade": "A"
   },
   "ALB": {
     "fails": [
@@ -1728,7 +1719,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.374",
+        "0.31",
         "\u2264 0.20"
       ],
       [
@@ -1742,11 +1733,6 @@
   },
   "W": {
     "fails": [
-      [
-        "Debt/EV",
-        "0.222",
-        "\u2264 0.20"
-      ],
       [
         "Op Margin",
         "3.0%",
@@ -1770,7 +1756,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.4",
+        "0.412",
         "\u2264 0.20"
       ],
       [
@@ -1802,12 +1788,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.242",
+        "0.227",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-3.6%",
+        "-3.2%",
         "> 0%"
       ]
     ],
@@ -1835,11 +1821,6 @@
         "FCF Yield",
         "missing (no data relief)",
         "> 0% or rev>50%+margin>10%"
-      ],
-      [
-        "P/E",
-        "162.3x",
-        "\u2264 100x"
       ]
     ],
     "note": "Cerebras Systems \u2014 Wafer-Scale Engine (WSE-3): entire silicon wafer as single chip, 900K AI cores, 44GB on-chip SRAM; auto-promoted from FUTURE_RADAR 2026-07-29 [grade B, blocking: Op Margin -7.8%, P/E 183.3x]",
@@ -1849,7 +1830,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.246",
+        "0.229",
         "\u2264 0.20"
       ]
     ],
@@ -1860,12 +1841,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.269",
+        "0.336",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-29.0%",
+        "-38.1%",
         "> 0%"
       ]
     ],
@@ -1876,7 +1857,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.476",
+        "0.506",
         "\u2264 0.20"
       ],
       [
@@ -1892,7 +1873,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.381",
+        "0.394",
         "\u2264 0.20"
       ],
       [
@@ -1913,7 +1894,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.306",
+        "0.316",
         "\u2264 0.20"
       ]
     ],
@@ -1955,7 +1936,7 @@
       ],
       [
         "FCF Yield",
-        "-1.8%",
+        "-2.7%",
         "> 0%"
       ]
     ],
@@ -1981,7 +1962,7 @@
       ],
       [
         "P/E",
-        "192.2x",
+        "153.4x",
         "\u2264 100x"
       ]
     ],
@@ -1992,7 +1973,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.411",
+        "0.506",
         "\u2264 0.20"
       ],
       [
@@ -2002,7 +1983,7 @@
       ]
     ],
     "note": "QCR Holdings \u2014 Midwest community bank holding company (Quad Cities IA/IL + St. Louis + Denver + Milwaukee markets); commercial banking + m2 Lease Funds (equipment leasing arm adds asset-light recurring fee income); community bank structural advantage: relationship lending + local credit underwriting = lower default rates in Midwest markets vs national peers; OM 37.5% (top-quartile community bank efficiency), NM 37.5%, ROE 12.9% \u2713, RevG 17.5% \u2713; D/EV and FCF screen as blockers (bank artifacts \u2014 deposits are liabilities by structure, bank FCF is not comparable to industrial FCF; same lens as NTRS/SCHW/IBKR); judge by: NIM trend + non-performing loans + tangible book value per share growth; gate: ROE consistently above 15% across a full rate cycle + RevG sustained above 10%; added WATCHLIST 2026-08-23",
-    "grade": "A"
+    "grade": "B"
   },
   "AMBQ": {
     "fails": [
@@ -2023,7 +2004,7 @@
       ],
       [
         "FCF Yield",
-        "-1.7%",
+        "-2.3%",
         "> 0%"
       ]
     ],
@@ -2049,7 +2030,7 @@
       ],
       [
         "FCF Yield",
-        "-5.3%",
+        "-6.3%",
         "> 0%"
       ]
     ],
@@ -2087,7 +2068,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.326",
+        "0.306",
         "\u2264 0.20"
       ]
     ],
@@ -2109,7 +2090,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.214",
+        "0.204",
         "\u2264 0.20"
       ]
     ],
@@ -2120,7 +2101,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.408",
+        "0.438",
         "\u2264 0.20"
       ]
     ],
@@ -2131,7 +2112,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.374",
+        "0.206",
         "\u2264 0.20"
       ]
     ],
@@ -2142,7 +2123,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.265",
+        "0.278",
         "\u2264 0.20"
       ]
     ],
@@ -2174,7 +2155,7 @@
       ],
       [
         "P/E",
-        "1258.9x",
+        "1214.5x",
         "\u2264 100x"
       ]
     ],
@@ -2185,7 +2166,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.28",
+        "0.297",
         "\u2264 0.20"
       ],
       [
@@ -2217,7 +2198,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.518",
+        "0.459",
         "\u2264 0.20"
       ],
       [
@@ -2233,12 +2214,12 @@
     "fails": [
       [
         "Debt/EV",
-        "0.268",
+        "0.243",
         "\u2264 0.20"
       ],
       [
         "FCF Yield",
-        "-2.3%",
+        "-2.1%",
         "> 0%"
       ]
     ],
@@ -2272,11 +2253,6 @@
         "Op Margin",
         "7.6%",
         "\u2265 10%"
-      ],
-      [
-        "P/E",
-        "101.6x",
-        "\u2264 100x"
       ]
     ],
     "note": "Arm Holdings \u2014 licenses chip architecture (near-universal in mobile CPUs, expanding into AI/datacenter server designs); GrossM 97.5% \u2713 (licensing economics, near-zero marginal cost), NM 20.2% \u2713, ROE 13.4% \u2713, D/EV 0.002 \u2713 (essentially debt-free), RevG 22.4% \u2713 \u2014 6/7 gates; OM 7.6% sole blocker, hairline miss (2.4% below the 10% gate) \u2014 heavy R&D/SBC investment ahead of the datacenter-CPU expansion, not weak underlying economics; grade A; $271.5B market cap; fwdPE 83x, priced for that expansion; moved from UNIVERSE 2026-09-11 \u2014 was sitting there as a bare \"auto-promoted 2026-07-07\" stub with no real write-up and a stale A+ grade; live re-check shows real (if mild, single-notch) drift to grade A with one numeric blocker, which by this framework's own rule belongs in WATCHLIST, not UNIVERSE; gate back to UNIVERSE: OM crossing 10% as R&D/SBC normalizes relative to licensing revenue scale",
@@ -2286,8 +2262,8 @@
     "fails": [
       [
         "FCF Yield",
-        "-0.1%",
-        "> 0%"
+        "missing (no data relief)",
+        "> 0% or rev>50%+margin>10%"
       ]
     ],
     "note": "TTM Technologies \u2014 printed circuit board (PCB) manufacturer with meaningful aerospace/defense exposure (RF/microwave PCBs for radar/EW systems) alongside datacenter/AI-infrastructure, automotive, and medical end-markets; GrossM 21.2% (thin/structural to PCB manufacturing, capital-intensive commodity-adjacent business \u2014 same lens as steel/mining elsewhere in this framework), OM 10.9% \u2713 (barely clears), NM 7.0% \u2713, ROE 13.3% \u2713, D/EV 0.079 \u2713 (very low) \u2014 6/7 gates; FCF yield -0.1% sole blocker, barely negative \u2014 reflects heavy capex for capacity expansion during a PCB upcycle, not distress; RevG 37.4% strong; grade B; $13.3B market cap; fwdPE 18.3x; gate to UNIVERSE: FCF turning positive as expansion capex normalizes; added WATCHLIST 2026-09-12",
@@ -2313,7 +2289,7 @@
       ]
     ],
     "note": "[LOCKED] Nutanix \u2014 hyperconverged infrastructure (HCI) software, private/hybrid-cloud alternative to VMware post-Broadcom-acquisition price hikes (real tailwind \u2014 customers actively migrating); ARTIFACT WARNING, deliberately kept out of UNIVERSE despite the raw gate check reading \"passes: True, grade A+\" \u2014 ROE reads as 37,460% (a data artifact, not real: raw Schwab payload shows operatingMarginTTM/netProfitMarginTTM both at an impossible 167.7% MRQ, epsChangePercentTTM +694.1% YoY \u2014 the signature of a one-time non-cash item, almost certainly a deferred-tax-asset valuation-allowance release after years of accumulated losses, not organic earnings); trailing P/E 12.8x looks cheap for the same reason (denominator inflated by the same one-time EPS spike) \u2014 fwdPE 24.8x is the more honest multiple, nearly 2x the trailing figure; discounting the broken ROE and falling back to ROA (this framework's own designed fallback when ROE looks wrong) \u2014 ROA is only 4.4-4.7%, well below the 15% fallback floor, meaning the ROE/ROA gate would genuinely FAIL on a clean read; the one trustworthy number is OM 13.6% \u2713 (hairline above the 10% gate, believable for enterprise infra software), D/EV 0.089 \u2713 clean; grade (honest) closer to B than the raw A+; $17.8B market cap; added WATCHLIST 2026-09-12; auto-promoted to UNIVERSE by the daily workflow within hours (same day) \u2014 reverted back here manually, since the automation mechanically re-ran the same artifact-contaminated \"passes/grade A+\" check this entry already documents as unreliable; [LOCKED] added 2026-09-12 so auto_promote_tickers() (aligned_screener.py) respects this override instead of re-promoting it again; gate to UNIVERSE: a clean quarter or two once the tax-item noise rolls out of the TTM window, confirming real ROE/ROA on a normalized basis, at which point remove the [LOCKED] tag and let it promote normally \u2014 don't leave this locked forever once the underlying issue resolves",
-    "grade": "A+"
+    "grade": "A"
   },
   "LITE": {
     "fails": [
@@ -2335,7 +2311,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.265",
+        "0.266",
         "\u2264 0.20"
       ]
     ],
@@ -2357,7 +2333,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.339",
+        "0.35",
         "\u2264 0.20"
       ],
       [
@@ -2394,24 +2370,24 @@
       ]
     ],
     "note": "Diodes Incorporated \u2014 discrete/analog semiconductor components (diodes, MOSFETs, analog ICs) across industrial/consumer/auto end markets; D/EV 0.022 \u2713 (near debt-free), GrossM 31.7% \u2713, FCF 4.2% \u2713 \u2014 2 blockers: Op Margin 7.5% (below the 10% gate) + ROE/ROA (4.7%/2.0%, both well below threshold) \u2014 sanity-checked for the NTNX/INVA/ZM-style artifact pattern first: NOT present, and actually the mirror-positive case \u2014 Schwab's raw operatingMarginMRQ (10.9%) and netProfitMarginMRQ (10.5%) are meaningfully stronger than their TTM figures (5.7%/5.3%), consistent with a real within-year margin recovery already underway (same read as NGVT), not weakness dressed up or an artifact; epsChangePercentTTM a modest +50.2%, nothing like NTNX's 694%/INVA's 812%; grade A (raw); $4.3B market cap; trailing PE 49.7x looks expensive but fwdPE 15.8x is cheap \u2014 consistent with the recovering-margin trajectory; technical: -22.7% off 52w high, weekly RSI 51 neutral, weekly slope -5.0% (declining), CMF -0.093 mild negative, 87w structure +41.8% \"moderate\" (still somewhat extended vs long-run base despite the recent pullback \u2014 real tension between \"cheap vs recent high\" and \"not cheap vs long-term base\"); gate to UNIVERSE: Op Margin crossing 10% + ROE/ROA continuing to recover as the MRQ-vs-TTM gap closes; added WATCHLIST 2026-09-21",
-    "grade": "A"
+    "grade": "B"
   },
   "VVV": {
     "fails": [
       [
         "Debt/EV",
-        "0.354",
+        "0.334",
         "\u2264 0.20"
       ]
     ],
     "note": "Valvoline Inc. \u2014 quick-lube retail service centers (Valvoline Instant Oil Change), franchise + company-owned mix; spun off from the lubricant/chemicals brand itself, which was sold to Saudi Aramco 2023 \u2014 VVV retained only the retail service business; recurring revenue model (oil changes every 3-6 months), real switching-cost-light but habit/convenience-driven repeat business; D/EV 0.373 sole blocker, real not hairline (0.173 above the 0.20 gate) \u2014 the retail-service-center buildout carries real lease/franchise-financing leverage; GrossM 38.3% \u2713, OM 21.0% \u2713, NM 5.2% \u2713, ROE 28.4% \u2713, FCF 2.1% \u2713 \u2014 6/7 gates; grade A; $3.4B market cap; technical: -33.4% off 52w high, weekly RSI 29 (deeply oversold), weekly slope -9.2% (still falling hard), CMF -0.045 mild negative, 87w structure -23.8% below LT (a real discount zone by that measure, though still actively falling); gate to UNIVERSE: D/EV trending toward 0.20 as lease/franchise obligations amortize; added WATCHLIST 2026-09-21",
-    "grade": "A"
+    "grade": "B"
   },
   "GPOR": {
     "fails": [
       [
         "Debt/EV",
-        "0.252",
+        "0.239",
         "\u2264 0.20"
       ]
     ],
@@ -2422,7 +2398,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.262",
+        "0.271",
         "\u2264 0.20"
       ]
     ],
@@ -2438,7 +2414,7 @@
       ]
     ],
     "note": "[LOCKED] Semtech Corporation \u2014 analog/mixed-signal semiconductors: LoRa IoT connectivity chips + high-speed datacenter/optical interconnect components; ARTIFACT WARNING \u2014 mechanical filter reads \"passes: True, grade B\" but NOT trusted: raw Schwab payload shows operatingMarginMRQ (46.8%) vs TTM (13.1%) \u2014 a ~3.6x jump \u2014 AND operatingMarginTTM/netProfitMarginTTM are byte-identical (13.1174/13.1174) and operatingMarginMRQ/netProfitMarginMRQ are also byte-identical (46.8366/46.8366), which is itself a data-quality red flag (two independently-computed margins should not match exactly); epsChangePercentTTM is -79.65% (a real trailing EPS decline) which directly contradicts the implied MRQ margin strength \u2014 same disconnect signature as the NTNX/INVA/ZM pattern, most likely a one-time item inflating the most recent quarter while trailing EPS still reflects an earlier hit; trailing PE 109x confirms something is off (nothing in this framework's UNIVERSE trades at 109x on believable fundamentals); pegRatio 5.05 expensive even growth-adjusted; do not trust any number here until a clean quarter shows MRQ/TTM converging; [LOCKED] added 2026-09-22 so auto_promote_tickers() doesn't promote this on the raw \"passes: True\" mechanical read, same as NTNX/INVA/ZM; $16.6B market cap; technical: zone extended, +21.8% above 10w MA, weekly RSI 67 (upper edge), 87w structure +118.7% \"extreme\" \u2014 already very stretched on top of the data-quality concern; gate to UNIVERSE: a clean quarter with MRQ/TTM margins converging and epsChangePercentTTM turning consistent with the margin trend, not before; added WATCHLIST 2026-09-22",
-    "grade": "A"
+    "grade": "B"
   },
   "ESLT": {
     "fails": [
@@ -2460,7 +2436,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.324",
+        "0.336",
         "\u2264 0.20"
       ],
       [
@@ -2519,7 +2495,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.213",
+        "0.21",
         "\u2264 0.20"
       ],
       [
@@ -2562,22 +2538,11 @@
     "note": "Littelfuse \u2014 circuit-protection (fuses) + power semiconductors + sensors for electronics/auto/industrial; TTM loss is real and explained, not a mystery artifact \u2014 Q4 2025 carried a $301M non-cash goodwill impairment (Semiconductor Products business), producing a full-year 2025 GAAP loss (-$2.89 EPS); confirmed via SEC filings the company genuinely returned to profitability in H1 2026 ($164.6M net income for the six months ended June 27, 2026) \u2014 matches the live data exactly: OM/NM TTM -0.3% (impairment-dragged) vs MRQ +12.1% (real recovery, independently confirmed, not just a Schwab-margin reading); LOTS of real blockers on the trailing-basis mechanical gates: OM -0.3% \u2717 (10% gate), NM -0.3% \u2717 (5% gate), ROE -0.3% \u2717 and ROA 6.7% \u2717 (both fail, ROA below the 15% fallback floor too) \u2014 all casualties of the one-time charge aging through the TTM window, not ongoing deterioration; CLEAN: D/Capital 17.96% \u2713 (well inside the 20% gate), current ratio 2.76, FCF yield 3.36% \u2713 (real, positive); RevG TTM +15.4%, YoY +8.9% \u2014 both positive, consistent; cross-vendor note: yfinance's own operatingMargins reads +18.8%, notably different from Schwab's -0.3% TTM \u2014 same kind of unresolved gap already flagged for WOR/NGVT/CCEP; grade context: the \"clears in 1-2 quarters\" read is concrete, not just hopeful \u2014 Q4 2025 (the impairment quarter) rolls out of the trailing-twelve-month window within the next couple of reporting cycles, at which point OM/NM/ROE clear mechanically even without further operational improvement, purely from the one-time charge aging out of the average; $10.9B market cap, Beta 1.47; technical: -0.4% below 10w MA (essentially at it), weekly RSI 54 neutral, weekly slope +1.5% mildly positive, CMF +0.008 essentially neutral, -10.9% off 52w high, 87w structure +40.4% \"moderate\" \u2014 healthy, not extended; earnings Oct 28 (29d); gate to UNIVERSE: OM/NM/ROE/ROA clearing as Q4 2025 rolls out of the TTM window (mechanical) + real continued profitability confirming the H1 2026 recovery holds (not mechanical); added WATCHLIST 2026-09-29",
     "grade": "B"
   },
-  "NOC": {
-    "fails": [
-      [
-        "Debt/EV",
-        "0.206",
-        "\u2264 0.20"
-      ]
-    ],
-    "note": "Northrop Grumman \u2014 defense prime; B-21 Raider stealth bomber (sole-source, multi-decade program), Sentinel ICBM replacement, space systems (satellites, missile defense), autonomous systems; same government sole-source moat as GD/LMT/RTX already covered; GrossM 20.1% (cost-plus defense contracting, same structural read as GD/LMT \u2014 not a blocker here since it clears anyway), OM 11.6%, NM 10.5%, ROE 27.0%, D/EV 0.194, FCF 3.4%, RevG 5.1% \u2014 7/7 gates, no blockers; grade A; $73.7B market cap; fwdPE 17.1x, -13.8% vs 200d MA (Sentinel program cost overrun headline risk already priced in); added UNIVERSE 2026-09-10; blocking: Debt/EV 0.206; auto-demoted from UNIVERSE 2026-10-05 [grade B] \u2014 was grade A, now B",
-    "grade": "B"
-  },
   "BDC": {
     "fails": [
       [
         "Debt/EV",
-        "0.248",
+        "0.265",
         "\u2264 0.20"
       ]
     ],
@@ -2593,13 +2558,13 @@
       ]
     ],
     "note": "Qnity Electronics, Inc. \u2014 semiconductor materials/consumables for chip fabrication, AI/data-center supercycle exposure; REAL SPINOFF, confirmed via search, not assumed \u2014 separated from DuPont de Nemours Nov 1, 2025 (1 DuPont share -> 2 Qnity shares), joined S&P 500, $24.7-34.2B market cap depending on source/date; same \"too new to fully trust\" category as HONA elsewhere in this framework, though more mature (~11.5 months post-spin vs HONA\\'s ~2); FAILS the mechanical quality filter on ROE 6.7% (below the 10% gate) \u2014 likely a transitional/spinoff-capitalization artifact, not confirmed either way; debt_to_ev 0.155 \u2713, OM 22.3% \u2713, NM 11.2% \u2713 all clear; PE 42.6x trailing vs fwd 21.5x \u2014 a large gap consistent with earnings still normalizing post-separation, not yet a stable read; RevG +22.1% TTM strong, real AI-driven growth; CONCRETE, mechanical reason this is still too new: this framework\\'s own get_extension_data() returns None for Q \u2014 insufficient weekly history (needs 55+ weekly bars, Q only has ~50 since the spin) to even compute a weekly zone/extension read yet; daily technical is genuinely weak right now regardless: below all 3 daily MAs, RSI 36.9 (soft), -6-7% across 10/20/50d; gate to UNIVERSE: enough weekly history to confirm a real extension/zone read + ROE clarifying as standalone financials settle, revisit after Q has a full year of independent reporting; added WATCHLIST 2026-10-15",
-    "grade": "A"
+    "grade": "B"
   },
   "PEP": {
     "fails": [
       [
         "Debt/EV",
-        "0.236",
+        "0.23",
         "\u2264 0.20"
       ]
     ],
@@ -2610,7 +2575,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.216",
+        "0.217",
         "\u2264 0.20"
       ]
     ],
@@ -2621,7 +2586,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.315",
+        "0.304",
         "\u2264 0.20"
       ]
     ],
@@ -2632,18 +2597,18 @@
     "fails": [
       [
         "Debt/EV",
-        "0.459",
+        "0.455",
         "\u2264 0.20"
       ]
     ],
     "note": "SM Energy Company \u2014 Permian/Midland Basin + South Texas E&P; found via the same cross-pool check as CVX/XOM/NVS/CNQ/MGY 2026-10-18, the one of the six that doesn\\'t clear screener.py\\'s own filter cleanly; real (not hairline) blocker \u2014 debt_to_ev 0.459, 0.259 above the 0.20 gate, real leverage, likely acquisition-related given the scale of growth below; otherwise A+ on every other measure \u2014 OM 60.3% \u2713 (highest in the batch), NM 20.2% \u2713, ROE 16.1% \u2713; PE 7.0x \u2014 very cheap, market pricing in the leverage concern; RevG +176.1% TTM \u2014 a real, large acquisition-driven jump (worth confirming the source before fully trusting the growth figure as organic); technical is extended, same Energy-sector pattern as CVX/XOM/CNQ: 4/4 weekly MA aligned, +8.49% above 10w MA, weekly RSI 64.1, 87w structure +50.6% \"stretched\" \u2014 the most extended name in the whole cross-pool batch, on top of being the one with a real blocker; gate to UNIVERSE: debt_to_ev crossing below 0.20 as the acquisition integrates; added WATCHLIST 2026-10-18",
-    "grade": "A+"
+    "grade": "A"
   },
   "AMT": {
     "fails": [
       [
         "Debt/EV",
-        "0.331",
+        "0.326",
         "\u2264 0.20"
       ]
     ],
@@ -2654,7 +2619,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.306",
+        "0.299",
         "\u2264 0.20"
       ]
     ],
@@ -2665,11 +2630,82 @@
     "fails": [
       [
         "Debt/EV",
-        "0.347",
+        "0.348",
         "\u2264 0.20"
       ]
     ],
     "note": "The Clorox Company \u2014 household/cleaning products (Clorox bleach, Pine-Sol, Glad bags, Kingsford charcoal, Burt\\'s Bees); found via the same XLP sweep 2026-10-18, genuinely the weaker of this batch, worth being honest about \u2014 real (not hairline) blocker, debt_to_ev 0.347 (0.147 above the 0.20 gate); grade only B, not A like STZ \u2014 OM 12.9%, NM 8.7%, both unremarkable; RevG -2.0% TTM declining, though fy0/fy1 estimates (+3.4%/+7.7%) price in a hoped-for reacceleration, not yet confirmed; ARTIFACT WARNING on ROE/P-B specifically \u2014 ROE 163.8% and P/B 117.1x are NOT trustworthy capital-efficiency signals, decades of buybacks have shrunk book equity to near nothing, same mechanical distortion already flagged for TPR/AAPL elsewhere in this framework; ROA 8.3% is the honest, unremarkable fallback; PE 18.1x (fwd 14.1x); short interest real and elevated \u2014 11.0% of float, 4.7 days to cover, an active bear thesis, not just drift; technical is genuinely broken, not just mixed: 0/4 weekly MA aligned, -4.71% below 10w MA, slope still falling -1.81%, weekly RSI 41.9, -20.56% below its own 87w structure (a real decline below long-run base, not a discount worth chasing), -13.5% vs 200d MA; added anyway per explicit request despite the rougher profile than STZ/PEP/MDLZ; gate to UNIVERSE: debt_to_ev crossing below 0.20 + trailing RevG actually turning positive (not just estimated) + weekly structure reclaiming the 10w MA; added WATCHLIST 2026-10-18",
+    "grade": "B"
+  },
+  "FANG": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE 3.5% / ROA 1.3%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Diamondback Energy, Inc. \u2014 Permian Basin E&P, completed the ~$26B Endeavor Energy Resources acquisition in 2024; real (not hairline) blocker \u2014 ROE/ROA (3.5%/1.3%) well below the 10%/15% gates, but explainable, not organic weakness: GrossM 72.4% and OM 48.5% are both excellent, the gap down to NM 9.0% points to heavy acquisition-related D&A/interest weighing on reported earnings, same shape as RRX\\'s Altra-acquisition drag elsewhere in this framework; FCF yield 8.9% is the tell that cash generation is genuinely fine despite the depressed NM/ROE; D/EV 0.169 \u2713 clean; PE 38.3x trailing vs fwd PE only 10.5x \u2014 a real gap, market already pricing the earnings recovery as integration completes; RevG +52.5% TTM; technical healthy, not stretched: 4/4 weekly MA aligned, +1.82% above 10w MA, slope flat, weekly RSI 55.0 neutral, 87w structure +23.7% \"moderate\"; gate to UNIVERSE: ROE/ROA recovering as Endeavor integration completes and acquisition-related D&A normalizes; added WATCHLIST 2026-10-21",
+    "grade": "A"
+  },
+  "ASND": {
+    "fails": [
+      [
+        "Passes all filters",
+        "\u2014",
+        "\u2014"
+      ]
+    ],
+    "note": "[LOCKED] Ascendis Pharma A/S \u2014 Danish commercial-stage biopharma (Skytrofa for growth hormone deficiency, Yorvipath for hypoparathyroidism, TransCon pipeline); ARTIFACT WARNING, deliberately kept out of UNIVERSE despite the raw gate check reading \"passes: True, grade A+\" \u2014 same category as NTNX/SMTC; three numbers all point the same direction: net margin shows an extraordinary 70.8% for a still-scaling commercial biopharma, but FCF yield is only 0.1% (if NM were genuinely 70.8%, cash generation should be far stronger \u2014 this gap is the tell); RevG TTM +114.7% but fy1 forward growth estimate is -24.8%, an explosive-trailing-into-declining-forecast reversal consistent with a one-time licensing/milestone payment inflating this year\\'s revenue, not durable operating economics; PE only 17.7x trailing \u2014 suspiciously cheap for a supposed 70.8%-margin, 114%-growth company, suggesting the market isn\\'t pricing it as the mechanical numbers claim either; debt_to_ev 0.031 \u2713 clean, that part is real; technical unremarkable either way, not a factor: 1/4 weekly MA aligned, -4.20% below 10w MA, weekly RSI 46.9 neutral, only +10.69% above long-term structure (not stretched); added WATCHLIST 2026-10-19; auto-promoted to UNIVERSE within hours 2026-10-22 (same mechanism as NTNX\\'s original incident) \u2014 reverted back here manually, [LOCKED] added 2026-10-22 so auto_promote_tickers() respects this override instead of re-promoting it again; gate to UNIVERSE: a clean quarter where NM and FCF yield actually converge, not the current mechanical \"A+\" read \u2014 at which point remove the [LOCKED] tag, don\\'t leave this locked forever once resolved",
+    "grade": "A+"
+  },
+  "BOX": {
+    "fails": [
+      [
+        "Passes all filters",
+        "\u2014",
+        "\u2014"
+      ]
+    ],
+    "note": "[LOCKED] Box, Inc. \u2014 cloud content management/collaboration platform (enterprise file storage, governance, AI-powered content search); ARTIFACT WARNING on ROE specifically, deliberately kept out of UNIVERSE despite the raw gate check reading \"passes: True, grade A\" \u2014 same category as NTNX/SMTC/ASND; ROE 70.2% is NOT a trustworthy capital-efficiency signal, P/B is actually NEGATIVE (-15.8), meaning negative book equity, same mechanical distortion already flagged for BBIO/TPR/CLX; ROA 5.2% is the honest, modest fallback; GrossM 79.6% \u2713, OM 10.2% (hairline-clear, not a standout), NM 10.6% \u2713, D/EV 0.09 \u2713 (low); FCF yield 6.8% \u2014 genuinely solid, real cash generation; PE 58.6x trailing (fwd 23.3x); RevG +9.2% TTM, forward growth accelerating (fy0 +6.9% -> fy1 +12.9%, a real positive); REAL CAUTION on entry, significantly extended: 4/4 weekly MA aligned but +14.67% above 10w MA, weekly RSI 72.4 (clearly overbought), +43.9% vs 200d MA, 87w structure +33.7% \"stretched\"; short interest elevated \u2014 15.8% of float, 7.4 days to cover, an active bear thesis; added WATCHLIST 2026-10-20 (originally a discretionary override into WATCHLIST despite passing cleanly, same category as NTR); auto-promoted to UNIVERSE within hours 2026-10-22 \u2014 reverted back here manually, [LOCKED] added 2026-10-22 so auto_promote_tickers() respects this override instead of re-promoting it again; gate to UNIVERSE: a clean quarter where ROE/P-B stop looking like a buyback artifact and ROA independently confirms real capital efficiency \u2014 at which point remove the [LOCKED] tag, don\\'t leave this locked forever once resolved",
+    "grade": "A"
+  },
+  "IR": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE 9.5% / ROA 5.1%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Ingersoll Rand Inc. \u2014 industrial compressors/pumps/fluid management, known for an active M&A-driven \"80/20\" operating model (the 2020 Gardner Denver reverse-merger is the likely source of purchase-accounting goodwill still weighing on ROE, though not independently confirmed here); hairline-adjacent blocker \u2014 ROE/ROA (9.5%/5.1%), ROE just 0.5pt below the 10% gate, not a dramatic miss; GrossM 42.8% \u2713, OM 16.9% \u2713, NM 12.1% \u2713, D/EV 0.151 \u2713 (clean); grade A; PE 32.5x trailing vs fwd 19.0x \u2014 a real gap, market pricing earnings normalization; RevG +8.5% TTM, accelerating to fy1 +10.0%; FCF yield 3.9%, healthy; technical shows a genuine discount, not just a pullback: 0/4 weekly MA aligned, -2.87% below 10w MA, weekly RSI 43.1, 87w structure -8.0% \"below LT\" \u2014 actually below its own long-term structural base; gate to UNIVERSE: ROE crossing 10%; added WATCHLIST 2026-10-23",
+    "grade": "A"
+  },
+  "FTAI": {
+    "fails": [
+      [
+        "FCF Yield",
+        "-3.3%",
+        "> 0%"
+      ]
+    ],
+    "note": "FTAI Aviation \u2014 CFM56 engine platform (powers 737/A320, largest narrowbody fleet in the world); buys used engines, refurbishes modules, leases/sells back to airlines at discount to OEM \u2014 toll booth on aviation, not the airline itself; OM 22.5%, NM 18.9%, ROA 11.3%, RevG 65.5%, fwd PE 18.5x; FCF -$320M \u2717 (main blocker \u2014 growth capex consuming cash or structural, unclear); D/EV 0.132 manageable (D/E 809 is buyback-distorted equity, not leverage deterioration); infrastructure segment separation adds complexity; Hindenburg short report (2024) raised accounting concerns \u2014 not fully resolved; down -34% from highs; gate: FCF turning positive + infrastructure separation complete + short report overhang cleared; Buffett/Munger would disapprove (aviation industry) \u2014 but this is the toll booth, not the airline; auto-promoted 2026-07-31 [grade A+, 1/4 MA]; blocking: FCF Yield -3.3%; auto-demoted from UNIVERSE 2026-10-24 [grade A] \u2014 was grade A+, now A",
+    "grade": "A"
+  },
+  "PKG": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE None% / ROA None%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "missing (no data relief)",
+        "> 0% or rev>50%+margin>10%"
+      ]
+    ],
+    "note": "Packaging Corporation of America \u2014 containerboard + corrugated packaging manufacturer, no merger integration noise (unlike IP/GPK peers currently digesting acquisitions); OM 13.1% \u2713, NM 7.3% \u2713, ROE 14.9% \u2713, D/EV 17.7% \u2713, FCF 2.0% \u2713, RevG 14.7% \u2713 \u2014 6/7 gates; GrossM 21.4% sole blocker, structural (containerboard/pulp manufacturing raw-material cost structure, same lens as mining/aggregates); grade A; added as part of a sector-coverage audit filling the \"paper\" gap in the AI-disruption-resistance lens; gate: GrossM structural exception confirmed via sustained OM/ROE strength; added UNIVERSE 2026-09-05; blocking: ROE/ROA ROE None% / ROA None%, FCF Yield missing (no data relief); auto-demoted from UNIVERSE 2026-10-24 [grade B] \u2014 was grade A, now B",
     "grade": "B"
   }
 }
