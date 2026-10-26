@@ -1,526 +1,526 @@
 {
   "TROW": {
-    "price": 100.97,
-    "score": 1
+    "price": 104.2,
+    "score": 2
   },
   "AMP": {
-    "price": 500.8,
+    "price": 492.19,
     "score": 2
   },
   "AB": {
-    "price": 34.86,
+    "price": 34.93,
     "score": 0
   },
   "AFL": {
-    "price": 119.97,
+    "price": 120.51,
     "score": 4
   },
   "CINF": {
-    "price": 171.25,
-    "score": 3
+    "price": 176.3,
+    "score": 4
   },
   "TRV": {
-    "price": 389.54,
+    "price": 398.28,
     "score": 4
   },
   "CB": {
-    "price": 359.79,
+    "price": 355.11,
     "score": 4
   },
   "AJG": {
-    "price": 254.88,
-    "score": 3
+    "price": 268.04,
+    "score": 4
   },
   "AON": {
-    "price": 292.55,
+    "price": 303.52,
     "score": 0
   },
   "PRU": {
-    "price": 115.91,
-    "score": 3
-  },
-  "ERIE": {
-    "price": 243.71,
+    "price": 114.99,
     "score": 2
   },
+  "ERIE": {
+    "price": 253.52,
+    "score": 3
+  },
   "ABT": {
-    "price": 104.89,
+    "price": 103.7,
     "score": 2
   },
   "JNJ": {
-    "price": 255.56,
-    "score": 2
+    "price": 263.81,
+    "score": 3
   },
   "ABBV": {
-    "price": 285.42,
+    "price": 285.64,
     "score": 4
   },
   "MRK": {
-    "price": 145.95,
-    "score": 4
+    "price": 145.27,
+    "score": 3
   },
   "BMY": {
-    "price": 59.75,
-    "score": 2
+    "price": 61.48,
+    "score": 3
   },
   "NVO": {
-    "price": 38.83,
+    "price": 39.05,
     "score": 0
   },
   "PFE": {
-    "price": 29.58,
+    "price": 30.03,
     "score": 4
   },
   "CVS": {
-    "price": 92.36,
+    "price": 93.47,
     "score": 3
   },
   "FMS": {
-    "price": 22.17,
-    "score": 0
+    "price": 22.68,
+    "score": 2
   },
   "PG": {
-    "price": 159.35,
+    "price": 161.02,
     "score": 4
   },
   "CL": {
-    "price": 94.11,
+    "price": 94.04,
     "score": 4
   },
   "KO": {
-    "price": 93.9,
+    "price": 92.71,
     "score": 4
   },
   "PEP": {
-    "price": 131.49,
-    "score": 0
-  },
-  "KHC": {
-    "price": 23.68,
+    "price": 135.77,
     "score": 1
   },
+  "KHC": {
+    "price": 24.8,
+    "score": 4
+  },
   "CLX": {
-    "price": 87.09,
+    "price": 86.4,
     "score": 0
   },
   "CHD": {
-    "price": 104.53,
+    "price": 105.19,
     "score": 4
   },
   "INGR": {
-    "price": 97.93,
+    "price": 95.7,
     "score": 0
   },
   "ECL": {
-    "price": 288.89,
+    "price": 288.53,
     "score": 4
   },
   "ROL": {
-    "price": 33.45,
-    "score": 0
+    "price": 34.82,
+    "score": 1
   },
   "CTAS": {
-    "price": 213.69,
+    "price": 224.1,
     "score": 4
   },
   "KR": {
-    "price": 63.63,
-    "score": 3
-  },
-  "GPC": {
-    "price": 133.96,
+    "price": 66.77,
     "score": 4
   },
+  "GPC": {
+    "price": 123.02,
+    "score": 2
+  },
   "SYY": {
-    "price": 82.22,
+    "price": 81.37,
     "score": 4
   },
   "ITW": {
-    "price": 272.28,
+    "price": 275.75,
     "score": 4
   },
   "EMR": {
-    "price": 161.47,
+    "price": 161.59,
     "score": 4
   },
   "GWW": {
-    "price": 1330.7,
+    "price": 1349.9,
     "score": 4
   },
   "CMI": {
-    "price": 531.33,
+    "price": 517.4,
     "score": 1
   },
   "DOV": {
-    "price": 195.8,
+    "price": 199.2,
     "score": 2
   },
   "SNA": {
-    "price": 367.25,
+    "price": 357.02,
     "score": 1
   },
   "UNP": {
-    "price": 289.04,
+    "price": 292.87,
     "score": 4
   },
   "WM": {
-    "price": 226.86,
+    "price": 239.38,
     "score": 4
   },
   "RSG": {
-    "price": 231.54,
+    "price": 240.45,
     "score": 4
   },
   "CBT": {
-    "price": 74.29,
+    "price": 73.79,
     "score": 0
   },
   "MCD": {
-    "price": 242.97,
-    "score": 0
-  },
-  "LEVI": {
-    "price": 20.44,
+    "price": 248.46,
     "score": 1
   },
+  "LEVI": {
+    "price": 21.13,
+    "score": 2
+  },
   "QSR": {
-    "price": 74.81,
-    "score": 3
+    "price": 75.34,
+    "score": 4
   },
   "TXN": {
-    "price": 276.48,
-    "score": 3
+    "price": 284.69,
+    "score": 4
   },
   "MSFT": {
-    "price": 529.05,
+    "price": 524.51,
     "score": 4
   },
   "AAPL": {
-    "price": 343.46,
+    "price": 347.73,
     "score": 4
   },
   "FIS": {
-    "price": 36.01,
-    "score": 0
+    "price": 37.53,
+    "score": 1
   },
   "CVX": {
-    "price": 224.99,
+    "price": 233.21,
     "score": 4
   },
   "XOM": {
-    "price": 178.98,
+    "price": 183.21,
     "score": 4
   },
   "CNQ": {
-    "price": 53.8,
+    "price": 55.06,
     "score": 4
   },
   "OXY": {
-    "price": 62.38,
+    "price": 64.17,
     "score": 4
   },
   "SM": {
-    "price": 39.5,
+    "price": 40.11,
     "score": 4
   },
   "DVN": {
-    "price": 50.73,
+    "price": 51.39,
     "score": 4
   },
   "PNC": {
-    "price": 217.39,
-    "score": 1
-  },
-  "CATY": {
-    "price": 59.96,
+    "price": 224.46,
     "score": 2
   },
+  "CATY": {
+    "price": 64.3,
+    "score": 4
+  },
   "IBOC": {
-    "price": 67.34,
+    "price": 67.16,
     "score": 0
   },
   "CFG": {
-    "price": 63.36,
-    "score": 1
+    "price": 65.14,
+    "score": 2
   },
   "STT": {
-    "price": 165.72,
+    "price": 167.83,
     "score": 2
   },
   "WFC": {
-    "price": 83.87,
-    "score": 2
+    "price": 82.39,
+    "score": 1
   },
   "BAC": {
-    "price": 51.23,
+    "price": 50.56,
     "score": 1
   },
   "C": {
-    "price": 124.26,
+    "price": 120.62,
     "score": 1
   },
   "EPD": {
-    "price": 36.82,
+    "price": 37.08,
     "score": 2
   },
   "ET": {
-    "price": 20.26,
+    "price": 20.45,
     "score": 3
   },
   "CQP": {
-    "price": 63.57,
-    "score": 2
+    "price": 66.15,
+    "score": 4
   },
   "VZ": {
-    "price": 44.79,
+    "price": 44.66,
     "score": 1
   },
   "CMCSA": {
-    "price": 21.9,
+    "price": 22.69,
     "score": 0
   },
   "NEE": {
-    "price": 79.8,
-    "score": 1
-  },
-  "DUK": {
-    "price": 121.47,
+    "price": 82.1,
     "score": 2
   },
+  "DUK": {
+    "price": 124.98,
+    "score": 4
+  },
   "SO": {
-    "price": 91.18,
+    "price": 92.89,
     "score": 4
   },
   "AEE": {
-    "price": 106.08,
-    "score": 2
+    "price": 108.04,
+    "score": 4
   },
   "AWK": {
-    "price": 134.94,
+    "price": 142.75,
     "score": 4
   },
   "XYL": {
-    "price": 104.05,
-    "score": 0
+    "price": 108.74,
+    "score": 1
   },
   "WEC": {
-    "price": 108.71,
-    "score": 2
+    "price": 111.09,
+    "score": 4
   },
   "XEL": {
-    "price": 76.31,
-    "score": 2
+    "price": 78.05,
+    "score": 4
   },
   "CNP": {
-    "price": 40.55,
-    "score": 2
+    "price": 41.07,
+    "score": 3
   },
   "SRE": {
-    "price": 83.41,
+    "price": 84.06,
     "score": 2
   },
   "SWKS": {
-    "price": 79.7,
+    "price": 83.43,
     "score": 4
   },
   "NKE": {
-    "price": 37.13,
-    "score": 0
-  },
-  "GM": {
-    "price": 83.96,
-    "score": 3
-  },
-  "F": {
-    "price": 12.43,
+    "price": 37.3,
     "score": 1
   },
+  "GM": {
+    "price": 75.92,
+    "score": 1
+  },
+  "F": {
+    "price": 11.6,
+    "score": 0
+  },
   "VFC": {
-    "price": 16.85,
-    "score": 3
+    "price": 17.26,
+    "score": 4
   },
   "FMC": {
-    "price": 5.66,
+    "price": 5.05,
     "score": 0
   },
   "WD": {
-    "price": 32.66,
+    "price": 34.16,
     "score": 0
   },
   "IFF": {
-    "price": 90.68,
+    "price": 94.15,
     "score": 4
   },
   "GFI": {
-    "price": 37.6,
-    "score": 1
+    "price": 34.59,
+    "score": 0
   },
   "B": {
-    "price": 40.82,
-    "score": 2
+    "price": 38.14,
+    "score": 1
   },
   "ACN": {
-    "price": 229.68,
-    "score": 3
+    "price": 249.37,
+    "score": 4
   },
   "CTSH": {
-    "price": 66.03,
-    "score": 3
+    "price": 70.54,
+    "score": 4
   },
   "ADP": {
-    "price": 288.9,
+    "price": 304.16,
     "score": 4
   },
   "GIS": {
-    "price": 33.13,
+    "price": 34.39,
     "score": 0
   },
   "BR": {
-    "price": 175.11,
+    "price": 183.28,
     "score": 3
   },
   "CF": {
-    "price": 120.85,
+    "price": 120.68,
     "score": 3
   },
   "CME": {
-    "price": 293.87,
+    "price": 305.71,
     "score": 4
   },
   "FDS": {
-    "price": 301.67,
-    "score": 3
+    "price": 331.32,
+    "score": 4
   },
   "HSY": {
-    "price": 170.83,
+    "price": 169.64,
     "score": 0
   },
   "KMB": {
-    "price": 105.57,
+    "price": 110.15,
     "score": 3
   },
   "TRI": {
-    "price": 109.01,
+    "price": 123.17,
     "score": 3
   },
   "HD": {
-    "price": 309.63,
-    "score": 0
+    "price": 319.83,
+    "score": 1
   },
   "PPG": {
-    "price": 107.39,
-    "score": 0
+    "price": 110.61,
+    "score": 2
   },
   "RPM": {
-    "price": 99.73,
+    "price": 98.74,
     "score": 0
   },
   "FRT": {
-    "price": 106.32,
+    "price": 108.72,
     "score": 1
   },
   "NNN": {
-    "price": 41.54,
+    "price": 41.72,
     "score": 1
   },
   "O": {
-    "price": 56.08,
+    "price": 56.89,
     "score": 0
   },
   "WPC": {
-    "price": 65.14,
-    "score": 1
+    "price": 63.9,
+    "score": 0
   },
   "EPR": {
-    "price": 55.71,
+    "price": 55.97,
     "score": 2
   },
   "RHP": {
-    "price": 125.98,
+    "price": 130.38,
     "score": 4
   },
   "VICI": {
-    "price": 23.6,
+    "price": 23.76,
     "score": 0
   },
   "AMT": {
-    "price": 185.27,
+    "price": 188.97,
     "score": 4
   },
   "STAG": {
-    "price": 35.83,
+    "price": 36.43,
     "score": 1
   },
   "HASI": {
-    "price": 36.42,
+    "price": 36.32,
     "score": 1
   },
   "MAIN": {
-    "price": 53.83,
+    "price": 53.51,
     "score": 0
   },
   "ARCC": {
-    "price": 18.72,
+    "price": 18.64,
     "score": 2
   },
   "BEN": {
-    "price": 30.98,
+    "price": 31.06,
     "score": 2
   },
   "PR": {
-    "price": 24.59,
+    "price": 25.49,
     "score": 4
   },
   "DINO": {
-    "price": 125.29,
+    "price": 121.66,
     "score": 4
   },
   "EBF": {
-    "price": 22.36,
+    "price": 22.64,
     "score": 4
   },
   "MGY": {
-    "price": 25.35,
-    "score": 1
-  },
-  "IBM": {
-    "price": 232.14,
-    "score": 1
-  },
-  "NSC": {
-    "price": 326.92,
+    "price": 26.15,
     "score": 3
   },
+  "IBM": {
+    "price": 253.56,
+    "score": 3
+  },
+  "NSC": {
+    "price": 329.99,
+    "score": 4
+  },
   "DTM": {
-    "price": 123.67,
+    "price": 123.91,
     "score": 1
   },
   "TRP": {
-    "price": 61.74,
-    "score": 2
+    "price": 62.4,
+    "score": 3
   },
   "DLR": {
-    "price": 175.97,
+    "price": 172.37,
     "score": 1
   },
   "CCEP": {
-    "price": 112.4,
+    "price": 110.84,
     "score": 4
   },
   "KRP": {
-    "price": 16.28,
+    "price": 16.96,
     "score": 4
   },
   "TIGO": {
-    "price": 82.86,
-    "score": 2
+    "price": 78.34,
+    "score": 1
   },
   "NVS": {
-    "price": 150.62,
+    "price": 151.12,
     "score": 3
   },
   "DMLP": {
-    "price": 30.43,
+    "price": 30.64,
     "score": 4
   }
 }
