@@ -152,7 +152,13 @@ def get_daily_ma_pos(ticker, force_yf=False):
         if wk_close is not None:
             ma10w_series = wk_close.rolling(10).mean().dropna()
             wk_slope = round((ma10w_series.iloc[-1] / ma10w_series.iloc[-6] - 1) * 100, 1) if len(ma10w_series) >= 6 else float('nan')
-            wk_cmf = _weekly_cmf(hist_w)
+            # Augment with the current in-progress week's bar before computing CMF --
+            # same fix already applied to CMF-20 in internal_cmf_trend_scanner.py
+            # (2026-10-05, confirmed live on INTU: -0.004 vs +0.073 without it). Scoped
+            # to just this CMF call, not wk_slope, which wasn't part of the reported gap.
+            from extension_scan import _build_current_week_bar
+            hist_w_live = _build_current_week_bar(ticker, hist_w, force_yf=force_yf)
+            wk_cmf = _weekly_cmf(hist_w_live)
         else:
             wk_slope = float('nan')
             wk_cmf   = float('nan')
