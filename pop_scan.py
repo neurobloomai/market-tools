@@ -1121,6 +1121,18 @@ def run(tickers, label, cli_only=False):
 if __name__ == '__main__':
     args = sys.argv[1:]
 
+    # Only required when SCHWAB_DATA=1 is actually set in the shell -- this script
+    # defaults to yfinance via market_data.py otherwise. When it IS set, fail fast with
+    # the real reason instead of every ticker in the scan silently falling back or
+    # returning no data. Same class of bug caught live 2026-10-28 in the CMF scanner.
+    if os.environ.get('SCHWAB_DATA') == '1':
+        from schwab_client import check_token
+        ok, hours_left, msg = check_token()
+        if not ok:
+            print(f'\n  SCHWAB AUTH CHECK FAILED: {msg}')
+            print(f'  SCHWAB_DATA=1 is set but auth is bad -- not running the scan on stale/wrong pricing.\n')
+            sys.exit(1)
+
     if not args:
         tickers = list(dict.fromkeys(UNIVERSE))
         tickers += [t for t in WATCHLIST if t not in tickers]
