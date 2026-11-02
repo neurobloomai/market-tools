@@ -45,7 +45,7 @@
       ],
       [
         "P/E",
-        "107.7x",
+        "110.1x",
         "\u2264 100x"
       ]
     ],
@@ -124,7 +124,7 @@
       ],
       [
         "P/E",
-        "159.9x",
+        "161.5x",
         "\u2264 100x"
       ]
     ],
@@ -240,7 +240,7 @@
       ]
     ],
     "note": "",
-    "grade": "B"
+    "grade": "A"
   },
   "MKC": {
     "fails": [
@@ -316,7 +316,7 @@
       ],
       [
         "FCF Yield",
-        "-15.5%",
+        "-14.5%",
         "> 0%"
       ]
     ],
@@ -337,7 +337,7 @@
       ],
       [
         "FCF Yield",
-        "-0.5%",
+        "-0.6%",
         "> 0%"
       ]
     ],
@@ -460,7 +460,7 @@
     "fails": [
       [
         "FCF Yield",
-        "-7.4%",
+        "-7.3%",
         "> 0%"
       ]
     ],
@@ -507,12 +507,23 @@
       ],
       [
         "P/E",
-        "194.1x",
+        "195.6x",
         "\u2264 100x"
       ]
     ],
     "note": "Cloudflare \u2014 global network infrastructure platform; CDN + DDoS protection + Zero Trust/SASE (Cloudflare One) + AI inference at the edge (Workers AI runs on 300+ PoPs globally); platform consolidation play: enterprises replacing 5-10 point security vendors with a single Cloudflare stack \u2014 each new product (CASB, DLP, RBI, ZTNA) sold into the existing base with near-zero CAC; GrossM 73.3%, RevG 33.5%, FCF 0.8% (barely positive), D/EV 0.037 (near-zero debt); Workers AI is an emerging edge inference network \u2014 low-latency AI calls at 300+ locations globally without GPU datacenter dependency; REAL BACKSLIDING since this entry was written, refreshed 2026-09-29 rather than left stale: OM was -9.7% at add time, described as \"already crossing zero\" \u2014 Schwab's raw operatingMarginTTM/MRQ now show -8.2%/-24.4%, meaning the MOST RECENT quarter alone moved backward, not toward the 0% gate (epsChangePercentTTM +27.2% is still genuinely positive, so this isn't a full reversal of the growth story, just a real margin step back worth tracking, not glossing over); market cap has grown to $124.3B in the meantime; gate: OM actually crossing 0% sustained + trending toward 10% as S&M leverage kicks in at scale \u2014 unchanged gate, but the MRQ move this cycle went the wrong way, watch next print closely; fwdPE 170.9x rich but compresses fast as OM inflects; added WATCHLIST 2026-07-30, refreshed 2026-09-29",
     "grade": "B"
+  },
+  "AFRM": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.314",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "Affirm Holdings \u2014 BNPL (buy-now-pay-later) consumer lender, point-of-sale installment loans at Amazon/Shopify/Walmart checkout; genuine blocker: D/EV 0.314, meaningfully over the 0.20 gate (not a hairline miss like HPE/TDY \u2014 real leverage from the lending model, Schwab's totalDebtToEquity 182.7%/totalDebtToCapital 64.6% confirm it's not a fluke); ARTIFACT WARNING on top of that: net margin reads 45.3% TTM but Schwab's own netProfitMarginMRQ is 138.65% -- literally impossible for an operating business (net income can't exceed revenue organically), and epsChangePercentTTM is +3515% -- the same one-time-item signature already documented for NTNX (deferred-tax-asset-style release, not real operating economics); ROA (this framework's own designed fallback when ROE looks artifact-inflated) is only 1.9%, nowhere near the 15% floor, confirming the headline 45.1% ROE isn't real capital efficiency; OM 12.6% and FCF yield 2.0% are the only clean, trustworthy numbers here; RevG +33.0% TTM; PE 12.6x looks cheap for the same reason the margin looks rich (one-time-item-distorted denominator); gate to UNIVERSE: D/EV compressing below 0.20 as the loan book scales AND the margin/EPS artifact rolling out of the TTM window to confirm real underlying profitability (don't trust a future \"OM/NM clears\" read without re-checking TTM-vs-MRQ agreement first); added WATCHLIST 2026-10-26",
+    "grade": "A"
   },
   "TREE": {
     "fails": [
@@ -902,7 +913,7 @@
       ],
       [
         "FCF Yield",
-        "-16.2%",
+        "-16.3%",
         "> 0%"
       ]
     ],
@@ -1109,7 +1120,7 @@
       ],
       [
         "FCF Yield",
-        "-7.1%",
+        "-7.3%",
         "> 0%"
       ]
     ],
@@ -1142,7 +1153,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.289",
+        "0.287",
         "\u2264 0.20"
       ]
     ],
@@ -1227,7 +1238,7 @@
         "\u2265 5%"
       ]
     ],
-    "note": "Costco \u2014 membership moat, not a margin story; OM ~3% by design (merchandise passes savings to members, fee stream runs at ~95% margin); screen blocks on OM/NM \u2014 low margins are the product, not a flaw; measure by membership fee growth + renewal rate (~93%) + ROIC; currently 0/4 MA (CMF -0.20, distribution); promote to UNIVERSE on 4/4 recovery",
+    "note": "[WATCHLIST] Costco \u2014 membership moat, not a margin story; OM ~3% by design (merchandise passes savings to members, fee stream runs at ~95% margin); screen blocks on OM/NM \u2014 low margins are the product, not a flaw; measure by membership fee growth + renewal rate (~93%) + ROIC; currently 0/4 MA (CMF -0.20, distribution); promote to UNIVERSE on 4/4 recovery; re-verified still failing OM/NM 2026-10-28 (OM 3.8%, NM 3.0%) \u2014 structural, not closing anytime soon; in WATCHLIST since initial release, no fixed add date on record",
     "grade": "B"
   },
   "WMT": {
@@ -1254,7 +1265,7 @@
         "\u2265 10% / \u2265 15%"
       ]
     ],
-    "note": "O'Reilly Auto Parts \u2014 Akre compounder; 18% OM, 14% NM, ROA 13.8% (ROE negative from 20yrs buybacks); ROA just below 15% threshold; D/EV 0.10, P/E 29x, exceptional execution",
+    "note": "[WATCHLIST] O'Reilly Auto Parts \u2014 Akre compounder; 18% OM, 14% NM, ROA 13.8% (ROE negative from 20yrs buybacks); ROA just below the 15% fallback threshold \u2014 real blocker, not a hairline rounding issue; D/EV 0.10, P/E 29x, exceptional execution; re-verified still failing ROE/ROA 2026-10-28 (ROE reads None, ROA 13.7%); added WATCHLIST 2026-06-15; gate to UNIVERSE: ROA (Net Income / Total Assets) crossing 15% requires net income growing faster than the asset base \u2014 real margin/operating improvement, NOT the buyback story (buybacks shrink equity, the ROE denominator, not assets; a debt-funded buyback in particular leaves total assets roughly unchanged, which is exactly why ROE went negative while ROA stayed a separate, real 13.7% \u2014 don't conflate the two mechanisms here)",
     "grade": "B"
   },
   "TDG": {
@@ -1475,6 +1486,44 @@
     "note": "Hewlett Packard Enterprise \u2014 enterprise servers/networking/storage; AI server demand driving RevG +33.7%, but that growth doesn't buy quality (post-2026-10-24 fix) \u2014 gate is purely capital efficiency: OM 12.6% \u2713, NM 6.7% \u2713, ROE 10.9% \u2713, FCF yield 6.3% \u2713; single blocker is D/EV 0.227, a hairline miss vs the 0.20 gate (one tick over, not a leverage concern); fwdPE 29.2x; gate: D/EV crossing below 0.20 as FCF-funded deleveraging continues; added WATCHLIST 2026-10-24",
     "grade": "B"
   },
+  "OKTA": {
+    "fails": [
+      [
+        "ROE/ROA",
+        "ROE 4.3% / ROA 1.6%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "Okta, Inc. \u2014 identity/access management SaaS (workforce + customer identity, Auth0 acquisition 2021); single blocker, real: ROE 4.3% / ROA 1.6%, both well below the 10%/15% gates; checked for an artifact given the huge epsChangePercentTTM (+2333%) and the ROE/ROA-vs-margin gap \u2014 not an impossible-number artifact like NTNX/AFRM: TTM net margin 9.6% is a real, modest figure and MRQ is actually HIGHER (14.4%), a genuine improving trend, and the extreme EPS% swing is explained by Okta coming off a near-zero prior-year earnings base, not a one-time item; the low ROE/ROA reads as the same serial-acquirer-goodwill pattern already documented for TDY/AME/MKSI \u2014 the ~$6.5B mostly-stock Auth0 deal inflated both equity and total assets, diluting the ratios even as the underlying business genuinely improves; D/EV 0.002 \u2713 (essentially debt-free), GrossM 78.1% \u2713 (strong SaaS margin), OM 13.3% \u2713, NM 9.6% \u2713, FCF yield 2.9% \u2713 \u2014 everything else clears comfortably; grade not applicable via the mechanical filter (fails on ROE/ROA alone); fwdPE 47.6x rich; RevG 10.6%; gate: ROE/ROA continuing to recover as the MRQ margin improvement (9.6%\u219214.4%) persists and the Auth0 goodwill drag ages; added WATCHLIST 2026-10-30",
+    "grade": "B"
+  },
+  "ITRI": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.324",
+        "\u2264 0.20"
+      ]
+    ],
+    "note": "Itron \u2014 smart metering/grid infrastructure (electricity, water, gas utility meters + grid edge intelligence); single blocker, real not hairline: D/EV 0.324, meaningfully over the 0.20 gate (62% over, not a one-tick miss like HPE/PENG); checked ROE/ROA gap (16.4%/5.1%) for an artifact given the 3.2x spread \u2014 not one, Schwab's TTM/MRQ margins are consistent (~12% both periods), epsChangePercentTTM a modest +25.5%, gap explained by real leverage (D/E 94.1%); OM 15.8% \u2713, NM 12.1% \u2713, FCF yield 7.9% \u2713 strong \u2014 everything else clears comfortably; grade not applicable via the mechanical filter (fails on D/EV alone); fwdPE 15.5x cheap; gate: D/EV crossing below 0.20; added WATCHLIST 2026-10-30",
+    "grade": "B"
+  },
+  "PENG": {
+    "fails": [
+      [
+        "Debt/EV",
+        "0.24",
+        "\u2264 0.20"
+      ],
+      [
+        "FCF Yield",
+        "-4.7%",
+        "> 0%"
+      ]
+    ],
+    "note": "Penguin Solutions (formerly SMART Global Holdings) \u2014 AI/HPC memory modules + optical interconnect + datacenter infrastructure; RevG +67.7% TTM (real AI memory demand, not a growth-assist to the grade post-fix); 2 real blockers: D/EV 0.234 (hairline over the 0.20 gate, same ballpark miss as HPE) + FCF yield -4.4% (negative, capex ramp for AI memory/infra buildout \u2014 same explainable pattern as FN's optical-interconnect capex); checked for a margin artifact given the wide ROE/ROA gap (27.6%/5.1%) and a large epsChangePercentTTM (+828.6%) \u2014 NOT the NTNX/AFRM impossible-margin pattern: Schwab's netProfitMarginMRQ (16.4%) and TTM (10.4%) are both plausible numbers with MRQ > TTM, a genuine within-year margin improvement, not a mathematically-impossible artifact; the ROE/ROA gap is explained by real leverage (totalDebtToEquity 107.2%), not a data error; OM 13.4% \u2713, NM 10.4% \u2713 both clear their gates already; fwdPE 21.1x; gate: D/EV crossing below 0.20 + FCF turning positive as the memory/infra capex cycle normalizes; added WATCHLIST 2026-10-26",
+    "grade": "B"
+  },
   "TDY": {
     "fails": [
       [
@@ -1495,7 +1544,7 @@
       ],
       [
         "FCF Yield",
-        "-123.0%",
+        "-119.4%",
         "> 0%"
       ]
     ],
@@ -1602,7 +1651,7 @@
       ],
       [
         "FCF Yield",
-        "-1.6%",
+        "-1.5%",
         "> 0%"
       ]
     ],
@@ -1650,7 +1699,7 @@
     "fails": [
       [
         "FCF Yield",
-        "-1.5%",
+        "-1.4%",
         "> 0%"
       ]
     ],
@@ -1962,7 +2011,7 @@
       ],
       [
         "P/E",
-        "153.4x",
+        "157.4x",
         "\u2264 100x"
       ]
     ],
@@ -2004,7 +2053,7 @@
       ],
       [
         "FCF Yield",
-        "-2.3%",
+        "-2.2%",
         "> 0%"
       ]
     ],
@@ -2030,7 +2079,7 @@
       ],
       [
         "FCF Yield",
-        "-6.3%",
+        "-6.4%",
         "> 0%"
       ]
     ],
@@ -2112,7 +2161,7 @@
     "fails": [
       [
         "Debt/EV",
-        "0.206",
+        "0.212",
         "\u2264 0.20"
       ]
     ],
@@ -2155,7 +2204,7 @@
       ],
       [
         "P/E",
-        "1214.5x",
+        "1202.0x",
         "\u2264 100x"
       ]
     ],
@@ -2219,7 +2268,7 @@
       ],
       [
         "FCF Yield",
-        "-2.1%",
+        "-2.0%",
         "> 0%"
       ]
     ],
@@ -2685,7 +2734,7 @@
     "fails": [
       [
         "FCF Yield",
-        "-3.3%",
+        "-3.2%",
         "> 0%"
       ]
     ],
@@ -2707,5 +2756,16 @@
     ],
     "note": "Packaging Corporation of America \u2014 containerboard + corrugated packaging manufacturer, no merger integration noise (unlike IP/GPK peers currently digesting acquisitions); OM 13.1% \u2713, NM 7.3% \u2713, ROE 14.9% \u2713, D/EV 17.7% \u2713, FCF 2.0% \u2713, RevG 14.7% \u2713 \u2014 6/7 gates; GrossM 21.4% sole blocker, structural (containerboard/pulp manufacturing raw-material cost structure, same lens as mining/aggregates); grade A; added as part of a sector-coverage audit filling the \"paper\" gap in the AI-disruption-resistance lens; gate: GrossM structural exception confirmed via sustained OM/ROE strength; added UNIVERSE 2026-09-05; blocking: ROE/ROA ROE None% / ROA None%, FCF Yield missing (no data relief); auto-demoted from UNIVERSE 2026-10-24 [grade B] \u2014 was grade A, now B",
     "grade": "B"
+  },
+  "VLTO": {
+    "fails": [
+      [
+        "Passes all filters",
+        "\u2014",
+        "\u2014"
+      ]
+    ],
+    "note": "Veralto Corporation \u2014 water quality + product quality/innovation instrumentation (spun off from Danaher 2023); D/EV 0.134 \u2713, GrossM 60.2% \u2713, OM 21.4% \u2713, NM 17.3% \u2713, ROE 34.3% \u2713, FCF yield 3.2% \u2713, RevG 7.5% \u2014 7/7 gates, no blockers; grade A+; $25.2B market cap; fwdPE 25.1x; added UNIVERSE 2026-10-26; blocking: ROE/ROA ROE None% / ROA None%, FCF Yield missing (no data relief); auto-demoted from UNIVERSE 2026-11-01 [grade A] \u2014 was grade A+, now A",
+    "grade": "A+"
   }
 }
