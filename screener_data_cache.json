@@ -13316,5 +13316,29 @@
     "price_vs_ma200": -8.2,
     "short_pct_float": 1.0,
     "days_to_cover": 2.7
+  },
+  "CRWV": {
+    "ticker": "CRWV",
+    "name": "CoreWeave, Inc.",
+    "sector": "Technology",
+    "price": 48.42,
+    "market_cap_b": 26.7,
+    "debt_to_ev": 0.682,
+    "gross_margin": 67.4,
+    "operating_margin": -1.9,
+    "net_margin": -25.4,
+    "roe": -43.6,
+    "roa": -0.2,
+    "pe": null,
+    "pe_is_forward": false,
+    "fwd_pe": null,
+    "pb": 5.3,
+    "fcf_yield": -34.0,
+    "rev_growth": 112.5,
+    "fy0_growth": -88.4,
+    "fy1_growth": 9.7,
+    "price_vs_ma200": -46.7,
+    "short_pct_float": 22.4,
+    "days_to_cover": 1.9
   }
 }
