@@ -13292,5 +13292,29 @@
     "price_vs_ma200": 22.6,
     "short_pct_float": 7.8,
     "days_to_cover": 4.8
+  },
+  "FER": {
+    "ticker": "FER",
+    "name": "Ferrovial N.V.",
+    "sector": "Industrials",
+    "price": 58.95,
+    "market_cap_b": 42.4,
+    "debt_to_ev": 0.213,
+    "gross_margin": 87.1,
+    "operating_margin": 10.4,
+    "net_margin": 6.1,
+    "roe": 11.6,
+    "roa": 2.6,
+    "pe": 32.4,
+    "pe_is_forward": false,
+    "fwd_pe": 43.8,
+    "pb": 6.6,
+    "fcf_yield": 2.1,
+    "rev_growth": 5.2,
+    "fy0_growth": 20.4,
+    "fy1_growth": 5.2,
+    "price_vs_ma200": -8.2,
+    "short_pct_float": 1.0,
+    "days_to_cover": 2.7
   }
 }
