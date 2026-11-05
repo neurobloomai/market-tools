@@ -15980,5 +15980,29 @@
     "price_vs_ma200": 6.0,
     "short_pct_float": 4.6,
     "days_to_cover": 3.7
+  },
+  "DOCU": {
+    "ticker": "DOCU",
+    "name": "DocuSign, Inc.",
+    "sector": "Technology",
+    "price": 79.18,
+    "market_cap_b": 14.8,
+    "debt_to_ev": 0.013,
+    "gross_margin": 79.6,
+    "operating_margin": 13.4,
+    "net_margin": 9.8,
+    "roe": 17.8,
+    "roa": 6.4,
+    "pe": 48.3,
+    "pe_is_forward": false,
+    "fwd_pe": 15.2,
+    "pb": 8.7,
+    "fcf_yield": 8.9,
+    "rev_growth": 9.4,
+    "fy0_growth": 20.3,
+    "fy1_growth": 12.8,
+    "price_vs_ma200": 44.1,
+    "short_pct_float": 8.5,
+    "days_to_cover": 5.2
   }
 }
