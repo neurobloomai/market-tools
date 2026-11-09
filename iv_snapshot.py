@@ -57,6 +57,11 @@ TIERS = {
     'AMZN': 2, 'GOOGL': 2, 'TSLA': 2,
     'MU': 3, 'AMD': 3, 'JPM': 3, 'GS': 3, 'NFLX': 3,
     'PLTR': 2,
+    # Added 2026-11-09 -- high-beta basket checked ad-hoc (BE/AAOI/ARM/COIN/CRDO/ALAB all
+    # beta 2.3-6.6, the opposite extreme from the "behavioral small cap" low-beta names),
+    # no rank/percentile will be meaningful until the nightly cron accumulates real history.
+    'ARM': 2, 'COIN': 2,
+    'BE': 3, 'AAOI': 3, 'CRDO': 3, 'ALAB': 3,
 }
 
 
