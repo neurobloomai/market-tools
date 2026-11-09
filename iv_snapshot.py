@@ -61,7 +61,7 @@ TIERS = {
     # beta 2.3-6.6, the opposite extreme from the "behavioral small cap" low-beta names),
     # no rank/percentile will be meaningful until the nightly cron accumulates real history.
     'ARM': 2, 'COIN': 2,
-    'BE': 3, 'AAOI': 3, 'CRDO': 3, 'ALAB': 3,
+    'BE': 3, 'AAOI': 3, 'CRDO': 3, 'ALAB': 3, 'MRVL': 3,
 }
 
 
