@@ -62,6 +62,7 @@ TIERS = {
     # no rank/percentile will be meaningful until the nightly cron accumulates real history.
     'ARM': 2, 'COIN': 2,
     'BE': 3, 'AAOI': 3, 'CRDO': 3, 'ALAB': 3, 'MRVL': 3,
+    'SEZL': 3, 'DAVE': 3,  # the two highest-beta names in the full UNIVERSE/WATCHLIST sweep (6.60, 4.08) -- higher than everything else in this tier
 }
 
 
