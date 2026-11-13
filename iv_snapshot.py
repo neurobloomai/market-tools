@@ -49,6 +49,15 @@ SPREAD_UNIVERSE = [
     'PLTR',                     # added 2026-10-07 -- proven liquid in practice (two real
                                  # positions filled/closed this week with tight spreads and
                                  # real volume), not just theoretically qualifying
+    # REAL BUG FOUND 2026-11-13: these 9 were added to TIERS on 2026-11-09 for the
+    # high-beta basket, but TIERS only controls display/grouping in
+    # internal_iv_rank_live.py -- THIS loop (main(), below) is what actually fetches
+    # and persists to iv_data.json, and it iterates SPREAD_UNIVERSE, not TIERS. Result:
+    # zero stored history for all 9, for 4+ days, confirmed by checking iv_data.json
+    # directly (no key present at all for any of them) -- not the "1 day building"
+    # the live tool's intraday-augmented view implied. Adding them here is what
+    # actually starts the clock; the TIERS entries alone never did anything.
+    'ARM', 'COIN', 'BE', 'AAOI', 'CRDO', 'ALAB', 'MRVL', 'SEZL', 'DAVE',
 ]
 
 TIERS = {
