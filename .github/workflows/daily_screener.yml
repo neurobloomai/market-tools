@@ -56,8 +56,21 @@ jobs:
         run: |
           git add iv_data.json
           git diff --staged --quiet || git commit -m "iv_snapshot: $(date -u +'%Y-%m-%d') after-close"
+          # Confirmed root cause 2026-11-13: market_breadth.py/aligned_screener.py leave
+          # tracked-but-uncommitted changes (breadth_snapshot.json etc) in the tree that
+          # the earlier "Sync after X" steps stash-pull-pop right back into existence --
+          # without this stash, `git pull --rebase` below fails with "unstaged changes",
+          # the commit above never reaches origin, and the ephemeral runner discards it
+          # when the job ends. Confirmed via `gh run view --log`: a real local commit
+          # (iv_snapshot: 2026-11-13 after-close) was made and then silently lost this
+          # way for 5 straight days (Nov 8-13), stalling every ticker's stored history,
+          # not just the newly-added high-beta basket. Stash/pop brackets BOTH the pull
+          # and the push+retry -- popping before the retry's own pull --rebase would
+          # just reintroduce the same failure there.
+          git stash --include-untracked || true
           git pull --rebase origin main || true
           git push || (sleep 10 && git pull --rebase origin main && git push)
+          git stash pop || true
 
       - name: Sync after IV snapshot
         run: |
@@ -72,8 +85,12 @@ jobs:
         run: |
           git add signal_cache.json
           git diff --staged --quiet || git commit -m "signal_cache: $(date -u +'%Y-%m-%d') refresh"
+          # Same fix, same root cause as the IV snapshot commit step above -- see that
+          # step's comment for the full explanation.
+          git stash --include-untracked || true
           git pull --rebase origin main || true
           git push || (sleep 10 && git pull --rebase origin main && git push)
+          git stash pop || true
 
       # ── Deploy GitHub Pages ───────────────────────────────────────────────────
       - uses: actions/configure-pages@v5
