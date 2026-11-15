@@ -26,8 +26,10 @@ except ImportError:
 # --- Universe ---
 UNIVERSE = [
     # Capital Goods & Industrials — the backbone of India's buildout
-    'LT.NS','SIEMENS.NS','ABB.NS','HAVELLS.NS','THERMAX.NS','CUMMINSIND.NS',
-    'KEC.NS','KPIL.NS','GRINDWELL.NS','POLYCAB.NS',
+    'LT.NS','SIEMENS.NS','HAVELLS.NS','THERMAX.NS','CUMMINSIND.NS',
+    'KEC.NS','KPIL.NS','GRINDWELL.NS',
+    'POLYCAB.NS', # Polycab India — largest player in India's wires & cables market (~Rs900B FY25 market; Polycab's own revenue ~Rs188.9B, ahead of KEI/Havells/RR Kabel/Finolex/APAR); real quality, clean on every gate with no yfinance data-gap caveat needed: D/EV 0.002 (near-zero debt), OM 12.6%, NM 9.1%, ROE 26.8%, RevG +52.8%; grade A; the one name in the Gautam Baid "data centre & power sector ancillaries" SMID-theme cross-check (2026-11-15) that cleared outright — same electrification value chain as ABB/HAVELLS/SIEMENS in this UNIVERSE, but this is the cluster's clean standout rather than a near-miss; price -7.1% vs 200d MA at the time of this note, not extended; added earlier, writeup backfilled 2026-11-15
+    'ABB.NS',   # ABB India — power/process automation + electrification equipment (robotics, motion, industrial automation, grid/switchgear); real quality case blocked by a yfinance data gap, not weak fundamentals: D/EV 0.001, OM 12.8%, NM 20.7% all clear via yfinance itself, but yfinance returns ROE/ROA/FCF yield as None for this ticker; cross-checked against screener.in/moneycontrol 2026-11-15 — real ROE ~21-22% (one 12mo-trailing read spiked to 36.1%, likely a one-off, don't anchor to it), comfortably clears the 10% gate; NM 20.7% also satisfies the >=15% strong-margin FCF-yield fallback on its own; 6/6 gates once corrected for the data gap; surfaced via a Gautam Baid "data centre & power sector ancillaries" SMID-theme cross-check — same electrification value chain as POLYCAB/HAVELLS/SIEMENS already in this UNIVERSE; added 2026-11-15
     'AIAENG.NS',      # AIA Engineering — high-chrome grinding media (balls/cylpebs) for mining/cement mills globally; 130+ countries; consumable replacement model = recurring revenue every 3-6 months per mill; no real competitor at this quality + scale; GrossM 54.8%, OM 26.4%, NM 28.7%, ROE 17.0%, D/EV 0.0% (zero debt), RevG 9.4%; 6/6 gates; A+; added 2026-08-12
 
     # Defense — Make in India moment
