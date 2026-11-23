@@ -21956,5 +21956,12 @@
       "DUOL": "ma100_200",
       "CVX": "ma100_200"
     }
+  },
+  {
+    "week": "Week of Nov 23 2026",
+    "date": "2026-11-23",
+    "tiers": {
+      "CHKP": "fully_stacked"
+    }
   }
 ]
