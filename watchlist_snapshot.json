@@ -1,4 +1,62 @@
 {
+  "GILD": {
+    "fails": [
+      [
+        "Net Margin",
+        "-12.5%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -22.4% / ROA 13.5%",
+        "\u2265 10% / \u2265 15%"
+      ]
+    ],
+    "note": "[LOCKED] Gilead Sciences \u2014 HIV/HCV franchise (Biktarvy, Descovy) + Veklury (remdesivir) + oncology (Trodelvy, Yescarta via Kite); mechanically fails the quality filter on a real TTM/MRQ margin disagreement, same category as the NTNX/INVA/ZM pattern: TTM net_margin -12.5% (ROE -22.4% to match) is dragged hugely negative by a single aberrant quarter -- Q2 2026 (ended 2026-06-30) posted a -$10.5B net loss on $7.8B revenue, almost certainly a one-time charge (litigation settlement or impairment, not independently confirmed here) -- while every OTHER quarter in the trailing year was solidly profitable: Q3'25 $3.05B, Q4'25 $2.18B, Q1'26 $2.02B, and the MOST RECENT quarter (Q3'26, ended 2026-09-30) posted $2.429B net income on $8.3B revenue, a genuinely healthy ~29.3% net margin. Everything else actually clears cleanly: D/EV 0.116, OM 38.2%, GrossM 79.9%, FCF yield +5.0% (real, positive, unaffected by the one-time charge), ROA 13.5% positive (agrees with the real-business read, disagrees with the artifact-distorted ROE); RevG +6.8% modest but real; fwdPE 16.8x cheap for the margin profile; short interest negligible (1.7%/3.6d); price already +20.5% vs 200d MA, not a depressed entry. [LOCKED] per the standing margin-artifact rule -- WATCHLIST not UNIVERSE regardless of how clean the underlying business looks; gate to UNIVERSE: the TTM figure rolling the Q2'26 charge out of the trailing window (naturally resolves within ~2 more quarters) with no new one-time hits in the meantime; added 2026-11-17",
+    "grade": "A"
+  },
+  "TCMD": {
+    "fails": [
+      [
+        "Op Margin",
+        "9.4%",
+        "\u2265 10%"
+      ]
+    ],
+    "note": "Tactile Systems Technology \u2014 medical device company; Flexitouch/ACTitouch at-home pneumatic compression devices for lymphedema + chronic venous insufficiency; near-miss on a single hairline gate, not a broad fail: D/EV 0.032 (near-zero debt), NM 6.7%, ROE 11.0%, FCF yield +4.3% all clear cleanly; OM 9.4% is the SOLE blocker, just 0.6 points under the 10% gate; RevG TTM +7.1% vs fy0 +41.2% is an odd, unresolved divergence worth naming rather than ignoring (possibly a low-base-effect or methodology quirk, not independently confirmed here), fy1 fwd +25.1% still real growth either way; fwdPE 17.9x; micro-cap ($0.6B), short interest notably elevated (12.7% float, 10.1 days to cover) \u2014 worth knowing as a real signal some of the market disagrees, not dismissed given this is a near-miss rather than a clean pass; price $26.25, +2.3% vs 200d MA, not stretched; gate to UNIVERSE: OM crossing 10% (margin expansion as the at-home-device model scales) + the RevG discrepancy resolving one way or the other; added 2026-11-18",
+    "grade": "B"
+  },
+  "INSM": {
+    "fails": [
+      [
+        "Op Margin",
+        "-23.8%",
+        "\u2265 10%"
+      ],
+      [
+        "Net Margin",
+        "-76.9%",
+        "\u2265 5%"
+      ],
+      [
+        "ROE/ROA",
+        "ROE -87.2% / ROA -22.2%",
+        "\u2265 10% / \u2265 15%"
+      ],
+      [
+        "FCF Yield",
+        "-2.1%",
+        "> 0%"
+      ],
+      [
+        "P/E",
+        "172.3x",
+        "\u2264 100x"
+      ]
+    ],
+    "note": "Insmed \u2014 specialty pharma, brensocatib (Brinsupri, oral neutrophil elastase inhibitor, FDA approved for bronchiectasis, ASPEN trial); promoted from FUTURE_RADAR -- real, measurable progress toward that entry's own stated gate: OM improved from -65.5% to -41.7%, NM from -144.4% to -39.9% (both roughly halved in severity, not noise), RevG TTM actually accelerated to 268.4% (launch ramp still building, not slowing); still fails the quality filter outright -- FCF yield -1.7% (the other half of the original gate, not yet turned positive), extreme valuation (fwdPE 186.6x, ROE -72.5%, ROA -17.3%); moat uncertain: bronchiectasis has limited competition now but single-product concentration + pipeline depth beyond brensocatib still TBD; GrossM 84.4% (drug economics genuinely strong); technical/flow is notably strong right now, worth naming plainly since the headline framing elsewhere (\"rising biotech powerhouse\") invites skepticism but the real data backs it independently: D10 among the strongest readings checked this session (+0.172 to +0.609, holding +0.497), WkCMF10/WkCMF20 both crossed from deeply negative to positive over the last month and are holding, MoCMF6 strongly positive this month (+0.224); price +21.4% over 6mo, -2.3% vs 200d MA (not stretched); short interest 7.2%/5.6 days, unremarkable; gate to UNIVERSE: FCF yield turning positive + OM continuing to inflect toward 0% as launch spend normalizes further; promoted to WATCHLIST 2026-11-19 (originally FUTURE_RADAR, added 2026-08-06)",
+    "grade": "B"
+  },
   "AXON": {
     "fails": [
       [
