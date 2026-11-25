@@ -354,6 +354,11 @@
       "iv": null,
       "hv": null,
       "price": null
+    },
+    "2026-11-25": {
+      "iv": null,
+      "hv": null,
+      "price": null
     }
   },
   "GOOGL": {
@@ -708,6 +713,11 @@
       "price": 265.29
     },
     "2026-11-22": {
+      "iv": null,
+      "hv": null,
+      "price": null
+    },
+    "2026-11-25": {
       "iv": null,
       "hv": null,
       "price": null
@@ -1068,6 +1078,11 @@
       "iv": null,
       "hv": null,
       "price": null
+    },
+    "2026-11-25": {
+      "iv": null,
+      "hv": null,
+      "price": null
     }
   },
   "QQQ": {
@@ -1425,6 +1440,11 @@
       "iv": null,
       "hv": null,
       "price": null
+    },
+    "2026-11-25": {
+      "iv": null,
+      "hv": null,
+      "price": null
     }
   },
   "PLTR": {
@@ -1574,6 +1594,11 @@
       "price": 143.49
     },
     "2026-11-22": {
+      "iv": null,
+      "hv": null,
+      "price": null
+    },
+    "2026-11-25": {
       "iv": null,
       "hv": null,
       "price": null
@@ -1934,6 +1959,11 @@
       "iv": null,
       "hv": null,
       "price": null
+    },
+    "2026-11-25": {
+      "iv": null,
+      "hv": null,
+      "price": null
     }
   },
   "AMZN": {
@@ -2288,6 +2318,11 @@
       "price": 246.82
     },
     "2026-11-22": {
+      "iv": null,
+      "hv": null,
+      "price": null
+    },
+    "2026-11-25": {
       "iv": null,
       "hv": null,
       "price": null
@@ -2648,6 +2683,11 @@
       "iv": null,
       "hv": null,
       "price": null
+    },
+    "2026-11-25": {
+      "iv": null,
+      "hv": null,
+      "price": null
     }
   },
   "META": {
@@ -3002,6 +3042,11 @@
       "price": 560.84
     },
     "2026-11-22": {
+      "iv": null,
+      "hv": null,
+      "price": null
+    },
+    "2026-11-25": {
       "iv": null,
       "hv": null,
       "price": null
@@ -3362,6 +3407,11 @@
       "iv": null,
       "hv": null,
       "price": null
+    },
+    "2026-11-25": {
+      "iv": null,
+      "hv": null,
+      "price": null
     }
   },
   "AAPL": {
@@ -3716,6 +3766,11 @@
       "price": 342.56
     },
     "2026-11-22": {
+      "iv": null,
+      "hv": null,
+      "price": null
+    },
+    "2026-11-25": {
       "iv": null,
       "hv": null,
       "price": null
@@ -4076,6 +4131,11 @@
       "iv": null,
       "hv": null,
       "price": null
+    },
+    "2026-11-25": {
+      "iv": null,
+      "hv": null,
+      "price": null
     }
   },
   "NVDA": {
@@ -4430,6 +4490,11 @@
       "price": 125.53
     },
     "2026-11-22": {
+      "iv": null,
+      "hv": null,
+      "price": null
+    },
+    "2026-11-25": {
       "iv": null,
       "hv": null,
       "price": null
@@ -4790,6 +4855,11 @@
       "iv": null,
       "hv": null,
       "price": null
+    },
+    "2026-11-25": {
+      "iv": null,
+      "hv": null,
+      "price": null
     }
   },
   "NFLX": {
@@ -5147,6 +5217,11 @@
       "iv": null,
       "hv": null,
       "price": null
+    },
+    "2026-11-25": {
+      "iv": null,
+      "hv": null,
+      "price": null
     }
   },
   "ARM": {
@@ -5186,6 +5261,11 @@
       "price": 152.2
     },
     "2026-11-22": {
+      "iv": null,
+      "hv": null,
+      "price": null
+    },
+    "2026-11-25": {
       "iv": null,
       "hv": null,
       "price": null
@@ -5231,6 +5311,11 @@
       "iv": null,
       "hv": null,
       "price": null
+    },
+    "2026-11-25": {
+      "iv": null,
+      "hv": null,
+      "price": null
     }
   },
   "BE": {
@@ -5270,6 +5355,11 @@
       "price": 142.39
     },
     "2026-11-22": {
+      "iv": null,
+      "hv": null,
+      "price": null
+    },
+    "2026-11-25": {
       "iv": null,
       "hv": null,
       "price": null
@@ -5315,6 +5405,11 @@
       "iv": null,
       "hv": null,
       "price": null
+    },
+    "2026-11-25": {
+      "iv": null,
+      "hv": null,
+      "price": null
     }
   },
   "CRDO": {
@@ -5354,6 +5449,11 @@
       "price": 99.86
     },
     "2026-11-22": {
+      "iv": null,
+      "hv": null,
+      "price": null
+    },
+    "2026-11-25": {
       "iv": null,
       "hv": null,
       "price": null
@@ -5399,6 +5499,11 @@
       "iv": null,
       "hv": null,
       "price": null
+    },
+    "2026-11-25": {
+      "iv": null,
+      "hv": null,
+      "price": null
     }
   },
   "MRVL": {
@@ -5438,6 +5543,11 @@
       "price": 122.28
     },
     "2026-11-22": {
+      "iv": null,
+      "hv": null,
+      "price": null
+    },
+    "2026-11-25": {
       "iv": null,
       "hv": null,
       "price": null
@@ -5483,6 +5593,11 @@
       "iv": null,
       "hv": null,
       "price": null
+    },
+    "2026-11-25": {
+      "iv": null,
+      "hv": null,
+      "price": null
     }
   },
   "DAVE": {
@@ -5522,6 +5637,11 @@
       "price": 228.39
     },
     "2026-11-22": {
+      "iv": null,
+      "hv": null,
+      "price": null
+    },
+    "2026-11-25": {
       "iv": null,
       "hv": null,
       "price": null
