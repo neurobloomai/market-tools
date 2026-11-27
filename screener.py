@@ -1096,10 +1096,11 @@ def failing_filters(d):
     if not roe_ok and not roa_ok:
         fails.append(('ROE/ROA', f"ROE {d['roe']}% / ROA {d['roa']}%", '≥ 10% / ≥ 15%'))
     if d['fcf_yield'] is None:
-        high_growth = d['rev_growth'] is not None and d['rev_growth'] >= 50
-        strong_margin = d['net_margin'] is not None and d['net_margin'] >= 10
-        if not (high_growth and strong_margin):
-            fails.append(('FCF Yield', 'missing (no data relief)', '> 0% or rev>50%+margin>10%'))
+        high_growth_saas = (d['rev_growth'] is not None and d['rev_growth'] >= 50
+                            and d['net_margin'] is not None and d['net_margin'] >= 10)
+        strong_margin    = d['net_margin'] is not None and d['net_margin'] >= 15
+        if not (high_growth_saas or strong_margin):
+            fails.append(('FCF Yield', 'missing (no data relief)', '> 0% or rev_growth>=50%+NM>=10% or NM>=15%'))
     elif d['fcf_yield'] < 0:
         fails.append(('FCF Yield', f"{d['fcf_yield']}%", '> 0%'))
     if d['pe'] is not None and d['pe'] > 100:
